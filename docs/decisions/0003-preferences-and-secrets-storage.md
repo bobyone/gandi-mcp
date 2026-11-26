@@ -35,7 +35,10 @@ a tool result or the model.
   user configuration directory of the OS (`platformdirs`), path configurable
   with `preferences.path`. Writes are atomic (temporary file in the same
   directory, then replace) and the file carries a format version. A corrupted
-  or newer file is refused and never overwritten.
+  or newer file is refused and never overwritten. Each change is a
+  read-modify-write under an exclusive lock on `<file>.lock`, shared by every
+  gandi-mcp process: several MCP clients each run their own server on the same
+  preferences, and none may lose another's change.
 
 ## Alternatives considered
 

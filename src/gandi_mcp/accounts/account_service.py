@@ -40,7 +40,9 @@ class AccountService:
 
     Invariants: names are unique ignoring case; exactly one default account as soon
     as an account exists; an account exists only if its token is stored and Gandi
-    accepted it when it was saved. Changes are serialized.
+    accepted it when it was saved. Changes are serialized, within this process and
+    with other processes sharing the preferences: each one loads, changes and saves
+    them inside one preferences transaction.
     """
 
     def __init__(
@@ -80,7 +82,7 @@ class AccountService:
             TokenRejectedError: if Gandi refuses the token; nothing is kept.
             GandiError, SecretStoreError, PreferencesError: nothing is kept.
         """
-        async with self._lock:
+        async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
             self._check_free(preferences, draft.name)
             identity = await self._verifier.verify(draft.environment, token)
@@ -103,7 +105,7 @@ class AccountService:
         Raises:
             AccountNotFoundError, DuplicateAccountError.
         """
-        async with self._lock:
+        async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
             account = self._find(preferences, name)
             if new_name != account.name:
@@ -123,7 +125,7 @@ class AccountService:
         Raises:
             AccountNotFoundError, NoAccountError.
         """
-        async with self._lock:
+        async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
             account = self._find(preferences, name)
             await self._preferences.save(replace(preferences, default_account=account.name))
@@ -138,7 +140,7 @@ class AccountService:
             AccountNotFoundError, NoAccountError, AccountChangedError (the account no
             longer matches ``expected``).
         """
-        async with self._lock:
+        async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
             account = self._find(preferences, name, expected)
             changed = replace(account, read_only=read_only)
@@ -158,7 +160,7 @@ class AccountService:
             Gandi request), TokenRejectedError (old token kept), GandiError,
             SecretStoreError.
         """
-        async with self._lock:
+        async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
             account = self._find(preferences, name, expected)
             identity = await self._verifier.verify(account.environment, token)
@@ -182,7 +184,7 @@ class AccountService:
             Gandi request), TokenRejectedError (nothing changed), GandiError,
             SecretStoreError, PreferencesError (old token restored).
         """
-        async with self._lock:
+        async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
             account = self._find(preferences, name, expected)
             identity = await self._verifier.verify(environment, token)
@@ -213,7 +215,7 @@ class AccountService:
             AccountNotFoundError, NoAccountError, AccountChangedError,
             PreferencesError (nothing removed).
         """
-        async with self._lock:
+        async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
             account = self._find(preferences, name, expected)
             remaining = tuple(item for item in preferences.accounts if item is not account)

@@ -3,10 +3,12 @@
 """Preferences kept in a JSON file, written atomically."""
 
 import asyncio
+import contextlib
 import json
 import logging
 import os
 import tempfile
+from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Any
 
@@ -15,11 +17,13 @@ from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.accounts.exceptions import InvalidAccountNameError
 from gandi_mcp.preferences.exceptions import CorruptPreferencesError, PreferencesUnavailableError
+from gandi_mcp.preferences.json.file_lock import FileLock
 from gandi_mcp.preferences.preferences import Preferences
 from gandi_mcp.preferences.preferences_store import PreferencesStore
 
 FORMAT_VERSION = 1
 MAX_FILE_SIZE = 1_000_000
+LOCK_TIMEOUT_SECONDS = 10.0
 
 logger = logging.getLogger(__name__)
 
@@ -82,12 +86,23 @@ class JsonPreferencesStore(PreferencesStore):
     A missing file means empty preferences. A file that cannot be understood, or
     written by a newer version, raises ``CorruptPreferencesError`` and is never
     overwritten. Saving writes a temporary file in the same directory, flushes it to
-    disk, then replaces the previous file.
+    disk, then replaces the previous file. :meth:`transaction` locks
+    ``<file>.lock`` against every other process.
     """
 
-    def __init__(self, path: Path) -> None:
+    def __init__(self, path: Path, lock_timeout_seconds: float = LOCK_TIMEOUT_SECONDS) -> None:
         """Use the preferences file at this path; its directory is created on save."""
         self._path = path
+        self._lock_timeout = lock_timeout_seconds
+
+    @contextlib.asynccontextmanager
+    async def transaction(self) -> AsyncIterator[None]:
+        lock = FileLock(self._path.with_name(self._path.name + ".lock"), self._lock_timeout)
+        await asyncio.to_thread(lock.acquire)
+        try:
+            yield
+        finally:
+            lock.release()
 
     async def load(self) -> Preferences:
         return await asyncio.to_thread(self._load)

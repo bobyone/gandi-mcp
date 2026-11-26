@@ -177,6 +177,7 @@ exists) and raises `CorruptPreferencesError` otherwise.
 | --- | --- |
 | `load()` | Returns the saved preferences, or empty ones. Raises `CorruptPreferencesError` (not understood) or `PreferencesUnavailableError` (unreadable). |
 | `save(preferences)` | Replaces the saved preferences atomically. Raises `PreferencesUnavailableError`. |
+| `transaction()` | Async context manager holding the preferences exclusively, against every process sharing them; `AccountService` loads, changes and saves inside it. Raises `PreferencesUnavailableError` when the lock is not obtained in time. |
 
 ### Gandi client: `gandi_mcp.gandi.gandi_client.GandiClient`
 
@@ -273,6 +274,9 @@ File format (UTF-8 JSON, no secret):
 Behavior and limits:
 
 - a missing file means empty preferences;
+- `transaction()` locks `<file>.lock` (`msvcrt` on Windows, `fcntl` elsewhere),
+  waiting up to `lock_timeout_seconds` (10 s): several MCP clients may run their
+  own gandi-mcp process on the same preferences;
 - an invalid file (JSON, structure, names, invariants), a file larger than
   1 MB or another format version raises `CorruptPreferencesError` and is never
   overwritten;

@@ -2,18 +2,24 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Integration tests of the JSON preferences store on temporary files."""
 
+import asyncio
 import json
 from pathlib import Path
 
 import pytest
 
 from gandi_mcp.accounts.account import Account
+from gandi_mcp.accounts.account_draft import AccountDraft
 from gandi_mcp.accounts.account_name import AccountName
+from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.preferences.exceptions import CorruptPreferencesError, PreferencesUnavailableError
 from gandi_mcp.preferences.json import json_preferences_store as module
 from gandi_mcp.preferences.json.json_preferences_store import JsonPreferencesStore
 from gandi_mcp.preferences.preferences import Preferences
+from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
+from tests.doubles.in_memory_secret_store import InMemorySecretStore
+from tests.doubles.stub_token_verifier import StubTokenVerifier
 
 pytestmark = pytest.mark.anyio
 
@@ -126,3 +132,35 @@ async def test_failed_replace_keeps_the_previous_file(
         await store.save(PREFERENCES)
     assert path.read_text(encoding="utf-8") == previous
     assert list(tmp_path.iterdir()) == [path]
+
+
+async def test_concurrent_processes_never_lose_an_account(tmp_path: Path) -> None:
+    path = tmp_path / "preferences.json"
+    token = PersonalAccessToken("pat_sandbox_0123456789")
+    secrets, verifier = InMemorySecretStore(), StubTokenVerifier()
+    verifier.accept(Environment.SANDBOX, token)
+    # Two services with their own store on the same file, as two server processes.
+    services = [AccountService(JsonPreferencesStore(path), secrets, verifier) for _ in range(2)]
+
+    await asyncio.gather(
+        *(
+            service.add(AccountDraft(AccountName(f"Account {index}"), Environment.SANDBOX), token)
+            for index, service in enumerate(services * 3)
+        )
+    )
+
+    names = {str(account.name) for account in await services[0].list()}
+    assert names == {f"Account {index}" for index in range(6)}
+    assert len(secrets.tokens) == 6
+
+
+async def test_transaction_times_out_when_another_holds_the_lock(tmp_path: Path) -> None:
+    path = tmp_path / "preferences.json"
+    first, second = JsonPreferencesStore(path), JsonPreferencesStore(path, 0.2)
+
+    async with first.transaction():
+        with pytest.raises(PreferencesUnavailableError):
+            async with second.transaction():
+                pass
+    async with second.transaction():
+        assert await second.load() == Preferences()

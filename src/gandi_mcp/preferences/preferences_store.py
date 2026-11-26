@@ -3,12 +3,24 @@
 """Abstraction of the place where preferences are kept."""
 
 from abc import ABC, abstractmethod
+from contextlib import AbstractAsyncContextManager
 
 from gandi_mcp.preferences.preferences import Preferences
 
 
 class PreferencesStore(ABC):
     """Load and save the preferences as a whole."""
+
+    @abstractmethod
+    def transaction(self) -> AbstractAsyncContextManager[None]:
+        """Hold the preferences exclusively for a read-modify-write.
+
+        The lock is shared with every process using the same preferences, so
+        that no concurrent change is lost. Load, change and save inside it.
+
+        Raises:
+            PreferencesUnavailableError: if the lock cannot be taken in time.
+        """
 
     @abstractmethod
     async def load(self) -> Preferences:
