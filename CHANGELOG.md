@@ -38,3 +38,5 @@ All notable changes are documented here. The format follows
   details, email addresses, owner names and authorization codes are only sent
   to the model on request; Gandi texts longer than `content.max_free_input`
   are withheld from it. (#5)
+- Organizations: list the organizations of an account and choose the one
+  paying its orders by default. (#5)

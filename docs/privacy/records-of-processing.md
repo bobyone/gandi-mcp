@@ -35,7 +35,7 @@ The software runs on the user's computer. Its authors receive no data.
 | Purpose | Configure the Gandi accounts used by the software and authenticate to the Gandi API on their behalf. |
 | Legal basis | [Same as P1] |
 | Data subjects | The user. |
-| Data categories | Account settings: name chosen by the user, environment (production or sandbox), read-only flag, default account. Gandi Personal Access Token (secret). Gandi identity behind the token (user name and full name), read when the token is saved, displayed to the user and never stored. |
+| Data categories | Account settings: name chosen by the user, environment (production or sandbox), read-only flag, default account, paying organization (identifier). Organizations the token can use (identifier, name, type), listed on request. Gandi Personal Access Token (secret). Gandi identity behind the token (user name and full name), read when the token is saved, displayed to the user and never stored. |
 | Recipients | Gandi SAS, to which the token is sent to authenticate each request and which returns the identity. The provider of the LLM receives the account settings in tool results, never the token nor the identity. |
 | Transfers outside the EU | Account settings: depending on the LLM provider, as in P1. Token and identity: none. |
 | Retention | Account settings and token: until the user removes the account in the software (the token may expire earlier at Gandi). Token entry sessions and pending confirmations: in memory only, at most `token_entry.timeout_seconds` (default 10 minutes) and `confirmation.timeout_seconds` (default 5 minutes). |

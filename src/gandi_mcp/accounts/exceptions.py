@@ -44,3 +44,11 @@ class ReadOnlyAccountError(AccountError):
 
 class TokenRejectedError(AccountError):
     """Raised when Gandi refuses a Personal Access Token in the chosen environment."""
+
+
+class InvalidOrganizationIdError(AccountError):
+    """Raised when an organization identifier is not a UUID."""
+
+
+class UnknownOrganizationError(AccountError):
+    """Raised when an organization is not one the account can use."""

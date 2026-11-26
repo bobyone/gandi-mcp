@@ -70,13 +70,13 @@ an account. It depends on a `PreferencesStore`, a `SecretStore` and a
 
 | Operation | Contract |
 | --- | --- |
-| `list()` | Accounts sorted by name, as `AccountSummary` (name, environment, read-only flag, default flag; no secret). |
+| `list()` | Accounts sorted by name, as `AccountSummary` (name, environment, read-only flag, default flag, paying organization; no secret). |
 | `resolve(name=None, *, allow_pending=False)` | The named account, else the default one. `NoAccountError`, `AccountNotFoundError`, `AccountRemovalPendingError` (only the removal flow sets `allow_pending`, to finish an interrupted removal). |
 | `add(draft, token)` | Checks the name is free (`DuplicateAccountError`), verifies the token in the chosen environment (`TokenRejectedError`), stores the token, then the account; the first account becomes the default. If saving the preferences fails, the token is removed again. Returns a `VerifiedAccount` (summary and `AccountIdentity`). |
-| `update(name, *, new_name, read_only, make_default, expected, writes_confirmed)` | Checks everything under the preferences transaction (expected account, free name, and `writes_confirmed` when allowing writes on an account read-only at that moment: `WritesNotConfirmedError` otherwise), then applies the rename, the read-only flag and the default flag in one save; a refusal changes nothing. Keeps the token; a case-only rename is saved. |
+| `update(name, *, new_name, read_only, make_default, paying_organization, expected, writes_confirmed)` | Checks everything under the preferences transaction (expected account, free name, and `writes_confirmed` when allowing writes on an account read-only at that moment: `WritesNotConfirmedError` otherwise), then applies the rename, the read-only flag, the paying organization (`Unchanged.KEEP` by default, `None` clears it) and the default flag in one save; a refusal changes nothing. Keeps the token; a case-only rename is saved. |
 | `rename`, `set_default`, `set_read_only` | Shortcuts of `update`. |
 | `replace_token(name, token)` | Verifies the token in the account environment, then replaces the old one (kept when rejected). |
-| `change_environment(name, environment, token)` | Verifies the token in the new environment; restores the previous token if saving fails. |
+| `change_environment(name, environment, token)` | Verifies the token in the new environment; restores the previous token if saving fails. The paying organization, which belongs to the old environment, is dropped. |
 | `remove(name)` | Marks the account as removal pending (durably), removes the token, then removes the account. A failure before the mark changes nothing; a secret store failure withdraws the mark, so the account stays usable; any later interruption (failure, cancellation, crash) leaves a pending removal: the account can only be removed again, which completes it (`AccountRemovalPendingError` for any other use). A removed default account is replaced by the first remaining one in alphabetical order. Returns an `AccountRemoval` (`removed`, `new_default`). |
 
 `set_read_only`, `replace_token`, `change_environment` and `remove` accept an
@@ -87,8 +87,20 @@ user saw): when the account no longer matches it, they raise
 Exceptions derive from `AccountError`: `InvalidAccountNameError`,
 `DuplicateAccountError`, `AccountNotFoundError`, `AccountChangedError`,
 `NoAccountError`,
-`ReadOnlyAccountError`, `TokenRejectedError`. Secret store, preferences and
-Gandi errors pass through.
+`ReadOnlyAccountError`, `TokenRejectedError`, `InvalidOrganizationIdError`,
+`UnknownOrganizationError`. Secret store, preferences and Gandi errors pass
+through.
+
+### Organizations: `gandi_mcp.accounts.organization_service.OrganizationService`
+
+`OrganizationService(accounts, secrets, directory)` lists the organizations an
+account can use (`organizations(name)`) and chooses its paying organization
+(`set_paying_organization(name, organization)`, `None` clears it;
+`UnknownOrganizationError` if the account cannot use it). The paying
+organization is a local preference: orders use it unless they name another
+one. `OrganizationDirectory` is the strategy listing the organizations behind a
+token (`organizations(environment, token)`); `OrganizationId` is a UUID in its
+canonical form; `Organization` holds its identifier, name and type.
 
 ### Operation: `gandi_mcp.operations.operation.Operation`
 
@@ -333,6 +345,16 @@ Calls `GET organization/user-info`. HTTP 401 and 403 mean the token is
 rejected. Only `username` (required) and `name` are kept, trimmed to 200
 characters; the email and the other fields are ignored.
 
+### Organization directory: `gandi_mcp.accounts.gandi.gandi_organization_directory.GandiOrganizationDirectory`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `client` | `GandiClient` | none | yes | Client used to call Gandi. |
+
+Calls `GET organization/organizations?per_page=500`. Only `id` (a UUID, else
+the entry is skipped), `name` and `type` (whitespace collapsed, at most 100
+characters) are kept; contact fields are never read.
+
 ### Confirmation channels: `gandi_mcp.confirmation.channels`
 
 | Channel | Available when | Behavior |
@@ -476,6 +498,7 @@ conversation and never to invent a confirmation identifier.
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
 | `tools.domains.transfer_tools.TransferTools` | `domain_owner_change_status`, `domain_transfer_in_status`, `domain_transfer_in_check` (sends no authorization code). |
+| `tools.organization_tools.OrganizationTools` | `list_organizations` (read-only; identifier, name and type, framed as untrusted data) and `set_paying_organization` (local preference, allowed on a read-only account; omitting `organization_id` clears it). |
 | `McpUserInteraction` | `UserInteraction` over MCP elicitation for one call. From protocol revision 2026-07-28 (no request from the server during a call), elicitation is treated as unavailable, so confirmations use the local page (ADR 4). |
 | `ErrorPresenter` | Maps each business exception (including `InvalidDomainNameError` and `InvalidDomainInputError`) to a translated explanation with its remedy (system language); Gandi details are appended and marked as untrusted, a detail longer than `content.max_free_input` being replaced by a notice of its length; unknown exceptions are logged and shown as a generic error. |
 

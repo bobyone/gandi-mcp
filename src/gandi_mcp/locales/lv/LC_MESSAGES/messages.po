@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:24+0100\n"
+"POT-Creation-Date: 2026-11-26 22:32+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lv\n"
@@ -222,6 +222,10 @@ msgid "The token of this account is missing from the keyring: replace the token 
 msgstr "Šī konta marķieris trūkst atslēgu saišķī: nomainiet konta marķieri."
 
 # needs-review
+msgid "This account cannot use this organization: list its organizations to choose one."
+msgstr "Šis konts nevar izmantot šo organizāciju: parādiet tā organizācijas, lai izvēlētos vienu."
+
+# needs-review
 msgid "This account is read-only: write operations are refused."
 msgstr "Šis konts ir tikai lasāms: rakstīšanas darbības tiek noraidītas."
 
@@ -258,6 +262,10 @@ msgstr "Šis nav derīgs Personal Access Token."
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
 msgstr "Šis nav derīgs Personal Access Token: nokopējiet to vēlreiz no Gandi administrācijas."
+
+# needs-review
+msgid "This is not an organization identifier: use one returned by the list of organizations."
+msgstr "Tas nav organizācijas identifikators: izmantojiet kādu no organizāciju saraksta atgrieztajiem."
 
 # needs-review
 msgid "This name is not a valid domain name: check its spelling, e.g. example.com."

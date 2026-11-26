@@ -158,6 +158,7 @@ async def test_list_accounts_never_shows_secrets(setup: Setup) -> None:
                 "read_only": False,
                 "is_default": True,
                 "removal_pending": False,
+                "paying_organization": None,
             },
             {
                 "name": "Pro",
@@ -165,6 +166,7 @@ async def test_list_accounts_never_shows_secrets(setup: Setup) -> None:
                 "read_only": False,
                 "is_default": False,
                 "removal_pending": False,
+                "paying_organization": None,
             },
         ]
     }
@@ -270,6 +272,7 @@ async def test_update_account(setup: Setup) -> None:
         "read_only": False,
         "is_default": True,
         "removal_pending": False,
+        "paying_organization": None,
     }
     assert locked["account"]["read_only"]
     assert unchanged["account"]["name"] == "Perso"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:24+0100\n"
+"POT-Creation-Date: 2026-11-26 22:32+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hy\n"
@@ -225,6 +225,12 @@ msgid "The token of this account is missing from the keyring: replace the token 
 msgstr "Այս հաշվի token-ը բացակայում է բանալիների պահոցից․ փոխարինեք հաշվի token-ը։"
 
 # needs-review
+msgid "This account cannot use this organization: list its organizations to choose one."
+msgstr ""
+"Այս հաշիվը չի կարող օգտագործել այս կազմակերպությունը. ցուցադրեք նրա կազմակերպությունները՝ մեկն "
+"ընտրելու համար։"
+
+# needs-review
 msgid "This account is read-only: write operations are refused."
 msgstr "Այս հաշիվը միայն կարդալու համար է․ գրելու գործողությունները մերժվում են։"
 
@@ -259,6 +265,10 @@ msgstr "Սա վավեր Personal Access Token չէ։"
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
 msgstr "Սա վավեր Personal Access Token չէ․ կրկին պատճենեք այն Gandi-ի կառավարման վահանակից։"
+
+# needs-review
+msgid "This is not an organization identifier: use one returned by the list of organizations."
+msgstr "Սա կազմակերպության նույնացուցիչ չէ. օգտագործեք կազմակերպությունների ցանկի վերադարձրածներից մեկը։"
 
 # needs-review
 msgid "This name is not a valid domain name: check its spelling, e.g. example.com."

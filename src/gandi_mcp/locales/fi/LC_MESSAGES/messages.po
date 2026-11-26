@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:24+0100\n"
+"POT-Creation-Date: 2026-11-26 22:32+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fi\n"
@@ -221,6 +221,10 @@ msgid "The token of this account is missing from the keyring: replace the token 
 msgstr "Tämän tilin token puuttuu avainnipusta: korvaa tilin token."
 
 # needs-review
+msgid "This account cannot use this organization: list its organizations to choose one."
+msgstr "Tämä tili ei voi käyttää tätä organisaatiota: näytä sen organisaatiot ja valitse yksi."
+
+# needs-review
 msgid "This account is read-only: write operations are refused."
 msgstr "Tämä tili on vain luku -tilassa: kirjoitustoiminnot hylätään."
 
@@ -257,6 +261,10 @@ msgstr "Tämä ei ole kelvollinen Personal Access Token."
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
 msgstr "Tämä ei ole kelvollinen Personal Access Token: kopioi se uudelleen Gandin hallinnasta."
+
+# needs-review
+msgid "This is not an organization identifier: use one returned by the list of organizations."
+msgstr "Tämä ei ole organisaation tunniste: käytä organisaatioluettelon palauttamaa tunnistetta."
 
 # needs-review
 msgid "This name is not a valid domain name: check its spelling, e.g. example.com."

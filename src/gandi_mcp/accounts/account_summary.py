@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from gandi_mcp.accounts.account import Account
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.accounts.organization_id import OrganizationId
 
 
 @dataclass(frozen=True)
@@ -18,6 +19,7 @@ class AccountSummary:
     read_only: bool
     is_default: bool
     removal_pending: bool = False
+    paying_organization: OrganizationId | None = None
 
     @classmethod
     def of(cls, account: Account, default: AccountName | None) -> "AccountSummary":
@@ -28,4 +30,5 @@ class AccountSummary:
             account.read_only,
             account.name == default,
             account.removal_pending,
+            account.paying_organization,
         )

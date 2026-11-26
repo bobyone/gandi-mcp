@@ -6,7 +6,9 @@ from dependency_injector import containers, providers
 
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.accounts.gandi.gandi_organization_directory import GandiOrganizationDirectory
 from gandi_mcp.accounts.gandi.gandi_token_verifier import GandiTokenVerifier
+from gandi_mcp.accounts.organization_service import OrganizationService
 from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChannel
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
@@ -33,6 +35,7 @@ from gandi_mcp.protocol.tools.domains.domains_tools import DomainsTools
 from gandi_mcp.protocol.tools.domains.nameserver_tools import NameserverTools
 from gandi_mcp.protocol.tools.domains.redirection_tools import RedirectionTools
 from gandi_mcp.protocol.tools.domains.transfer_tools import TransferTools
+from gandi_mcp.protocol.tools.organization_tools import OrganizationTools
 from gandi_mcp.secrets.keyring.keyring_secret_store import KeyringSecretStore
 from gandi_mcp.token_entry.token_entry_service import TokenEntryService
 from gandi_mcp.token_entry.token_entry_sessions import TokenEntrySessions
@@ -125,8 +128,15 @@ class ApplicationContainer(containers.DeclarativeContainer):
         providers.Singleton(ContactRedactor),
         long_text_filter,
     )
+    organization_service = providers.Singleton(
+        OrganizationService,
+        account_service,
+        secret_store,
+        providers.Singleton(GandiOrganizationDirectory, gandi_client),
+    )
     tool_modules = providers.List(
         accounts_tools,
+        providers.Singleton(OrganizationTools, organization_service, accounts_tools),
         providers.Singleton(AvailabilityTools, domain_tool_runner),
         providers.Singleton(DomainsTools, domain_tool_runner),
         providers.Singleton(NameserverTools, domain_tool_runner),

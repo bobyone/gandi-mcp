@@ -49,6 +49,7 @@ in the UI says "not displayed".
 | Billing contact | The domain contact receiving the invoices of the domain. | `bill` | not displayed yet |
 | Quote | The availability and price announced by Gandi for a billable procedure on a name. | `quote` | not displayed yet |
 | Order | A billable procedure confirmed by the user, with its account, paying organization, name, duration and accepted price. | `order` | not displayed yet |
+| Organization | A Gandi entity (person, company, association) that owns resources and can pay for orders; identified by a UUID (`sharing_id` in the Gandi API). | `organization` | not displayed yet |
 | Paying organization | The Gandi organization charged for an order; a default one is stored in the account preferences. | `paying_organization` | not displayed yet |
 | Asynchronous operation | A procedure Gandi runs later (registration, owner change, transfer), followed by its step and state. | `async_operation` | not displayed |
 | Dry run | A simulation of a procedure by Gandi, without effect nor charge. | `dry_run` | not displayed |

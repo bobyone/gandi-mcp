@@ -14,6 +14,7 @@ from gandi_mcp.accounts.account_draft import AccountDraft
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.accounts.organization_id import OrganizationId
 from gandi_mcp.preferences.exceptions import CorruptPreferencesError, PreferencesUnavailableError
 from gandi_mcp.preferences.json import json_preferences_store as module
 from gandi_mcp.preferences.json.json_preferences_store import JsonPreferencesStore
@@ -243,6 +244,41 @@ async def test_rejects_a_non_boolean_pending_removal(tmp_path: Path) -> None:
     path.write_text(
         '{"version": 1, "default_account": "A", "accounts": [{"name": "A", "environment":'
         ' "sandbox", "read_only": false, "secret_key": "k", "removal_pending": "yes"}]}',
+        encoding="utf-8",
+    )
+
+    with pytest.raises(CorruptPreferencesError):
+        await JsonPreferencesStore(path).load()
+
+
+ORG_ID = "5a53edc7-b514-416a-98c2-2d477a288eb9"
+
+
+async def test_paying_organization_survives_a_reload(tmp_path: Path) -> None:
+    path = tmp_path / "preferences.json"
+    account = Account(
+        AccountName("Perso"),
+        Environment.SANDBOX,
+        False,
+        "k1",
+        paying_organization=OrganizationId(ORG_ID),
+    )
+    preferences = Preferences((account,), AccountName("Perso"))
+
+    await JsonPreferencesStore(path).save(preferences)
+
+    assert await JsonPreferencesStore(path).load() == preferences
+    assert f'"paying_organization": "{ORG_ID}"' in path.read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("value", ["3", '"not-a-uuid"'])
+async def test_rejects_an_invalid_paying_organization(tmp_path: Path, value: str) -> None:
+    path = tmp_path / "preferences.json"
+    path.write_text(
+        '{"version": 1, "default_account": "A", "accounts": [{"name": "A", "environment":'
+        ' "sandbox", "read_only": false, "secret_key": "k", "paying_organization": '
+        + value
+        + "}]}",
         encoding="utf-8",
     )
 

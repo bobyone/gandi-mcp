@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:24+0100\n"
+"POT-Creation-Date: 2026-11-26 22:32+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -225,6 +225,10 @@ msgid "The token of this account is missing from the keyring: replace the token 
 msgstr "El token de esta cuenta no está en el llavero: sustituya el token de la cuenta."
 
 # needs-review
+msgid "This account cannot use this organization: list its organizations to choose one."
+msgstr "Esta cuenta no puede usar esta organización: liste sus organizaciones para elegir una."
+
+# needs-review
 msgid "This account is read-only: write operations are refused."
 msgstr "Esta cuenta es de solo lectura: se rechazan las operaciones de escritura."
 
@@ -259,6 +263,12 @@ msgstr "No es un Personal Access Token válido."
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
 msgstr "No es un Personal Access Token válido: cópielo de nuevo desde la administración de Gandi."
+
+# needs-review
+msgid "This is not an organization identifier: use one returned by the list of organizations."
+msgstr ""
+"Esto no es un identificador de organización: use uno de los que devuelve la lista de "
+"organizaciones."
 
 # needs-review
 msgid "This name is not a valid domain name: check its spelling, e.g. example.com."
