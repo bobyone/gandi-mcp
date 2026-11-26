@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2026 bobyone
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# Project permission profile for Codex (beta feature): workspace writes allowed,
+# local environment configuration and credential files denied. Examples
+# (gandi-mcp.example.toml, .env.example) stay readable.
+
+default_permissions = "gandi-mcp"
+
+[permissions.gandi-mcp]
+extends = ":workspace"
+
+[permissions.gandi-mcp.filesystem]
+glob_scan_max_depth = 6
+
+[permissions.gandi-mcp.filesystem.":workspace_roots"]
+"." = "write"
+"**/.env" = "deny"
+"**/.env.local" = "deny"
+"**/.env.*.local" = "deny"
+"**/gandi-mcp.toml" = "deny"
+"**/*.pem" = "deny"
+"**/*.key" = "deny"
