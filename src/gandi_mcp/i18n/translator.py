@@ -4,6 +4,7 @@
 
 from abc import ABC, abstractmethod
 from collections.abc import Iterable
+from decimal import Decimal
 
 from gandi_mcp.i18n.message import Message
 
@@ -38,4 +39,12 @@ class Translator(ABC):
 
         Raises:
             TranslationError: if a parameter is missing or ``count`` is invalid.
+        """
+
+    @abstractmethod
+    def format_money(self, amount: Decimal, currency: str, locale: str | None = None) -> str:
+        """Render an amount in a currency (ISO 4217 code) for the locale.
+
+        Raises:
+            TranslationError: if the currency code is unknown.
         """

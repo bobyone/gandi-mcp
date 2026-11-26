@@ -46,6 +46,7 @@ the `N_` and `ngettext` markers so that Babel extracts them) in a locale.
 | `default_locale` | Locale used when none is given (system language, else English). |
 | `negotiate(preferred)` | Best supported locale for tags in preference order (`fr-CA`, `sr_Latn`); English when nothing matches. |
 | `translate(message, locale=None, **params)` | Renders the message with its named parameters; numbers are formatted for the locale; a plural message needs an integer `count`. Raises `TranslationError` for a missing parameter or an invalid `count`. |
+| `format_money(amount, currency, locale=None)` | Renders a `Decimal` amount in an ISO 4217 currency for the locale (Babel `format_currency`); `TranslationError` for an unknown currency. |
 
 ### Secret store: `gandi_mcp.secrets.secret_store.SecretStore`
 
@@ -413,6 +414,8 @@ Behavior and limits:
 | `TldName` | One label, leading dot removed. |
 | `HostLabel` | A host relative to a domain (`ns1`, `ns1.sub`) or `@` for the domain itself. |
 | `PageRequest` | `page` from 1 to 1000, `per_page` from 1 to 100. |
+| `RegistrationDuration` | 1 to 10 years; each extension may allow fewer. |
+| `Money` | A finite non-negative `Decimal` amount and a three-letter currency code (upper case). |
 
 Invalid values raise `InvalidDomainNameError` or `InvalidDomainInputError`
 (both `DomainError`).
@@ -430,6 +433,25 @@ max_length=1024)` (`gandi_mcp.confirmation.secret_input`) describes the field
 asked with a confirmation. On the local confirmation page, the field is required
 to confirm, not to refuse; an empty or invalid value shows the page again (422)
 without writing the value back (ADR 11).
+
+### Quotes: `gandi_mcp.domains.quotes`
+
+`QuoteRequest(name, process, duration, paying_organization=None)` asks the
+price of a `DomainProcess` (`create`, `renew`, `transfer`, `restore`);
+`Quote(request, price, price_before_taxes, premium, discount)` gives the total
+for the whole duration. `QuoteProvider.quote(environment, token, request)` is
+the strategy; it raises `NotAvailableError` (a domain to register is taken,
+reserved or forbidden; carries the Gandi `status`), `NoPriceForDurationError`,
+`QuoteUnavailableError` (no price yet, pending status: try again later), all
+`QuoteError` (a `DomainError`).
+
+`GandiQuoteProvider(client)` calls `GET domain/check?name=…&processes=…`
+(with `sharing_id`, the paying organization, when given). It takes the product
+of the requested `process` (or the only product without one), checks the
+availability status for `create` only (Gandi says to ignore it for the other
+processes), finds the price band (`min_duration`..`max_duration`, in years)
+containing the duration, and multiplies its yearly prices by the duration.
+Prices are read as `Decimal` from their textual form.
 
 ### Contact minimization: `gandi_mcp.domains.contacts.contact_redactor.ContactRedactor`
 
