@@ -6,8 +6,12 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Privacy policy (draft)
 
 > Draft to be validated by a legal professional; not legal advice. Version
-> 0.1, 2026-11-26. It will be translated and made accessible from the MCP App
-> UI.
+> 0.1, 2026-11-26. **The [French version](privacy-policy.fr.md) is
+> authoritative**; this English text and the other languages are
+> translations. It will be made accessible from the MCP App UI.
+>
+> There are no terms of use: use of the software is governed by its license,
+> `GPL-2.0-or-later`.
 
 ## Who processes your data
 

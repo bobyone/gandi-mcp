@@ -26,7 +26,8 @@ operating system keyring and never reaches the model.
 - [Glossary](docs/glossary.md)
 - [Architecture decision records](docs/decisions/)
 - Privacy: [records of processing](docs/privacy/records-of-processing.md),
-  [privacy policy (draft)](docs/privacy/privacy-policy.md)
+  privacy policy (draft): [French, authoritative](docs/privacy/privacy-policy.fr.md),
+  [English](docs/privacy/privacy-policy.md)
 - [Changelog](CHANGELOG.md)
 
 ## Contributing
