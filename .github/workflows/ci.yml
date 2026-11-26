@@ -89,6 +89,9 @@ jobs:
           version: ${{ env.UV_VERSION }}
       - run: uv sync --locked
       - run: npm install --prefix "$RUNNER_TEMP/codex" --no-fund --no-audit "@openai/codex@$CODEX_VERSION"
+      - name: Allow the unprivileged user namespaces used by the Codex sandbox
+        # Ubuntu 24.04 restricts them through AppArmor, which makes bubblewrap fail.
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       - name: Enforce the committed profile with codex sandbox
         env:
           CODEX_PROFILE_REQUIRED: "1"

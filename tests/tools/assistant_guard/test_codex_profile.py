@@ -23,7 +23,8 @@ ROOT = Path(__file__).resolve().parents[3]
 PROFILE_FILE = ROOT / ".codex" / "config.toml"
 CODEX = os.environ.get("CODEX_CLI") or shutil.which("codex")
 REQUIRED = os.environ.get("CODEX_PROFILE_REQUIRED") == "1"
-SANDBOX_UNAVAILABLE = "sandbox failed"
+# Sandbox start-up failures: a read failing for these reasons proves nothing.
+SANDBOX_UNAVAILABLE = ("sandbox failed", "bwrap:")
 
 pytestmark = pytest.mark.skipif(CODEX is None and not REQUIRED, reason="Codex CLI not available")
 
@@ -73,7 +74,7 @@ def read_in_sandbox(repository: Path, relative: str) -> subprocess.CompletedProc
         timeout=120,
         check=False,
     )
-    if SANDBOX_UNAVAILABLE in result.stderr:
+    if any(marker in result.stderr for marker in SANDBOX_UNAVAILABLE):
         message = "Codex sandbox unavailable: " + result.stderr.strip().splitlines()[-1]
         if REQUIRED:
             pytest.fail(message)
