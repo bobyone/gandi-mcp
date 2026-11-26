@@ -396,6 +396,20 @@ returns a filtered copy of Gandi data (ADR 9): at any depth, a contact under
 Frames Gandi data for the model as `{"notice", "untrusted_data"}`, plus
 `page`, `per_page` and `total_count` for a list.
 
+### Endpoint catalogue: `gandi_mcp.operations.domain`
+
+`DomainEndpoint` describes one endpoint of the Domain API (ADR 8): `name` (also
+the tool name), `method`, `path` (segments, `{placeholder}` segments filled
+with validated values), `category`, accepted `query` parameters,
+`description` (required for confirmed categories), `supports_dry_run` and
+`follow_up`. `domain_endpoints.py` lists them.
+
+`EndpointOperation(endpoint, path_values, query=None, body=None,
+description_params=None)` runs a specification: it raises
+`InvalidDomainInputError` when a placeholder has no value, a value is empty or
+contains `/`, or a query parameter is not accepted; `None` query values are
+dropped.
+
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
 | Parameter | Type | Default | Required | Description |
