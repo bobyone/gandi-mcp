@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Privacy policy (draft)
 
 > Draft to be validated by a legal professional; not legal advice. Version
-> 0.1, 2026-11-26. **The [French version](privacy-policy.fr.md) is
+> 0.2, 2026-11-26. **The [French version](privacy-policy.fr.md) is
 > authoritative**; this English text and the other languages are
 > translations. It will be made accessible from the MCP App UI.
 >
@@ -22,7 +22,15 @@ organization) remain responsible for the data you process with it.
 ## What the software processes
 
 - **Your Gandi Personal Access Tokens**: stored in your operating system
-  keyring, sent only to the Gandi API, never shown to the AI model.
+  keyring, sent only to the Gandi API, never shown to the AI model. You enter
+  them in the app or on a temporary page of your own computer, never in the
+  conversation.
+- **Your account settings** (the name you give each account, its environment,
+  whether it is read-only, the default account): stored in a preferences file
+  on your computer, without any secret, and sent to the AI model when it lists
+  your accounts.
+- **The Gandi identity behind a token** (user name and full name): read from
+  Gandi when you save a token, displayed to you, never stored.
 - **Your Gandi data** (domains and their contacts, DNS records, mailboxes,
   certificates, hosting, invoices): fetched from Gandi when a tool needs it,
   kept in memory only, never written to disk by the software.
@@ -36,8 +44,8 @@ organization) remain responsible for the data you process with it.
 
 ## Your rights
 
-The software keeps no copy of your Gandi data. To remove your tokens, delete
-the account in the software (or in your keyring). Exercise your rights on data
+The software keeps no copy of your Gandi data. To remove a token and the
+settings of its account, remove the account in the software: it deletes both. Exercise your rights on data
 held by Gandi or by your AI provider with them directly.
 
 ## Contact

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: az\n"
@@ -17,4 +17,267 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Bu adda hesab artıq var: başqa ad seçin."
+
+# needs-review
+#, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "{account} adlı hesab artıq mövcuddur. Heç nə yadda saxlanılmadı."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Gözlənilməz xəta baş verdi: heç nə dəyişdirilmədi."
+
+# needs-review
+msgid "Confirm"
+msgstr "Təsdiqlə"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "{account} istehsal hesabında təsdiq edin: {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "{account} sandbox hesabında təsdiq edin: {action}"
+
+# needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Təsdiq - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Gandi idarəetmə panelində token yaradın"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "{account} istehsal hesabının Personal Access Token-ini daxil edin."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "{account} sandbox hesabının Personal Access Token-ini daxil edin."
+
+# needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi gözlənilməz cavab verdi: sonra yenidən cəhd edin və ya bu barədə bildirin."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Gandi ilə hazırda əlaqə qurmaq mümkün deyil. Heç nə yadda saxlanılmadı: sonra yenidən cəhd edin."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi ilə hazırda əlaqə qurmaq mümkün deyil: sonra yenidən cəhd edin."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi bu resursu tapmadı."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi göndərilən məlumatları rədd etdi."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi bu hesabın tokenini rədd etdi, o etibarsız və ya vaxtı keçmiş ola bilər: hesabın tokenini "
+"dəyişdirin."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi bu əməliyyatı rədd etdi: tokenin lazımi icazəsi olmaya və ya vaxtı keçmiş ola bilər."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi bu tokeni bu mühit üçün rədd etdi. Heç nə yadda saxlanılmadı: köməkçidən yeni səhifə "
+"açmasını xahiş edin, sonra etibarlı token daxil edin."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Heç bir Gandi hesabı qurulmayıb: əvvəlcə birini əlavə edin."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Bu adda hesab yoxdur: adı yoxlamaq üçün hesabları sadalayın."
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "Əməliyyatı təsdiqləmək və ya rədd etmək üçün bu səhifəni açın."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "{account} hesabının Personal Access Token-ini daxil etmək üçün bu səhifəni açın."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Əməliyyat təsdiqləndi. Söhbətə qayıdın və köməkçidən davam etməsini xahiş edin."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Əməliyyat rədd edildi. Heç nə dəyişdirilmədi."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Rədd et"
+
+# needs-review
+msgid "Save"
+msgstr "Yadda saxla"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr ""
+"{account} hesabı Gandi istifadəçisi {username} üçün yadda saxlanıldı. Bu səhifəni bağlaya "
+"bilərsiniz."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "{account} hesabı artıq mövcud deyil. Heç nə yadda saxlanılmadı."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"Bu səhifə açıq olarkən {account} hesabı əvəz olunub və ya başqa mühitə köçürülüb. Heç nə yadda "
+"saxlanılmadı: köməkçidən yeni səhifə açmasını xahiş edin."
+
+# needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Təsdiq vaxtında verilmədi: heç nə dəyişdirilmədi."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Sistemin açar dəsti əlçatan deyil. Heç nə yadda saxlanılmadı: onu kilidini açın və ya quraşdırın,"
+" sonra yenidən cəhd edin."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Sistemin açar dəsti əlçatan deyil: onun kilidini açın və ya quraşdırın, sonra yenidən cəhd edin."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Əməliyyat resursun Gandi-dəki cari vəziyyəti ilə ziddiyyət təşkil edir."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Əməliyyat rədd edildi: heç nə dəyişdirilmədi."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Tokeni daxil etmək üçün səhifəni brauzerdə açmaq mümkün olmadı."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "gandi-mcp parametrlərini oxumaq və ya yadda saxlamaq mümkün deyil: parametrlər faylını yoxlayın."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"gandi-mcp parametrlərini yadda saxlamaq mümkün deyil. Heç nə yadda saxlanılmadı: parametrlər "
+"faylını yoxlayın, sonra yenidən cəhd edin."
+
+# needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Bu hesabın silinməsi yarımçıq qaldı: tamamlamaq üçün hesabı yenidən silin."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Bu hesabın tokeni açar dəstində yoxdur: hesabın tokenini dəyişdirin."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Bu hesab yalnız oxumaq üçündür: yazma əməliyyatları rədd edilir."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr "Bu hesab adı etibarlı deyil: 1-dən 40-a qədər hərf, rəqəm, defis və ya tək boşluq istifadə edin."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Bu hesab bu arada yalnız oxumaq üçün edilib: heç nə dəyişdirilmədi. Yazma əməliyyatlarına icazə "
+"üçün yenidən soruşun və təsdiqləyin."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Bu hesab bu arada əvəz olunub və ya başqa mühitə köçürülüb: heç nə dəyişdirilmədi, hesabı "
+"yoxlayın və yenidən cəhd edin."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Bu təsdiq naməlumdur, artıq istifadə olunub və ya başqa əməliyyat üçündür: heç nə dəyişdirilmədi."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Bu etibarlı Personal Access Token deyil."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Bu etibarlı Personal Access Token deyil: onu Gandi idarəetmə panelindən yenidən kopyalayın."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Bu səhifənin vaxtı keçib və ya artıq istifadə olunub. Heç nə dəyişdirilmədi."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Bu sorğu rədd edildi. Heç nə dəyişdirilmədi."
+
+# needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Bu alət yalnız Gandi tətbiqindən istifadə oluna bilər."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Gandi-yə çox sayda sorğu göndərildi: bir dəqiqə gözləyin, sonra yenidən cəhd edin."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Təsdiqiniz soruşula bilmədi (dialoq yoxdur, brauzer yoxdur): heç nə dəyişdirilmədi."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "{account} hesabında yazma əməliyyatlarına icazə vermək"
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "hesabın kimliyini oxumaq"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "{account} hesabını və onun tokenini bu kompüterdən silmək"
 

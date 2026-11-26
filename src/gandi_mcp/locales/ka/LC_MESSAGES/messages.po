@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ka\n"
@@ -17,4 +17,265 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "An account already has this name: choose another name."
+msgstr "ამ სახელით ანგარიში უკვე არსებობს: აირჩიეთ სხვა სახელი."
+
+# needs-review
+#, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "ანგარიში სახელით {account} უკვე არსებობს. არაფერი შენახულა."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "მოულოდნელი შეცდომა მოხდა: არაფერი შეცვლილა."
+
+# needs-review
+msgid "Confirm"
+msgstr "დადასტურება"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "დაადასტურეთ სამუშაო ანგარიშზე {account}: {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "დაადასტურეთ სატესტო ანგარიშზე (sandbox) {account}: {action}"
+
+# needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "დადასტურება - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "შექმენით ტოკენი Gandi-ის ადმინისტრირებაში"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "შეიყვანეთ სამუშაო ანგარიშის {account} Personal Access Token."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "შეიყვანეთ სატესტო ანგარიშის (sandbox) {account} Personal Access Token."
+
+# needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi-მ მოულოდნელად უპასუხა: სცადეთ მოგვიანებით ან შეგვატყობინეთ."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Gandi ამჟამად მიუწვდომელია. არაფერი შენახულა: სცადეთ მოგვიანებით."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi ამჟამად მიუწვდომელია: სცადეთ მოგვიანებით."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi-მ ეს რესურსი ვერ იპოვა."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi-მ გაგზავნილი მონაცემები უარყო."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi-მ უარყო ამ ანგარიშის ტოკენი, რომელიც შეიძლება არასწორი ან ვადაგასული იყოს: შეცვალეთ "
+"ანგარიშის ტოკენი."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi-მ ეს ოპერაცია უარყო: ტოკენს შეიძლება აკლდეს საჭირო ნებართვა ან ვადა გაუვიდა."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi-მ უარყო ეს ტოკენი ამ გარემოსთვის. არაფერი შენახულა: სთხოვეთ ასისტენტს ახალი გვერდის გახსნა "
+"და შეიყვანეთ სწორი ტოკენი."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Gandi-ის ანგარიში არ არის დაყენებული: ჯერ დაამატეთ ერთი."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "ამ სახელით ანგარიში არ არსებობს: სახელის შესამოწმებლად ნახეთ ანგარიშების სია."
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "გახსენით ეს გვერდი ოპერაციის დასადასტურებლად ან უარსაყოფად."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "გახსენით ეს გვერდი ანგარიშის {account} Personal Access Token-ის შესაყვანად."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "ოპერაცია დადასტურებულია. დაბრუნდით საუბარში და სთხოვეთ ასისტენტს გაგრძელება."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "ოპერაცია უარყოფილია. არაფერი შეცვლილა."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "უარყოფა"
+
+# needs-review
+msgid "Save"
+msgstr "შენახვა"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "ანგარიში {account} შენახულია Gandi-ის მომხმარებლისთვის {username}. შეგიძლიათ დახუროთ ეს გვერდი."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "ანგარიში {account} აღარ არსებობს. არაფერი შენახულა."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"სანამ ეს გვერდი ღია იყო, ანგარიში {account} შეიცვალა ან სხვა გარემოში გადავიდა. არაფერი შენახულა:"
+" სთხოვეთ ასისტენტს ახალი გვერდის გახსნა."
+
+# needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "დადასტურება დროულად არ მოხდა: არაფერი შეცვლილა."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"სისტემის გასაღებების საცავი მიუწვდომელია. არაფერი შენახულა: განბლოკეთ ან დააინსტალირეთ და სცადეთ "
+"ხელახლა."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "სისტემის გასაღებების საცავი მიუწვდომელია: განბლოკეთ ან დააინსტალირეთ და სცადეთ ხელახლა."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "ოპერაცია ეწინააღმდეგება რესურსის მიმდინარე მდგომარეობას Gandi-ში."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "ოპერაცია უარყოფილია: არაფერი შეცვლილა."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "ტოკენის შესაყვანი გვერდის ბრაუზერში გახსნა ვერ მოხერხდა."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "gandi-mcp-ის პარამეტრების წაკითხვა ან შენახვა შეუძლებელია: შეამოწმეთ პარამეტრების ფაილი."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"gandi-mcp-ის პარამეტრების შენახვა შეუძლებელია. არაფერი შენახულა: შეამოწმეთ პარამეტრების ფაილი და "
+"სცადეთ ხელახლა."
+
+# needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "ამ ანგარიშის წაშლა შეწყდა: დასასრულებლად კვლავ წაშალეთ ანგარიში."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "ამ ანგარიშის ტოკენი გასაღებების საცავში არ არის: შეცვალეთ ანგარიშის ტოკენი."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "ეს ანგარიში მხოლოდ წაკითხვისთვისაა: ჩაწერის ოპერაციები უარყოფილია."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr "ანგარიშის ეს სახელი არასწორია: გამოიყენეთ 1-დან 40-მდე ასო, ციფრი, დეფისი ან ერთეული ჰარი."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"ეს ანგარიში ამასობაში მხოლოდ წაკითხვად გადაიყვანეს: არაფერი შეცვლილა. ხელახლა მოითხოვეთ ჩაწერის "
+"დაშვება და დაადასტურეთ."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"ეს ანგარიში ამასობაში შეიცვალა ან სხვა გარემოში გადავიდა: არაფერი შეცვლილა, შეამოწმეთ ანგარიში და"
+" სცადეთ ხელახლა."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "ეს დადასტურება უცნობია, უკვე გამოყენებულია ან სხვა ოპერაციისთვისაა: არაფერი შეცვლილა."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "ეს არ არის სწორი Personal Access Token."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "ეს არ არის სწორი Personal Access Token: ხელახლა დააკოპირეთ Gandi-ის ადმინისტრირებიდან."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "ამ გვერდს ვადა გაუვიდა ან უკვე გამოყენებულია. არაფერი შეცვლილა."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "ეს მოთხოვნა უარყოფილია. არაფერი შეცვლილა."
+
+# needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "ამ ხელსაწყოს გამოყენება მხოლოდ Gandi აპლიკაციიდან შეიძლება."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Gandi-ს ძალიან ბევრი მოთხოვნა გაეგზავნა: დაელოდეთ ერთ წუთს და სცადეთ ხელახლა."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "თქვენი დადასტურების მოთხოვნა ვერ მოხერხდა (არც დიალოგი, არც ბრაუზერი): არაფერი შეცვლილა."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "ჩაწერის ოპერაციების დაშვება ანგარიშზე {account}"
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "ანგარიშის იდენტობის წაკითხვა"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "ანგარიშის {account} და მისი ტოკენის წაშლა ამ კომპიუტერიდან"
 

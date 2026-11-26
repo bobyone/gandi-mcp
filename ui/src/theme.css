@@ -1,0 +1,23 @@
+/*
+SPDX-FileCopyrightText: 2026 bobyone
+SPDX-License-Identifier: GPL-2.0-or-later
+
+Bootstrap themed by the host style variables of MCP Apps, through Bootstrap's own
+CSS variables; Bootstrap's values apply when the host gives none.
+*/
+:root,
+[data-bs-theme] {
+  --bs-body-bg: var(--color-background-primary, var(--bs-white));
+  --bs-body-color: var(--color-text-primary, var(--bs-gray-900));
+  --bs-secondary-color: var(--color-text-secondary, rgba(33, 37, 41, 0.75));
+  --bs-border-color: var(--color-border-primary, var(--bs-gray-300));
+  --bs-body-font-family: var(--font-sans, system-ui, -apple-system, "Segoe UI", sans-serif);
+  --bs-border-radius: var(--border-radius-md, 0.375rem);
+}
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: var(--color-background-primary, #212529);
+  --bs-body-color: var(--color-text-primary, #dee2e6);
+  --bs-secondary-color: var(--color-text-secondary, rgba(222, 226, 230, 0.75));
+  --bs-border-color: var(--color-border-primary, #495057);
+}

@@ -30,6 +30,36 @@ repos:
         language: system
         pass_filenames: false
         files: '(\.(py|po|pot)|locales\.toml)$'
+      - id: ui-translations
+        name: UI translations
+        entry: uv run --locked python scripts/check_ui_translations.py
+        language: system
+        pass_filenames: false
+        files: '^(ui/src/|src/gandi_mcp/locales/locales\.toml$|docs/glossary\.md$)'
+      - id: ui-lint
+        name: UI lint and format (eslint, prettier)
+        entry: npm --prefix ui run lint
+        language: system
+        pass_filenames: false
+        files: '^ui/'
+      - id: ui-typecheck
+        name: UI types (tsc)
+        entry: npm --prefix ui run typecheck
+        language: system
+        pass_filenames: false
+        files: '^ui/'
+      - id: ui-test
+        name: UI tests (with coverage threshold)
+        entry: npm --prefix ui test
+        language: system
+        pass_filenames: false
+        files: '^ui/'
+      - id: ui-build
+        name: UI build (committed app.html must be up to date)
+        entry: npm --prefix ui run build
+        language: system
+        pass_filenames: false
+        files: '^ui/'
       - id: reuse
         name: reuse lint
         entry: uv run --locked reuse lint

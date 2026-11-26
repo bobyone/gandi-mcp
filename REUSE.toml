@@ -10,6 +10,9 @@ path = [
   "uv.lock",
   "src/gandi_mcp/py.typed",
   "src/gandi_mcp/locales/**",
+  "src/gandi_mcp/protocol/app/static/app.html",
+  "ui/.nvmrc",
+  "ui/.prettierignore",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 bobyone"

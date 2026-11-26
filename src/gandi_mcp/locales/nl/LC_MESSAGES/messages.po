@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nl\n"
@@ -17,4 +17,275 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Er bestaat al een account met deze naam: kies een andere naam."
+
+# needs-review
+#, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Er bestaat al een account met de naam {account}. Er is niets opgeslagen."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Er is een onverwachte fout opgetreden: er is niets gewijzigd."
+
+# needs-review
+msgid "Confirm"
+msgstr "Bevestigen"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "Bevestig op het productieaccount {account}: {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "Bevestig op het testaccount (sandbox) {account}: {action}"
+
+# needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Bevestiging - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Maak een token aan in het Gandi-beheer"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Voer de Personal Access Token van het productieaccount {account} in."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Voer de Personal Access Token van het testaccount (sandbox) {account} in."
+
+# needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi antwoordde op een onverwachte manier: probeer het later opnieuw of meld het."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Gandi is momenteel niet bereikbaar. Er is niets opgeslagen: probeer het later opnieuw."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi is momenteel niet bereikbaar: probeer het later opnieuw."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi heeft deze resource niet gevonden."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi heeft de verzonden gegevens geweigerd."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi heeft de token van dit account geweigerd, die mogelijk ongeldig of verlopen is: vervang de "
+"token van het account."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr ""
+"Gandi heeft deze bewerking geweigerd: de token mist mogelijk de vereiste machtiging of is "
+"verlopen."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi heeft deze token voor deze omgeving geweigerd. Er is niets opgeslagen: vraag de assistent "
+"een nieuwe pagina te openen en voer daarna een geldige token in."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Er is geen Gandi-account ingesteld: voeg er eerst een toe."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Geen enkel account heeft deze naam: toon de accounts om de naam te controleren."
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "Open deze pagina om de bewerking te bevestigen of te weigeren."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Open deze pagina om de Personal Access Token van het account {account} in te voeren."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Bewerking bevestigd. Ga terug naar het gesprek en vraag de assistent door te gaan."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Bewerking geweigerd. Er is niets gewijzigd."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Weigeren"
+
+# needs-review
+msgid "Save"
+msgstr "Opslaan"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr ""
+"Het account {account} is opgeslagen voor de Gandi-gebruiker {username}. U kunt deze pagina "
+"sluiten."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Het account {account} bestaat niet meer. Er is niets opgeslagen."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"Terwijl deze pagina open was, is het account {account} vervangen of naar een andere omgeving "
+"verplaatst. Er is niets opgeslagen: vraag de assistent een nieuwe pagina te openen."
+
+# needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "De bevestiging is niet op tijd gegeven: er is niets gewijzigd."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"De sleutelbos van het systeem is niet beschikbaar. Er is niets opgeslagen: ontgrendel of "
+"installeer deze en probeer het opnieuw."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr ""
+"De sleutelbos van het systeem is niet beschikbaar: ontgrendel of installeer deze en probeer het "
+"opnieuw."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "De bewerking is in conflict met de huidige status van de resource bij Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "De bewerking is geweigerd: er is niets gewijzigd."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "De pagina om de token in te voeren kon niet in een browser worden geopend."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr ""
+"De voorkeuren van gandi-mcp kunnen niet worden gelezen of opgeslagen: controleer het "
+"voorkeurenbestand."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"De voorkeuren van gandi-mcp kunnen niet worden opgeslagen. Er is niets opgeslagen: controleer het"
+" voorkeurenbestand en probeer het opnieuw."
+
+# needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Het verwijderen van dit account is onderbroken: verwijder het account opnieuw om het te voltooien."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "De token van dit account ontbreekt in de sleutelbos: vervang de token van het account."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Dit account is alleen-lezen: schrijfbewerkingen worden geweigerd."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr "Deze accountnaam is ongeldig: gebruik 1 tot 40 letters, cijfers, koppeltekens of enkele spaties."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Dit account is intussen alleen-lezen gemaakt: er is niets gewijzigd. Vraag opnieuw om schrijven "
+"toe te staan en bevestig het."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Dit account is intussen vervangen of naar een andere omgeving verplaatst: er is niets gewijzigd, "
+"controleer het account en probeer het opnieuw."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Deze bevestiging is onbekend, al gebruikt of voor een andere bewerking: er is niets gewijzigd."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Dit is geen geldige Personal Access Token."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Dit is geen geldige Personal Access Token: kopieer deze opnieuw uit het Gandi-beheer."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Deze pagina is verlopen of al gebruikt. Er is niets gewijzigd."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Dit verzoek is geweigerd. Er is niets gewijzigd."
+
+# needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Deze tool kan alleen vanuit de Gandi-app worden gebruikt."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Er zijn te veel verzoeken naar Gandi gestuurd: wacht een minuut en probeer het opnieuw."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr ""
+"Uw bevestiging kon niet worden gevraagd (geen dialoogvenster, geen browser): er is niets "
+"gewijzigd."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "schrijfbewerkingen toestaan op het account {account}"
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "de identiteit van het account lezen"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "het account {account} en de token ervan van deze computer verwijderen"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sv\n"
@@ -17,4 +17,265 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Det finns redan ett konto med detta namn: välj ett annat namn."
+
+# needs-review
+#, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Det finns redan ett konto som heter {account}. Inget sparades."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Ett oväntat fel inträffade: inget ändrades."
+
+# needs-review
+msgid "Confirm"
+msgstr "Bekräfta"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "Bekräfta på produktionskontot {account}: {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "Bekräfta på testkontot (sandbox) {account}: {action}"
+
+# needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Bekräftelse - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Skapa en token i Gandis administration"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Ange Personal Access Token för produktionskontot {account}."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Ange Personal Access Token för testkontot (sandbox) {account}."
+
+# needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi svarade på ett oväntat sätt: försök igen senare eller rapportera det."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Gandi kan inte nås just nu. Inget sparades: försök igen senare."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi kan inte nås just nu: försök igen senare."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi hittade inte den här resursen."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi avvisade de skickade uppgifterna."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr "Gandi avvisade kontots token, som kan vara ogiltig eller ha gått ut: ersätt kontots token."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi avvisade åtgärden: token saknar kanske nödvändig behörighet eller har gått ut."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi avvisade denna token för den här miljön. Inget sparades: be assistenten öppna en ny sida "
+"och ange sedan en giltig token."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Inget Gandi-konto är konfigurerat: lägg först till ett."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Inget konto har detta namn: lista kontona för att kontrollera namnet."
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "Öppna den här sidan för att bekräfta eller avvisa åtgärden."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Öppna den här sidan för att ange Personal Access Token för kontot {account}."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Åtgärden är bekräftad. Gå tillbaka till konversationen och be assistenten fortsätta."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Åtgärden avvisades. Inget ändrades."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Avvisa"
+
+# needs-review
+msgid "Save"
+msgstr "Spara"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "Kontot {account} har sparats för Gandi-användaren {username}. Du kan stänga den här sidan."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Kontot {account} finns inte längre. Inget sparades."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"Medan sidan var öppen ersattes kontot {account} eller flyttades till en annan miljö. Inget "
+"sparades: be assistenten öppna en ny sida."
+
+# needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Bekräftelsen gavs inte i tid: inget ändrades."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Systemets nyckelring är inte tillgänglig. Inget sparades: lås upp eller installera den och försök"
+" igen."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Systemets nyckelring är inte tillgänglig: lås upp eller installera den och försök igen."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Åtgärden står i konflikt med resursens nuvarande tillstånd hos Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Åtgärden avvisades: inget ändrades."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Sidan för att ange token kunde inte öppnas i en webbläsare."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Inställningarna för gandi-mcp kan inte läsas eller sparas: kontrollera inställningsfilen."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"Inställningarna för gandi-mcp kan inte sparas. Inget sparades: kontrollera inställningsfilen och "
+"försök igen."
+
+# needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Borttagningen av kontot avbröts: ta bort kontot igen för att slutföra den."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Kontots token saknas i nyckelringen: ersätt kontots token."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Det här kontot är skrivskyddat: skrivåtgärder avvisas."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Detta kontonamn är inte giltigt: använd 1 till 40 bokstäver, siffror, bindestreck eller enkla "
+"mellanslag."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Kontot har under tiden gjorts skrivskyddat: inget ändrades. Be igen om att tillåta skrivning och "
+"bekräfta det."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Kontot har under tiden ersatts eller flyttats till en annan miljö: inget ändrades, kontrollera "
+"kontot och försök igen."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Denna bekräftelse är okänd, redan använd eller gäller en annan åtgärd: inget ändrades."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Detta är inte en giltig Personal Access Token."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Detta är inte en giltig Personal Access Token: kopiera den igen från Gandis administration."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Den här sidan har gått ut eller redan använts. Inget ändrades."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Denna begäran avvisades. Inget ändrades."
+
+# needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Det här verktyget kan bara användas från Gandi-appen."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "För många förfrågningar skickades till Gandi: vänta en minut och försök igen."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Din bekräftelse kunde inte efterfrågas (ingen dialog, ingen webbläsare): inget ändrades."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "tillåta skrivåtgärder på kontot {account}"
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "läsa kontots identitet"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "ta bort kontot {account} och dess token från den här datorn"
 

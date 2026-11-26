@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Politique de confidentialité (projet)
 
 > Projet à faire valider par un professionnel du droit ; ne constitue pas un
-> conseil juridique. Version 0.1 du 26 novembre 2026. **Cette version
+> conseil juridique. Version 0.2 du 26 novembre 2026. **Cette version
 > française fait foi** ; les autres langues en sont des traductions. Elle sera
 > accessible depuis l'interface de la MCP App.
 >
@@ -24,7 +24,15 @@ responsable des données que vous traitez avec lui.
 
 - **Vos Personal Access Tokens Gandi** : conservés dans le trousseau de votre
   système d'exploitation, envoyés uniquement à l'API Gandi, jamais montrés au
-  modèle d'IA.
+  modèle d'IA. Vous les saisissez dans l'application ou sur une page
+  temporaire de votre propre ordinateur, jamais dans la conversation.
+- **Les réglages de vos comptes** (le nom que vous donnez à chaque compte, son
+  environnement, son éventuelle lecture seule, le compte par défaut) :
+  conservés dans un fichier de préférences sur votre ordinateur, sans aucun
+  secret, et transmis au modèle d'IA lorsqu'il liste vos comptes.
+- **L'identité Gandi associée à un jeton** (nom d'utilisateur et nom complet) :
+  lue auprès de Gandi lorsque vous enregistrez un jeton, affichée pour vous,
+  jamais conservée.
 - **Vos données Gandi** (domaines et leurs contacts, enregistrements DNS,
   boîtes mail, certificats, hébergements, factures) : lues auprès de Gandi
   lorsqu'un outil en a besoin, conservées en mémoire uniquement, jamais
@@ -40,8 +48,9 @@ responsable des données que vous traitez avec lui.
 
 ## Vos droits
 
-Le logiciel ne conserve aucune copie de vos données Gandi. Pour supprimer vos
-jetons, supprimez le compte dans le logiciel (ou dans votre trousseau).
+Le logiciel ne conserve aucune copie de vos données Gandi. Pour supprimer un
+jeton et les réglages de son compte, supprimez le compte dans le logiciel : il
+efface les deux.
 Exercez vos droits sur les données détenues par Gandi ou par votre
 fournisseur d'IA directement auprès d'eux.
 

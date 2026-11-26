@@ -10,11 +10,6 @@ from gandi_mcp.protocol.server_factory import SERVER_NAME, create_server
 pytestmark = pytest.mark.anyio
 
 
-@pytest.fixture
-def anyio_backend() -> str:
-    return "asyncio"
-
-
 async def test_server_advertises_name_and_version() -> None:
     server = create_server(version="1.2.3")
 

@@ -13,14 +13,18 @@ for Claude Desktop, Claude Code and Codex, on Windows, macOS and Linux. It
 covers the Gandi public API v5. Your Personal Access Token stays in your
 operating system keyring and never reaches the model.
 
-> **Status: pre-alpha.** The project skeleton is in place; Gandi features are
+> **Status: pre-alpha.** Account management is available; Gandi features are
 > delivered in batches (see [ADR 1](docs/decisions/0001-project-framing.md)).
 
 ## Documentation
 
 - [Quick-start](docs/quick-start.md)
 - [Architecture](docs/architecture.md)
-- How-to guides: [run the checks](docs/how-to/run-the-checks.md),
+- How-to guides: [add a Gandi account](docs/how-to/add-a-gandi-account.md),
+  [use the Gandi sandbox](docs/how-to/use-the-sandbox.md),
+  [add a Gandi operation](docs/how-to/add-an-operation.md),
+  [run the checks](docs/how-to/run-the-checks.md),
+  [build and test the MCP App](docs/how-to/build-the-ui.md),
   [add a language](docs/how-to/add-a-language.md),
   [configure the assistant guard](docs/how-to/configure-the-assistant-guard.md)
 - [Glossary](docs/glossary.md)

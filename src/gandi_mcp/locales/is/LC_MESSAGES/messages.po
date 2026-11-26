@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: is\n"
@@ -17,4 +17,265 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Það er þegar til reikningur með þessu nafni: veldu annað nafn."
+
+# needs-review
+#, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Það er þegar til reikningur sem heitir {account}. Ekkert var vistað."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Óvænt villa kom upp: engu var breytt."
+
+# needs-review
+msgid "Confirm"
+msgstr "Staðfesta"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "Staðfestu á framleiðslureikningnum {account}: {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "Staðfestu á prófunarreikningnum (sandbox) {account}: {action}"
+
+# needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Staðfesting - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Búðu til tóka í Gandi-stjórnborðinu"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Sláðu inn Personal Access Token framleiðslureikningsins {account}."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Sláðu inn Personal Access Token prófunarreikningsins (sandbox) {account}."
+
+# needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi svaraði á óvæntan hátt: reyndu aftur síðar eða tilkynntu það."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Ekki næst í Gandi núna. Ekkert var vistað: reyndu aftur síðar."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Ekki næst í Gandi núna: reyndu aftur síðar."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi fann ekki þessa auðlind."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi hafnaði innsendum gögnum."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi hafnaði tóka þessa reiknings, sem gæti verið ógildur eða útrunninn: skiptu um tóka "
+"reikningsins."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi hafnaði þessari aðgerð: tókann gæti vantað nauðsynlega heimild eða verið útrunninn."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi hafnaði þessum tóka fyrir þetta umhverfi. Ekkert var vistað: biddu aðstoðarmanninn að opna "
+"nýja síðu og sláðu svo inn gildan tóka."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Enginn Gandi-reikningur er stilltur: bættu fyrst einum við."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Enginn reikningur heitir þessu nafni: birtu reikningana til að athuga nafnið."
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "Opnaðu þessa síðu til að staðfesta eða hafna aðgerðinni."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Opnaðu þessa síðu til að slá inn Personal Access Token reikningsins {account}."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Aðgerð staðfest. Farðu aftur í samtalið og biddu aðstoðarmanninn að halda áfram."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Aðgerð hafnað. Engu var breytt."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Hafna"
+
+# needs-review
+msgid "Save"
+msgstr "Vista"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "Reikningurinn {account} er vistaður fyrir Gandi-notandann {username}. Þú getur lokað þessari síðu."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Reikningurinn {account} er ekki lengur til. Ekkert var vistað."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"Reikningnum {account} var skipt út eða hann færður í annað umhverfi á meðan þessi síða var opin. "
+"Ekkert var vistað: biddu aðstoðarmanninn að opna nýja síðu."
+
+# needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Staðfesting barst ekki í tæka tíð: engu var breytt."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Lyklakippa kerfisins er ekki tiltæk. Ekkert var vistað: aflæstu henni eða settu hana upp og "
+"reyndu aftur."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Lyklakippa kerfisins er ekki tiltæk: aflæstu henni eða settu hana upp og reyndu aftur."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Aðgerðin stangast á við núverandi stöðu auðlindarinnar hjá Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Aðgerðinni var hafnað: engu var breytt."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Ekki tókst að opna síðuna til að slá inn tókann í vafra."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Ekki er hægt að lesa eða vista stillingar gandi-mcp: athugaðu stillingaskrána."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"Ekki er hægt að vista stillingar gandi-mcp. Ekkert var vistað: athugaðu stillingaskrána og reyndu"
+" aftur."
+
+# needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Fjarlæging þessa reiknings var rofin: fjarlægðu reikninginn aftur til að ljúka henni."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Tóka þessa reiknings vantar í lyklakippuna: skiptu um tóka reikningsins."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Þessi reikningur er skrifvarinn: skrifaðgerðum er hafnað."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr "Þetta reikningsnafn er ekki gilt: notaðu 1 til 40 bókstafi, tölustafi, bandstrik eða stök bil."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Þessi reikningur var gerður skrifvarinn á meðan: engu var breytt. Biddu aftur um að leyfa skrif "
+"og staðfestu það."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Reikningnum hefur á meðan verið skipt út eða hann færður í annað umhverfi: engu var breytt, "
+"athugaðu reikninginn og reyndu aftur."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Þessi staðfesting er óþekkt, þegar notuð eða fyrir aðra aðgerð: engu var breytt."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Þetta er ekki gilt Personal Access Token."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Þetta er ekki gilt Personal Access Token: afritaðu það aftur úr Gandi-stjórnborðinu."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Þessi síða er útrunnin eða hefur þegar verið notuð. Engu var breytt."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Þessari beiðni var hafnað. Engu var breytt."
+
+# needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Aðeins er hægt að nota þetta verkfæri úr Gandi-forritinu."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Of margar beiðnir voru sendar til Gandi: bíddu í mínútu og reyndu svo aftur."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Ekki tókst að biðja um staðfestingu þína (enginn gluggi, enginn vafri): engu var breytt."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "leyfa skrifaðgerðir á reikningnum {account}"
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "lesa auðkenni reikningsins"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "fjarlægja reikninginn {account} og tóka hans af þessari tölvu"
 

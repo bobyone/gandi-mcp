@@ -7,15 +7,278 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: be\n"
 "Language-Team: be <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=n % 10 == 1 && n % 100 != 11 ? 0 : n % "
-"10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 &&"
+" (n % 100 < 12 || n % 100 > 14) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Уліковы запіс з такой назвай ужо ёсць: выберыце іншую назву."
+
+# needs-review
+#, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Уліковы запіс з назвай {account} ужо існуе. Нічога не захавана."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Адбылася нечаканая памылка: нічога не зменена."
+
+# needs-review
+msgid "Confirm"
+msgstr "Пацвердзіць"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "Пацвердзіце ў рабочым уліковым запісе {account}: {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "Пацвердзіце ў тэставым уліковым запісе (sandbox) {account}: {action}"
+
+# needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Пацвярджэнне - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Стварыце токен у панэлі кіравання Gandi"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Увядзіце Personal Access Token рабочага ўліковага запісу {account}."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Увядзіце Personal Access Token тэставага ўліковага запісу (sandbox) {account}."
+
+# needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi адказаў нечакана: паспрабуйце пазней або паведаміце пра гэта."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Зараз немагчыма звязацца з Gandi. Нічога не захавана: паспрабуйце пазней."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Зараз немагчыма звязацца з Gandi: паспрабуйце пазней."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi не знайшоў гэты рэсурс."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi адхіліў адпраўленыя даныя."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi адхіліў токен гэтага ўліковага запісу, магчыма, ён несапраўдны або пратэрмінаваны: заменіце"
+" токен уліковага запісу."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr ""
+"Gandi адхіліў гэту аперацыю: магчыма, у токена няма патрэбнага дазволу або скончыўся тэрмін "
+"дзеяння."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi адхіліў гэты токен для гэтага асяроддзя. Нічога не захавана: папрасіце асістэнта адкрыць "
+"новую старонку і ўвядзіце сапраўдны токен."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Не настроена ніводнага ўліковага запісу Gandi: спачатку дадайце яго."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Няма ўліковага запісу з такой назвай: праглядзіце спіс уліковых запісаў, каб праверыць назву."
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "Адкрыйце гэту старонку, каб пацвердзіць або адхіліць аперацыю."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Адкрыйце гэту старонку, каб увесці Personal Access Token уліковага запісу {account}."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Аперацыя пацверджана. Вярніцеся да размовы і папрасіце асістэнта працягнуць."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Аперацыя адхілена. Нічога не зменена."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Адхіліць"
+
+# needs-review
+msgid "Save"
+msgstr "Захаваць"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "Уліковы запіс {account} захаваны для карыстальніка Gandi {username}. Можаце закрыць гэту старонку."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Уліковага запісу {account} больш не існуе. Нічога не захавана."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"Пакуль гэта старонка была адкрыта, уліковы запіс {account} заменены або перанесены ў іншае "
+"асяроддзе. Нічога не захавана: папрасіце асістэнта адкрыць новую старонку."
+
+# needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Пацвярджэнне не было дадзена своечасова: нічога не зменена."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Сховішча ключоў сістэмы недаступнае. Нічога не захавана: разблакуйце або ўсталюйце яго і "
+"паспрабуйце зноў."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Сховішча ключоў сістэмы недаступнае: разблакуйце або ўсталюйце яго і паспрабуйце зноў."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Аперацыя супярэчыць бягучаму стану рэсурсу ў Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Аперацыя адхілена: нічога не зменена."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Не ўдалося адкрыць у браўзеры старонку для ўводу токена."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Немагчыма прачытаць або захаваць налады gandi-mcp: праверце файл налад."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr "Немагчыма захаваць налады gandi-mcp. Нічога не захавана: праверце файл налад і паспрабуйце зноў."
+
+# needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Выдаленне гэтага ўліковага запісу было перапынена: выдаліце ўліковы запіс яшчэ раз, каб завяршыць."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Токена гэтага ўліковага запісу няма ў сховішчы ключоў: заменіце токен уліковага запісу."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Гэты ўліковы запіс толькі для чытання: аперацыі запісу адхіляюцца."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Гэтая назва ўліковага запісу несапраўдная: выкарыстоўвайце ад 1 да 40 літар, лічбаў, злучкоў або "
+"адзінарных прабелаў."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Тым часам гэты ўліковы запіс зрабілі толькі для чытання: нічога не зменена. Папрасіце зноў "
+"дазволіць аперацыі запісу і пацвердзіце гэта."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Гэты ўліковы запіс тым часам заменены або перанесены ў іншае асяроддзе: нічога не зменена, "
+"праверце ўліковы запіс і паспрабуйце зноў."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Гэта пацвярджэнне невядомае, ужо выкарыстанае або для іншай аперацыі: нічога не зменена."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Гэта несапраўдны Personal Access Token."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Гэта несапраўдны Personal Access Token: скапіруйце яго яшчэ раз з панэлі кіравання Gandi."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Тэрмін дзеяння гэтай старонкі скончыўся або яна ўжо выкарыстана. Нічога не зменена."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Гэты запыт адхілены. Нічога не зменена."
+
+# needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Гэты інструмент можна выкарыстоўваць толькі з праграмы Gandi."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Да Gandi адпраўлена занадта шмат запытаў: пачакайце хвіліну і паспрабуйце зноў."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Не ўдалося запытаць ваша пацвярджэнне (няма дыялогу, няма браўзера): нічога не зменена."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "дазволіць аперацыі запісу ва ўліковым запісе {account}"
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "прачытаць ідэнтычнасць уліковага запісу"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "выдаліць уліковы запіс {account} і яго токен з гэтага камп'ютара"
 

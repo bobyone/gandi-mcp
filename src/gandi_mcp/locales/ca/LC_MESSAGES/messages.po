@@ -7,15 +7,279 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ca\n"
 "Language-Team: ca <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n == 1 ? 0 : n != 0 && n % 1000000 == 0"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Ja hi ha un compte amb aquest nom: trieu-ne un altre."
+
+# needs-review
+#, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Ja hi ha un compte anomenat {account}. No s'ha desat res."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "S'ha produït un error inesperat: no s'ha canviat res."
+
+# needs-review
+msgid "Confirm"
+msgstr "Confirma"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "Confirmeu al compte de producció {account}: {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "Confirmeu al compte de proves (sandbox) {account}: {action}"
+
+# needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Confirmació - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Creeu un token a l'administració de Gandi"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Introduïu el Personal Access Token del compte de producció {account}."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Introduïu el Personal Access Token del compte de proves (sandbox) {account}."
+
+# needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi ha respost de manera inesperada: torneu-ho a provar més tard o informeu-ne."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Ara mateix no es pot accedir a Gandi. No s'ha desat res: torneu-ho a provar més tard."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Ara mateix no es pot accedir a Gandi: torneu-ho a provar més tard."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi no ha trobat aquest recurs."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi ha rebutjat les dades enviades."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi ha rebutjat el token d'aquest compte, que pot ser invàlid o caducat: substituïu el token "
+"del compte."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr ""
+"Gandi ha rebutjat aquesta operació: pot ser que el token no tingui el permís necessari o que hagi"
+" caducat."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi ha rebutjat aquest token per a aquest entorn. No s'ha desat res: demaneu a l'assistent que "
+"obri una pàgina nova i introduïu un token vàlid."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "No hi ha cap compte de Gandi configurat: primer afegiu-ne un."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Cap compte té aquest nom: llisteu els comptes per comprovar-lo."
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "Obriu aquesta pàgina per confirmar o rebutjar l'operació."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Obriu aquesta pàgina per introduir el Personal Access Token del compte {account}."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Operació confirmada. Torneu a la conversa i demaneu a l'assistent que continuï."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Operació rebutjada. No s'ha canviat res."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Rebutja"
+
+# needs-review
+msgid "Save"
+msgstr "Desa"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "El compte {account} s'ha desat per a l'usuari de Gandi {username}. Podeu tancar aquesta pàgina."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "El compte {account} ja no existeix. No s'ha desat res."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"Mentre aquesta pàgina era oberta, el compte {account} s'ha substituït o s'ha mogut a un altre "
+"entorn. No s'ha desat res: demaneu a l'assistent que obri una pàgina nova."
+
+# needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "La confirmació no s'ha donat a temps: no s'ha canviat res."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"El clauer del sistema no està disponible. No s'ha desat res: desbloquegeu-lo o instal·leu-lo i "
+"torneu-ho a provar."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "El clauer del sistema no està disponible: desbloquegeu-lo o instal·leu-lo i torneu-ho a provar."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "L'operació entra en conflicte amb l'estat actual del recurs a Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "S'ha rebutjat l'operació: no s'ha canviat res."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "No s'ha pogut obrir en un navegador la pàgina per introduir el token."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "No es poden llegir ni desar les preferències de gandi-mcp: comproveu el fitxer de preferències."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"No es poden desar les preferències de gandi-mcp. No s'ha desat res: comproveu el fitxer de "
+"preferències i torneu-ho a provar."
+
+# needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "S'ha interromput la supressió d'aquest compte: torneu a suprimir el compte per acabar-la."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "El token d'aquest compte no és al clauer: substituïu el token del compte."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Aquest compte és només de lectura: es rebutgen les operacions d'escriptura."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr "Aquest nom de compte no és vàlid: feu servir d'1 a 40 lletres, xifres, guionets o espais simples."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Mentrestant, aquest compte s'ha passat a només lectura: no s'ha canviat res. Torneu a demanar que"
+" es permetin les escriptures i confirmeu-ho."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Mentrestant, aquest compte s'ha substituït o s'ha mogut a un altre entorn: no s'ha canviat res, "
+"comproveu el compte i torneu-ho a provar."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr ""
+"Aquesta confirmació és desconeguda, ja s'ha fet servir o és per a una altra operació: no s'ha "
+"canviat res."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Aquest no és un Personal Access Token vàlid."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Aquest no és un Personal Access Token vàlid: torneu-lo a copiar de l'administració de Gandi."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Aquesta pàgina ha caducat o ja s'ha fet servir. No s'ha canviat res."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "S'ha rebutjat aquesta sol·licitud. No s'ha canviat res."
+
+# needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Aquesta eina només es pot fer servir des de l'aplicació Gandi."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "S'han enviat massa sol·licituds a Gandi: espereu un minut i torneu-ho a provar."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "No s'ha pogut demanar la vostra confirmació (cap diàleg, cap navegador): no s'ha canviat res."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "permetre operacions d'escriptura al compte {account}"
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "llegir la identitat del compte"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "suprimir el compte {account} i el seu token d'aquest ordinador"
 

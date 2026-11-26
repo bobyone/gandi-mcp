@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: et\n"
@@ -17,4 +17,263 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Selle nimega konto on juba olemas: valige muu nimi."
+
+# needs-review
+#, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Konto nimega {account} on juba olemas. Midagi ei salvestatud."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Ilmnes ootamatu viga: midagi ei muudetud."
+
+# needs-review
+msgid "Confirm"
+msgstr "Kinnita"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "Kinnitage tootmiskontol {account}: {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "Kinnitage testkontol (sandbox) {account}: {action}"
+
+# needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Kinnitus - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Looge token Gandi halduses"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Sisestage tootmiskonto {account} Personal Access Token."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Sisestage testkonto (sandbox) {account} Personal Access Token."
+
+# needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi vastas ootamatult: proovige hiljem uuesti või teatage sellest."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Gandi pole praegu kättesaadav. Midagi ei salvestatud: proovige hiljem uuesti."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi pole praegu kättesaadav: proovige hiljem uuesti."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi ei leidnud seda ressurssi."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi lükkas saadetud andmed tagasi."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr "Gandi lükkas selle konto tokeni tagasi, see võib olla kehtetu või aegunud: asendage konto token."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi lükkas selle toimingu tagasi: tokenil ei pruugi olla vajalikku õigust või see on aegunud."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi lükkas selle tokeni selle keskkonna jaoks tagasi. Midagi ei salvestatud: paluge assistendil"
+" avada uus leht ja sisestage kehtiv token."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Ühtegi Gandi kontot pole seadistatud: lisage esmalt üks."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Selle nimega kontot pole: kuvage kontode loend ja kontrollige nime."
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "Avage see leht, et toiming kinnitada või tagasi lükata."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Avage see leht, et sisestada konto {account} Personal Access Token."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Toiming on kinnitatud. Minge tagasi vestlusesse ja paluge assistendil jätkata."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Toiming on tagasi lükatud. Midagi ei muudetud."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Keeldu"
+
+# needs-review
+msgid "Save"
+msgstr "Salvesta"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "Konto {account} on salvestatud Gandi kasutajale {username}. Võite selle lehe sulgeda."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Kontot {account} enam ei ole. Midagi ei salvestatud."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"Selle lehe avatud olekus asendati konto {account} või teisaldati see teise keskkonda. Midagi ei "
+"salvestatud: paluge assistendil avada uus leht."
+
+# needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Kinnitust ei antud õigel ajal: midagi ei muudetud."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Süsteemi võtmehoidja pole saadaval. Midagi ei salvestatud: avage või paigaldage see ja proovige "
+"uuesti."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Süsteemi võtmehoidja pole saadaval: avage või paigaldage see ja proovige uuesti."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Toiming on vastuolus ressursi praeguse olekuga Gandis."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Toiming lükati tagasi: midagi ei muudetud."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Tokeni sisestamise lehte ei saanud brauseris avada."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "gandi-mcp eelistusi ei saa lugeda ega salvestada: kontrollige eelistuste faili."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"gandi-mcp eelistusi ei saa salvestada. Midagi ei salvestatud: kontrollige eelistuste faili ja "
+"proovige uuesti."
+
+# needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Selle konto eemaldamine katkes: eemaldage konto uuesti, et see lõpule viia."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Selle konto token puudub võtmehoidjast: asendage konto token."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "See konto on kirjutuskaitstud: kirjutustoimingud lükatakse tagasi."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr "See kontonimi pole kehtiv: kasutage 1 kuni 40 tähte, numbrit, sidekriipsu või üksikut tühikut."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"See konto muudeti vahepeal kirjutuskaitstuks: midagi ei muudetud. Paluge uuesti kirjutamist "
+"lubada ja kinnitage see."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"See konto on vahepeal asendatud või teise keskkonda teisaldatud: midagi ei muudetud, kontrollige "
+"kontot ja proovige uuesti."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "See kinnitus on tundmatu, juba kasutatud või teise toimingu jaoks: midagi ei muudetud."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "See ei ole kehtiv Personal Access Token."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "See ei ole kehtiv Personal Access Token: kopeerige see uuesti Gandi haldusest."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "See leht on aegunud või juba kasutatud. Midagi ei muudetud."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "See päring lükati tagasi. Midagi ei muudetud."
+
+# needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Seda tööriista saab kasutada ainult Gandi rakendusest."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Gandile saadeti liiga palju päringuid: oodake minut ja proovige uuesti."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Teie kinnitust ei saanud küsida (dialoogi ega brauserit pole): midagi ei muudetud."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "lubada kirjutustoiminguid kontol {account}"
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "konto identiteedi lugemine"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "eemaldada konto {account} ja selle token sellest arvutist"
 
