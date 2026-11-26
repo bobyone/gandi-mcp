@@ -1,6 +1,9 @@
 # SPDX-FileCopyrightText: 2026 bobyone
 # SPDX-License-Identifier: GPL-2.0-or-later
-"""Check that every commit of a range carries a DCO sign-off matching its author.
+"""Check that every commit of a range, merges included, is signed off by its author.
+
+Only the ``Signed-off-by`` trailers parsed by Git count: a matching line elsewhere
+in the message body does not.
 
 Usage: ``python scripts/check_dco.py <base>..<head>``.
 """
@@ -13,9 +16,15 @@ import sys
 from collections.abc import Sequence
 from dataclasses import dataclass
 
-SIGN_OFF = re.compile(r"^Signed-off-by: .+ <(?P<email>[^>]+)>\s*$", re.M)
 FIELD_SEPARATOR = "\x1f"
 RECORD_SEPARATOR = "\x1e"
+TRAILER_SEPARATOR = "\x1d"
+LOG_FORMAT = (
+    f"%H{FIELD_SEPARATOR}%ae{FIELD_SEPARATOR}"
+    "%(trailers:key=Signed-off-by,valueonly,separator=%x1d)"
+    f"{RECORD_SEPARATOR}"
+)
+IDENTITY = re.compile(r"^.+ <(?P<email>[^<>\s]+)>$")
 
 logger = logging.getLogger("check_dco")
 
@@ -26,40 +35,44 @@ class Commit:
 
     sha: str
     author_email: str
-    message: str
+    sign_offs: tuple[str, ...]
 
 
 def is_signed_off(commit: Commit) -> bool:
-    """Tell whether the commit is signed off by its author."""
-    emails = {match["email"].lower() for match in SIGN_OFF.finditer(commit.message)}
+    """Tell whether one of the commit's sign-off trailers names its author."""
+    emails = {
+        match["email"].lower()
+        for sign_off in commit.sign_offs
+        if (match := IDENTITY.match(sign_off.strip()))
+    }
     return commit.author_email.lower() in emails
 
 
+def parse_log(output: str) -> list[Commit]:
+    """Parse the output of ``git log --format=LOG_FORMAT``."""
+    commits = []
+    for record in output.split(RECORD_SEPARATOR):
+        if not record.strip():
+            continue
+        sha, email, trailers = record.strip("\n").split(FIELD_SEPARATOR, 2)
+        sign_offs = tuple(value for value in trailers.split(TRAILER_SEPARATOR) if value.strip())
+        commits.append(Commit(sha=sha, author_email=email, sign_offs=sign_offs))
+    return commits
+
+
 def read_commits(revision_range: str) -> list[Commit]:
-    """Read the non-merge commits of a range with Git."""
+    """Read every commit of a range, merge commits included."""
     git = shutil.which("git")
     if git is None:
         raise SystemExit("git is required")
     output = subprocess.run(  # noqa: S603 - fixed arguments, no shell
-        [
-            git,
-            "log",
-            "--no-merges",
-            f"--format=%H{FIELD_SEPARATOR}%ae{FIELD_SEPARATOR}%B{RECORD_SEPARATOR}",
-            revision_range,
-            "--",
-        ],
+        [git, "log", f"--format={LOG_FORMAT}", revision_range, "--"],
         check=True,
         capture_output=True,
         text=True,
         encoding="utf-8",
     ).stdout
-    commits = []
-    for record in output.split(RECORD_SEPARATOR):
-        if record.strip():
-            sha, email, message = record.strip("\n").split(FIELD_SEPARATOR, 2)
-            commits.append(Commit(sha=sha, author_email=email, message=message))
-    return commits
+    return parse_log(output)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -73,8 +86,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     unsigned = [commit for commit in commits if not is_signed_off(commit)]
     for commit in unsigned:
         logger.error(
-            "commit %s lacks a 'Signed-off-by' matching its author; amend it with "
-            "'git commit --amend -s' or 'git rebase --signoff'",
+            "commit %s lacks a 'Signed-off-by' trailer matching its author; amend it with "
+            "'git commit --amend -s', 'git rebase --signoff' or 'git merge --signoff'",
             commit.sha[:12],
         )
     logger.info("%d commits checked", len(commits))
