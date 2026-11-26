@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: 2026 bobyone
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+prefix_rule(
+    pattern = ["git", "push", ["--force", "-f", "--force-with-lease", "--force-if-includes"]],
+    decision = "forbidden",
+    justification = "Force push needs the maintainer's consent; push a new commit instead.",
+    match = ["git push --force", "git push -f origin main"],
+    not_match = ["git push origin 1-branch"],
+)
+
+prefix_rule(
+    pattern = ["git", ["commit", "push", "merge"], "--no-verify"],
+    decision = "forbidden",
+    justification = "Git hooks are mandatory; fix the failing check instead.",
+    match = ["git commit --no-verify -m x"],
+    not_match = ["git commit -s -m x"],
+)
+
+prefix_rule(
+    pattern = ["gh", "pr", "merge"],
+    decision = "prompt",
+    justification = "Every merge is confirmed by the maintainer.",
+    match = ["gh pr merge 3 --merge"],
+)

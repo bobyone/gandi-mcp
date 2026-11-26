@@ -1,0 +1,21 @@
+# Serbian (Cyrillic) translations for gandi-mcp.
+# Copyright (C) 2026 bobyone
+# This file is distributed under the same license as the gandi-mcp project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gandi-mcp VERSION\n"
+"Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
+"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"PO-Revision-Date: 2026-11-26 10:51+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: sr_Cyrl\n"
+"Language-Team: sr_Cyrl <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=n % 10 == 1 && n % 100 != 11 ? 0 : n % "
+"10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : 2;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.19.0\n"
+

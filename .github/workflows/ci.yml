@@ -1,0 +1,128 @@
+# SPDX-FileCopyrightText: 2026 bobyone
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_VERSION: "0.13.9"
+
+jobs:
+  checks:
+    name: checks (${{ matrix.os }}, py${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025, macos-15]
+        python: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ matrix.python }}
+      - run: uv sync --locked
+      - run: uv run --locked pre-commit run --all-files --show-diff-on-failure
+
+  audit:
+    name: dependency audit (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Platform-specific runtime dependencies (for example pywin32) are only
+        # installed, hence only checked, on their platform.
+        os: [ubuntu-24.04, windows-2025, macos-15]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --locked
+      - run: uv run --locked pip-audit --skip-editable
+
+  licenses:
+    name: dependency licenses (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Platform-specific runtime dependencies (for example pywin32) are only
+        # installed, hence only checked, on their platform.
+        os: [ubuntu-24.04, windows-2025, macos-15]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --locked
+      - run: uv run --locked python scripts/check_licenses.py
+
+  codex-profile:
+    name: Codex permission profile (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025]
+    env:
+      CODEX_VERSION: "0.172.0"
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --locked
+      - run: npm install --prefix "$RUNNER_TEMP/codex" --no-fund --no-audit "@openai/codex@$CODEX_VERSION"
+      - name: Allow the unprivileged user namespaces used by the Codex sandbox
+        if: runner.os == 'Linux'
+        # Ubuntu 24.04 restricts them through AppArmor, which makes bubblewrap fail.
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      - name: Enforce the committed profile with codex sandbox
+        env:
+          CODEX_PROFILE_REQUIRED: "1"
+          # Deny-read rules need the elevated backend on Windows; the runner is an administrator.
+          CODEX_WINDOWS_SANDBOX: ${{ runner.os == 'Windows' && 'elevated' || '' }}
+        run: |
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            export CODEX_CLI="$RUNNER_TEMP/codex/node_modules/.bin/codex.cmd"
+          else
+            export CODEX_CLI="$RUNNER_TEMP/codex/node_modules/.bin/codex"
+            unset CODEX_WINDOWS_SANDBOX
+          fi
+          export CODEX_HOME="$RUNNER_TEMP/codex-home"
+          mkdir -p "$CODEX_HOME"
+          uv run --locked pytest --no-cov -q -rs tests/tools/assistant_guard/test_codex_profile.py
+
+  dco:
+    name: DCO sign-off
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - run: python3 scripts/check_dco.py "${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"

@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: 2026 bobyone
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+name: Bug report
+description: Report something that does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Never include a Personal Access Token, personal data or the content of
+        your configuration files. Report vulnerabilities privately (see SECURITY.md).
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `gandi-mcp --version`, or the commit SHA.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, MCP client and its version.
+      placeholder: Windows 11, Claude Desktop 1.2.3
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Ask the assistant to ...
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log excerpts
+      description: Relevant lines from stderr, with tokens and personal data removed.
+      render: text

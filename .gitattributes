@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 bobyone
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.sh text eol=lf
+*.png binary
+*.mo binary

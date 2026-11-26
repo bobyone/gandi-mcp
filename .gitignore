@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: 2026 bobyone
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+# Environment configuration and credentials (never commit)
+.env
+.env.*
+!.env.example
+gandi-mcp.toml
+!gandi-mcp.example.toml
+*.pem
+*.key
+credentials*.json
+
+# Assistant local settings
+.claude/settings.local.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+build/
+dist/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Compiled translations
+*.mo
+
+# Node (UI)
+node_modules/
+ui/dist/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
