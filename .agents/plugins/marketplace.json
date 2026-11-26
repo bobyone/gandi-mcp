@@ -1,0 +1,16 @@
+{
+  "name": "gandi-mcp",
+  "owner": {
+    "name": "bobyone"
+  },
+  "plugins": [
+    {
+      "name": "gandi-mcp",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "description": "Manage Gandi domains, DNS, email, certificates, hosting and billing from your AI assistant."
+    }
+  ]
+}

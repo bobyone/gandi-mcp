@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "gandi-mcp",
+  "owner": {
+    "name": "bobyone"
+  },
+  "metadata": {
+    "description": "Gandi MCP server and its skills."
+  },
+  "plugins": [
+    {
+      "name": "gandi-mcp",
+      "source": "./",
+      "description": "Manage Gandi domains, DNS, email, certificates, hosting and billing from Claude.",
+      "license": "GPL-2.0-or-later",
+      "homepage": "https://github.com/bobyone/gandi-mcp"
+    }
+  ]
+}
