@@ -129,8 +129,10 @@ user typed a secret, Gandi error details are dropped and every text of the
 result containing the secret is hidden (`operations.secret_echo`). Just
 before a write, the account is resolved again (`operations.write_access`):
 `ReadOnlyAccountError` if it became read-only, `AccountChangedError` if its
-identity or environment changed; the `OrderExecutor` does the same after the
-price re-check, then reads the token again. It returns an `UntrustedResult` (data and `total_count`), or
+identity or environment changed. The check runs again after reading the token,
+so that it is the last step before the request. After the price re-check, the
+`OrderExecutor` also refuses an order whose token was replaced since the quote
+(`AccountChangedError`): a new quote and confirmation are needed. It returns an `UntrustedResult` (data and `total_count`), or
 a pending `ConfirmationDecision` to resume with its identifier.
 
 ### Billable operation: `gandi_mcp.operations.billable_operation.BillableOperation`

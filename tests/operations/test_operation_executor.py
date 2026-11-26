@@ -30,6 +30,7 @@ from gandi_mcp.secrets.secret_value import SecretValue
 from tests.doubles.fake_browser import FakeBrowser
 from tests.doubles.fake_confirmation_page import FakeConfirmationPage
 from tests.doubles.fake_gandi_client import FakeGandiClient
+from tests.doubles.hooked_secret_store import HookedSecretStore
 from tests.doubles.in_memory_preferences_store import InMemoryPreferencesStore
 from tests.doubles.in_memory_secret_store import InMemorySecretStore
 from tests.doubles.scripted_interaction import ScriptedInteraction
@@ -232,3 +233,23 @@ async def test_a_secret_operation_is_refused_on_a_read_only_account(setup: Setup
         await setup.executor.run(operation, AccountName("Watch"), ConfirmationContext())
 
     assert setup.pending._items == {}
+
+
+async def test_a_read_only_toggle_during_the_token_read_stops_the_write() -> None:
+    secrets, verifier = HookedSecretStore(), StubTokenVerifier()
+    verifier.accept(Environment.SANDBOX, TOKEN)
+    accounts = AccountService(InMemoryPreferencesStore(), secrets, verifier)
+    await accounts.add(AccountDraft(AccountName("Perso"), Environment.SANDBOX), TOKEN)
+    pending = PendingConfirmations(300)
+    client = FakeGandiClient()
+    executor = OperationExecutor(accounts, secrets, client, ConfirmationService([], pending))
+
+    async def lock() -> None:
+        await accounts.update(AccountName("Perso"), read_only=True)
+
+    secrets.reads, secrets.on_read, secrets.on_get = 0, 1, lock
+
+    with pytest.raises(ReadOnlyAccountError):
+        await executor.run(ScriptedOperation(OperationCategory.WRITE), None, ConfirmationContext())
+
+    assert client.calls == []

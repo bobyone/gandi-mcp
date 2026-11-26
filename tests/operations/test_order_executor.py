@@ -44,8 +44,8 @@ from gandi_mcp.secrets.secret_value import SecretValue
 from tests.doubles.fake_browser import FakeBrowser
 from tests.doubles.fake_confirmation_page import FakeConfirmationPage
 from tests.doubles.fake_gandi_client import FakeGandiClient
+from tests.doubles.hooked_secret_store import HookedSecretStore
 from tests.doubles.in_memory_preferences_store import InMemoryPreferencesStore
-from tests.doubles.in_memory_secret_store import InMemorySecretStore
 from tests.doubles.scripted_interaction import ScriptedInteraction
 from tests.doubles.source_translator import SourceTranslator
 from tests.doubles.stub_token_verifier import StubTokenVerifier
@@ -86,11 +86,12 @@ class Setup:
     quotes: StubQuotes
     pending: PendingConfirmations
     translator: SourceTranslator
+    secrets: HookedSecretStore
 
 
 @pytest.fixture
 async def setup() -> Setup:
-    secrets, verifier = InMemorySecretStore(), StubTokenVerifier()
+    secrets, verifier = HookedSecretStore(), StubTokenVerifier()
     verifier.accept(Environment.SANDBOX, TOKEN)
     accounts = AccountService(InMemoryPreferencesStore(), secrets, verifier)
     await accounts.add(AccountDraft(AccountName("Perso"), Environment.SANDBOX), TOKEN)
@@ -109,7 +110,7 @@ async def setup() -> Setup:
     orders = OrderExecutor(
         accounts, secrets, client, confirmation, quotes=quotes, translator=translator
     )
-    return Setup(orders, accounts, client, quotes, pending, translator)
+    return Setup(orders, accounts, client, quotes, pending, translator, secrets)
 
 
 def register() -> RegisterDomain:
@@ -329,3 +330,34 @@ async def test_an_account_moved_meanwhile_does_not_buy(setup: Setup) -> None:
         await setup.orders.run(register(), None, ConfirmationContext(ScriptedInteraction()))
 
     assert len(setup.client.calls) == 1
+
+
+async def test_a_token_replaced_during_the_second_quote_does_not_buy(setup: Setup) -> None:
+    other = PersonalAccessToken("pat_other_0123456789")
+    setup.accounts._verifier.accept(Environment.SANDBOX, other)  # type: ignore[attr-defined]
+
+    async def replace() -> None:
+        await setup.accounts.replace_token(AccountName("Perso"), other)
+
+    setup.quotes.on_second_quote = replace
+    setup.client.outcomes.append(GandiResponse(200, {"status": "success"}))
+
+    with pytest.raises(AccountChangedError):
+        await setup.orders.run(register(), None, ConfirmationContext(ScriptedInteraction()))
+
+    assert [call.dry_run for call in setup.client.calls] == [True]
+
+
+async def test_a_read_only_toggle_during_the_last_token_read_does_not_buy(setup: Setup) -> None:
+    async def lock() -> None:
+        await setup.accounts.update(AccountName("Perso"), read_only=True)
+
+    setup.secrets.reads = 0
+    setup.secrets.on_read = 2  # 1: before the first quote; 2: after the second quote
+    setup.secrets.on_get = lock
+    setup.client.outcomes.append(GandiResponse(200, {"status": "success"}))
+
+    with pytest.raises(ReadOnlyAccountError):
+        await setup.orders.run(register(), None, ConfirmationContext(ScriptedInteraction()))
+
+    assert [call.dry_run for call in setup.client.calls] == [True]

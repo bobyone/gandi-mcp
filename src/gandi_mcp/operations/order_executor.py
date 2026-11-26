@@ -6,7 +6,7 @@ import logging
 
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
-from gandi_mcp.accounts.exceptions import ReadOnlyAccountError
+from gandi_mcp.accounts.exceptions import AccountChangedError, ReadOnlyAccountError
 from gandi_mcp.accounts.organization_id import OrganizationId
 from gandi_mcp.confirmation.confirmation_context import ConfirmationContext
 from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
@@ -120,8 +120,12 @@ class OrderExecutor:
         current = await self._quotes.quote(account.environment, token, request)
         if current.price != quote.price:
             raise PriceChangedError("the price changed since the confirmation")
+        # Same account and same credential as the confirmed quote; the write access is
+        # checked again last, right before the request (the keyring read may wait).
         account = await still_writable(self._accounts, account)
-        token = await self._secrets.get(account.secret_key)
+        if await self._secrets.get(account.secret_key) != token:
+            raise AccountChangedError(f"the token of {account.name} changed meanwhile")
+        account = await still_writable(self._accounts, account)
         secret = decision.secret
         try:
             response = await operation.order(

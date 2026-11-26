@@ -90,6 +90,9 @@ class OperationExecutor:
         if operation.category.is_write:
             account = await still_writable(self._accounts, account)
         token = await self._secrets.get(account.secret_key)
+        # Checked again last, right before the request (the keyring read may wait).
+        if operation.category.is_write:
+            account = await still_writable(self._accounts, account)
         try:
             response = await operation.execute(self._client, account.environment, token, secret)
         except GandiError as error:

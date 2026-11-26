@@ -40,7 +40,8 @@ registration and transfer in.
      user's language;
   5. quote again just before ordering: any difference, up or down, cancels
      the order (`PriceChangedError`); then check again that the account is
-     the same and may still write;
+     the same, has the same token as for the quote, and may still write (this
+     last check right before the order);
   6. order; registration and transfer in also send `price`, `currency` and,
      for a premium domain, `enforce_premium`, so that Gandi refuses a
      different price.
