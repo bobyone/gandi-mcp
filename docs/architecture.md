@@ -383,6 +383,19 @@ Behavior and limits:
 Invalid values raise `InvalidDomainNameError` or `InvalidDomainInputError`
 (both `DomainError`).
 
+### Contact minimization: `gandi_mcp.domains.contacts.contact_redactor.ContactRedactor`
+
+`apply(data, *, include_contact_details=False, include_authorization_code=False)`
+returns a filtered copy of Gandi data (ADR 9): at any depth, a contact under
+`owner`, `admin`, `bill` or `tech` (a mapping with personal fields such as
+`email` or `streetaddr`) keeps only `type`, `country`, `same_as_owner` and
+`details: "hidden"`; `authinfo` becomes `"hidden"`.
+
+### Untrusted results: `gandi_mcp.protocol.untrusted_result_presenter.present`
+
+Frames Gandi data for the model as `{"notice", "untrusted_data"}`, plus
+`page`, `per_page` and `total_count` for a list.
+
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
 | Parameter | Type | Default | Required | Description |
