@@ -88,7 +88,8 @@ class AvailabilityTools(ToolModule):
             self.domain_tld_details,
             domain_endpoints.TLD_DETAILS,
             "Describe an extension",
-            "Describe an extension (TLD): its rules, features and allowed durations.",
+            "Describe an extension (TLD): its category and rules (transfer lock, "
+            "authorization code, owner change, reserved to corporate customers).",
         )
 
     async def domain_check_availability(
