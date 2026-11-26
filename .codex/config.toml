@@ -2,8 +2,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
 # Project permission profile for Codex (beta feature): workspace writes allowed,
-# local environment configuration and credential files denied. Examples
-# (gandi-mcp.example.toml, .env.example) stay readable.
+# local environment configuration and credential files denied, their examples
+# kept writable. The workspace rules are derived from the shared guard policy:
+# regenerate them with `uv run python -m tools.assistant_guard.codex_profile`
+# (tests/tools/assistant_guard/test_codex_profile.py fails when they diverge).
 
 default_permissions = "gandi-mcp"
 
@@ -16,8 +18,29 @@ glob_scan_max_depth = 6
 [permissions.gandi-mcp.filesystem.":workspace_roots"]
 "." = "write"
 "**/.env" = "deny"
-"**/.env.local" = "deny"
-"**/.env.*.local" = "deny"
+"**/.env.*" = "deny"
+"**/*.env" = "deny"
 "**/gandi-mcp.toml" = "deny"
 "**/*.pem" = "deny"
 "**/*.key" = "deny"
+"**/*.p12" = "deny"
+"**/*.pfx" = "deny"
+"**/credentials*.json" = "deny"
+"**/.netrc" = "deny"
+"**/_netrc" = "deny"
+"**/.git-credentials" = "deny"
+"**/.pypirc" = "deny"
+"**/.npmrc" = "deny"
+"**/id_rsa*" = "deny"
+"**/id_ed25519*" = "deny"
+"**/id_ecdsa*" = "deny"
+"**/.ssh" = "deny"
+"**/.aws" = "deny"
+"**/.gnupg" = "deny"
+"**/.azure" = "deny"
+"**/.kube" = "deny"
+"**/*.example" = "write"
+"**/*.example.*" = "write"
+"**/*.sample" = "write"
+"**/*.template" = "write"
+"**/*.pub" = "write"

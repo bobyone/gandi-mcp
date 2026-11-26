@@ -47,6 +47,22 @@ skipped. The CI job `Codex permission profile` runs it on Linux with
 
 ## Change the rules
 
-Edit `PROTECTED_FILE_PATTERNS`, `ALLOWED_EXAMPLE_PATTERNS` or the Git checks
-in `policy.py`, add tests in `tests/tools/assistant_guard/`, and keep the
-static deny lists of both clients consistent.
+Edit `PROTECTED_FILE_PATTERNS`, `PROTECTED_DIRECTORIES`,
+`ALLOWED_EXAMPLE_PATTERNS` or the Git checks in `policy.py`, and add tests in
+`tests/tools/assistant_guard/`. Then:
+
+- regenerate the workspace rules of the Codex profile, which are derived from
+  the policy (a test fails while `.codex/config.toml` differs):
+
+  ```text
+  uv run python -m tools.assistant_guard.codex_profile
+  ```
+
+  and paste the printed table in place of the `":workspace_roots"` table;
+- give every new allowed example pattern a sample name in
+  `EXAMPLE_NAMES` (`tools/assistant_guard/codex_profile.py`): the
+  integration test reads one synthetic file per pattern, at the root and in a
+  subdirectory;
+- keep the static Claude Code deny list in `.claude/settings.json` a subset of
+  the policy: Claude Code deny rules win over any allow rule, so patterns whose
+  examples must stay readable (such as `.env.*`) are left to the hook.

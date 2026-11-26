@@ -19,6 +19,8 @@ from typing import Any
 
 import pytest
 
+from tools.assistant_guard.codex_profile import example_samples, protected_samples
+
 ROOT = Path(__file__).resolve().parents[3]
 PROFILE_FILE = ROOT / ".codex" / "config.toml"
 CODEX = os.environ.get("CODEX_CLI") or shutil.which("codex")
@@ -28,11 +30,18 @@ SANDBOX_UNAVAILABLE = ("sandbox failed", "bwrap:")
 
 pytestmark = pytest.mark.skipif(CODEX is None and not REQUIRED, reason="Codex CLI not available")
 
-DENIED = [".env", "gandi-mcp.toml", "sub/.env.local", "server.pem"]
+# One synthetic file per protected pattern of the shared policy, at the root and nested.
+DENIED = [*protected_samples(), *(f"sub/{name}" for name in protected_samples())]
 # On case-insensitive file systems, a mixed-case name designates the protected file itself.
 if sys.platform in {"win32", "darwin"}:
     DENIED.append("sub/Gandi-MCP.TOML")
-ALLOWED = ["README.md", ".env.example", "gandi-mcp.example.toml", "sub/notes.txt"]
+# One example per allowed pattern (each also matching a protected pattern), and ordinary files.
+ALLOWED = [
+    "README.md",
+    "sub/notes.txt",
+    *example_samples(),
+    *(f"sub/{n}" for n in example_samples()),
+]
 
 
 def inline_toml(value: Any) -> str:
