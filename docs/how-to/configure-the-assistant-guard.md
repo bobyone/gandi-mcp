@@ -52,7 +52,10 @@ Edit `PROTECTED_FILE_PATTERNS`, `PROTECTED_DIRECTORIES`,
 `tests/tools/assistant_guard/`. Then:
 
 - regenerate the workspace rules of the Codex profile, which are derived from
-  the policy (a test fails while `.codex/config.toml` differs):
+  the policy (a test fails while `.codex/config.toml` differs). Codex globs can
+  only deny: each protected pattern becomes a `deny` glob, and each tracked
+  example file covered by one of them (such as a future `.env.example`) gets an
+  exact-path `write` entry. Rerun the command after adding such an example:
 
   ```text
   uv run python -m tools.assistant_guard.codex_profile

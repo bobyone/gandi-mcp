@@ -2,8 +2,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Integration test of the committed Codex permission profile, enforced by ``codex sandbox``.
 
-Synthetic protected files and their examples are created in a temporary repository; the
-profile read from ``.codex/config.toml`` must deny the former and allow the latter.
+Synthetic protected files and their examples are created in a temporary repository. The
+profile read from ``.codex/config.toml`` is applied with its workspace rules derived for that
+repository (``workspace_rules`` of its example files, the same derivation as the committed
+rules); it must deny the protected files and allow their examples.
 Skipped when the Codex CLI or its sandbox is not available (set ``CODEX_CLI`` to its path
 if it is not on the ``PATH``). With ``CODEX_PROFILE_REQUIRED=1`` (CI), an unavailable sandbox
 fails the test instead.
@@ -19,7 +21,12 @@ from typing import Any
 
 import pytest
 
-from tools.assistant_guard.codex_profile import example_samples, protected_samples
+from tools.assistant_guard.codex_profile import (
+    PROFILE_NAME,
+    example_samples,
+    protected_samples,
+    workspace_rules,
+)
 
 ROOT = Path(__file__).resolve().parents[3]
 PROFILE_FILE = ROOT / ".codex" / "config.toml"
@@ -27,6 +34,8 @@ CODEX = os.environ.get("CODEX_CLI") or shutil.which("codex")
 REQUIRED = os.environ.get("CODEX_PROFILE_REQUIRED") == "1"
 # Sandbox start-up failures: a read failing for these reasons proves nothing.
 SANDBOX_UNAVAILABLE = ("sandbox failed", "bwrap:")
+# Codex rejects an invalid configuration: every read fails, which must never pass a test.
+CONFIGURATION_ERROR = "Error:"
 
 pytestmark = pytest.mark.skipif(CODEX is None and not REQUIRED, reason="Codex CLI not available")
 
@@ -63,6 +72,8 @@ def inline_toml(value: Any) -> str:
 def profile_overrides() -> list[str]:
     with PROFILE_FILE.open("rb") as stream:
         configuration = tomllib.load(stream)
+    filesystem = configuration["permissions"][PROFILE_NAME]["filesystem"]
+    filesystem[":workspace_roots"] = workspace_rules(ALLOWED)
     return [
         "-c",
         f"default_permissions={inline_toml(configuration['default_permissions'])}",
@@ -86,6 +97,8 @@ def read_in_sandbox(repository: Path, relative: str) -> subprocess.CompletedProc
         timeout=120,
         check=False,
     )
+    if result.stderr.lstrip().startswith(CONFIGURATION_ERROR):
+        pytest.fail("Codex rejected the profile: " + result.stderr.strip()[-500:])
     if any(marker in result.stderr for marker in SANDBOX_UNAVAILABLE):
         message = "Codex sandbox unavailable: " + result.stderr.strip().splitlines()[-1]
         if REQUIRED:

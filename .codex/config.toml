@@ -2,10 +2,11 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
 # Project permission profile for Codex (beta feature): workspace writes allowed,
-# local environment configuration and credential files denied, their examples
-# kept writable. The workspace rules are derived from the shared guard policy:
+# local environment configuration and credential files denied. Codex globs only
+# deny: tracked example files covered by a deny glob get an exact-path write entry.
+# The workspace rules are derived from the shared guard policy:
 # regenerate them with `uv run python -m tools.assistant_guard.codex_profile`
-# (tests/tools/assistant_guard/test_codex_profile.py fails when they diverge).
+# (tests/tools/assistant_guard/test_codex_profile_rules.py fails when they diverge).
 
 default_permissions = "gandi-mcp"
 
@@ -39,8 +40,3 @@ glob_scan_max_depth = 6
 "**/.gnupg" = "deny"
 "**/.azure" = "deny"
 "**/.kube" = "deny"
-"**/*.example" = "write"
-"**/*.example.*" = "write"
-"**/*.sample" = "write"
-"**/*.template" = "write"
-"**/*.pub" = "write"
