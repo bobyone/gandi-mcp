@@ -371,6 +371,18 @@ Behavior and limits:
 - a token with an invalid format can be corrected on the same page; any other
   outcome ends the session and is explained without technical detail.
 
+### Domain values: `gandi_mcp.domains`
+
+| Value | Rule |
+| --- | --- |
+| `DomainName` | Fully qualified name, at least two labels, IDNA 2008 with UTS 46 mapping (`idna`); `value` is the ASCII form sent to Gandi, `unicode` the readable form; at most 253 characters, labels of 1 to 63 characters, no wildcard nor path character. |
+| `TldName` | One label, leading dot removed. |
+| `HostLabel` | A host relative to a domain (`ns1`, `ns1.sub`) or `@` for the domain itself. |
+| `PageRequest` | `page` from 1 to 1000, `per_page` from 1 to 100. |
+
+Invalid values raise `InvalidDomainNameError` or `InvalidDomainInputError`
+(both `DomainError`).
+
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
 | Parameter | Type | Default | Required | Description |
