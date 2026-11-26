@@ -5,6 +5,7 @@
 import asyncio
 import secrets
 import time
+import weakref
 from collections.abc import Callable
 from dataclasses import replace
 
@@ -100,9 +101,10 @@ class PendingConfirmations:
         answered = replace(pending, state=state, secret=kept)
         self._items[confirmation_id] = answered
         if kept is not None:
+            entry = weakref.ref(answered)
             self._scheduler(
                 max(0.0, answered.deadline - self._clock()),
-                lambda: self._expire(confirmation_id, answered),
+                lambda: self._expire(confirmation_id, entry),
             )
         return answered
 
@@ -131,9 +133,12 @@ class PendingConfirmations:
         """Forget a confirmation, for example when its page could not be shown."""
         self._items.pop(confirmation_id, None)
 
-    def _expire(self, confirmation_id: str, answered: PendingConfirmation) -> None:
+    def _expire(
+        self, confirmation_id: str, entry: weakref.ReferenceType[PendingConfirmation]
+    ) -> None:
         """Forget a confirmation holding a secret at its deadline, if still there."""
-        if self._items.get(confirmation_id) is answered:
+        answered = entry()
+        if answered is not None and self._items.get(confirmation_id) is answered:
             del self._items[confirmation_id]
 
     def _live(self, confirmation_id: str) -> PendingConfirmation:

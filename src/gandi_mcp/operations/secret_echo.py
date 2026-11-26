@@ -10,12 +10,12 @@ HIDDEN = "hidden"
 
 
 def scrubbed(data: JsonValue, secret: SecretValue) -> JsonValue:
-    """A copy of ``data`` where every text containing the secret is hidden."""
+    """A copy of ``data`` with no keys or text values containing the secret."""
     value = secret.reveal()
     if isinstance(data, list):
         return [scrubbed(item, secret) for item in data]
     if isinstance(data, dict):
-        return {key: scrubbed(item, secret) for key, item in data.items()}
+        return {key: scrubbed(item, secret) for key, item in data.items() if value not in key}
     if isinstance(data, str) and value in data:
         return HIDDEN
     return data

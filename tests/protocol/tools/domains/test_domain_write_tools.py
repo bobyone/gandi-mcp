@@ -413,6 +413,7 @@ async def test_writes_are_refused_on_a_read_only_account(setup: Setup) -> None:
     "outcome",
     [
         GandiResponse(200, {"message": "code Echo-123 accepted"}),
+        GandiResponse(200, {"details": [{"Echo-123": "accepted"}]}),
         GandiValidationError("refused", ("wrong code Echo-123",)),
     ],
 )
@@ -435,7 +436,13 @@ async def test_a_typed_code_is_never_echoed_to_the_model(
 
 
 @pytest.mark.parametrize(
-    "name", ["domain_transfer_unlock", "domain_authorization_code_reset", "domain_tags_replace"]
+    "name",
+    [
+        "domain_transfer_unlock",
+        "domain_authorization_code_reset",
+        "domain_tags_replace",
+        "domain_owner_email_update",
+    ],
 )
 async def test_risky_changes_wait_for_the_confirmation(setup: Setup, name: str) -> None:
     arguments, *_ = CALLS[name]

@@ -60,7 +60,7 @@ class ContactTools(ToolModule):
                 "Update the owner details of a domain, including its email",
                 "Correct the details of the current owner, including its email address. The "
                 "user authorizes Gandi to act as their Designated Agent under the ICANN rules "
-                "by confirming outside the conversation. Checked by Gandi first.",
+                "by confirming outside the conversation.",
             ),
             (
                 self.domain_owner_change,

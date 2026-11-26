@@ -138,7 +138,6 @@ OWNER_EMAIL_UPDATE = DomainEndpoint(
     (*DOMAIN, "contacts", "owner"),
     DESTRUCTIVE,
     description=messages.UPDATE_OWNER_EMAIL,
-    supports_dry_run=True,
 )
 OWNER_CHANGE = DomainEndpoint(
     "domain_owner_change",

@@ -46,7 +46,8 @@ All notable changes are documented here. The format follows
   the transfer authorization code is typed on the confirmation page, never in
   the conversation. (#5)
 - Domain settings: automatic renewal, transfer lock, authorization code,
-  contacts and owner (details or change, checked with a dry run), nameservers,
+  contacts and owner (details or change, checked with a dry run where possible),
+  nameservers,
   LiveDNS, DNSSEC and its keys, glue records, web redirections, tags, transfer
   out answer and transfer in follow-up, and domain deletion. Destructive
   operations are confirmed by the user. (#5)

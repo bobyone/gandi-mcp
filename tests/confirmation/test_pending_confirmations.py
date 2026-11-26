@@ -3,6 +3,7 @@
 """Tests of the registry of confirmations answered on local pages."""
 
 import asyncio
+import weakref
 from collections.abc import Callable
 from dataclasses import dataclass, field, replace
 
@@ -220,19 +221,19 @@ def test_a_typed_secret_is_released_at_the_deadline_without_a_new_call() -> None
     assert registry.consume(plain.confirmation_id, "other") is not None
 
 
-def test_a_late_release_keeps_a_newer_confirmation() -> None:
+def test_timer_does_not_keep_a_consumed_confirmation_alive() -> None:
     scheduler = ManualScheduler()
     registry = PendingConfirmations(300, Clock(), scheduler)
     pending = registry.create(secret_request())
-    registry.answer(pending.confirmation_id, True, SecretValue("Auth-123"))
+    answered = weakref.ref(registry.answer(pending.confirmation_id, True, SecretValue("Auth-123")))
     registry.consume(pending.confirmation_id, pending.request.subject)
 
+    assert answered() is None
     scheduler.calls[0][1]()
 
     assert registry._items == {}
 
 
-@pytest.mark.anyio
 @pytest.mark.anyio
 async def test_the_default_scheduler_uses_the_running_loop() -> None:
     called: list[bool] = []
