@@ -58,6 +58,20 @@ serialization and exposes the value through `reveal()` only) under opaque keys.
 Every operation raises `SecretStoreUnavailableError` when the store cannot be
 reached. Exceptions derive from `SecretStoreError` and never contain a secret.
 
+### Preferences store: `gandi_mcp.preferences.preferences_store.PreferencesStore`
+
+Loads and saves `gandi_mcp.preferences.preferences.Preferences` as a whole: the
+accounts (`gandi_mcp.accounts.account.Account`: an `AccountName`, unique
+ignoring case, an `Environment`, a read-only flag and the opaque key of its
+token in the secret store) and the default account. `Preferences` checks its
+invariants (unique names, a default account among the accounts as soon as one
+exists) and raises `CorruptPreferencesError` otherwise.
+
+| Operation | Contract |
+| --- | --- |
+| `load()` | Returns the saved preferences, or empty ones. Raises `CorruptPreferencesError` (not understood) or `PreferencesUnavailableError` (unreadable). |
+| `save(preferences)` | Replaces the saved preferences atomically. Raises `PreferencesUnavailableError`. |
+
 ## Implementations
 
 ### Entry point: `gandi_mcp.main`
@@ -114,6 +128,34 @@ Behavior and limits:
 - any keyring failure (no backend, locked keyring, D-Bus error) raises
   `SecretStoreUnavailableError`; there is no plaintext fallback (ADR 3);
 - a stored value that is not a valid token raises `InvalidTokenFormatError`.
+
+### Preferences store: `gandi_mcp.preferences.json.json_preferences_store.JsonPreferencesStore`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `path` | path | none | yes | Preferences file (`preferences.path`); its directory is created on save. |
+
+File format (UTF-8 JSON, no secret):
+
+```json
+{
+  "version": 1,
+  "default_account": "Perso",
+  "accounts": [
+    {"name": "Perso", "environment": "sandbox", "read_only": false, "secret_key": "<opaque key>"}
+  ]
+}
+```
+
+Behavior and limits:
+
+- a missing file means empty preferences;
+- an invalid file (JSON, structure, names, invariants), a file larger than
+  1 MB or another format version raises `CorruptPreferencesError` and is never
+  overwritten;
+- saving writes a temporary file in the same directory, flushes it to disk and
+  replaces the previous file; on failure the previous file is kept and the
+  temporary file removed.
 
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
