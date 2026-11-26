@@ -82,6 +82,21 @@ def test_valid_catalogs_pass_and_count_reviews(
             {**VALID, DOMAINS: ("{count} domaine", "de domaines", "{count} domaines")},
             "in plural form 1",
         ),
+        # A singular catalog entry for a plural source, with the right parameters.
+        ({HELLO: VALID[HELLO], DOMAINS[0]: "{count} domaines"}, "plural shape differs"),
+        (
+            {
+                ("Hello {name}", "Hello {name}s"): ("a {name}", "b {name}", "c {name}"),
+                **{DOMAINS: VALID[DOMAINS]},
+            },
+            "plural shape differs (source is singular)",
+        ),
+        # Babel pads a missing plural form with an empty string when reading the catalog.
+        ({**VALID, DOMAINS: ("{count} domaine", "{count} domaines")}, "empty translation"),
+        (
+            {HELLO: VALID[HELLO], ("{count} domain", "{count} names"): VALID[DOMAINS]},
+            "plural source text differs",
+        ),
     ],
 )
 def test_catalog_errors(

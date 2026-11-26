@@ -72,6 +72,21 @@ def check_template(template: Catalog, used: set[str]) -> list[str]:
     return errors
 
 
+def check_shape(message: Message, source: Message) -> list[str]:
+    """Check that a translation has the singular or plural shape of its source message.
+
+    The number of plural forms needs no check: Babel normalizes it to the language's
+    ``nplurals`` when reading a catalog (a missing form becomes an empty translation,
+    reported as such; an extra form is dropped).
+    """
+    if source.pluralizable != message.pluralizable:
+        expected = "plural" if source.pluralizable else "singular"
+        return [f"plural shape differs (source is {expected})"]
+    if source.pluralizable and tuple(message.id) != tuple(source.id):
+        return ["plural source text differs"]
+    return []
+
+
 def check_catalog(language: str, catalog: Catalog, template: Catalog) -> tuple[list[str], int]:
     """Check one language against the template; return its errors and review count."""
     errors: list[str] = []
@@ -85,6 +100,10 @@ def check_catalog(language: str, catalog: Catalog, template: Catalog) -> tuple[l
     to_review = 0
     for key, message in actual.items():
         if key not in expected:
+            continue
+        shape_errors = check_shape(message, expected[key])
+        if shape_errors:
+            errors += [f"{language}: {error} for {key!r}" for error in shape_errors]
             continue
         string = message.string
         strings = [string] if isinstance(string, str) else list(string or ())
