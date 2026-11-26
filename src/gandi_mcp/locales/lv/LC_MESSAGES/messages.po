@@ -7,15 +7,33 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 14:47+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lv\n"
 "Language-Team: lv <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100"
-" <= 19 ? 0 : n % 10 == 1 && n % 100 != 11 ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= 19 ? 0 : n % 10 == 1"
+" && n % 100 != 11 ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "Apstipriniet ražošanas kontā {account}: {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "Apstipriniet testa kontā (sandbox) {account}: {action}"
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "Atveriet šo lapu, lai apstiprinātu vai noraidītu darbību."
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "nolasīt konta identitāti"
 

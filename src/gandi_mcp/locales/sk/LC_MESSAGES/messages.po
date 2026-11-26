@@ -7,15 +7,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 14:47+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sk\n"
 "Language-Team: sk <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n == 1 ? 0 : n >= 2 && n <= 4 ? 1 : 2);"
-"\n"
+"Plural-Forms: nplurals=3; plural=(n == 1 ? 0 : n >= 2 && n <= 4 ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "Potvrďte v produkčnom účte {account}: {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "Potvrďte v testovacom účte (sandbox) {account}: {action}"
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "Otvorte túto stránku a operáciu potvrďte alebo odmietnite."
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "načítanie identity účtu"
 

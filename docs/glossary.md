@@ -28,9 +28,11 @@ the term appears in the UI; until then the column says "not displayed".
 | Read-only account | An account whose write operations are all refused. | `read_only` | not displayed yet |
 | Secret store | The operating system keyring, the only place where a Personal Access Token is kept. | `secret_store` | not displayed |
 | Preferences | Local settings without any secret: the accounts and the default account. | `preferences` | not displayed |
-| Token entry session | A temporary local page, protected by a single-use code, to enter a Personal Access Token without the MCP App. | `token_entry_session` | not displayed yet |
+| Token entry session | A local page to enter a Personal Access Token without the MCP App. | `token_entry_session` | not displayed yet |
 | Operation | A call to Gandi on behalf of an account. | `operation` | not displayed |
 | Read operation | An operation that only reads Gandi resources. | `read_operation` | not displayed |
 | Write operation | An operation that changes Gandi resources; destructive and billable operations are write operations. | `write_operation` | not displayed |
-| Confirmation channel | A way to ask for a confirmation: elicitation, MCP App or local link. | `confirmation_channel` | not displayed |
+| Confirmation channel | A way to ask for a confirmation: MCP App, elicitation or local page. | `confirmation_channel` | not displayed |
+| Local page | A temporary page served by the personal mode on `127.0.0.1`, protected by a single-use code, shown to the user through URL elicitation or the browser and never given to the model. | `local_page` | not displayed |
+| Pending confirmation | A confirmation waiting for the user's answer on a local page; its identifier, given back by the model, is valid once and for the same operation only. | `pending_confirmation` | not displayed |
 | Untrusted data | Content coming from tool results or free inputs, which may contain prompt injection. | `untrusted` | not displayed |

@@ -7,15 +7,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 10:51+0100\n"
+"POT-Creation-Date: 2026-11-26 14:47+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
-"1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the production account {account}: {action}"
+msgstr "Confirmez sur le compte de production {account} : {action}"
+
+# needs-review
+#, python-brace-format
+msgid "Confirm on the sandbox account {account}: {action}"
+msgstr "Confirmez sur le compte de test (sandbox) {account} : {action}"
+
+# needs-review
+msgid "Open this page to confirm or refuse the operation."
+msgstr "Ouvrez cette page pour confirmer ou refuser l'opération."
+
+# needs-review
+msgid "read the identity of the account"
+msgstr "lire l'identité du compte"
 

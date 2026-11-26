@@ -80,6 +80,56 @@ Exceptions derive from `AccountError`: `InvalidAccountNameError`,
 `ReadOnlyAccountError`, `TokenRejectedError`. Secret store, preferences and
 Gandi errors pass through.
 
+### Operation: `gandi_mcp.operations.operation.Operation`
+
+A command: one Gandi call on behalf of an account (ADR 4).
+
+| Member | Contract |
+| --- | --- |
+| `name` | Stable identifier, for example `domain.renew`. |
+| `category` | `OperationCategory`: `read`, `write`, `destructive` or `billable`; the last two are writes and need a confirmation. |
+| `parameters()` | Parameters defining what the operation does; with `name`, they form its `subject()`, to which a confirmation is bound. |
+| `describe()` | `LocalizedText` shown when asking for a confirmation. |
+| `execute(client, environment, token)` | Calls Gandi; raises `GandiError`. |
+
+`OperationExecutor.run(operation, account_name, context, confirmation_id=None)`
+resolves the account, refuses a write on a read-only account
+(`ReadOnlyAccountError`), asks for a confirmation when needed, reads the token
+and calls Gandi. It returns an `UntrustedResult` (data and `total_count`), or
+a pending `ConfirmationDecision` to resume with its identifier.
+
+### Confirmation channel: `gandi_mcp.confirmation.confirmation_channel.ConfirmationChannel`
+
+| Operation | Contract |
+| --- | --- |
+| `available(context)` | Whether the channel can reach the user during this call (`ConfirmationContext`: user interaction, call from the MCP App, locale). |
+| `confirm(request, context)` | Returns an accepted or pending `ConfirmationDecision`; raises `ConfirmationRefusedError` or `ConfirmationUnavailableError`. |
+
+`ConfirmationService` tries its channels in order. Given a confirmation
+identifier, it resumes the pending confirmation instead (`PendingConfirmations`:
+accepted once, for the same subject, until it expires).
+Exceptions derive from `ConfirmationError`: `ConfirmationRefusedError`,
+`ConfirmationExpiredError`, `ConfirmationUnavailableError`,
+`ConfirmationMismatchError`.
+
+`ConfirmationPage` is the port of the local page where a pending confirmation is
+answered: `open_confirmation(pending, locale)` returns its URL, which is never
+given to the model.
+
+### User interaction: `gandi_mcp.interaction.user_interaction.UserInteraction`
+
+Questions asked to the user through the MCP client, outside the model context.
+
+| Member | Contract |
+| --- | --- |
+| `supports_confirmation`, `supports_links` | Whether form or URL elicitation is available. |
+| `confirm(message)` | `True` only when the user accepted. |
+| `open_link(message, url)` | Offers a link the client shows to the user; `True` when the user agreed. |
+
+`Browser.open(url)` opens a page in the user's browser and returns `False`
+when it cannot. `LinkPresenter.present(url, message, interaction)` uses URL
+elicitation when available, otherwise the browser.
+
 ### Token verifier: `gandi_mcp.accounts.token_verifier.TokenVerifier`
 
 | Operation | Contract |
@@ -233,6 +283,24 @@ Behavior and limits:
 Calls `GET organization/user-info`. HTTP 401 and 403 mean the token is
 rejected. Only `username` (required) and `name` are kept, trimmed to 200
 characters; the email and the other fields are ignored.
+
+### Confirmation channels: `gandi_mcp.confirmation.channels`
+
+| Channel | Available when | Behavior |
+| --- | --- | --- |
+| `AppChannel` | the call comes from an app-only tool | Accepts: the MCP App dialog was the confirmation. |
+| `ElicitationChannel(translator)` | the client supports form elicitation | Asks "Confirm on the production/sandbox account {account}: {action}" in the user's language; anything but an acceptance raises `ConfirmationRefusedError`. |
+| `LocalLinkChannel(pending, page, presenter, translator)` | always (last resort) | Registers a pending confirmation, shows its page through `LinkPresenter`; returns it as pending, or raises `ConfirmationUnavailableError` (and forgets it) when the page cannot be shown. |
+
+`PendingConfirmations(timeout_seconds, clock)` keeps at most 100 pending
+confirmations in memory (`confirmation.timeout_seconds`), with random
+identifiers (128 bits).
+
+### Browser: `gandi_mcp.interaction.system.system_browser.SystemBrowser`
+
+Opens `http://127.0.0.1` and `http://localhost` URLs only, in a new tab of the
+default browser (`webbrowser`), in a worker thread; any other URL raises
+`ValueError`.
 
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
