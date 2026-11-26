@@ -193,8 +193,9 @@ Errors: `GandiAuthenticationError` (401), `GandiPermissionError` (403),
 `GandiConflictError` (409), `GandiRateLimitError` (429, with `retry_after`),
 `GandiUnavailableError` (network error, timeout, 5xx),
 `GandiUnexpectedResponseError` (any other status or an unreadable body). Each
-carries `details`: Gandi's explanations, bounded (10 entries of 300
-characters), untrusted.
+carries `details`: Gandi's explanations, at most 10 entries, untrusted. They
+are never truncated: `ErrorPresenter` withholds an entry longer than
+`content.max_free_input` (ADR 10), which an excerpt would get around.
 
 ## Implementations
 

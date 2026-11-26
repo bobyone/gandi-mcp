@@ -17,7 +17,6 @@ from gandi_mcp.gandi.exceptions import (
 )
 from gandi_mcp.gandi.gandi_response import JsonValue
 from gandi_mcp.gandi.http.gandi_error_translator import (
-    MAX_DETAIL_LENGTH,
     MAX_DETAILS,
     MAX_RETRY_AFTER,
     extract_details,
@@ -71,14 +70,14 @@ def test_ignores_unusable_bodies(body: JsonValue) -> None:
 
 def test_bounds_the_explanations() -> None:
     body: JsonValue = {
-        "message": "x" * (MAX_DETAIL_LENGTH * 2),
+        "message": "x" * 5000,
         "errors": [{"description": str(index)} for index in range(MAX_DETAILS * 2)],
     }
 
     details = extract_details(body)
 
     assert len(details) == MAX_DETAILS
-    assert len(details[0]) == MAX_DETAIL_LENGTH
+    assert len(details[0]) == 5000  # never truncated: the presenter withholds it
 
 
 @pytest.mark.parametrize(

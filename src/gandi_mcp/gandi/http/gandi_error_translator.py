@@ -18,7 +18,6 @@ from gandi_mcp.gandi.exceptions import (
 from gandi_mcp.gandi.gandi_response import JsonValue
 
 MAX_DETAILS = 10
-MAX_DETAIL_LENGTH = 300
 MAX_RETRY_AFTER = 3600
 
 _BY_STATUS: Mapping[int, tuple[type[GandiError], str]] = {
@@ -31,11 +30,9 @@ _BY_STATUS: Mapping[int, tuple[type[GandiError], str]] = {
 }
 
 
-def _bounded(text: str) -> str:
-    cleaned = " ".join(text.split())
-    if len(cleaned) <= MAX_DETAIL_LENGTH:
-        return cleaned
-    return cleaned[: MAX_DETAIL_LENGTH - 1] + "\N{HORIZONTAL ELLIPSIS}"
+def _cleaned(text: str) -> str:
+    """Collapse the whitespace; never truncate, see the module of the exceptions."""
+    return " ".join(text.split())
 
 
 def extract_details(body: JsonValue) -> tuple[str, ...]:
@@ -54,7 +51,7 @@ def extract_details(body: JsonValue) -> tuple[str, ...]:
         text = ": ".join(part for part in parts if isinstance(part, str) and part.strip())
         if text:
             details.append(text)
-    return tuple(_bounded(detail) for detail in details[:MAX_DETAILS])
+    return tuple(_cleaned(detail) for detail in details[:MAX_DETAILS])
 
 
 def _retry_after(value: str | None) -> int | None:
