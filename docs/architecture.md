@@ -43,6 +43,21 @@ the `N_` and `ngettext` markers so that Babel extracts them) in a locale.
 | `negotiate(preferred)` | Best supported locale for tags in preference order (`fr-CA`, `sr_Latn`); English when nothing matches. |
 | `translate(message, locale=None, **params)` | Renders the message with its named parameters; numbers are formatted for the locale; a plural message needs an integer `count`. Raises `TranslationError` for a missing parameter or an invalid `count`. |
 
+### Secret store: `gandi_mcp.secrets.secret_store.SecretStore`
+
+Keeps Personal Access Tokens (`gandi_mcp.secrets.personal_access_token.PersonalAccessToken`,
+a value object that validates the format, masks `repr`/`str`, refuses
+serialization and exposes the value through `reveal()` only) under opaque keys.
+
+| Operation | Contract |
+| --- | --- |
+| `get(key)` | Returns the token; raises `SecretNotFoundError` when absent. |
+| `put(key, token)` | Stores the token, replacing any previous one. |
+| `delete(key)` | Removes the token; raises `SecretNotFoundError` when absent. |
+
+Every operation raises `SecretStoreUnavailableError` when the store cannot be
+reached. Exceptions derive from `SecretStoreError` and never contain a secret.
+
 ## Implementations
 
 ### Entry point: `gandi_mcp.main`
@@ -85,6 +100,20 @@ Behavior and limits:
   `nb`), then English;
 - an untranslated entry is rendered in English;
 - translations flagged `needs-review` are used as they are.
+
+### Secret store: `gandi_mcp.secrets.keyring.keyring_secret_store.KeyringSecretStore`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `service` | string | `gandi-mcp` | no | Keyring service name under which tokens are stored. |
+| `backend` | object with `get_password`, `set_password`, `delete_password` | system keyring | no | Keyring backend; tests inject a memory backend. |
+
+Behavior and limits:
+
+- calls run in a worker thread, since a keyring may block on an unlock prompt;
+- any keyring failure (no backend, locked keyring, D-Bus error) raises
+  `SecretStoreUnavailableError`; there is no plaintext fallback (ADR 3);
+- a stored value that is not a valid token raises `InvalidTokenFormatError`.
 
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
