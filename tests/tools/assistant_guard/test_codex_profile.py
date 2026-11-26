@@ -100,7 +100,7 @@ def read_in_sandbox(repository: Path, relative: str) -> subprocess.CompletedProc
     if result.stderr.lstrip().startswith(CONFIGURATION_ERROR):
         pytest.fail("Codex rejected the profile: " + result.stderr.strip()[-500:])
     if any(marker in result.stderr for marker in SANDBOX_UNAVAILABLE):
-        message = "Codex sandbox unavailable: " + result.stderr.strip().splitlines()[-1]
+        message = "Codex sandbox unavailable: " + result.stderr.strip()[-800:]
         if REQUIRED:
             pytest.fail(message)
         pytest.skip(message)
