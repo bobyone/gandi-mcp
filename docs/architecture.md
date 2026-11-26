@@ -77,7 +77,7 @@ an account. It depends on a `PreferencesStore`, a `SecretStore` and a
 | `set_default(name)`, `set_read_only(name, flag)` | Changes the flag. |
 | `replace_token(name, token)` | Verifies the token in the account environment, then replaces the old one (kept when rejected). |
 | `change_environment(name, environment, token)` | Verifies the token in the new environment; restores the previous token if saving fails. |
-| `remove(name)` | Removes the account, then its token; a removed default account is replaced by the first remaining one in alphabetical order. Returns an `AccountRemoval` (`new_default`, `token_removed`, false when the secret store was unavailable). |
+| `remove(name)` | Removes the token, then the account; when the secret store cannot remove the token, the account is kept so that the removal can be retried. A removed default account is replaced by the first remaining one in alphabetical order. Returns an `AccountRemoval` (`removed`, `new_default`). |
 
 `set_read_only`, `replace_token`, `change_environment` and `remove` accept an
 `expected` `AccountReference` (opaque key and environment of the account the

@@ -269,7 +269,6 @@ async def test_remove_default_promotes_the_first_remaining_account(world: World)
 
     assert removal.removed == AccountName("Perso")
     assert removal.new_default == AccountName("Beta")
-    assert removal.token_removed
     assert key not in world.secrets.tokens
     assert (await world.service.resolve()).name == AccountName("Beta")
 
@@ -293,32 +292,44 @@ async def test_remove_the_last_account(world: World) -> None:
     assert world.secrets.tokens == {}
 
 
-async def test_remove_reports_a_token_left_in_an_unavailable_store(world: World) -> None:
+async def test_remove_keeps_the_account_when_the_token_cannot_be_removed(
+    world: World,
+) -> None:
     await add(world, "Perso")
     world.secrets.unavailable = True
 
-    removal = await world.service.remove(AccountName("Perso"))
+    with pytest.raises(SecretStoreUnavailableError):
+        await world.service.remove(AccountName("Perso"))
 
-    assert not removal.token_removed
+    assert len(await world.service.list()) == 1
+    world.secrets.unavailable = False
+    await world.service.remove(AccountName("Perso"))
     assert await world.service.list() == ()
+    assert world.secrets.tokens == {}
 
 
 async def test_remove_tolerates_an_already_missing_token(world: World) -> None:
     await add(world, "Perso")
     world.secrets.tokens.clear()
 
-    assert (await world.service.remove(AccountName("Perso"))).token_removed
+    removal = await world.service.remove(AccountName("Perso"))
+
+    assert removal.removed == AccountName("Perso")
+    assert await world.service.list() == ()
 
 
-async def test_remove_keeps_everything_when_saving_fails(world: World) -> None:
+async def test_remove_can_be_retried_when_saving_fails(world: World) -> None:
     await add(world, "Perso")
     world.preferences.fail_on_save = True
 
     with pytest.raises(PreferencesUnavailableError):
         await world.service.remove(AccountName("Perso"))
 
-    assert len(world.secrets.tokens) == 1
     assert len(await world.service.list()) == 1
+    world.preferences.fail_on_save = False
+    await world.service.remove(AccountName("Perso"))
+    assert await world.service.list() == ()
+    assert world.secrets.tokens == {}
 
 
 @pytest.mark.parametrize("operation", ["rename", "set_default", "set_read_only", "remove"])

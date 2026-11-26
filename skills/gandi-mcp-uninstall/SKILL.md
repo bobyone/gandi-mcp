@@ -9,10 +9,11 @@ Ask for confirmation before each removal; removing tokens is irreversible.
 
 1. Remove the stored Personal Access Tokens first: call `list_accounts`, then
    `remove_account` for each account (the user confirms each removal outside
-   the conversation). If a result says `token_removed_from_keyring: false`, or
-   gandi-mcp no longer starts, ask the user to delete the `gandi-mcp` entries
-   in the OS keyring (Windows Credential Manager, macOS Keychain, Secret
-   Service) themselves.
+   the conversation). If a removal fails because the keyring is unavailable,
+   the account is kept: fix the keyring (see `gandi-mcp-troubleshoot`) and
+   remove it again. If gandi-mcp no longer starts, ask the user to delete the
+   `gandi-mcp` entries in the OS keyring (Windows Credential Manager, macOS
+   Keychain, Secret Service) themselves.
 2. Ask the user to delete the preferences file (`preferences.json` in the
    `gandi-mcp` folder of the user configuration directory, or the
    `preferences.path` of their configuration); do not read it.

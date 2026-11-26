@@ -227,6 +227,19 @@ describe("AccountsScreen", () => {
     expect(await screen.findByText("The account Pro is removed.")).toBeInTheDocument();
   });
 
+  it("keeps the account when its token cannot be removed", async () => {
+    const api = fakeApi();
+    api.remove.mockRejectedValue(new AccountsError("The keyring of the system is unavailable."));
+    const user = show(api);
+
+    await user.click((await openActions(user, "Pro")).getByRole("button", { name: "Remove" }));
+    const dialog = await screen.findByRole("dialog", { name: "Remove the account Pro?" });
+    await user.click(within(dialog).getByRole("button", { name: "Remove" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("keyring of the system");
+    expect(screen.getByRole("button", { name: "Actions for Pro" })).toBeInTheDocument();
+  });
+
   it("offers no set-as-default action for the default account", async () => {
     const user = show(fakeApi());
 

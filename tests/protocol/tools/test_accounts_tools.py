@@ -293,7 +293,6 @@ async def test_remove_account_with_elicitation(setup: Setup) -> None:
         "status": "removed",
         "account": "Perso",
         "new_default_account": "Beta",
-        "token_removed_from_keyring": True,
     }
 
 

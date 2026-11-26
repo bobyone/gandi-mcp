@@ -3,6 +3,7 @@
 """Facade of the account rules: the business core of the accounts notion."""
 
 import asyncio
+import contextlib
 import logging
 import uuid
 from dataclasses import replace
@@ -94,7 +95,8 @@ class AccountService:
                     Preferences(_sorted((*preferences.accounts, account)), default)
                 )
             except Exception:
-                await self._forget_token(account.secret_key)
+                with contextlib.suppress(SecretStoreError):
+                    await self._forget_token(account.secret_key, missing_ok=True)
                 raise
             logger.info("account added (%s)", account.environment.value)
             return VerifiedAccount(AccountSummary.of(account, default), identity)
@@ -208,12 +210,15 @@ class AccountService:
     ) -> AccountRemoval:
         """Remove an account and its token.
 
-        If it was the default account, the first remaining account in alphabetical
-        order becomes the default one.
+        The token is removed first: when the secret store cannot remove it, the
+        account is kept, so that the removal can be retried. If it was the default
+        account, the first remaining account in alphabetical order becomes the
+        default one.
 
         Raises:
             AccountNotFoundError, NoAccountError, AccountChangedError,
-            PreferencesError (nothing removed).
+            SecretStoreError (nothing removed), PreferencesError (the token is
+            already removed and the account kept: retrying the removal completes it).
         """
         async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
@@ -224,10 +229,10 @@ class AccountService:
             if default == account.name:
                 default = _sorted(remaining)[0].name if remaining else None
                 new_default = default
+            await self._forget_token(account.secret_key, missing_ok=True)
             await self._preferences.save(Preferences(_sorted(remaining), default))
-            token_removed = await self._forget_token(account.secret_key)
             logger.info("account removed")
-            return AccountRemoval(account.name, new_default, token_removed)
+            return AccountRemoval(account.name, new_default)
 
     @staticmethod
     def _find(
@@ -260,12 +265,12 @@ class AccountService:
         accounts = tuple(new if item is old else item for item in preferences.accounts)
         await self._preferences.save(Preferences(_sorted(accounts), default))
 
-    async def _forget_token(self, key: str) -> bool:
+    async def _forget_token(self, key: str, missing_ok: bool = False) -> None:
         try:
             await self._secrets.delete(key)
         except SecretNotFoundError:
-            return True
+            if not missing_ok:
+                raise
         except SecretStoreError:
             logger.warning("a token could not be removed from the secret store")
-            return False
-        return True
+            raise

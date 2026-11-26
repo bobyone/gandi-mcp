@@ -313,7 +313,6 @@ class AccountsTools(ToolModule):
             "status": "removed",
             "account": str(removal.removed),
             "new_default_account": str(removal.new_default) if removal.new_default else None,
-            "token_removed_from_keyring": removal.token_removed,
         }
 
     async def listing(self) -> dict[str, Any]:
