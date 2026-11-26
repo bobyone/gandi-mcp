@@ -38,8 +38,14 @@ jobs:
       - run: uv run --locked pre-commit run --all-files --show-diff-on-failure
 
   audit:
-    name: dependency audit
-    runs-on: ubuntu-24.04
+    name: dependency audit (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Platform-specific runtime dependencies (for example pywin32) are only
+        # installed, hence only checked, on their platform.
+        os: [ubuntu-24.04, windows-2025, macos-15]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -51,8 +57,14 @@ jobs:
       - run: uv run --locked pip-audit --skip-editable
 
   licenses:
-    name: dependency licenses
-    runs-on: ubuntu-24.04
+    name: dependency licenses (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Platform-specific runtime dependencies (for example pywin32) are only
+        # installed, hence only checked, on their platform.
+        os: [ubuntu-24.04, windows-2025, macos-15]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -62,6 +74,29 @@ jobs:
           version: ${{ env.UV_VERSION }}
       - run: uv sync --locked
       - run: uv run --locked python scripts/check_licenses.py
+
+  codex-profile:
+    name: Codex permission profile
+    runs-on: ubuntu-24.04
+    env:
+      CODEX_VERSION: "0.172.0"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: ${{ env.UV_VERSION }}
+      - run: uv sync --locked
+      - run: npm install --prefix "$RUNNER_TEMP/codex" --no-fund --no-audit "@openai/codex@$CODEX_VERSION"
+      - name: Enforce the committed profile with codex sandbox
+        env:
+          CODEX_PROFILE_REQUIRED: "1"
+        run: |
+          export CODEX_CLI="$RUNNER_TEMP/codex/node_modules/.bin/codex"
+          export CODEX_HOME="$RUNNER_TEMP/codex-home"
+          mkdir -p "$CODEX_HOME"
+          uv run --locked pytest --no-cov -q tests/tools/assistant_guard/test_codex_profile.py
 
   dco:
     name: DCO sign-off

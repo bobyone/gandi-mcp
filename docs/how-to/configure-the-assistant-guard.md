@@ -16,7 +16,7 @@ this with:
 | Commands | `permissions.deny` / `ask` | [`.codex/rules/git.rules`](../../.codex/rules/git.rules) |
 
 Both hooks call the same policy, [`tools/assistant_guard/policy.py`](../../tools/assistant_guard/policy.py),
-through one adapter per client. Example files (`config.example.toml`,
+through one adapter per client. Example files (`gandi-mcp.example.toml`,
 `*.example`) stay readable.
 
 ## Enable
@@ -36,6 +36,14 @@ echo '{"tool_name":"Read","tool_input":{"file_path":".env"}}' | uv run --no-proj
 
 The second command prints a `deny` decision. With Codex, also run
 `codex execpolicy check --pretty --rules .codex/rules/git.rules -- git push --force`.
+
+`tests/tools/assistant_guard/test_codex_profile.py` enforces the committed
+permission profile with `codex sandbox` on synthetic files: protected files
+must be unreadable, their examples readable. It runs when the Codex CLI is on
+the `PATH` (or `CODEX_CLI` gives its path) and its sandbox is available; on
+Windows this requires the elevated sandbox backend, otherwise the test is
+skipped. The CI job `Codex permission profile` runs it on Linux with
+`CODEX_PROFILE_REQUIRED=1`, so it can never be skipped there.
 
 ## Change the rules
 
