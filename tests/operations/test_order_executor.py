@@ -53,6 +53,7 @@ from tests.doubles.stub_token_verifier import StubTokenVerifier
 pytestmark = pytest.mark.anyio
 
 TOKEN = PersonalAccessToken("pat_sandbox_0123456789")
+REPLACEMENT_TOKEN = PersonalAccessToken("pat_other_0123456789")
 ORG = OrganizationId("5a53edc7-b514-416a-98c2-2d477a288eb9")
 OWNER = DomainContact(
     ContactType.INDIVIDUAL, "Ada", "Lovelace", "ada@example.org", "1 rue", "Paris", "75001", "FR"
@@ -93,6 +94,7 @@ class Setup:
 async def setup() -> Setup:
     secrets, verifier = HookedSecretStore(), StubTokenVerifier()
     verifier.accept(Environment.SANDBOX, TOKEN)
+    verifier.accept(Environment.SANDBOX, REPLACEMENT_TOKEN)
     accounts = AccountService(InMemoryPreferencesStore(), secrets, verifier)
     await accounts.add(AccountDraft(AccountName("Perso"), Environment.SANDBOX), TOKEN)
     await accounts.add(AccountDraft(AccountName("Watch"), Environment.SANDBOX, True), TOKEN)
@@ -235,6 +237,27 @@ async def test_a_new_price_does_not_match_the_confirmation(setup: Setup) -> None
         await setup.orders.run(renew, None, ConfirmationContext(), first.confirmation_id)
 
 
+async def test_a_replaced_token_does_not_match_the_local_confirmation(setup: Setup) -> None:
+    setup.client.outcomes.extend(
+        [GandiResponse(200, {"status": "success"}), GandiResponse(202, None)]
+    )
+    context = ConfirmationContext()
+    first = await setup.orders.run(register(), None, context)
+    assert isinstance(first, ConfirmationDecision)
+    assert first.confirmation_id is not None
+    assert TOKEN.reveal() not in setup.pending.get(first.confirmation_id).request.subject
+    setup.pending.answer(first.confirmation_id, True)
+
+    await setup.accounts.replace_token(AccountName("Perso"), REPLACEMENT_TOKEN)
+
+    with pytest.raises(ConfirmationMismatchError):
+        await setup.orders.run(register(), None, context, first.confirmation_id)
+
+    assert setup.quotes.prices == ["24.96"]
+    assert [request.paying_organization for request in setup.quotes.requests] == [None, None]
+    assert [call.dry_run for call in setup.client.calls] == [True]
+
+
 async def test_a_transfer_asks_for_the_code_on_the_page(setup: Setup) -> None:
     interaction = ScriptedInteraction()
     transfer = TransferInDomain(
@@ -333,11 +356,8 @@ async def test_an_account_moved_meanwhile_does_not_buy(setup: Setup) -> None:
 
 
 async def test_a_token_replaced_during_the_second_quote_does_not_buy(setup: Setup) -> None:
-    other = PersonalAccessToken("pat_other_0123456789")
-    setup.accounts._verifier.accept(Environment.SANDBOX, other)  # type: ignore[attr-defined]
-
     async def replace() -> None:
-        await setup.accounts.replace_token(AccountName("Perso"), other)
+        await setup.accounts.replace_token(AccountName("Perso"), REPLACEMENT_TOKEN)
 
     setup.quotes.on_second_quote = replace
     setup.client.outcomes.append(GandiResponse(200, {"status": "success"}))

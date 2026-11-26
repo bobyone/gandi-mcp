@@ -153,7 +153,12 @@ An `Operation` of category `billable` that only runs through the
 `OrderExecutor(accounts, secrets, client, confirmation, *, quotes, translator)`
 `.run(operation, account_name, context, confirmation_id=None,
 paying_organization=None)` applies algorithm G (ADR 7) and returns an
-`UntrustedResult` or a pending `ConfirmationDecision`. Errors: `OrderError` >
+`UntrustedResult` or a pending `ConfirmationDecision`. It binds the confirmation
+to the token used for the quote with HMAC-SHA-256 and a random key kept in memory
+for the executor's lifetime. The confirmation subject contains only the
+fingerprint of the token. If a resumed call uses a different token, it raises
+`ConfirmationMismatchError` even if the price is the same. The user must start
+the order again for a new quote and confirmation. Errors: `OrderError` >
 `DryRunRejectedError` (also a `GandiValidationError`, with the untrusted
 details of the dry run), `PriceChangedError`; quote, confirmation, account,
 secret store and Gandi errors pass through.

@@ -1,8 +1,10 @@
 # SPDX-FileCopyrightText: 2026 bobyone
 # SPDX-License-Identifier: GPL-2.0-or-later
-"""Run orders: quote, dry run, confirmation bound to the price, price re-check."""
+"""Run orders: quote, dry run, confirmation bound to the quote and token, price re-check."""
 
+import hmac
 import logging
+from secrets import token_bytes
 
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
@@ -40,8 +42,8 @@ class OrderExecutor:
        one given, else the account preference, else none.
     2. Quote the order.
     3. Check it with a dry run when Gandi supports one (first call only).
-    4. Ask for a confirmation bound to the operation, the account, the price, its
-       currency and the paying organization; the description shows the price.
+    4. Ask for a confirmation bound to the operation, the account, the token, the
+       price, its currency and the paying organization; the description shows the price.
     5. Quote again: any difference cancels the order.
     6. Order at the accepted price.
     """
@@ -62,6 +64,7 @@ class OrderExecutor:
         self._confirmation = confirmation
         self._quotes = quotes
         self._translator = translator
+        self._confirmation_key = token_bytes(32)
 
     async def run(
         self,
@@ -74,8 +77,8 @@ class OrderExecutor:
         """Order, or return a pending confirmation to resume with its identifier.
 
         Raises:
-            NoAccountError, AccountNotFoundError, ReadOnlyAccountError, QuoteError,
-            DryRunRejectedError, ConfirmationError, PriceChangedError,
+            NoAccountError, AccountNotFoundError, AccountChangedError, ReadOnlyAccountError,
+            QuoteError, DryRunRejectedError, ConfirmationError, PriceChangedError,
             SecretStoreError, GandiError.
         """
         account = await self._accounts.resolve(account_name)
@@ -93,12 +96,18 @@ class OrderExecutor:
             if details is not None:
                 raise DryRunRejectedError("Gandi refused the order when checking it", details)
         secret_input = operation.secret_input()
+        # Pending confirmations live in memory, so the key only needs to live
+        # as long as this executor. The subject never contains the token itself.
+        token_fingerprint = hmac.digest(
+            self._confirmation_key, token.reveal().encode("ascii"), "sha256"
+        ).hex()
         decision = await self._confirmation.confirm(
             ConfirmationRequest(
                 "@".join(
                     (
                         operation.subject(),
                         account.reference.fingerprint(),
+                        token_fingerprint,
                         str(quote.price.amount),
                         quote.price.currency,
                         str(organization or ""),

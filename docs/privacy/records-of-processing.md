@@ -40,3 +40,7 @@ The software runs on the user's computer. Its authors receive no data.
 | Transfers outside the EU | Account settings: depending on the LLM provider, as in P1. Token and identity: none. |
 | Retention | Account settings and token: until the user removes the account in the software (the token may expire earlier at Gandi). Token entry sessions and pending confirmations: in memory only, at most `token_entry.timeout_seconds` (default 10 minutes) and `confirmation.timeout_seconds` (default 5 minutes). |
 | Security measures | The token is kept in the operating system keyring only, never in a file nor in logs, and never passes through the model: it is entered in the MCP App UI through an app-only tool, or on a local page served on `127.0.0.1` only, protected by a single-use code and shown through URL elicitation or the browser, never through the model. Account settings are kept in a local preferences file without any secret, written atomically. |
+
+For a pending order confirmation, the server holds a keyed fingerprint of the
+token used for the quote in memory with the confirmation. The key is randomly
+generated and held in server memory. Neither is sent to a recipient or logged.

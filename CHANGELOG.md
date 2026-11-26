@@ -42,8 +42,9 @@ All notable changes are documented here. The format follows
   paying its orders by default. (#5)
 - Domain orders: register, renew, restore and transfer in a domain. Each order
   is priced with Gandi, checked with a dry run when possible, confirmed by the
-  user at its price (in their language) and priced again just before buying;
-  the transfer authorization code is typed on the confirmation page, never in
+  user at its price (in their language) and priced again just before buying.
+  Changing the token used for the quote requires a new confirmation.
+  The transfer authorization code is typed on the confirmation page, never in
   the conversation. (#5)
 - Domain settings: automatic renewal, transfer lock, authorization code,
   contacts and owner (details or change, checked with a dry run where possible),
