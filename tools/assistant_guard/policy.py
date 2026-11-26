@@ -18,7 +18,7 @@ PROTECTED_FILE_PATTERNS: tuple[str, ...] = (
     ".env",
     ".env.*",
     "*.env",
-    "config.toml",
+    "gandi-mcp.toml",
     "*.pem",
     "*.key",
     "*.p12",

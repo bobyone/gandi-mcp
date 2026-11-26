@@ -19,7 +19,7 @@ def test_defaults_without_configuration_file() -> None:
 
 
 def test_reads_log_level_from_file(tmp_path: Path) -> None:
-    path = tmp_path / "config.toml"
+    path = tmp_path / "gandi-mcp.toml"
     path.write_text('[logging]\nlevel = "debug"\n', encoding="utf-8")
 
     assert load_configuration(path)["logging"]["level"] == "DEBUG"
@@ -30,7 +30,7 @@ def test_reads_log_level_from_file(tmp_path: Path) -> None:
     ['[logging]\nlevel = "LOUD"\n', 'logging = "INFO"\n', "not = [toml\n"],
 )
 def test_rejects_invalid_configuration(tmp_path: Path, content: str) -> None:
-    path = tmp_path / "config.toml"
+    path = tmp_path / "gandi-mcp.toml"
     path.write_text(content, encoding="utf-8")
 
     with pytest.raises(ConfigurationError):

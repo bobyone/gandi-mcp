@@ -5,8 +5,8 @@
 .env
 .env.*
 !.env.example
-config.toml
-!config.example.toml
+gandi-mcp.toml
+!gandi-mcp.example.toml
 *.pem
 *.key
 credentials*.json

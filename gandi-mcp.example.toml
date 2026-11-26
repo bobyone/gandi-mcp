@@ -1,8 +1,8 @@
 # SPDX-FileCopyrightText: 2026 bobyone
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
-# Example configuration for gandi-mcp. Copy it to config.toml (never committed)
-# and pass it with: gandi-mcp --config config.toml
+# Example configuration for gandi-mcp. Copy it to gandi-mcp.toml (never committed)
+# and pass it with: gandi-mcp --config gandi-mcp.toml
 # Secrets (Gandi Personal Access Tokens) never go in this file: they are stored
 # in the operating system keyring.
 

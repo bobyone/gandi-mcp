@@ -10,8 +10,8 @@ description: Diagnose gandi-mcp problems (server not starting or not connected, 
    A failure here points to `uv` or the network; reinstall with the
    `gandi-mcp-install` skill.
 2. Exit status 2 at start means a configuration error: the log line names the
-   invalid key. Ask the user to compare their file with `config.example.toml`;
-   never open their `config.toml` yourself.
+   invalid key. Ask the user to compare their file with `gandi-mcp.example.toml`;
+   never open their `gandi-mcp.toml` yourself.
 3. Logs go to stderr, which the client captures:
    - Claude Code: `/mcp` shows the server status; `claude --debug` shows its
      output;

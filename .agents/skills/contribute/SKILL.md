@@ -17,7 +17,7 @@ only drives its steps with the project commands.
 4. **Branch**: `git switch -c <issue>-<short-description>`.
 5. **Implement** the validated design. If it must change, stop and propose the
    change in the issue. Update docs, glossary, translations, skills,
-   `CHANGELOG.md`, `config.example.toml`, records of processing and SPDX
+   `CHANGELOG.md`, `gandi-mcp.example.toml`, records of processing and SPDX
    headers in the same commits.
 6. **Check**: `uv run pre-commit run --all-files`. Fix failures; never bypass
    the hook.

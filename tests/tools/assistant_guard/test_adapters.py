@@ -5,10 +5,10 @@
 import json
 
 import pytest
-from tools.assistant_guard.adapters import evaluate_hook_input, render_decision
-from tools.assistant_guard.policy import MALFORMED_REASON
 
 from tools.assistant_guard import hook
+from tools.assistant_guard.adapters import evaluate_hook_input, render_decision
+from tools.assistant_guard.policy import MALFORMED_REASON
 
 
 def payload(tool_name: str, **tool_input: object) -> str:
@@ -20,7 +20,7 @@ def payload(tool_name: str, **tool_input: object) -> str:
     [
         ("claude", payload("Read", file_path="/repo/.env"), False),
         ("claude", payload("Read", file_path="/repo/.env.example"), True),
-        ("claude", payload("Edit", file_path="config.toml"), False),
+        ("claude", payload("Edit", file_path="gandi-mcp.toml"), False),
         ("claude", payload("NotebookEdit", notebook_path="a.ipynb"), True),
         ("claude", payload("Grep", pattern="TOKEN", glob=".env*"), True),
         ("claude", payload("Grep", pattern="TOKEN", path=".env"), False),

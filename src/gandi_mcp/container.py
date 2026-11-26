@@ -10,7 +10,7 @@ from gandi_mcp.protocol.server_factory import create_server
 class ApplicationContainer(containers.DeclarativeContainer):
     """Wire the application.
 
-    Configuration keys (see ``config.example.toml``):
+    Configuration keys (see ``gandi-mcp.example.toml``):
         ``app.version`` (str, required): application version, set by the entry point.
         ``logging.level`` (str, optional, default ``WARNING``): log level.
     """

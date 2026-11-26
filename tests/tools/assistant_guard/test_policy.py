@@ -3,6 +3,7 @@
 """Unit tests of the assistant guard policy."""
 
 import pytest
+
 from tools.assistant_guard.policy import MALFORMED_REASON, check_command, check_path
 
 
@@ -14,8 +15,8 @@ from tools.assistant_guard.policy import MALFORMED_REASON, check_command, check_
         r"C:\repo\.ENV",
         ".env.local",
         "prod.env",
-        "config.toml",
-        "nested/Config.TOML",
+        "gandi-mcp.toml",
+        "nested/Gandi-MCP.TOML",
         "server.pem",
         "credentials.json",
         "~/.ssh/config",
@@ -33,7 +34,16 @@ def test_protected_paths_are_denied(path: str) -> None:
 
 @pytest.mark.parametrize(
     "path",
-    [".env.example", "config.example.toml", "sub/.ENV.EXAMPLE", "id_ed25519.pub", "README.md", ""],
+    [
+        ".env.example",
+        "gandi-mcp.example.toml",
+        ".codex/config.toml",
+        "pyproject.toml",
+        "sub/.ENV.EXAMPLE",
+        "id_ed25519.pub",
+        "README.md",
+        "",
+    ],
 )
 def test_examples_and_ordinary_files_are_allowed(path: str) -> None:
     assert check_path(path).allowed
@@ -48,8 +58,8 @@ def test_non_string_path_is_malformed() -> None:
     [
         "cat .env",
         r"Get-Content -Path .\.env",
-        "type config.toml",
-        r"type C:\x\config.toml",
+        "type gandi-mcp.toml",
+        r"type C:\x\gandi-mcp.toml",
         r"Get-Content 'C:\Program Files\app\.env'",
         "grep TOKEN --file=.env",
         "git push --force",
