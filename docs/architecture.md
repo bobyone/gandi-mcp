@@ -73,11 +73,11 @@ an account. It depends on a `PreferencesStore`, a `SecretStore` and a
 | `list()` | Accounts sorted by name, as `AccountSummary` (name, environment, read-only flag, default flag; no secret). |
 | `resolve(name=None)` | The named account, else the default one. `NoAccountError`, `AccountNotFoundError`. |
 | `add(draft, token)` | Checks the name is free (`DuplicateAccountError`), verifies the token in the chosen environment (`TokenRejectedError`), stores the token, then the account; the first account becomes the default. If saving the preferences fails, the token is removed again. Returns a `VerifiedAccount` (summary and `AccountIdentity`). |
-| `rename(name, new_name)` | Keeps the token and the default flag; a case change is allowed. |
-| `set_default(name)`, `set_read_only(name, flag)` | Changes the flag. |
+| `update(name, *, new_name, read_only, make_default, expected)` | Checks everything (expected account, free name), then applies the rename, the read-only flag and the default flag in one save; a refusal changes nothing. Keeps the token; a case change of the name is allowed. |
+| `rename`, `set_default`, `set_read_only` | Shortcuts of `update`. |
 | `replace_token(name, token)` | Verifies the token in the account environment, then replaces the old one (kept when rejected). |
 | `change_environment(name, environment, token)` | Verifies the token in the new environment; restores the previous token if saving fails. |
-| `remove(name)` | Removes the token, then the account; when the secret store cannot remove the token, the account is kept so that the removal can be retried. A removed default account is replaced by the first remaining one in alphabetical order. Returns an `AccountRemoval` (`removed`, `new_default`). |
+| `remove(name)` | Removes the token, then the account; when the secret store cannot remove the token, the account is kept so that the removal can be retried, and when saving the preferences fails the token is put back, so that the account stays usable. A removed default account is replaced by the first remaining one in alphabetical order. Returns an `AccountRemoval` (`removed`, `new_default`). |
 
 `set_read_only`, `replace_token`, `change_environment` and `remove` accept an
 `expected` `AccountReference` (opaque key and environment of the account the

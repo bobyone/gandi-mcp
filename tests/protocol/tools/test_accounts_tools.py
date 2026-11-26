@@ -395,3 +395,25 @@ async def test_token_pages_are_bound_to_the_account_shown(setup: Setup) -> None:
         )
 
     assert [s.target.expected for s in setup.token_page.opened] == [reference, reference]
+
+
+async def test_a_confirmed_update_never_touches_a_replaced_account(setup: Setup) -> None:
+    await setup.accounts.add(
+        AccountDraft(AccountName("Perso"), Environment.SANDBOX, read_only=True), TOKEN
+    )
+    arguments: dict[str, Any] = {"name": "Perso", "new_name": "Home", "read_only": False}
+
+    async with client(setup) as session:
+        first = data(await session.call_tool("update_account", arguments))
+        setup.pending.answer(first["confirmation_id"], True)
+        await setup.accounts.remove(AccountName("Perso"))
+        await setup.accounts.add(
+            AccountDraft(AccountName("Perso"), Environment.SANDBOX, read_only=True), TOKEN
+        )
+        replacement = await setup.accounts.resolve()
+        resumed = await session.call_tool(
+            "update_account", {**arguments, "confirmation_id": first["confirmation_id"]}
+        )
+
+    assert resumed.is_error
+    assert await setup.accounts.resolve() == replacement

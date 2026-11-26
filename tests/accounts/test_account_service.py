@@ -348,3 +348,53 @@ async def test_unknown_account(world: World, operation: str) -> None:
 
     with pytest.raises(AccountNotFoundError):
         await call
+
+
+async def test_combined_update_is_applied_in_one_save(world: World) -> None:
+    await add(world, "Perso", "Pro")
+    saves = world.preferences.saves
+
+    summary = await world.service.update(
+        AccountName("Pro"), new_name=AccountName("Work"), read_only=True, make_default=True
+    )
+
+    assert (summary.name, summary.read_only, summary.is_default) == (
+        AccountName("Work"),
+        True,
+        True,
+    )
+    assert world.preferences.saves == saves + 1
+
+
+async def test_combined_update_changes_nothing_when_a_part_is_refused(world: World) -> None:
+    await add(world, "Perso", "Pro")
+    before = world.preferences.preferences
+
+    with pytest.raises(DuplicateAccountError):
+        await world.service.update(
+            AccountName("Pro"), new_name=AccountName("perso"), read_only=True, make_default=True
+        )
+
+    assert world.preferences.preferences == before
+
+
+async def test_update_without_change_saves_nothing(world: World) -> None:
+    await add(world, "Perso")
+    saves = world.preferences.saves
+
+    summary = await world.service.update(AccountName("Perso"), new_name=AccountName("Perso"))
+
+    assert summary.name == AccountName("Perso")
+    assert world.preferences.saves == saves
+
+
+async def test_failed_removal_keeps_a_usable_account(world: World) -> None:
+    await add(world, "Perso")
+    account = await world.service.resolve()
+    world.preferences.fail_on_save = True
+
+    with pytest.raises(PreferencesUnavailableError):
+        await world.service.remove(AccountName("Perso"))
+
+    assert await world.service.resolve() == account
+    assert world.secrets.tokens == {account.secret_key: SANDBOX_TOKEN}

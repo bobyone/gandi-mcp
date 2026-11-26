@@ -101,25 +101,49 @@ class AccountService:
             logger.info("account added (%s)", account.environment.value)
             return VerifiedAccount(AccountSummary.of(account, default), identity)
 
+    async def update(
+        self,
+        name: AccountName,
+        *,
+        new_name: AccountName | None = None,
+        read_only: bool | None = None,
+        make_default: bool = False,
+        expected: AccountReference | None = None,
+    ) -> AccountSummary:
+        """Rename an account, change its read-only flag and make it the default one.
+
+        Everything is checked first, then applied in one save: a failure changes
+        nothing. Changing only the case of the name is allowed.
+
+        Raises:
+            AccountNotFoundError, NoAccountError, DuplicateAccountError,
+            AccountChangedError (the account no longer matches ``expected``),
+            PreferencesError.
+        """
+        async with self._lock, self._preferences.transaction():
+            preferences = await self._preferences.load()
+            account = self._find(preferences, name, expected)
+            changed = account
+            if new_name is not None and new_name.value != account.name.value:
+                if new_name != account.name:
+                    self._check_free(preferences, new_name)
+                changed = changed.renamed(new_name)
+            if read_only is not None:
+                changed = replace(changed, read_only=read_only)
+            default = preferences.default_account
+            if make_default or default == account.name:
+                default = changed.name
+            if changed != account or default != preferences.default_account:
+                await self._save_replacing(preferences, account, changed, default)
+            return AccountSummary.of(changed, default)
+
     async def rename(self, name: AccountName, new_name: AccountName) -> AccountSummary:
         """Rename an account; changing only the case is allowed.
 
         Raises:
             AccountNotFoundError, DuplicateAccountError.
         """
-        async with self._lock, self._preferences.transaction():
-            preferences = await self._preferences.load()
-            account = self._find(preferences, name)
-            if new_name != account.name:
-                self._check_free(preferences, new_name)
-            renamed = account.renamed(new_name)
-            default = (
-                renamed.name
-                if preferences.default_account == account.name
-                else preferences.default_account
-            )
-            await self._save_replacing(preferences, account, renamed, default)
-            return AccountSummary.of(renamed, default)
+        return await self.update(name, new_name=new_name)
 
     async def set_default(self, name: AccountName) -> AccountSummary:
         """Make an account the default one.
@@ -127,11 +151,7 @@ class AccountService:
         Raises:
             AccountNotFoundError, NoAccountError.
         """
-        async with self._lock, self._preferences.transaction():
-            preferences = await self._preferences.load()
-            account = self._find(preferences, name)
-            await self._preferences.save(replace(preferences, default_account=account.name))
-            return AccountSummary.of(account, account.name)
+        return await self.update(name, make_default=True)
 
     async def set_read_only(
         self, name: AccountName, read_only: bool, expected: AccountReference | None = None
@@ -142,12 +162,7 @@ class AccountService:
             AccountNotFoundError, NoAccountError, AccountChangedError (the account no
             longer matches ``expected``).
         """
-        async with self._lock, self._preferences.transaction():
-            preferences = await self._preferences.load()
-            account = self._find(preferences, name, expected)
-            changed = replace(account, read_only=read_only)
-            await self._save_replacing(preferences, account, changed, preferences.default_account)
-            return AccountSummary.of(changed, preferences.default_account)
+        return await self.update(name, read_only=read_only, expected=expected)
 
     async def replace_token(
         self,
@@ -211,14 +226,14 @@ class AccountService:
         """Remove an account and its token.
 
         The token is removed first: when the secret store cannot remove it, the
-        account is kept, so that the removal can be retried. If it was the default
-        account, the first remaining account in alphabetical order becomes the
-        default one.
+        account is kept, so that the removal can be retried. When saving the
+        preferences then fails, the token is put back, so that the account stays
+        usable. If it was the default account, the first remaining account in
+        alphabetical order becomes the default one.
 
         Raises:
             AccountNotFoundError, NoAccountError, AccountChangedError,
-            SecretStoreError (nothing removed), PreferencesError (the token is
-            already removed and the account kept: retrying the removal completes it).
+            SecretStoreError, PreferencesError: nothing removed.
         """
         async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
@@ -229,8 +244,17 @@ class AccountService:
             if default == account.name:
                 default = _sorted(remaining)[0].name if remaining else None
                 new_default = default
+            try:
+                token: PersonalAccessToken | None = await self._secrets.get(account.secret_key)
+            except SecretNotFoundError:
+                token = None
             await self._forget_token(account.secret_key, missing_ok=True)
-            await self._preferences.save(Preferences(_sorted(remaining), default))
+            try:
+                await self._preferences.save(Preferences(_sorted(remaining), default))
+            except Exception:
+                if token is not None:
+                    await self._restore_token(account.secret_key, token)
+                raise
             logger.info("account removed")
             return AccountRemoval(account.name, new_default)
 
@@ -264,6 +288,12 @@ class AccountService:
     ) -> None:
         accounts = tuple(new if item is old else item for item in preferences.accounts)
         await self._preferences.save(Preferences(_sorted(accounts), default))
+
+    async def _restore_token(self, key: str, token: PersonalAccessToken) -> None:
+        try:
+            await self._secrets.put(key, token)
+        except SecretStoreError:
+            logger.error("a token could not be restored in the secret store")
 
     async def _forget_token(self, key: str, missing_ok: bool = False) -> None:
         try:

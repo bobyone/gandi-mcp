@@ -281,16 +281,13 @@ class AccountsTools(ToolModule):
             decision = await self._confirmation.confirm(request, context, confirmation_id)
             if not decision.accepted:
                 return pending(decision)
-        result = None
-        if target_name.value != account.name.value:
-            result = await self._accounts.rename(account.name, target_name)
-        if read_only is not None and read_only != account.read_only:
-            result = await self._accounts.set_read_only(target_name, read_only, account.reference)
-        if make_default:
-            result = await self._accounts.set_default(target_name)
-        if result is None:
-            listed = await self._accounts.list()
-            result = next(item for item in listed if item.name == target_name)
+        result = await self._accounts.update(
+            account.name,
+            new_name=target_name,
+            read_only=read_only,
+            make_default=make_default,
+            expected=account.reference,
+        )
         return {"status": "updated", "account": summary(result)}
 
     async def remove(

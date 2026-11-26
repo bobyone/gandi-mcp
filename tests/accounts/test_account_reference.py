@@ -86,3 +86,17 @@ async def test_token_changes_are_checked_before_calling_gandi(service: AccountSe
     with pytest.raises(AccountChangedError):
         await service.change_environment(PERSO, Environment.PRODUCTION, PRODUCTION, reference)
     assert len(verifier.calls) == calls
+
+
+async def test_a_combined_update_checks_the_account_before_any_change(
+    service: AccountService,
+) -> None:
+    reference = await stale(service)
+    replacement = await service.resolve(PERSO)
+
+    with pytest.raises(AccountChangedError):
+        await service.update(
+            PERSO, new_name=AccountName("Home"), read_only=True, expected=reference
+        )
+
+    assert await service.resolve(PERSO) == replacement
