@@ -131,6 +131,9 @@ async def test_token_form_is_translated_and_hardened(pages: Pages) -> None:
     assert "default-src 'none'" in headers["content-security-policy"]
     assert "frame-ancestors 'none'" in headers["content-security-policy"]
     assert headers["referrer-policy"] == "same-origin"
+    # The meta tag overrides the header: both must let browsers send the real Origin.
+    assert '<meta name="referrer" content="same-origin">' in response.text
+    assert "no-referrer" not in response.text
     assert headers["cache-control"] == "no-store"
     assert headers["x-frame-options"] == "DENY"
     assert "server" not in headers
@@ -289,6 +292,8 @@ async def test_confirmation_page_escapes_untrusted_data(pages: Pages) -> None:
     assert "&lt;b&gt;example.com&lt;/b&gt;" in response.text
     assert "<b>example.com" not in response.text
     assert "production" in response.text
+    assert response.headers["referrer-policy"] == "same-origin"
+    assert '<meta name="referrer" content="same-origin">' in response.text
 
 
 @pytest.mark.parametrize(("decision", "accepted"), [("confirm", True), ("refuse", False)])
