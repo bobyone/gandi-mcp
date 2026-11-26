@@ -111,7 +111,8 @@ a pending `ConfirmationDecision` to resume with its identifier.
 
 `ConfirmationService` tries its channels in order. Given a confirmation
 identifier, it resumes the pending confirmation instead (`PendingConfirmations`:
-accepted once, for the same subject, until it expires).
+accepted once, for the same subject, before its deadline, which also applies
+once it is accepted).
 Exceptions derive from `ConfirmationError`: `ConfirmationRefusedError`,
 `ConfirmationExpiredError`, `ConfirmationUnavailableError`,
 `ConfirmationMismatchError`.

@@ -104,14 +104,28 @@ def test_expiry(registry: PendingConfirmations, clock: Clock) -> None:
         registry.consume(pending.confirmation_id, "remove:perso")
 
 
-def test_answer_given_in_time_survives_the_deadline(
+def test_accepted_confirmation_is_usable_until_the_deadline(
     registry: PendingConfirmations, clock: Clock
 ) -> None:
     pending = registry.create(request())
     registry.answer(pending.confirmation_id, True)
-    clock.now += 100
+    clock.now += 299
 
     assert registry.consume(pending.confirmation_id, "remove:perso")
+
+
+@pytest.mark.parametrize("accepted", [True, False])
+def test_answered_confirmation_expires_at_the_deadline(
+    registry: PendingConfirmations, clock: Clock, accepted: bool
+) -> None:
+    pending = registry.create(request())
+    registry.answer(pending.confirmation_id, accepted)
+    clock.now += 301
+
+    with pytest.raises(ConfirmationExpiredError):
+        registry.consume(pending.confirmation_id, "remove:perso")
+    with pytest.raises(ConfirmationMismatchError):
+        registry.consume(pending.confirmation_id, "remove:perso")
 
 
 def test_unknown_and_cancelled(registry: PendingConfirmations) -> None:

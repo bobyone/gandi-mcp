@@ -22,8 +22,9 @@ class PendingConfirmations:
     """Hold pending confirmations until answered, used or expired.
 
     The user answers on the local page (:meth:`answer`); the operation then gives the
-    identifier back (:meth:`consume`), which succeeds once, for the same subject.
-    Nothing survives a restart of the server.
+    identifier back (:meth:`consume`), which succeeds once, for the same subject, before
+    the deadline: an accepted confirmation not used in time expires too. Nothing
+    survives a restart of the server.
     """
 
     def __init__(self, timeout_seconds: float, clock: Callable[[], float] = time.monotonic) -> None:
@@ -94,9 +95,9 @@ class PendingConfirmations:
         pending = self._items.get(confirmation_id)
         if pending is None:
             raise ConfirmationMismatchError("unknown or already used confirmation")
-        if pending.state is PendingState.PENDING and self._clock() > pending.deadline:
+        if self._clock() > pending.deadline:
             del self._items[confirmation_id]
-            raise ConfirmationExpiredError("the confirmation was not given in time")
+            raise ConfirmationExpiredError("the confirmation is no longer valid")
         return pending
 
     def _purge(self) -> None:
