@@ -29,7 +29,7 @@ repos:
         entry: uv run --locked python scripts/check_translations.py
         language: system
         pass_filenames: false
-        files: '\.(py|po|pot)$'
+        files: '(\.(py|po|pot)|locales\.toml)$'
       - id: reuse
         name: reuse lint
         entry: uv run --locked reuse lint

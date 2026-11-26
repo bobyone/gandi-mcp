@@ -14,7 +14,7 @@ All notable changes are documented here. The format follows
 ### Added
 
 - Project initialization: framing and technology stack ADRs, MCP server
-  skeleton over `stdio`, configuration example, translation catalogs for 43
+  skeleton over `stdio`, configuration example, translation catalogs for 42
   languages, CI on Windows, macOS and Linux, assistant guard for Claude Code
   and Codex, plugin and skills skeleton, REUSE compliance, records of
   processing. (#1)

@@ -8,25 +8,27 @@ SPDX-License-Identifier: GPL-2.0-or-later
 Server messages use gettext catalogs in
 [`src/gandi_mcp/locales/`](../../src/gandi_mcp/locales/): one
 `<locale>/LC_MESSAGES/messages.po` per language, generated from the template
-`messages.pot`. English is the source language. Adding a language needs no
-code change. The MCP App UI catalogs are described with the UI (batch 1).
+`messages.pot`. The target locales are declared in
+[`locales.toml`](../../src/gandi_mcp/locales/locales.toml). English is the
+source language and has no catalog. Adding a language needs no code change. The MCP App UI catalogs are described with the UI (batch 1).
 
 ## Add a language
 
 1. Choose its locale identifier as understood by Babel (CLDR), for example
    `pt`, `sr_Latn`, `nn`.
-2. Create its catalog:
+2. Add it to the `supported` list of `src/gandi_mcp/locales/locales.toml`.
+3. Create its catalog:
 
    ```text
    uv run pybabel init -i src/gandi_mcp/locales/messages.pot -d src/gandi_mcp/locales -l <locale>
    ```
 
-3. Translate every entry. Keep named parameters (`{name}`) unchanged; fill
-   every plural form given by the catalog header.
-4. Add a translator comment `# needs-review` to each entry until a native
+4. Translate every entry. Keep named parameters (`{name}`) unchanged in every
+   plural form given by the catalog header.
+5. Add a translator comment `# needs-review` to each entry until a native
    speaker validates it, then remove it.
-5. Run `uv run python scripts/check_translations.py`.
-6. Add the language label to the glossary columns if terms are displayed.
+6. Run `uv run python scripts/check_translations.py`.
+7. Add the language label to the glossary columns if terms are displayed.
 
 ## Fix a translation
 

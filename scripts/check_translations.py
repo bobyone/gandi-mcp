@@ -3,9 +3,11 @@
 """Check translation catalogs against the source code.
 
 Fails when:
+- a locale declared in ``locales.toml`` has no catalog, or a catalog is not declared;
 - the template (``messages.pot``) is out of date with the source code (missing or unused keys);
 - a catalog lacks a key, has an empty translation, or keeps an obsolete key;
-- a translation's named parameters differ from the source message.
+- a translation's named parameters differ from the source message, checked separately for
+  each plural form.
 
 Translations flagged ``needs-review`` (not yet validated by a native speaker) are only counted.
 
@@ -16,6 +18,7 @@ import argparse
 import logging
 import re
 import sys
+import tomllib
 from collections.abc import Iterable, Sequence
 from pathlib import Path
 
@@ -27,6 +30,7 @@ NEEDS_REVIEW = "needs-review"
 PLACEHOLDER = re.compile(r"(?<!\{)\{([A-Za-z_][A-Za-z0-9_]*)\}(?!\})")
 DEFAULT_LOCALES = Path("src/gandi_mcp/locales")
 DEFAULT_SOURCE = Path("src")
+LOCALES_FILE = "locales.toml"
 
 logger = logging.getLogger("check_translations")
 
@@ -87,11 +91,40 @@ def check_catalog(language: str, catalog: Catalog, template: Catalog) -> tuple[l
         if not all(strings):
             errors.append(f"{language}: empty translation for {key!r}")
             continue
-        if placeholders(strings) != placeholders(expected[key].id):
-            errors.append(f"{language}: parameters differ for {key!r}")
+        required = placeholders(expected[key].id)
+        errors += [
+            f"{language}: parameters differ for {key!r} in plural form {index}"
+            if len(strings) > 1
+            else f"{language}: parameters differ for {key!r}"
+            for index, text in enumerate(strings)
+            if placeholders(text) != required
+        ]
         if NEEDS_REVIEW in message.flags or any(NEEDS_REVIEW in c for c in message.user_comments):
             to_review += 1
     return errors, to_review
+
+
+def supported_locales(locales: Path) -> set[str]:
+    """Read the declared target locales."""
+    with (locales / LOCALES_FILE).open("rb") as stream:
+        declared = tomllib.load(stream).get("supported", [])
+    if not isinstance(declared, list) or not all(isinstance(item, str) for item in declared):
+        raise SystemExit(f"{LOCALES_FILE}: 'supported' must be a list of locale identifiers")
+    return set(declared)
+
+
+def check_declared_locales(declared: set[str], found: set[str]) -> list[str]:
+    """Compare declared locales with the catalogs present on disk."""
+    errors = [
+        f"{locale}: declared in {LOCALES_FILE} but has no catalog"
+        for locale in sorted(declared - found)
+    ]
+    errors += [
+        f"{locale}: catalog not declared in {LOCALES_FILE}" for locale in sorted(found - declared)
+    ]
+    if not declared:
+        errors.append(f"no locale declared in {LOCALES_FILE}")
+    return errors
 
 
 def run(locales: Path, source: Path) -> int:
@@ -100,8 +133,9 @@ def run(locales: Path, source: Path) -> int:
     errors = check_template(template, source_keys(source))
     total_review = 0
     catalogs = sorted(locales.glob("*/LC_MESSAGES/messages.po"))
-    if not catalogs:
-        errors.append(f"no catalog found under {locales}")
+    errors += check_declared_locales(
+        supported_locales(locales), {path.parents[1].name for path in catalogs}
+    )
     for path in catalogs:
         language_errors, to_review = check_catalog(
             path.parents[1].name, read_catalog(path), template
