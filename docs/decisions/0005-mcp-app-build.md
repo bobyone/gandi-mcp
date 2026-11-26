@@ -27,9 +27,9 @@ is installed with `uvx` from Git or PyPI, where Node is usually absent.
   `THIRD_PARTY_NOTICES.md` (license texts of the bundled packages, generated
   from `package-lock.json`). The pre-commit hook rebuilds it whenever `ui/`
   changes: a stale build makes the hook, hence the CI, fail.
-- The App talks to the server through app-only tools (`visibility: ["app"]`)
-  and confirms destructive actions in its own dialog (ADR 4). App-only tools
-  refuse clients that did not negotiate the MCP Apps extension.
+- The App talks to the server through app-only tools (`visibility: ["app"]`),
+  which refuse clients that did not negotiate the MCP Apps extension.
+  Destructive changes are confirmed by the server, as for the model (ADR 4).
 - The host theme drives the look: the MCP Apps style variables are mapped to
   Bootstrap CSS variables, and the host theme sets `data-bs-theme`. The
   language is the host locale, then the browser languages, then English.

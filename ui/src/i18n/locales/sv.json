@@ -45,6 +45,8 @@
   "feedback.updated": "Kontot {name} är uppdaterat.",
   "feedback.removed": "Kontot {name} är borttaget.",
   "feedback.failed": "Åtgärden misslyckades",
+  "feedback.confirmPending": "Bekräfta eller avvisa åtgärden i fönstret som gandi-mcp öppnade och välj sedan Fortsätt.",
+  "action.continue": "Fortsätt",
   "validation.name": "Använd 1 till 40 bokstäver, siffror, bindestreck eller enkla mellanslag.",
   "validation.token": "En Personal Access Token har 16 till 512 tecken utan mellanslag."
 }

@@ -45,6 +45,8 @@
   "feedback.updated": "Il conto {name} è actualisà.",
   "feedback.removed": "Il conto {name} è allontanà.",
   "feedback.failed": "L'operaziun n'è betg reussida",
+  "feedback.confirmPending": "Confermai u refusai questa operaziun en la fanestra averta da gandi-mcp e tscherni lura Cuntinuar.",
+  "action.continue": "Cuntinuar",
   "validation.name": "Duvrai 1 fin 40 bustabs, cifras, lingettas u spazis singuls.",
   "validation.token": "In Personal Access Token ha 16 fin 512 caracters, senza spazis."
 }

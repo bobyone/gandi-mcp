@@ -21,13 +21,15 @@ form or URL elicitation, some render the MCP App, some support neither.
 
 - Confirmations go through a **chain of channels** (Chain of Responsibility),
   tried in this order:
-  1. **MCP App**: an app-only tool (`visibility: ["app"]`, never shown to the
-     model) is called by the App after its own dialog; the click is the
-     confirmation.
-  2. **Elicitation**: a form elicitation naming the account, its environment
+  1. **Elicitation**: a form elicitation naming the account, its environment
      and the operation.
-  3. **Local page**: a pending confirmation is registered and its local page
+  2. **Local page**: a pending confirmation is registered and its local page
      is shown to the user; the tool returns the confirmation identifier.
+- Calls from the **MCP App** follow the same chain. The App asks the user in
+  its own dialog first, for comfort, but the server cannot check that click:
+  a client advertising MCP Apps could call app-only tools without rendering
+  the App. When the confirmation is pending, the App shows a message and a
+  Continue button that calls again with the confirmation identifier.
 - The link of a **local page** (confirmation or token entry session) is never
   returned to the model. It is offered through URL elicitation when the
   client supports it (the client shows it to the user), otherwise the server
@@ -54,18 +56,21 @@ form or URL elicitation, some render the MCP App, some support neither.
   would cut long waits.
 - **Returning the page link to the model**, which shows it to the user: a
   model with shell tools could open it and confirm on the user's behalf.
-- **Elicitation before the MCP App dialog**: asks the user twice for the same
-  action.
+- **The MCP App dialog as the confirmation** (an app-only tool call meaning
+  the user clicked): no prompt beyond the App, but the server cannot verify
+  it; rejected in review.
 
 ## Consequences
 
 - On a computer without a browser and with a client supporting neither
   elicitation nor the MCP App, destructive and billable operations cannot be
   confirmed; the error explains it.
-- Trust in app-only tools relies on the host not exposing them to the model,
-  as the MCP Apps specification requires. A client that does not render the
-  MCP App may still list them to its model: app-only tools therefore refuse
-  calls from clients that did not negotiate the MCP Apps extension.
+- App-only tools are the only ones receiving a token; they refuse clients
+  that did not negotiate the MCP Apps extension, since a client that does not
+  render the App may list them to its model. They never confirm anything by
+  themselves.
+- From the App, removing an account or allowing writes asks the user twice:
+  in the App dialog, then in the client dialog or the local page.
 - From protocol revision 2026-07-28, a server cannot send requests to the
   client during a tool call: elicitation goes through input-required results.
   That path is not implemented yet; on such sessions elicitation is treated as

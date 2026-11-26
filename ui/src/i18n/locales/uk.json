@@ -45,6 +45,8 @@
   "feedback.updated": "Обліковий запис {name} оновлено.",
   "feedback.removed": "Обліковий запис {name} видалено.",
   "feedback.failed": "Операція не вдалася",
+  "feedback.confirmPending": "Підтвердьте або відхиліть цю операцію у вікні, яке відкрив gandi-mcp, потім виберіть «Продовжити».",
+  "action.continue": "Продовжити",
   "validation.name": "Використовуйте від 1 до 40 літер, цифр, дефісів або одиночних пробілів.",
   "validation.token": "Personal Access Token містить від 16 до 512 символів без пробілів."
 }

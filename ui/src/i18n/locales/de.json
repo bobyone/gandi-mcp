@@ -45,6 +45,8 @@
   "feedback.updated": "Das Konto {name} ist aktualisiert.",
   "feedback.removed": "Das Konto {name} ist entfernt.",
   "feedback.failed": "Der Vorgang ist fehlgeschlagen",
+  "feedback.confirmPending": "Bestätigen oder lehnen Sie diesen Vorgang in dem von gandi-mcp geöffneten Fenster ab und wählen Sie dann Fortfahren.",
+  "action.continue": "Fortfahren",
   "validation.name": "Verwenden Sie 1 bis 40 Buchstaben, Ziffern, Bindestriche oder einzelne Leerzeichen.",
   "validation.token": "Ein Personal Access Token hat 16 bis 512 Zeichen ohne Leerzeichen."
 }

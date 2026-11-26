@@ -45,6 +45,8 @@
   "feedback.updated": "ანგარიში {name} განახლებულია.",
   "feedback.removed": "ანგარიში {name} წაშლილია.",
   "feedback.failed": "ოპერაცია ვერ შესრულდა",
+  "feedback.confirmPending": "დაადასტურეთ ან უარყავით ეს ოპერაცია gandi-mcp-ის მიერ გახსნილ ფანჯარაში, შემდეგ აირჩიეთ „გაგრძელება“.",
+  "action.continue": "გაგრძელება",
   "validation.name": "გამოიყენეთ 1-დან 40-მდე ასო, ციფრი, დეფისი ან ერთეული ჰარი.",
   "validation.token": "Personal Access Token შედგება 16-დან 512-მდე სიმბოლოსგან, ჰარების გარეშე."
 }

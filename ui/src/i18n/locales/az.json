@@ -45,6 +45,8 @@
   "feedback.updated": "{name} hesabı yeniləndi.",
   "feedback.removed": "{name} hesabı silindi.",
   "feedback.failed": "Əməliyyat uğursuz oldu",
+  "feedback.confirmPending": "Bu əməliyyatı gandi-mcp-nin açdığı pəncərədə təsdiqləyin və ya rədd edin, sonra Davam et düyməsini seçin.",
+  "action.continue": "Davam et",
   "validation.name": "1-dən 40-a qədər hərf, rəqəm, defis və ya tək boşluq istifadə edin.",
   "validation.token": "Personal Access Token boşluqsuz 16-dan 512-yə qədər simvoldan ibarətdir."
 }

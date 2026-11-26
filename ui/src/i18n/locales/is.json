@@ -45,6 +45,8 @@
   "feedback.updated": "Reikningurinn {name} er uppfærður.",
   "feedback.removed": "Reikningurinn {name} er fjarlægður.",
   "feedback.failed": "Aðgerðin mistókst",
+  "feedback.confirmPending": "Staðfestu eða hafnaðu þessari aðgerð í glugganum sem gandi-mcp opnaði og veldu svo Halda áfram.",
+  "action.continue": "Halda áfram",
   "validation.name": "Notaðu 1 til 40 bókstafi, tölustafi, bandstrik eða stök bil.",
   "validation.token": "Personal Access Token hefur 16 til 512 stafi, án bila."
 }

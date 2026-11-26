@@ -45,6 +45,8 @@
   "feedback.updated": "Учётная запись {name} обновлена.",
   "feedback.removed": "Учётная запись {name} удалена.",
   "feedback.failed": "Операция не удалась",
+  "feedback.confirmPending": "Подтвердите или отклоните эту операцию в окне, которое открыл gandi-mcp, затем выберите «Продолжить».",
+  "action.continue": "Продолжить",
   "validation.name": "Используйте от 1 до 40 букв, цифр, дефисов или одиночных пробелов.",
   "validation.token": "Personal Access Token содержит от 16 до 512 символов без пробелов."
 }

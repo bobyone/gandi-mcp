@@ -8,7 +8,6 @@ import pytest
 
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.environment import Environment
-from gandi_mcp.confirmation.channels.app_channel import AppChannel
 from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChannel
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_context import ConfirmationContext
@@ -60,22 +59,10 @@ def chain() -> Chain:
         SourceTranslator(),
     )
     channels = [
-        AppChannel(),
         ElicitationChannel(translator),
         LocalLinkChannel(pending, page, LinkPresenter(browser), translator),
     ]
     return Chain(ConfirmationService(channels, pending), pending, page, browser, translator)
-
-
-async def test_app_calls_are_already_confirmed(chain: Chain) -> None:
-    interaction = ScriptedInteraction()
-
-    decision = await chain.service.confirm(
-        request(), ConfirmationContext(interaction, from_app=True)
-    )
-
-    assert decision.accepted
-    assert interaction.questions == []
 
 
 @pytest.mark.parametrize(
@@ -165,7 +152,7 @@ async def test_a_model_given_identifier_is_not_a_confirmation(chain: Chain) -> N
 
 
 async def test_no_channel(chain: Chain) -> None:
-    service = ConfirmationService([AppChannel()], chain.pending)
+    service = ConfirmationService([ElicitationChannel(chain.translator)], chain.pending)
 
     with pytest.raises(ConfirmationUnavailableError):
         await service.confirm(request(), ConfirmationContext())

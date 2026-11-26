@@ -45,6 +45,8 @@
   "feedback.updated": "Налог {name} је ажуриран.",
   "feedback.removed": "Налог {name} је уклоњен.",
   "feedback.failed": "Операција није успела",
+  "feedback.confirmPending": "Потврдите или одбијте ову операцију у прозору који је отворио gandi-mcp, затим изаберите Настави.",
+  "action.continue": "Настави",
   "validation.name": "Користите од 1 до 40 слова, цифара, цртица или појединачних размака.",
   "validation.token": "Personal Access Token има од 16 до 512 знакова, без размака."
 }

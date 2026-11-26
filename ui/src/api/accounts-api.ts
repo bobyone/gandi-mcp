@@ -5,22 +5,30 @@ import type {
   AccountChanges,
   AccountDraft,
   Environment,
+  PendingConfirmation,
   VerifiedAccount,
 } from "./account";
 
 /**
  * Account operations offered to the MCP App. Every operation rejects with an
- * `AccountsError` carrying a message for the user.
+ * `AccountsError` carrying a message for the user. A confirmation given in the App
+ * itself is not enough: the server asks the user again, outside the App.
  */
 export interface AccountsApi {
   list(): Promise<Account[]>;
   add(draft: AccountDraft, token: string): Promise<VerifiedAccount>;
-  update(name: string, changes: AccountChanges): Promise<Account>;
+  /** Allowing writes is confirmed by the user: the change may come back pending. */
+  update(
+    name: string,
+    changes: AccountChanges,
+    confirmationId?: string,
+  ): Promise<Account | PendingConfirmation>;
   replaceToken(name: string, token: string): Promise<VerifiedAccount>;
   changeEnvironment(
     name: string,
     environment: Environment,
     token: string,
   ): Promise<VerifiedAccount>;
-  remove(name: string): Promise<void>;
+  /** Removing is confirmed by the user: it may come back pending. */
+  remove(name: string, confirmationId?: string): Promise<PendingConfirmation | null>;
 }

@@ -45,6 +45,8 @@
   "feedback.updated": "Konts {name} ir atjaunināts.",
   "feedback.removed": "Konts {name} ir noņemts.",
   "feedback.failed": "Darbība neizdevās",
+  "feedback.confirmPending": "Apstipriniet vai noraidiet šo darbību logā, ko atvēra gandi-mcp, pēc tam izvēlieties Turpināt.",
+  "action.continue": "Turpināt",
   "validation.name": "Izmantojiet no 1 līdz 40 burtiem, cipariem, defisēm vai atsevišķām atstarpēm.",
   "validation.token": "Personal Access Token ir no 16 līdz 512 rakstzīmēm bez atstarpēm."
 }

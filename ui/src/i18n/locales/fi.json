@@ -45,6 +45,8 @@
   "feedback.updated": "Tili {name} on päivitetty.",
   "feedback.removed": "Tili {name} on poistettu.",
   "feedback.failed": "Toiminto epäonnistui",
+  "feedback.confirmPending": "Vahvista tai hylkää tämä toiminto gandi-mcp:n avaamassa ikkunassa ja valitse sitten Jatka.",
+  "action.continue": "Jatka",
   "validation.name": "Käytä 1–40 kirjainta, numeroa, yhdysmerkkiä tai yksittäistä välilyöntiä.",
   "validation.token": "Personal Access Tokenissa on 16–512 merkkiä ilman välilyöntejä."
 }

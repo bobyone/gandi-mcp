@@ -45,6 +45,8 @@
   "feedback.updated": "Účet {name} je aktualizován.",
   "feedback.removed": "Účet {name} je odebrán.",
   "feedback.failed": "Operace se nezdařila",
+  "feedback.confirmPending": "Potvrďte nebo odmítněte tuto operaci v okně, které otevřel gandi-mcp, a pak zvolte Pokračovat.",
+  "action.continue": "Pokračovat",
   "validation.name": "Použijte 1 až 40 písmen, číslic, spojovníků nebo jednotlivých mezer.",
   "validation.token": "Personal Access Token má 16 až 512 znaků bez mezer."
 }

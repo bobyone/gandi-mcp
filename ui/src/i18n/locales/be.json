@@ -45,6 +45,8 @@
   "feedback.updated": "Уліковы запіс {name} абноўлены.",
   "feedback.removed": "Уліковы запіс {name} выдалены.",
   "feedback.failed": "Аперацыя не ўдалася",
+  "feedback.confirmPending": "Пацвердзіце або адхіліце гэту аперацыю ў акне, адкрытым gandi-mcp, затым выберыце «Працягнуць».",
+  "action.continue": "Працягнуць",
   "validation.name": "Выкарыстоўвайце ад 1 да 40 літар, лічбаў, злучкоў або адзінарных прабелаў.",
   "validation.token": "Personal Access Token мае ад 16 да 512 знакаў без прабелаў."
 }

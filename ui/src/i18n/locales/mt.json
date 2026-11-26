@@ -45,6 +45,8 @@
   "feedback.updated": "Il-kont {name} ġie aġġornat.",
   "feedback.removed": "Il-kont {name} tneħħa.",
   "feedback.failed": "L-operazzjoni falliet",
+  "feedback.confirmPending": "Ikkonferma jew irrifjuta din l-operazzjoni fit-tieqa li fetaħ gandi-mcp, imbagħad agħżel Kompli.",
+  "action.continue": "Kompli",
   "validation.name": "Uża minn 1 sa 40 ittra, ċifra, sing jew spazju wieħed.",
   "validation.token": "Personal Access Token għandu minn 16 sa 512-il karattru, mingħajr spazji."
 }

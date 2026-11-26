@@ -45,6 +45,8 @@
   "feedback.updated": "Contul {name} a fost actualizat.",
   "feedback.removed": "Contul {name} a fost eliminat.",
   "feedback.failed": "Operațiunea a eșuat",
+  "feedback.confirmPending": "Confirmați sau refuzați această operațiune în fereastra deschisă de gandi-mcp, apoi selectați Continuați.",
+  "action.continue": "Continuați",
   "validation.name": "Folosiți între 1 și 40 de litere, cifre, cratime sau spații simple.",
   "validation.token": "Un Personal Access Token are între 16 și 512 caractere, fără spații."
 }

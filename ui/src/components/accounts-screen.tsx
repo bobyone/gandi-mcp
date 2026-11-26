@@ -8,7 +8,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
 import { useTranslation } from "react-i18next";
-import { AccountsError, type Account } from "../api/account";
+import { AccountsError, isPending, type Account, type AccountChanges } from "../api/account";
 import type { AccountsApi } from "../api/accounts-api";
 import { AccountForm, type AccountFormValues } from "./account-form";
 import { ConfirmDialog } from "./confirm-dialog";
@@ -23,6 +23,11 @@ type Dialog =
 
 type Feedback = { variant: "success"; text: string } | { variant: "danger"; text: string };
 
+/** A change the server asked the user to confirm outside the App. */
+type Pending =
+  | { kind: "remove"; account: Account; confirmationId: string }
+  | { kind: "update"; account: Account; changes: AccountChanges; confirmationId: string };
+
 export interface AccountsScreenProps {
   readonly api: AccountsApi;
 }
@@ -34,6 +39,7 @@ export function AccountsScreen({ api }: AccountsScreenProps) {
   const [dialog, setDialog] = useState<Dialog | null>(null);
   const [busy, setBusy] = useState(false);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
+  const [pending, setPending] = useState<Pending | null>(null);
 
   const failure = useCallback(
     (error: unknown) => {
@@ -69,13 +75,15 @@ export function AccountsScreen({ api }: AccountsScreenProps) {
     };
   }, [api, failure]);
 
-  async function run(action: () => Promise<string>) {
+  /** Run a change; it returns its success text, or null while a confirmation is pending. */
+  async function run(action: () => Promise<string | null>) {
     setBusy(true);
     setFeedback(null);
+    setPending(null);
     try {
       const text = await action();
       setDialog(null);
-      setFeedback({ variant: "success", text });
+      if (text !== null) setFeedback({ variant: "success", text });
       await reload();
     } catch (error) {
       setDialog(null);
@@ -101,18 +109,31 @@ export function AccountsScreen({ api }: AccountsScreenProps) {
     });
   }
 
-  function update(account: Account, changes: Parameters<AccountsApi["update"]>[1]) {
+  function update(account: Account, changes: AccountChanges, confirmationId?: string) {
     void run(async () => {
-      const updated = await api.update(account.name, changes);
+      const updated = await api.update(account.name, changes, confirmationId);
+      if (isPending(updated)) {
+        setPending({ kind: "update", account, changes, ...updated });
+        return null;
+      }
       return t("feedback.updated", { name: updated.name });
     });
   }
 
-  function remove(account: Account) {
+  function remove(account: Account, confirmationId?: string) {
     void run(async () => {
-      await api.remove(account.name);
+      const result = await api.remove(account.name, confirmationId);
+      if (result !== null) {
+        setPending({ kind: "remove", account, ...result });
+        return null;
+      }
       return t("feedback.removed", { name: account.name });
     });
+  }
+
+  function resume(waiting: Pending) {
+    if (waiting.kind === "remove") remove(waiting.account, waiting.confirmationId);
+    else update(waiting.account, waiting.changes, waiting.confirmationId);
   }
 
   const cancel = () => {
@@ -133,6 +154,20 @@ export function AccountsScreen({ api }: AccountsScreenProps) {
         </Button>
       </div>
       <div aria-live="polite">
+        {pending && (
+          <Alert variant="info">
+            <p className="mb-2">{t("feedback.confirmPending")}</p>
+            <Button
+              variant="primary"
+              disabled={busy}
+              onClick={() => {
+                resume(pending);
+              }}
+            >
+              {t("action.continue")}
+            </Button>
+          </Alert>
+        )}
         {feedback && (
           <Alert
             variant={feedback.variant}

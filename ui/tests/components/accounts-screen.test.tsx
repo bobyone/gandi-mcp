@@ -31,7 +31,7 @@ function fakeApi(accounts: Account[] = [PERSO, PRO]) {
     changeEnvironment: vi
       .fn<AccountsApi["changeEnvironment"]>()
       .mockResolvedValue({ account: PERSO, username: "ada" }),
-    remove: vi.fn<AccountsApi["remove"]>().mockResolvedValue(undefined),
+    remove: vi.fn<AccountsApi["remove"]>().mockResolvedValue(null),
   } satisfies AccountsApi;
 }
 
@@ -158,7 +158,7 @@ describe("AccountsScreen", () => {
     await user.type(input, "Home");
     await user.click(screen.getByRole("button", { name: "Save" }));
 
-    expect(api.update).toHaveBeenCalledWith("Perso", { newName: "Home" });
+    expect(api.update).toHaveBeenCalledWith("Perso", { newName: "Home" }, undefined);
     expect(await screen.findByText("The account Pro is updated.")).toBeInTheDocument();
   });
 
@@ -204,14 +204,14 @@ describe("AccountsScreen", () => {
     await user.click(
       (await openActions(user, "Perso")).getByRole("button", { name: "Make read-only" }),
     );
-    expect(api.update).toHaveBeenCalledWith("Perso", { readOnly: true });
+    expect(api.update).toHaveBeenCalledWith("Perso", { readOnly: true }, undefined);
 
     await user.click(
       (await openActions(user, "Pro")).getByRole("button", { name: "Allow writes" }),
     );
     const dialog = await screen.findByRole("dialog", { name: "Allow writes on Pro?" });
     await user.click(within(dialog).getByRole("button", { name: "Allow writes" }));
-    expect(api.update).toHaveBeenCalledWith("Pro", { readOnly: false });
+    expect(api.update).toHaveBeenCalledWith("Pro", { readOnly: false }, undefined);
   });
 
   it("asks before removing an account", async () => {
@@ -223,7 +223,7 @@ describe("AccountsScreen", () => {
     expect(dialog).toHaveTextContent("Nothing changes at Gandi.");
     await user.click(within(dialog).getByRole("button", { name: "Remove" }));
 
-    expect(api.remove).toHaveBeenCalledWith("Pro");
+    expect(api.remove).toHaveBeenCalledWith("Pro", undefined);
     expect(await screen.findByText("The account Pro is removed.")).toBeInTheDocument();
   });
 
@@ -238,6 +238,40 @@ describe("AccountsScreen", () => {
 
     expect(await screen.findByRole("alert")).toHaveTextContent("keyring of the system");
     expect(screen.getByRole("button", { name: "Actions for Pro" })).toBeInTheDocument();
+  });
+
+  it("waits for the confirmation asked outside the App before removing", async () => {
+    const api = fakeApi();
+    api.remove.mockResolvedValueOnce({ confirmationId: "c-1" });
+    const user = show(api);
+
+    await user.click((await openActions(user, "Pro")).getByRole("button", { name: "Remove" }));
+    const dialog = await screen.findByRole("dialog", { name: "Remove the account Pro?" });
+    await user.click(within(dialog).getByRole("button", { name: "Remove" }));
+
+    expect(await screen.findByText(/in the window opened by gandi-mcp/)).toBeInTheDocument();
+    expect(screen.queryByText("The account Pro is removed.")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+
+    expect(api.remove).toHaveBeenLastCalledWith("Pro", "c-1");
+    expect(await screen.findByText("The account Pro is removed.")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Continue" })).not.toBeInTheDocument();
+  });
+
+  it("waits for the confirmation before allowing writes", async () => {
+    const api = fakeApi();
+    api.update.mockResolvedValueOnce({ confirmationId: "c-2" });
+    const user = show(api);
+
+    await user.click(
+      (await openActions(user, "Pro")).getByRole("button", { name: "Allow writes" }),
+    );
+    const dialog = await screen.findByRole("dialog", { name: "Allow writes on Pro?" });
+    await user.click(within(dialog).getByRole("button", { name: "Allow writes" }));
+    await user.click(await screen.findByRole("button", { name: "Continue" }));
+
+    expect(api.update).toHaveBeenLastCalledWith("Pro", { readOnly: false }, "c-2");
+    expect(await screen.findByText("The account Pro is updated.")).toBeInTheDocument();
   });
 
   it("offers no set-as-default action for the default account", async () => {

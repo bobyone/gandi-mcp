@@ -45,6 +45,8 @@
   "feedback.updated": "L'account {name} è aggiornato.",
   "feedback.removed": "L'account {name} è rimosso.",
   "feedback.failed": "L'operazione non è riuscita",
+  "feedback.confirmPending": "Conferma o rifiuta questa operazione nella finestra aperta da gandi-mcp, poi seleziona Continua.",
+  "action.continue": "Continua",
   "validation.name": "Usa da 1 a 40 lettere, cifre, trattini o spazi singoli.",
   "validation.token": "Un Personal Access Token ha da 16 a 512 caratteri, senza spazi."
 }

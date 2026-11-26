@@ -5,6 +5,7 @@ import type {
   AccountChanges,
   AccountDraft,
   Environment,
+  PendingConfirmation,
   VerifiedAccount,
 } from "../account";
 import { AccountsError } from "../account";
@@ -33,6 +34,12 @@ function account(wire: WireAccount): Account {
     readOnly: wire.read_only,
     isDefault: wire.is_default,
   };
+}
+
+function pending(result: Record<string, unknown>): PendingConfirmation | null {
+  return result.status === "confirmation_pending"
+    ? { confirmationId: String(result.confirmation_id) }
+    : null;
 }
 
 function errorText(content: unknown[] | undefined): string {
@@ -66,14 +73,19 @@ export class McpAccountsApi implements AccountsApi {
     );
   }
 
-  async update(name: string, changes: AccountChanges): Promise<Account> {
+  async update(
+    name: string,
+    changes: AccountChanges,
+    confirmationId?: string,
+  ): Promise<Account | PendingConfirmation> {
     const result = await this.call("app_update_account", {
       name,
+      ...(confirmationId !== undefined && { confirmation_id: confirmationId }),
       ...(changes.newName !== undefined && { new_name: changes.newName }),
       ...(changes.readOnly !== undefined && { read_only: changes.readOnly }),
       ...(changes.makeDefault !== undefined && { make_default: changes.makeDefault }),
     });
-    return account(result.account as WireAccount);
+    return pending(result) ?? account(result.account as WireAccount);
   }
 
   async replaceToken(name: string, token: string): Promise<VerifiedAccount> {
@@ -90,8 +102,13 @@ export class McpAccountsApi implements AccountsApi {
     );
   }
 
-  async remove(name: string): Promise<void> {
-    await this.call("app_remove_account", { name });
+  async remove(name: string, confirmationId?: string): Promise<PendingConfirmation | null> {
+    return pending(
+      await this.call("app_remove_account", {
+        name,
+        ...(confirmationId !== undefined && { confirmation_id: confirmationId }),
+      }),
+    );
   }
 
   private verified(result: Record<string, unknown>): VerifiedAccount {

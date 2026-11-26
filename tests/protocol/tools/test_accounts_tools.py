@@ -15,7 +15,6 @@ from gandi_mcp.accounts.account_draft import AccountDraft
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
-from gandi_mcp.confirmation.channels.app_channel import AppChannel
 from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChannel
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
@@ -83,7 +82,6 @@ def setup() -> Setup:
     token_page = FakeTokenEntryPage()
     confirmation = ConfirmationService(
         [
-            AppChannel(),
             ElicitationChannel(translator),
             LocalLinkChannel(pending, FakeConfirmationPage(), presenter, translator),
         ],

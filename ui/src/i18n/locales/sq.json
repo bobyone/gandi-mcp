@@ -45,6 +45,8 @@
   "feedback.updated": "Llogaria {name} u përditësua.",
   "feedback.removed": "Llogaria {name} u hoq.",
   "feedback.failed": "Veprimi dështoi",
+  "feedback.confirmPending": "Konfirmoni ose refuzoni këtë veprim në dritaren që hapi gandi-mcp, pastaj zgjidhni Vazhdo.",
+  "action.continue": "Vazhdo",
   "validation.name": "Përdorni nga 1 deri në 40 shkronja, shifra, viza ose hapësira të vetme.",
   "validation.token": "Një Personal Access Token ka nga 16 deri në 512 karaktere, pa hapësira."
 }

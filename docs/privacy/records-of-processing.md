@@ -25,7 +25,7 @@ The software runs on the user's computer. Its authors receive no data.
 | Recipients | Gandi SAS (France), service provider of the controller; the provider of the LLM used by the MCP client (for example Anthropic or OpenAI), which receives tool results. |
 | Transfers outside the EU | Depending on the LLM provider: [for example United States, under the provider's data processing terms and transfer mechanism]. Gandi processes data in the EU. |
 | Retention | The software stores no Gandi data: it fetches it on demand and keeps it in memory for the duration of a tool call. Retention by the LLM provider follows its own policy and the client's settings: [to complete]. |
-| Security measures | HTTPS to the Gandi API; logs contain no personal data nor secret; tool results are marked as untrusted data; destructive and billable operations require the user's confirmation, given outside the model (MCP App dialog, elicitation or local page); read-only accounts refuse every write operation. |
+| Security measures | HTTPS to the Gandi API; logs contain no personal data nor secret; tool results are marked as untrusted data; destructive and billable operations require the user's confirmation, given outside the model and checked by the server (elicitation or local page); read-only accounts refuse every write operation. |
 
 ## P2. Management of the accounts and their Personal Access Tokens
 

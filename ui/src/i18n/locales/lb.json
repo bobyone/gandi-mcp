@@ -45,6 +45,8 @@
   "feedback.updated": "De Kont {name} ass aktualiséiert.",
   "feedback.removed": "De Kont {name} ass ewechgeholl.",
   "feedback.failed": "D'Operatioun ass feelgeschloen",
+  "feedback.confirmPending": "Confirméiert oder refuséiert dës Operatioun an der Fënster, déi gandi-mcp opgemaach huet, a wielt dann Weider.",
+  "action.continue": "Weider",
   "validation.name": "Benotzt 1 bis 40 Buschtawen, Zifferen, Bindestricher oder eenzel Espacen.",
   "validation.token": "E Personal Access Token huet 16 bis 512 Zeechen, ouni Espacen."
 }

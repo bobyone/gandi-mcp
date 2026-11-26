@@ -45,6 +45,8 @@
   "feedback.updated": "Ο λογαριασμός {name} ενημερώθηκε.",
   "feedback.removed": "Ο λογαριασμός {name} αφαιρέθηκε.",
   "feedback.failed": "Η λειτουργία απέτυχε",
+  "feedback.confirmPending": "Επιβεβαιώστε ή απορρίψτε αυτή τη λειτουργία στο παράθυρο που άνοιξε το gandi-mcp και, στη συνέχεια, επιλέξτε Συνέχεια.",
+  "action.continue": "Συνέχεια",
   "validation.name": "Χρησιμοποιήστε 1 έως 40 γράμματα, ψηφία, παύλες ή μονά κενά.",
   "validation.token": "Ένα Personal Access Token έχει 16 έως 512 χαρακτήρες, χωρίς κενά."
 }

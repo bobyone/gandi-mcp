@@ -206,7 +206,7 @@ class AccountsTools(ToolModule):
                 new_name=new_name,
                 read_only=read_only,
                 make_default=make_default,
-                context=self._context(ctx),
+                context=self.context(ctx),
                 confirmation_id=confirmation_id,
             )
         )
@@ -255,7 +255,7 @@ class AccountsTools(ToolModule):
         confirmation_id: ConfirmationParameter = None,
     ) -> dict[str, Any]:
         """Remove an account after the user's confirmation."""
-        return await self._guard(lambda: self.remove(name, self._context(ctx), confirmation_id))
+        return await self._guard(lambda: self.remove(name, self.context(ctx), confirmation_id))
 
     async def update(
         self,
@@ -336,10 +336,9 @@ class AccountsTools(ToolModule):
             "next_step": PAGE_SHOWN_NEXT_STEP,
         }
 
-    def _context(self, ctx: Context[Any, Any]) -> ConfirmationContext:
-        return ConfirmationContext(
-            McpUserInteraction(ctx), from_app=False, locale=self._translator.default_locale
-        )
+    def context(self, ctx: Context[Any, Any]) -> ConfirmationContext:
+        """How the user can be reached for this call: elicitation, else a local page."""
+        return ConfirmationContext(McpUserInteraction(ctx), locale=self._translator.default_locale)
 
     async def _guard(self, action: Callable[[], Awaitable[dict[str, Any]]]) -> dict[str, Any]:
         try:

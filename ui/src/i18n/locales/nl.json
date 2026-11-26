@@ -45,6 +45,8 @@
   "feedback.updated": "Het account {name} is bijgewerkt.",
   "feedback.removed": "Het account {name} is verwijderd.",
   "feedback.failed": "De bewerking is mislukt",
+  "feedback.confirmPending": "Bevestig of weiger deze bewerking in het venster dat gandi-mcp heeft geopend en kies daarna Doorgaan.",
+  "action.continue": "Doorgaan",
   "validation.name": "Gebruik 1 tot 40 letters, cijfers, koppeltekens of enkele spaties.",
   "validation.token": "Een Personal Access Token heeft 16 tot 512 tekens, zonder spaties."
 }

@@ -13,11 +13,8 @@ class ConfirmationContext:
 
     Attributes:
         interaction: Elicitation of the MCP client, when it supports some.
-        from_app: Whether the call comes from an app-only tool of the MCP App, whose
-            dialog the user has already confirmed.
         locale: Language of the user, when known.
     """
 
     interaction: UserInteraction | None = None
-    from_app: bool = False
     locale: str | None = None

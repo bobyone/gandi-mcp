@@ -45,6 +45,8 @@
   "feedback.updated": "Kontoen {name} er oppdatert.",
   "feedback.removed": "Kontoen {name} er fjerna.",
   "feedback.failed": "Handlinga mislukkast",
+  "feedback.confirmPending": "Stadfest eller avvis operasjonen i vindauget gandi-mcp opna, og vel deretter Hald fram.",
+  "action.continue": "Hald fram",
   "validation.name": "Bruk 1 til 40 bokstavar, siffer, bindestrekar eller enkle mellomrom.",
   "validation.token": "Eit Personal Access Token har 16 til 512 teikn utan mellomrom."
 }

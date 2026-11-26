@@ -45,6 +45,8 @@
   "feedback.updated": "{name} hesabı güncellendi.",
   "feedback.removed": "{name} hesabı kaldırıldı.",
   "feedback.failed": "İşlem başarısız oldu",
+  "feedback.confirmPending": "Bu işlemi gandi-mcp'nin açtığı pencerede onaylayın veya reddedin, ardından Devam'ı seçin.",
+  "action.continue": "Devam",
   "validation.name": "1 ile 40 arasında harf, rakam, kısa çizgi veya tek boşluk kullanın.",
   "validation.token": "Personal Access Token boşluksuz 16 ile 512 karakterden oluşur."
 }

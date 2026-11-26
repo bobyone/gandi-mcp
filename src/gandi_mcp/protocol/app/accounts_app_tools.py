@@ -15,7 +15,6 @@ from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.accounts.verified_account import VerifiedAccount
-from gandi_mcp.confirmation.confirmation_context import ConfirmationContext
 from gandi_mcp.i18n.translator import Translator
 from gandi_mcp.protocol.app.app_resource import APP_URI, register_app_resource
 from gandi_mcp.protocol.app_module import AppModule
@@ -23,6 +22,7 @@ from gandi_mcp.protocol.error_presenter import AppOnlyToolError
 from gandi_mcp.protocol.tools.accounts_tools import (
     AccountNameParameter,
     AccountsTools,
+    ConfirmationParameter,
     EnvironmentParameter,
     summary,
 )
@@ -43,7 +43,9 @@ class AccountsAppTools(AppModule):
 
     App-only tools are refused unless the client negotiated the MCP Apps extension:
     a client that does not render the App could list them to its model (ADR 4). The
-    App confirms destructive actions in its own dialog before calling them.
+    App asks the user in its own dialog first, but that click cannot be checked by
+    the server: removing an account and allowing writes are confirmed like for
+    the model, through elicitation or a local page (ADR 4).
     """
 
     def __init__(
@@ -79,7 +81,7 @@ class AccountsAppTools(AppModule):
             (self.app_change_account_environment, "Move an account with a new token.", remote),
             (
                 self.app_remove_account,
-                "Remove an account confirmed in the app.",
+                "Remove an account, once the user confirmed it.",
                 local.model_copy(update={"destructive_hint": True}),
             ),
         ]
@@ -124,8 +126,9 @@ class AccountsAppTools(AppModule):
         new_name: str | None = None,
         read_only: bool | None = None,
         make_default: bool = False,
+        confirmation_id: ConfirmationParameter = None,
     ) -> dict[str, Any]:
-        """Change an account; the App asked the user before allowing writes."""
+        """Change an account; allowing writes is confirmed by the user first."""
         return await self._app(
             ctx,
             lambda: self._tools.update(
@@ -133,7 +136,8 @@ class AccountsAppTools(AppModule):
                 new_name=new_name,
                 read_only=read_only,
                 make_default=make_default,
-                context=self._context(),
+                context=self._tools.context(ctx),
+                confirmation_id=confirmation_id,
             ),
         )
 
@@ -168,13 +172,15 @@ class AccountsAppTools(AppModule):
         return await self._app(ctx, run)
 
     async def app_remove_account(
-        self, name: AccountNameParameter, ctx: Context[Any, Any]
+        self,
+        name: AccountNameParameter,
+        ctx: Context[Any, Any],
+        confirmation_id: ConfirmationParameter = None,
     ) -> dict[str, Any]:
-        """Remove an account; the App asked the user first."""
-        return await self._app(ctx, lambda: self._tools.remove(name, self._context()))
-
-    def _context(self) -> ConfirmationContext:
-        return ConfirmationContext(from_app=True, locale=self._translator.default_locale)
+        """Remove an account once the user confirmed it."""
+        return await self._app(
+            ctx, lambda: self._tools.remove(name, self._tools.context(ctx), confirmation_id)
+        )
 
     async def _app(
         self, ctx: Context[Any, Any], action: Callable[[], Awaitable[dict[str, Any]]]

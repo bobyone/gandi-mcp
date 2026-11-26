@@ -45,6 +45,8 @@
   "feedback.updated": "Konto {name} on uuendatud.",
   "feedback.removed": "Konto {name} on eemaldatud.",
   "feedback.failed": "Toiming nurjus",
+  "feedback.confirmPending": "Kinnitage või lükake see toiming tagasi gandi-mcp avatud aknas ja valige seejärel Jätka.",
+  "action.continue": "Jätka",
   "validation.name": "Kasutage 1 kuni 40 tähte, numbrit, sidekriipsu või üksikut tühikut.",
   "validation.token": "Personal Access Tokenis on 16 kuni 512 märki, tühikuteta."
 }

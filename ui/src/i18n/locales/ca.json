@@ -45,6 +45,8 @@
   "feedback.updated": "El compte {name} s'ha actualitzat.",
   "feedback.removed": "El compte {name} s'ha suprimit.",
   "feedback.failed": "L'operació ha fallat",
+  "feedback.confirmPending": "Confirmeu o rebutgeu aquesta operació a la finestra oberta per gandi-mcp i després seleccioneu Continua.",
+  "action.continue": "Continua",
   "validation.name": "Feu servir d'1 a 40 lletres, xifres, guionets o espais simples.",
   "validation.token": "Un Personal Access Token té de 16 a 512 caràcters, sense espais."
 }

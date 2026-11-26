@@ -72,6 +72,34 @@ describe("McpAccountsApi", () => {
     ]);
   });
 
+  it("returns pending confirmations and resumes them", async () => {
+    const fake = caller({
+      structuredContent: { status: "confirmation_pending", confirmation_id: "c-1" },
+    });
+    const api = new McpAccountsApi(fake);
+
+    await expect(api.remove("Perso")).resolves.toEqual({ confirmationId: "c-1" });
+    await expect(api.update("Perso", { readOnly: false }, "c-1")).resolves.toEqual({
+      confirmationId: "c-1",
+    });
+    await api.remove("Perso", "c-1");
+
+    expect(fake.callServerTool.mock.calls.map((call) => call[0] as unknown)).toEqual([
+      { name: "app_remove_account", arguments: { name: "Perso" } },
+      {
+        name: "app_update_account",
+        arguments: { name: "Perso", confirmation_id: "c-1", read_only: false },
+      },
+      { name: "app_remove_account", arguments: { name: "Perso", confirmation_id: "c-1" } },
+    ]);
+  });
+
+  it("removes an account at once when the confirmation was given", async () => {
+    const fake = caller({ structuredContent: { status: "removed", account: "Perso" } });
+
+    await expect(new McpAccountsApi(fake).remove("Perso")).resolves.toBeNull();
+  });
+
   it("turns tool errors into the server message", async () => {
     const fake = caller({
       isError: true,

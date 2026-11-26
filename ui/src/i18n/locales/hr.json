@@ -45,6 +45,8 @@
   "feedback.updated": "Račun {name} je ažuriran.",
   "feedback.removed": "Račun {name} je uklonjen.",
   "feedback.failed": "Operacija nije uspjela",
+  "feedback.confirmPending": "Potvrdite ili odbijte ovu operaciju u prozoru koji je otvorio gandi-mcp, a zatim odaberite Nastavi.",
+  "action.continue": "Nastavi",
   "validation.name": "Koristite od 1 do 40 slova, znamenki, crtica ili pojedinačnih razmaka.",
   "validation.token": "Personal Access Token ima od 16 do 512 znakova, bez razmaka."
 }

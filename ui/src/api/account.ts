@@ -29,6 +29,18 @@ export interface AccountChanges {
   readonly makeDefault?: boolean;
 }
 
+/**
+ * A change waiting for the user's confirmation, asked by the server outside the App
+ * (dialog of the client or local page); call again with its identifier afterwards.
+ */
+export interface PendingConfirmation {
+  readonly confirmationId: string;
+}
+
+export function isPending(value: unknown): value is PendingConfirmation {
+  return typeof value === "object" && value !== null && "confirmationId" in value;
+}
+
 /** An operation refused by the server; its message is already explained for the user. */
 export class AccountsError extends Error {
   override readonly name = "AccountsError";

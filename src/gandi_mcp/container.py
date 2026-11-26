@@ -7,7 +7,6 @@ from dependency_injector import containers, providers
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.accounts.gandi.gandi_token_verifier import GandiTokenVerifier
-from gandi_mcp.confirmation.channels.app_channel import AppChannel
 from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChannel
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
@@ -91,7 +90,6 @@ class ApplicationContainer(containers.DeclarativeContainer):
     confirmation = providers.Singleton(
         ConfirmationService,
         providers.List(
-            providers.Singleton(AppChannel),
             providers.Singleton(ElicitationChannel, translator),
             providers.Singleton(
                 LocalLinkChannel, pending_confirmations, local_pages, link_presenter, translator

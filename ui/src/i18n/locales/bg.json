@@ -45,6 +45,8 @@
   "feedback.updated": "Акаунтът {name} е обновен.",
   "feedback.removed": "Акаунтът {name} е премахнат.",
   "feedback.failed": "Операцията не успя",
+  "feedback.confirmPending": "Потвърдете или откажете тази операция в прозореца, отворен от gandi-mcp, след което изберете „Продължаване“.",
+  "action.continue": "Продължаване",
   "validation.name": "Използвайте от 1 до 40 букви, цифри, тирета или единични интервали.",
   "validation.token": "Personal Access Token има от 16 до 512 знака, без интервали."
 }

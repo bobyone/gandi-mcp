@@ -45,6 +45,8 @@
   "feedback.updated": "{name} հաշիվը թարմացված է։",
   "feedback.removed": "{name} հաշիվը հեռացված է։",
   "feedback.failed": "Գործողությունը ձախողվեց",
+  "feedback.confirmPending": "Հաստատեք կամ մերժեք այս գործողությունը gandi-mcp-ի բացած պատուհանում, ապա ընտրեք «Շարունակել»։",
+  "action.continue": "Շարունակել",
   "validation.name": "Օգտագործեք 1-ից 40 տառ, թվանշան, գծիկ կամ մեկական բացատ։",
   "validation.token": "Personal Access Token-ն ունի 16-ից 512 նիշ՝ առանց բացատների։"
 }

@@ -45,6 +45,8 @@
   "feedback.updated": "Сметката {name} е ажурирана.",
   "feedback.removed": "Сметката {name} е отстранета.",
   "feedback.failed": "Операцијата не успеа",
+  "feedback.confirmPending": "Потврдете ја или одбијте ја оваа операција во прозорецот што го отвори gandi-mcp, потоа изберете Продолжи.",
+  "action.continue": "Продолжи",
   "validation.name": "Користете од 1 до 40 букви, цифри, цртички или единечни празни места.",
   "validation.token": "Personal Access Token има од 16 до 512 знаци, без празни места."
 }

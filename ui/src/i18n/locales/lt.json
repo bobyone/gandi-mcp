@@ -45,6 +45,8 @@
   "feedback.updated": "Paskyra {name} atnaujinta.",
   "feedback.removed": "Paskyra {name} pašalinta.",
   "feedback.failed": "Operacija nepavyko",
+  "feedback.confirmPending": "Patvirtinkite arba atmeskite šią operaciją lange, kurį atidarė gandi-mcp, tada pasirinkite Tęsti.",
+  "action.continue": "Tęsti",
   "validation.name": "Naudokite nuo 1 iki 40 raidžių, skaitmenų, brūkšnelių arba pavienių tarpų.",
   "validation.token": "Personal Access Token turi nuo 16 iki 512 simbolių be tarpų."
 }

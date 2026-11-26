@@ -112,7 +112,7 @@ a pending `ConfirmationDecision` to resume with its identifier.
 
 | Operation | Contract |
 | --- | --- |
-| `available(context)` | Whether the channel can reach the user during this call (`ConfirmationContext`: user interaction, call from the MCP App, locale). |
+| `available(context)` | Whether the channel can reach the user during this call (`ConfirmationContext`: user interaction, locale). |
 | `confirm(request, context)` | Returns an accepted or pending `ConfirmationDecision`; raises `ConfirmationRefusedError` or `ConfirmationUnavailableError`. |
 
 `ConfirmationService` tries its channels in order. Given a confirmation
@@ -320,7 +320,6 @@ characters; the email and the other fields are ignored.
 
 | Channel | Available when | Behavior |
 | --- | --- | --- |
-| `AppChannel` | the call comes from an app-only tool | Accepts: the MCP App dialog was the confirmation. |
 | `ElicitationChannel(translator)` | the client supports form elicitation | Asks "Confirm on the production/sandbox account {account}: {action}" in the user's language; anything but an acceptance raises `ConfirmationRefusedError`. |
 | `LocalLinkChannel(pending, page, presenter, translator)` | always (last resort) | Registers a pending confirmation, shows its page through `LinkPresenter`; returns it as pending, or raises `ConfirmationUnavailableError` (and forgets it) when the page cannot be shown. |
 
@@ -394,13 +393,14 @@ conversation and never to invent a confirmation identifier.
 | --- | --- |
 | `AppModule` | Abstraction: `register(apps)` adds UI resources and UI-bound tools to the MCP Apps extension. |
 | `app.app_resource` | Serves `ui://gandi/app.html` (`text/html;profile=mcp-app`, empty CSP domains) from `protocol/app/static/app.html`, built from `ui/` and committed (ADR 5); `AppResourceMissingError` when missing. |
-| `app.accounts_app_tools.AccountsAppTools` | `open_gandi_app` (model and app) and the app-only tools `app_list_accounts`, `app_add_account`, `app_update_account`, `app_replace_account_token`, `app_change_account_environment`, `app_remove_account`. Only these receive a token. They refuse clients that did not negotiate MCP Apps, and use `ConfirmationContext(from_app=True)`: the App dialog is the confirmation. |
+| `app.accounts_app_tools.AccountsAppTools` | `open_gandi_app` (model and app) and the app-only tools `app_list_accounts`, `app_add_account`, `app_update_account`, `app_replace_account_token`, `app_change_account_environment`, `app_remove_account`. Only these receive a token. They refuse clients that did not negotiate MCP Apps. Removing an account and allowing writes are confirmed through the same chain as for the model (elicitation, else local page); `app_update_account` and `app_remove_account` accept the `confirmation_id` of a pending confirmation. |
 
 The UI (`ui/src/`, TypeScript, React-Bootstrap) has the same layering:
 `api/accounts-api.ts` (abstraction `AccountsApi`), `api/mcp/mcp-accounts-api.ts`
 (calls the app-only tools through the host), `components/` (the "Accounts"
 screen: table, add, rename, replace token, change environment, set as default,
-read-only on and off, remove with a confirmation dialog), `i18n/` (language of
+read-only on and off, remove with a confirmation dialog; a pending server
+confirmation shows a message and a Continue button), `i18n/` (language of
 the host, then of the browser, then English; ICU catalogs). The host style
 variables theme Bootstrap through its CSS variables (`theme.css`).
 
@@ -409,7 +409,7 @@ variables theme Bootstrap through its CSS variables (`theme.css`).
 Every component is a container singleton. The entry point adds `app.version`
 and `app.locale` (the system language, from `gandi_mcp.i18n.system_locale`) to
 the validated configuration. The confirmation channels are wired in the order
-`AppChannel`, `ElicitationChannel`, `LocalLinkChannel`; the local page server
+`ElicitationChannel`, `LocalLinkChannel`; the local page server
 implements both page ports and uses the longest of the two page timeouts.
 
 ## Development tooling

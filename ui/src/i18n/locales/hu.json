@@ -45,6 +45,8 @@
   "feedback.updated": "A(z) {name} fiók frissítve.",
   "feedback.removed": "A(z) {name} fiók eltávolítva.",
   "feedback.failed": "A művelet sikertelen",
+  "feedback.confirmPending": "Erősítse meg vagy utasítsa el ezt a műveletet a gandi-mcp által megnyitott ablakban, majd válassza a Folytatás lehetőséget.",
+  "action.continue": "Folytatás",
   "validation.name": "Használjon 1–40 betűt, számjegyet, kötőjelet vagy egyszeres szóközt.",
   "validation.token": "A Personal Access Token 16–512 karakterből áll, szóköz nélkül."
 }

@@ -45,6 +45,8 @@
   "feedback.updated": "Tá an cuntas {name} nuashonraithe.",
   "feedback.removed": "Baineadh an cuntas {name}.",
   "feedback.failed": "Theip ar an oibríocht",
+  "feedback.confirmPending": "Deimhnigh nó diúltaigh an oibríocht seo san fhuinneog a d'oscail gandi-mcp, ansin roghnaigh Lean ar aghaidh.",
+  "action.continue": "Lean ar aghaidh",
   "validation.name": "Úsáid 1 go 40 litir, digit, fleiscín nó spás aonair.",
   "validation.token": "Tá 16 go 512 carachtar i Personal Access Token, gan spásanna."
 }
