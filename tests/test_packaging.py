@@ -30,14 +30,56 @@ def test_claude_manifests_have_no_version() -> None:
     assert all("version" not in plugin for plugin in marketplace["plugins"])
 
 
+PORTABLE_PLUGIN_KEYS = {
+    "$schema",
+    "name",
+    "version",
+    "description",
+    "author",
+    "homepage",
+    "repository",
+    "license",
+    "keywords",
+    "extensions",
+}
+STDIO_SERVER_KEYS = {"type", "command", "args", "env", "cwd"}
+
+
+def test_portable_manifest_follows_agent_plugins_1_0() -> None:
+    manifest = load_json("plugin.json")
+
+    assert manifest["$schema"] == "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
+    assert set(manifest) <= PORTABLE_PLUGIN_KEYS
+    assert "mcpServers" not in manifest
+
+
+def test_portable_mcp_configuration_declares_a_stdio_server() -> None:
+    configuration = load_json("mcp.json")
+
+    assert configuration["$schema"] == "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json"
+    assert set(configuration) == {"$schema", "mcpServers"}
+    server = configuration["mcpServers"]["gandi"]
+    assert server["type"] == "stdio"
+    assert set(server) <= STDIO_SERVER_KEYS
+
+
+def test_codex_marketplace_entry() -> None:
+    entry = load_json(".agents/plugins/marketplace.json")["plugins"][0]
+
+    assert entry["source"] == {"source": "local", "path": "./"}
+    assert {"installation", "authentication"} <= set(entry["policy"])
+    assert entry["category"]
+
+
 def test_manifests_share_the_plugin_name_and_server() -> None:
     claude = load_json(".claude-plugin/plugin.json")
     portable = load_json("plugin.json")
     codex = load_json(".agents/plugins/marketplace.json")
+    server = load_json("mcp.json")["mcpServers"]["gandi"]
 
     assert claude["name"] == portable["name"] == codex["plugins"][0]["name"] == "gandi-mcp"
-    assert claude["mcpServers"] == portable["mcpServers"]
-    assert codex["plugins"][0]["source"]["path"] == "./"
+    claude_server = claude["mcpServers"]["gandi"]
+    assert (claude_server["command"], claude_server["args"]) == (server["command"], server["args"])
 
 
 def test_every_skill_has_a_description() -> None:

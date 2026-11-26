@@ -28,10 +28,15 @@ the `main` branch.
   Then enable automatic updates of the `gandi-mcp` marketplace in `/plugin`
   (Marketplaces tab).
 
-- **Codex**: add `https://github.com/bobyone/gandi-mcp` as a plugin
-  marketplace (see the
-  [Codex plugin documentation](https://developers.openai.com/plugins/build/plugins)),
-  then install the `gandi-mcp` plugin.
+- **Codex**:
+
+  ```text
+  codex plugin marketplace add bobyone/gandi-mcp
+  codex plugin add gandi-mcp@gandi-mcp
+  ```
+
+  `codex mcp list` then shows the `gandi` server. Update with
+  `codex plugin marketplace upgrade`.
 
 - **Any other MCP client**: run the server with
 
@@ -41,7 +46,7 @@ the `main` branch.
 
 ## 3. Configure (optional)
 
-Copy [`config.example.toml`](../config.example.toml) to a `config.toml` of
+Copy [`gandi-mcp.example.toml`](../gandi-mcp.example.toml) to a `gandi-mcp.toml` of
 your choice, adjust it, and pass it with `--config <path>`. Never put your
 Personal Access Token in this file.
 

@@ -1,4 +1,5 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "gandi-mcp",
   "version": "0.1.0.dev0",
   "description": "Manage Gandi domains, DNS, email, certificates, hosting and billing from your AI assistant.",
@@ -9,12 +10,5 @@
   "homepage": "https://github.com/bobyone/gandi-mcp",
   "repository": "https://github.com/bobyone/gandi-mcp",
   "license": "GPL-2.0-or-later",
-  "keywords": ["gandi", "dns", "domains", "mcp"],
-  "skills": "./skills/",
-  "mcpServers": {
-    "gandi": {
-      "command": "uvx",
-      "args": ["--from", "git+https://github.com/bobyone/gandi-mcp", "gandi-mcp"]
-    }
-  }
+  "keywords": ["gandi", "dns", "domains", "mcp"]
 }

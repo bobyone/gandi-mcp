@@ -13,8 +13,9 @@ Ask for confirmation before each removal; removing tokens is irreversible.
 2. Remove the client registration:
    - Claude Code: `/plugin uninstall gandi-mcp@gandi-mcp`, then optionally
      `/plugin marketplace remove gandi-mcp`;
-   - Codex: uninstall the `gandi-mcp` plugin and remove the marketplace;
+   - Codex: `codex plugin remove gandi-mcp@gandi-mcp`, then optionally
+     `codex plugin marketplace remove gandi-mcp`;
    - other clients: delete the `gandi` server entry from their configuration.
 3. Remove the cached package: `uv cache clean gandi-mcp`.
-4. Ask the user to delete their own `config.toml` if they created one; do not
+4. Ask the user to delete their own `gandi-mcp.toml` if they created one; do not
    read it.
