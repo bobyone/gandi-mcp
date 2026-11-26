@@ -32,7 +32,16 @@ Source tree and tests mirror each other (`src/gandi_mcp/<notion>/`,
 
 ## Abstractions
 
-None yet: they are introduced by the validated design of each batch.
+### Translator: `gandi_mcp.i18n.translator.Translator`
+
+Renders user-facing messages (`gandi_mcp.i18n.message.Message`, declared with
+the `N_` and `ngettext` markers so that Babel extracts them) in a locale.
+
+| Operation | Contract |
+| --- | --- |
+| `default_locale` | Locale used when none is given (system language, else English). |
+| `negotiate(preferred)` | Best supported locale for tags in preference order (`fr-CA`, `sr_Latn`); English when nothing matches. |
+| `translate(message, locale=None, **params)` | Renders the message with its named parameters; numbers are formatted for the locale; a plural message needs an integer `count`. Raises `TranslationError` for a missing parameter or an invalid `count`. |
 
 ## Implementations
 
@@ -59,6 +68,23 @@ Behavior and limits:
 - an unreadable file, invalid TOML or an invalid value logs an error and exits
   with status 2;
 - logs go to stderr only: stdout carries the MCP protocol.
+
+### Translator: `gandi_mcp.i18n.babel.babel_translator.BabelTranslator`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `locales_directory` | path | none | yes | Directory holding `locales.toml` and `<locale>/LC_MESSAGES/messages.po`; the package ships `gandi_mcp/locales`. |
+| `default_locale` | string or none | none | no | Preferred locale, usually the system language (`gandi_mcp.i18n.system_locale`). |
+
+Behavior and limits:
+
+- every declared catalog is read and compiled in memory at construction; an
+  unreadable declaration or catalog raises `TranslationError`;
+- negotiation tries the exact locale, then language and script, then the
+  language, then a fallback (`cnr` to `sr_Latn`, `sr` to `sr_Cyrl`, `no` to
+  `nb`), then English;
+- an untranslated entry is rendered in English;
+- translations flagged `needs-review` are used as they are.
 
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
