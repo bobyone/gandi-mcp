@@ -3,7 +3,9 @@
 """Exceptions of the Gandi API access.
 
 ``details`` holds the explanations returned by Gandi: untrusted data, bounded in
-length, never containing the token.
+number, never containing the token. They keep their full length: the presenter
+withholds a detail longer than the free input limit (ADR 10), which a truncated
+excerpt would get around.
 """
 
 

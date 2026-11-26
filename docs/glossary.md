@@ -39,6 +39,32 @@ in the UI says "not displayed".
 | Pending removal | An account whose removal started and did not finish (failure, cancellation, crash); it can only be removed again, which completes the removal. | `removal_pending` | Removal not finished (`status.removalPending`) |
 | Pending confirmation | A confirmation waiting for the user's answer on a local page; its identifier, given back by the model, is valid once and for the same operation only. | `pending_confirmation` | not displayed |
 | Untrusted data | Content coming from tool results or free inputs, which may contain prompt injection. | `untrusted` | not displayed |
+| Domain | A domain name managed by a Gandi account. | `domain` | not displayed yet |
+| TLD | The ending of a domain name (`.fr`, `.com`), with its rules: durations and allowed procedures. | `tld` | not displayed yet |
+| Domain contact | A person or structure in one of the roles of a domain: owner, admin contact, tech contact or billing contact; personal data. | `contact` | not displayed yet |
+| Owner | The domain contact holding the domain. | `owner` | not displayed yet |
+| Admin contact | The domain contact handling the administration of the domain. | `admin` | not displayed yet |
+| Tech contact | The domain contact handling the technical matters of the domain. | `tech` | not displayed yet |
+| Billing contact | The domain contact receiving the invoices of the domain. | `bill` | not displayed yet |
+| Quote | The availability and price announced by Gandi for a billable procedure on a name. | `quote` | not displayed yet |
+| Order | A billable procedure confirmed by the user, with its account, paying organization, name, duration and accepted price. | `order` | not displayed yet |
+| Paying organization | The Gandi organization charged for an order; a default one is stored in the account preferences. | `paying_organization` | not displayed yet |
+| Asynchronous operation | A procedure Gandi runs later (registration, owner change, transfer), followed by its step and state. | `async_operation` | not displayed |
+| Dry run | A simulation of a procedure by Gandi, without effect nor charge. | `dry_run` | not displayed |
+| Nameserver | A DNS server declared for a domain. | `nameserver` | not displayed yet |
+| Glue record | The IP addresses of a nameserver named inside the domain itself. | `glue_record` | not displayed |
+| DNSSEC key | A public key published at the registry to sign the zone of a domain. | `dnssec_key` | not displayed |
+| Web redirection | A redirection of a host of a domain to a URL, served by Gandi. | `web_redirection` | not displayed |
+| Tag | A label attached to a domain to organize domains. | `tag` | not displayed yet |
+| Transfer lock | The status forbidding the transfer of a domain to another registrar. | `transfer_lock` | not displayed yet |
+| Authorization code | The secret code required to transfer a domain between registrars. | `authinfo` | not displayed |
+| Transfer in | Moving a domain from another registrar to Gandi; a billable procedure. | `transfer_in` | not displayed |
+| Transfer out | Moving a domain from Gandi to another registrar. | `transfer_out` | not displayed |
+| Owner change | Changing the owner of a domain; may be billable. | `owner_change` | not displayed |
+| Trademark claim | The trademark notice to accept before registering some names. | `claim` | not displayed |
+| Automatic renewal | The renewal Gandi performs by itself before expiry. | `autorenew` | not displayed yet |
+| Renewal | Extending the registration of a domain; a billable procedure. | `renewal` | not displayed yet |
+| Restore | Recovering an expired domain during its redemption period; a billable procedure. | `restore` | not displayed |
 
 ## UI labels by language
 

@@ -146,6 +146,42 @@ async def test_does_not_follow_redirects() -> None:
         await client_with(handler).request(Environment.SANDBOX, TOKEN, "GET", ("x",))
 
 
+async def test_reads_the_matching_count_of_a_filtered_list() -> None:
+    def handler(_request: httpx2.Request) -> httpx2.Response:
+        headers = {"Total-Count": "120", "Filtered-Count": "3"}
+        return httpx2.Response(200, json=[], headers=headers)
+
+    response = await client_with(handler).request(Environment.SANDBOX, TOKEN, "GET", ("x",))
+
+    assert (response.total_count, response.filtered_count) == (120, 3)
+
+
+async def test_see_other_is_returned_without_being_followed() -> None:
+    seen: list[httpx2.Request] = []
+    location = "https://api.sandbox.gandi.net/v5/domain/domains/example.com"
+
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        seen.append(request)
+        return httpx2.Response(303, headers={"Location": location})
+
+    response = await client_with(handler).request(
+        Environment.SANDBOX, TOKEN, "GET", ("x",), accept_see_other=True
+    )
+
+    assert len(seen) == 1
+    assert (response.status, response.data, response.location) == (303, None, location)
+
+
+async def test_see_other_is_an_error_unless_expected() -> None:
+    def handler(_request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(303, json={"username": "mallory"}, headers={"Location": "/x"})
+
+    with pytest.raises(GandiUnexpectedResponseError):
+        await client_with(handler).request(
+            Environment.SANDBOX, TOKEN, "GET", ("organization", "user-info")
+        )
+
+
 @pytest.mark.parametrize(
     ("failure", "message"),
     [

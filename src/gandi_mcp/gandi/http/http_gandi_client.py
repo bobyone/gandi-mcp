@@ -13,7 +13,7 @@ import httpx2
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.gandi.exceptions import GandiUnavailableError, GandiUnexpectedResponseError
 from gandi_mcp.gandi.gandi_client import GandiClient, QueryValue
-from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
+from gandi_mcp.gandi.gandi_response import SEE_OTHER, GandiResponse, JsonValue
 from gandi_mcp.gandi.http.gandi_error_translator import translate_error
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 
@@ -46,7 +46,7 @@ def _decode(response: httpx2.Response) -> JsonValue:
     return decoded
 
 
-def _total_count(value: str | None) -> int | None:
+def _count(value: str | None) -> int | None:
     return int(value) if value is not None and value.strip().isdigit() else None
 
 
@@ -92,6 +92,7 @@ class HttpGandiClient(GandiClient):
         *,
         query: Mapping[str, QueryValue] | None = None,
         body: JsonValue = None,
+        accept_see_other: bool = False,
     ) -> GandiResponse:
         verb = method.upper()
         if verb not in METHODS:
@@ -122,12 +123,16 @@ class HttpGandiClient(GandiClient):
             (time.monotonic() - started) * 1000,
         )
         data = _decode(response)
-        if not response.is_success:
+        # 303 marks a completed operation, only where the caller expects it; it is
+        # never followed.
+        see_other = accept_see_other and response.status_code == SEE_OTHER
+        if not response.is_success and not see_other:
             raise translate_error(response.status_code, data, response.headers)
         return GandiResponse(
             status=response.status_code,
             data=data,
-            total_count=_total_count(response.headers.get("total-count")),
+            total_count=_count(response.headers.get("total-count")),
+            filtered_count=_count(response.headers.get("filtered-count")),
             location=response.headers.get("location"),
         )
 

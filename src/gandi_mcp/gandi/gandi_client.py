@@ -25,6 +25,7 @@ class GandiClient(ABC):
         *,
         query: Mapping[str, QueryValue] | None = None,
         body: JsonValue = None,
+        accept_see_other: bool = False,
     ) -> GandiResponse:
         """Send a request and return the successful response.
 
@@ -37,6 +38,8 @@ class GandiClient(ABC):
                 user input can never change the path structure.
             query: Query parameters.
             body: JSON body, or ``None`` for no body.
+            accept_see_other: Return a ``303 See Other`` (never followed) as a
+                response instead of an error; only for endpoints documenting it.
 
         Raises:
             GandiError: a subclass describing why the request failed.

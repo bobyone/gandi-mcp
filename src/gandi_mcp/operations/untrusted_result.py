@@ -14,7 +14,12 @@ class UntrustedResult:
     Attributes:
         data: Decoded data returned by Gandi.
         total_count: Total number of items of a paginated list, when given.
+        filtered_count: Number of items matching the filters of a list, when given.
+        completed: Gandi answered "see other": the followed operation is complete and
+            its result is another resource.
     """
 
     data: JsonValue
     total_count: int | None = None
+    filtered_count: int | None = None
+    completed: bool = False

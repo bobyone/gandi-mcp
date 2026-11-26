@@ -8,6 +8,7 @@ import pytest
 from mcp.server.mcpserver.exceptions import ToolError
 
 from gandi_mcp.accounts.exceptions import AccountError, NoAccountError
+from gandi_mcp.content.long_text_filter import LongTextFilter
 from gandi_mcp.gandi.exceptions import (
     GandiAuthenticationError,
     GandiUnexpectedResponseError,
@@ -25,7 +26,7 @@ from tests.doubles.source_translator import SourceTranslator
 
 @pytest.fixture
 def presenter() -> ErrorPresenter:
-    return ErrorPresenter(SourceTranslator())
+    return ErrorPresenter(SourceTranslator(), LongTextFilter(280))
 
 
 def test_every_known_error_has_a_remedy(presenter: ErrorPresenter) -> None:

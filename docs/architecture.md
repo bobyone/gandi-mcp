@@ -193,8 +193,9 @@ Errors: `GandiAuthenticationError` (401), `GandiPermissionError` (403),
 `GandiConflictError` (409), `GandiRateLimitError` (429, with `retry_after`),
 `GandiUnavailableError` (network error, timeout, 5xx),
 `GandiUnexpectedResponseError` (any other status or an unreadable body). Each
-carries `details`: Gandi's explanations, bounded (10 entries of 300
-characters), untrusted.
+carries `details`: Gandi's explanations, at most 10 entries, untrusted. They
+are never truncated: `ErrorPresenter` withholds an entry longer than
+`content.max_free_input` (ADR 10), which an excerpt would get around.
 
 ## Implementations
 
@@ -211,7 +212,7 @@ Command line: `gandi-mcp [--config PATH] [--version]`.
 | `gandi.timeout_seconds` | number, 1 to 300 | `30` | no | Timeout of one request to Gandi. |
 | `confirmation.timeout_seconds` | integer, 30 to 3600 | `300` | no | Validity of a confirmation request. |
 | `token_entry.timeout_seconds` | integer, 60 to 3600 | `600` | no | Validity of a token entry session. |
-| `content.max_free_input` | integer, 1 to 10000 | `280` | no | Longest free input passed to the model as is. |
+| `content.max_free_input` | integer, 1 to 10000 | `280` | no | Longest free input or Gandi text passed to the model as is; longer Gandi texts are withheld. |
 
 Behavior and limits:
 
@@ -302,7 +303,12 @@ Behavior and limits:
 
 - sends `Authorization: Bearer <token>`; the token is never logged;
 - redirects are not followed, so the token only reaches the configured base
-  URLs;
+  URLs; a `303 See Other` is returned as a response with its `location`
+  only when the caller passes `accept_see_other=True` (endpoints declaring
+  `completes_with_see_other`, i.e. the registration status); any other
+  redirect is an error;
+- `Total-Count` and `Filtered-Count` become `total_count` and
+  `filtered_count`;
 - boolean query values are sent as `true`/`false`, lists as repeated
   parameters;
 - logs (DEBUG) only the method, environment, status and duration: no path,
@@ -373,6 +379,61 @@ Behavior and limits:
 - a token with an invalid format can be corrected on the same page; any other
   outcome ends the session and is explained without technical detail.
 
+### Domain values: `gandi_mcp.domains`
+
+| Value | Rule |
+| --- | --- |
+| `DomainName` | Fully qualified name, at least two labels, IDNA 2008 with UTS 46 mapping (`idna`); `value` is the ASCII form sent to Gandi, `unicode` the readable form; at most 253 characters, labels of 1 to 63 characters, no wildcard nor path character. |
+| `TldName` | One label, leading dot removed. |
+| `HostLabel` | A host relative to a domain (`ns1`, `ns1.sub`) or `@` for the domain itself. |
+| `PageRequest` | `page` from 1 to 1000, `per_page` from 1 to 100. |
+
+Invalid values raise `InvalidDomainNameError` or `InvalidDomainInputError`
+(both `DomainError`).
+
+### Contact minimization: `gandi_mcp.domains.contacts.contact_redactor.ContactRedactor`
+
+`apply(data, *, include_contact_details=False, include_authorization_code=False)`
+returns a filtered copy of Gandi data (ADR 10). At any depth and whatever its
+key, a contact (a mapping under `owner`, `admin`, `bill` or `tech`, an item
+of a `contacts` or `holders` list, a mapping with an address, name or phone
+field, or with a `name` next to an `email`) keeps only
+`type`, `country`, `cc`, `same_as_owner` and `details: "hidden"`; text fields
+whose name ends with `email`, and `domain_owner`, become `"hidden"` unless
+contact details are requested; `authinfo` becomes `"hidden"` unless the
+authorization code is requested.
+
+### Long texts: `gandi_mcp.content.long_text_filter.LongTextFilter`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `max_length` | integer, at least 1 | none | yes | `content.max_free_input`. |
+
+`allows(text)` tells whether a text fits the limit. `apply(data)` replaces,
+at any depth, every text longer than `max_length` by
+`{"withheld": "long_text", "length": n}` (ADR 10). `public_key` and `digest`
+values made of base64 or hexadecimal characters only are kept.
+
+### Untrusted results: `gandi_mcp.protocol.untrusted_result_presenter.present`
+
+Frames Gandi data for the model as `{"notice", "untrusted_data"}`, plus
+`page`, `per_page`, `total_count` and, for a filtered list, `matching_count`
+(`Filtered-Count`).
+
+### Endpoint catalogue: `gandi_mcp.operations.domain`
+
+`DomainEndpoint` describes one endpoint of the Domain API (ADR 8): `name` (also
+the tool name), `method`, `path` (segments, `{placeholder}` segments filled
+with validated values), `category`, accepted `query` parameters,
+`description` (required for confirmed categories), `supports_dry_run`,
+`follow_up` and `completes_with_see_other`. `domain_endpoints.py` lists them.
+
+`EndpointOperation(endpoint, path_values, query=None, body=None,
+description_params=None)` runs a specification: it raises
+`InvalidDomainInputError` when a placeholder has no value, a value is empty or
+contains `/`, or a query parameter is not accepted; `None` query values are
+dropped.
+
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
 | Parameter | Type | Default | Required | Description |
@@ -391,8 +452,14 @@ conversation and never to invent a confirmation identifier.
 | --- | --- |
 | `ToolModule` | Abstraction: `register(server)` adds the tools of a notion. |
 | `tools.accounts_tools.AccountsTools` | `list_accounts`, `add_account`, `update_account`, `replace_account_token`, `change_account_environment`, `remove_account`. No tool receives or returns a token; token changes open a token entry session; removing an account and turning read-only off need a confirmation (pending results carry `confirmation_id`). |
+| `tools.domains.domain_tool_runner.DomainToolRunner` | Shared by the domain tool modules: `read(ctx, endpoint, account, path_values=None, *, query=None, body=None, page=None, include_contact_details=False, include_authorization_code=False)` builds the `EndpointOperation` (path values and query are given as functions, so that their validation errors are explained like the others), runs it through the `OperationExecutor`, applies the optional `adapt` function of the tool, minimizes personal data with the `ContactRedactor`, withholds long texts with the `LongTextFilter` and frames the result with `present`. A completed operation (`303`) returns `{"status": "completed", "next_step"}` when the tool gives `when_completed`, and is an unexpected answer otherwise. `add_read_tool` registers a tool named after its endpoint with the read annotations (`readOnlyHint`, `idempotentHint`, `openWorldHint`). |
+| `tools.domains.availability_tools.AvailabilityTools` | `domain_check_availability` (name, `processes` among `create`, `renew`, `transfer`, `restore`, optional `currency`; the status of each product whose `process` is not `create`, which Gandi says to ignore, is dropped and replaced by an `availability` note), `domain_list_tlds`, `domain_tld_details`. |
+| `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`, `sort_by` by name, expiry or creation date, `-` to reverse), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status` (`completed` once registered), `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
+| `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
+| `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
+| `tools.domains.transfer_tools.TransferTools` | `domain_owner_change_status`, `domain_transfer_in_status`, `domain_transfer_in_check` (sends no authorization code). |
 | `McpUserInteraction` | `UserInteraction` over MCP elicitation for one call. From protocol revision 2026-07-28 (no request from the server during a call), elicitation is treated as unavailable, so confirmations use the local page (ADR 4). |
-| `ErrorPresenter` | Maps each business exception to a translated explanation with its remedy (system language); Gandi details are appended and marked as untrusted; unknown exceptions are logged and shown as a generic error. |
+| `ErrorPresenter` | Maps each business exception (including `InvalidDomainNameError` and `InvalidDomainInputError`) to a translated explanation with its remedy (system language); Gandi details are appended and marked as untrusted, a detail longer than `content.max_free_input` being replaced by a notice of its length; unknown exceptions are logged and shown as a generic error. |
 
 ### MCP App: `gandi_mcp.protocol.app` and `ui/`
 
@@ -415,7 +482,8 @@ variables theme Bootstrap through its CSS variables (`theme.css`).
 
 Every component is a container singleton. The entry point adds `app.version`
 and `app.locale` (the system language, from `gandi_mcp.i18n.system_locale`) to
-the validated configuration. The confirmation channels are wired in the order
+the validated configuration. `tool_modules` lists the account tools, then the
+domain tool modules, which share one `DomainToolRunner`. The confirmation channels are wired in the order
 `ElicitationChannel`, `LocalLinkChannel`; the local page server
 implements both page ports and uses the longest of the two page timeouts.
 

@@ -19,6 +19,7 @@ from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChann
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
+from gandi_mcp.content.long_text_filter import LongTextFilter
 from gandi_mcp.interaction.link_presenter import LinkPresenter
 from gandi_mcp.protocol.error_presenter import ErrorPresenter
 from gandi_mcp.protocol.server_factory import create_server
@@ -91,7 +92,7 @@ def setup() -> Setup:
         accounts,
         confirmation,
         TokenEntryService(sessions, token_page, presenter, translator),
-        ErrorPresenter(translator),
+        ErrorPresenter(translator, LongTextFilter(280)),
         translator,
     )
     return Setup(tools, accounts, secrets, sessions, token_page, pending, browser)
