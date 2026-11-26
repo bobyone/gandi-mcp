@@ -130,7 +130,7 @@ async def test_token_form_is_translated_and_hardened(pages: Pages) -> None:
     headers = response.headers
     assert "default-src 'none'" in headers["content-security-policy"]
     assert "frame-ancestors 'none'" in headers["content-security-policy"]
-    assert headers["referrer-policy"] == "no-referrer"
+    assert headers["referrer-policy"] == "same-origin"
     assert headers["cache-control"] == "no-store"
     assert headers["x-frame-options"] == "DENY"
     assert "server" not in headers
@@ -207,12 +207,27 @@ async def test_account_gone_before_replacing(pages: Pages) -> None:
     assert "Gone" in response.text
 
 
+async def test_browser_form_submission_is_accepted(pages: Pages) -> None:
+    url = await pages.token_page()
+    origin = pages.server.origin
+    assert origin is not None
+    headers = {"Origin": origin, "Sec-Fetch-Site": "same-origin", "Referer": url}
+
+    response = await pages.http.post(
+        url, data={"code": code_of(url), "token": TOKEN.reveal()}, headers=headers
+    )
+
+    assert response.status_code == 200
+    assert [str(a.name) for a in await pages.accounts.list()] == ["Perso"]
+
+
 @pytest.mark.parametrize(
     ("headers", "body_code"),
     [
         ({"Host": "evil.example"}, True),
         ({"Host": "localhost"}, True),
         ({"Origin": "http://evil.example"}, True),
+        ({"Origin": "null"}, True),
         ({"Sec-Fetch-Site": "cross-site"}, True),
         ({}, False),
     ],

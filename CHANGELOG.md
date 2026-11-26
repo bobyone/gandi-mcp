@@ -30,3 +30,8 @@ All notable changes are documented here. The format follows
 - MCP App: an "Accounts" screen (React-Bootstrap, themed by the host, in 43
   languages) to add, rename, re-authenticate, move, lock and remove accounts;
   tokens typed there go to app-only tools, never to the model. (#4)
+
+### Fixed
+
+- Token and confirmation pages: form submissions from browsers were refused
+  (`Origin: null` caused by `Referrer-Policy: no-referrer`). (#10)
