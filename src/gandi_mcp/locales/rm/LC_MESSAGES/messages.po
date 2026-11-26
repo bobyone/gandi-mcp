@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: rm\n"
@@ -19,9 +19,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "I dat gia in conto cun quest num: tschernai in auter num."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "I dat gia in conto cun il num {account}. Nagut n'è vegnì memorisà."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Ina errur nunspetgada è capitada: nagut n'è vegnì midà."
 
 # needs-review
 msgid "Confirm"
@@ -56,8 +64,36 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Endatai il Personal Access Token dal conto da test (sandbox) {account}."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi ha respundì en moda nunspetgada: empruvai pli tard u annunziai quai."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Gandi n'è momentan betg cuntanschibel. Nagut n'è vegnì memorisà: empruvai pli tard anc ina giada."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi n'è momentan betg cuntanschibel: empruvai pli tard anc ina giada."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi n'ha betg chattà questa resursa."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi ha refusà las datas tramessas."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi ha refusà il token da quest conto, ch'è forsa nunvalid u scadì: remplazzai il token dal "
+"conto."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi ha refusà questa operaziun: il token n'ha forsa betg la permissiun necessaria u è scadì."
 
 # needs-review
 msgid ""
@@ -66,6 +102,14 @@ msgid ""
 msgstr ""
 "Gandi ha refusà quest token per quest ambient. Nagut n'è vegnì memorisà: dumandai l'assistent "
 "d'avrir ina nova pagina e endatai lura in token valid."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Nagin conto da Gandi n'è configurà: agiuntai l'emprim in."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Nagin conto n'ha quest num: mussai ils contos per controllar il num."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -113,10 +157,36 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Il conto {account} n'exista betg pli. Nagut n'è vegnì memorisà."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "La conferma n'è betg vegnida dada a temp: nagut n'è vegnì midà."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Il clavier dal sistem n'è betg disponibel. Nagut n'è vegnì memorisà: deblocai u installai el ed "
 "empruvai anc ina giada."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Il clavier dal sistem n'è betg disponibel: deblocai u installai el ed empruvai anc ina giada."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "L'operaziun è en conflict cun il stadi actual da la resursa tar Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "L'operaziun è vegnida refusada: nagut n'è vegnì midà."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "La pagina per endatar il token n'ha betg pudì vegnir averta en in navigatur."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr ""
+"Las preferenzas da gandi-mcp na pon betg vegnir legidas u memorisadas: controllai la datoteca da "
+"preferenzas."
 
 # needs-review
 msgid ""
@@ -125,6 +195,26 @@ msgid ""
 msgstr ""
 "Las preferenzas da gandi-mcp na pon betg vegnir memorisadas. Nagut n'è vegnì memorisà: controllai"
 " la datoteca da preferenzas ed empruvai anc ina giada."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Il token da quest conto manca en il clavier: remplazzai il token dal conto."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Quest conto è mo per leger: operaziuns da scriver vegnan refusadas."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr "Quest num da conto n'è betg valid: duvrai 1 fin 40 bustabs, cifras, lingettas u spazis singuls."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Questa conferma è nunenconuschenta, gia utilisada u per in'autra operaziun: nagut n'è vegnì midà."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Quai n'è nagin Personal Access Token valid."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -139,6 +229,32 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Questa dumonda è vegnida refusada. Nagut n'è vegnì midà."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Quest utensil po vegnir duvrà mo da l'app Gandi."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr ""
+"I èn vegnidas tramessas memia bleras dumondas a Gandi: spetgai ina minuta ed empruvai lura anc "
+"ina giada."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr ""
+"Vossa conferma n'ha betg pudì vegnir dumandada (nagin dialog, nagin navigatur): nagut n'è vegnì "
+"midà."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "permetter operaziuns da scriver sin il conto {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "leger l'identitad dal conto"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "allontanar il conto {account} e ses token da quest computer"
 

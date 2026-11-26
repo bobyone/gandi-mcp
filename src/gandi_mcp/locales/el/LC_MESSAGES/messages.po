@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -19,9 +19,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Υπάρχει ήδη λογαριασμός με αυτό το όνομα: επιλέξτε άλλο όνομα."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Υπάρχει ήδη λογαριασμός με το όνομα {account}. Δεν αποθηκεύτηκε τίποτα."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Παρουσιάστηκε απρόσμενο σφάλμα: δεν άλλαξε τίποτα."
 
 # needs-review
 msgid "Confirm"
@@ -56,8 +64,36 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Εισαγάγετε το Personal Access Token του δοκιμαστικού λογαριασμού (sandbox) {account}."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Η Gandi απάντησε με απρόσμενο τρόπο: δοκιμάστε ξανά αργότερα ή αναφέρετέ το."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Η Gandi δεν είναι προσβάσιμη αυτή τη στιγμή. Δεν αποθηκεύτηκε τίποτα: δοκιμάστε ξανά αργότερα."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Η Gandi δεν είναι προσβάσιμη αυτή τη στιγμή: δοκιμάστε ξανά αργότερα."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Η Gandi δεν βρήκε αυτόν τον πόρο."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Η Gandi απέρριψε τα δεδομένα που υποβλήθηκαν."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Η Gandi απέρριψε το token αυτού του λογαριασμού, που μπορεί να είναι άκυρο ή ληγμένο: "
+"αντικαταστήστε το token του λογαριασμού."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Η Gandi απέρριψε αυτή τη λειτουργία: το token ίσως δεν έχει την απαιτούμενη άδεια ή έχει λήξει."
 
 # needs-review
 msgid ""
@@ -66,6 +102,14 @@ msgid ""
 msgstr ""
 "Η Gandi απέρριψε αυτό το token για αυτό το περιβάλλον. Δεν αποθηκεύτηκε τίποτα: ζητήστε από τον "
 "βοηθό να ανοίξει νέα σελίδα και εισαγάγετε ένα έγκυρο token."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Δεν έχει ρυθμιστεί λογαριασμός Gandi: προσθέστε πρώτα έναν."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Κανένας λογαριασμός δεν έχει αυτό το όνομα: εμφανίστε τους λογαριασμούς για να ελέγξετε το όνομα."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -113,10 +157,38 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Ο λογαριασμός {account} δεν υπάρχει πλέον. Δεν αποθηκεύτηκε τίποτα."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Η επιβεβαίωση δεν δόθηκε εγκαίρως: δεν άλλαξε τίποτα."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Η κλειδοθήκη του συστήματος δεν είναι διαθέσιμη. Δεν αποθηκεύτηκε τίποτα: ξεκλειδώστε ή "
 "εγκαταστήστε την και δοκιμάστε ξανά."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr ""
+"Η κλειδοθήκη του συστήματος δεν είναι διαθέσιμη: ξεκλειδώστε ή εγκαταστήστε την και δοκιμάστε "
+"ξανά."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Η λειτουργία συγκρούεται με την τρέχουσα κατάσταση του πόρου στη Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Η λειτουργία απορρίφθηκε: δεν άλλαξε τίποτα."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Η σελίδα εισαγωγής του token δεν άνοιξε σε πρόγραμμα περιήγησης."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr ""
+"Δεν είναι δυνατή η ανάγνωση ή η αποθήκευση των προτιμήσεων του gandi-mcp: ελέγξτε το αρχείο "
+"προτιμήσεων."
 
 # needs-review
 msgid ""
@@ -125,6 +197,30 @@ msgid ""
 msgstr ""
 "Δεν είναι δυνατή η αποθήκευση των προτιμήσεων του gandi-mcp. Δεν αποθηκεύτηκε τίποτα: ελέγξτε το "
 "αρχείο προτιμήσεων και δοκιμάστε ξανά."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Το token αυτού του λογαριασμού λείπει από την κλειδοθήκη: αντικαταστήστε το token του λογαριασμού."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Αυτός ο λογαριασμός είναι μόνο για ανάγνωση: οι λειτουργίες εγγραφής απορρίπτονται."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Αυτό το όνομα λογαριασμού δεν είναι έγκυρο: χρησιμοποιήστε 1 έως 40 γράμματα, ψηφία, παύλες ή "
+"μονά κενά."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr ""
+"Αυτή η επιβεβαίωση είναι άγνωστη, έχει ήδη χρησιμοποιηθεί ή αφορά άλλη λειτουργία: δεν άλλαξε "
+"τίποτα."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Αυτό δεν είναι έγκυρο Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -139,6 +235,30 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Αυτό το αίτημα απορρίφθηκε. Δεν άλλαξε τίποτα."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Αυτό το εργαλείο μπορεί να χρησιμοποιηθεί μόνο από την εφαρμογή Gandi."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Στάλθηκαν πάρα πολλά αιτήματα στη Gandi: περιμένετε ένα λεπτό και δοκιμάστε ξανά."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr ""
+"Δεν ήταν δυνατό να ζητηθεί η επιβεβαίωσή σας (κανένα παράθυρο διαλόγου, κανένα πρόγραμμα "
+"περιήγησης): δεν άλλαξε τίποτα."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "να επιτραπούν λειτουργίες εγγραφής στον λογαριασμό {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "ανάγνωση της ταυτότητας του λογαριασμού"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "αφαίρεση του λογαριασμού {account} και του token του από αυτόν τον υπολογιστή"
 

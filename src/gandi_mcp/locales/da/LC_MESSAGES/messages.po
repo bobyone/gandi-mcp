@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: da\n"
@@ -19,9 +19,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Der findes allerede en konto med dette navn: vælg et andet navn."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Der findes allerede en konto med navnet {account}. Intet blev gemt."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Der opstod en uventet fejl: intet blev ændret."
 
 # needs-review
 msgid "Confirm"
@@ -56,8 +64,34 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Indtast Personal Access Token for testkontoen (sandbox) {account}."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi svarede på en uventet måde: prøv igen senere, eller rapportér det."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Gandi kan ikke nås lige nu. Intet blev gemt: prøv igen senere."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi kan ikke nås lige nu: prøv igen senere."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi fandt ikke denne ressource."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi afviste de indsendte data."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr "Gandi afviste denne kontos token, som kan være ugyldigt eller udløbet: erstat kontoens token."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi afviste denne handling: tokenet mangler måske den nødvendige tilladelse eller er udløbet."
 
 # needs-review
 msgid ""
@@ -66,6 +100,14 @@ msgid ""
 msgstr ""
 "Gandi afviste dette token for dette miljø. Intet blev gemt: bed assistenten om at åbne en ny "
 "side, og indtast derefter et gyldigt token."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Ingen Gandi-konto er konfigureret: tilføj først en."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Ingen konto har dette navn: vis kontiene for at kontrollere navnet."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -111,10 +153,34 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Kontoen {account} findes ikke længere. Intet blev gemt."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Bekræftelsen blev ikke givet i tide: intet blev ændret."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Systemets nøglering er ikke tilgængelig. Intet blev gemt: lås den op eller installér den, og prøv"
 " igen."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Systemets nøglering er ikke tilgængelig: lås den op eller installér den, og prøv igen."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Handlingen er i konflikt med ressourcens aktuelle tilstand hos Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Handlingen blev afvist: intet blev ændret."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Siden til indtastning af tokenet kunne ikke åbnes i en browser."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Indstillingerne for gandi-mcp kan ikke læses eller gemmes: kontrollér indstillingsfilen."
 
 # needs-review
 msgid ""
@@ -123,6 +189,28 @@ msgid ""
 msgstr ""
 "Indstillingerne for gandi-mcp kan ikke gemmes. Intet blev gemt: kontrollér indstillingsfilen, og "
 "prøv igen."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Denne kontos token mangler i nøgleringen: erstat kontoens token."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Denne konto er skrivebeskyttet: skrivehandlinger afvises."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Dette kontonavn er ikke gyldigt: brug 1 til 40 bogstaver, cifre, bindestreger eller enkelte "
+"mellemrum."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Denne bekræftelse er ukendt, allerede brugt eller til en anden handling: intet blev ændret."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Dette er ikke et gyldigt Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -137,6 +225,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Denne anmodning blev afvist. Intet blev ændret."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Dette værktøj kan kun bruges fra Gandi-appen."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Der blev sendt for mange anmodninger til Gandi: vent et minut, og prøv igen."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Din bekræftelse kunne ikke indhentes (ingen dialog, ingen browser): intet blev ændret."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "tillade skrivehandlinger på kontoen {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "læse kontoens identitet"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "fjerne kontoen {account} og dens token fra denne computer"
 

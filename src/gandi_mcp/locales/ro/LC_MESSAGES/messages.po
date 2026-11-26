@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ro\n"
@@ -20,9 +20,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Există deja un cont cu acest nume: alegeți alt nume."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Există deja un cont numit {account}. Nu s-a salvat nimic."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "A apărut o eroare neașteptată: nu s-a modificat nimic."
 
 # needs-review
 msgid "Confirm"
@@ -57,8 +65,38 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Introduceți Personal Access Token al contului de test (sandbox) {account}."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi a răspuns în mod neașteptat: încercați mai târziu sau raportați problema."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Gandi nu poate fi contactat acum. Nu s-a salvat nimic: încercați din nou mai târziu."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi nu poate fi contactat acum: încercați din nou mai târziu."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi nu a găsit această resursă."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi a refuzat datele trimise."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi a refuzat tokenul acestui cont, care poate fi invalid sau expirat: înlocuiți tokenul "
+"contului."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr ""
+"Gandi a refuzat această operațiune: este posibil ca tokenul să nu aibă permisiunea necesară sau "
+"să fi expirat."
 
 # needs-review
 msgid ""
@@ -67,6 +105,14 @@ msgid ""
 msgstr ""
 "Gandi a refuzat acest token pentru acest mediu. Nu s-a salvat nimic: cereți asistentului să "
 "deschidă o pagină nouă, apoi introduceți un token valid."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Nu este configurat niciun cont Gandi: adăugați mai întâi unul."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Niciun cont nu are acest nume: afișați conturile pentru a verifica numele."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -114,10 +160,36 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Contul {account} nu mai există. Nu s-a salvat nimic."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Confirmarea nu a fost dată la timp: nu s-a modificat nimic."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Breloc-ul de chei al sistemului nu este disponibil. Nu s-a salvat nimic: deblocați-l sau "
 "instalați-l, apoi încercați din nou."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr ""
+"Breloc-ul de chei al sistemului nu este disponibil: deblocați-l sau instalați-l, apoi încercați "
+"din nou."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Operațiunea intră în conflict cu starea actuală a resursei la Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Operațiunea a fost refuzată: nu s-a modificat nimic."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Pagina pentru introducerea tokenului nu a putut fi deschisă într-un browser."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Preferințele gandi-mcp nu pot fi citite sau salvate: verificați fișierul de preferințe."
 
 # needs-review
 msgid ""
@@ -126,6 +198,30 @@ msgid ""
 msgstr ""
 "Preferințele gandi-mcp nu pot fi salvate. Nu s-a salvat nimic: verificați fișierul de preferințe,"
 " apoi încercați din nou."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Tokenul acestui cont lipsește din brelocul de chei: înlocuiți tokenul contului."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Acest cont este doar pentru citire: operațiunile de scriere sunt refuzate."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Acest nume de cont nu este valid: folosiți între 1 și 40 de litere, cifre, cratime sau spații "
+"simple."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr ""
+"Această confirmare este necunoscută, deja folosită sau pentru altă operațiune: nu s-a modificat "
+"nimic."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Acesta nu este un Personal Access Token valid."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -140,6 +236,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Această cerere a fost refuzată. Nu s-a modificat nimic."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Acest instrument poate fi folosit doar din aplicația Gandi."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Au fost trimise prea multe cereri către Gandi: așteptați un minut, apoi încercați din nou."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Confirmarea dvs. nu a putut fi cerută (niciun dialog, niciun browser): nu s-a modificat nimic."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "permiterea operațiunilor de scriere în contul {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "citirea identității contului"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "eliminarea contului {account} și a tokenului său de pe acest computer"
 

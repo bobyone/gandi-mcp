@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nb\n"
@@ -19,9 +19,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Det finnes allerede en konto med dette navnet: velg et annet navn."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Det finnes allerede en konto som heter {account}. Ingenting ble lagret."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Det oppstod en uventet feil: ingenting ble endret."
 
 # needs-review
 msgid "Confirm"
@@ -56,8 +64,36 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Skriv inn Personal Access Token for testkontoen (sandbox) {account}."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi svarte på en uventet måte: prøv igjen senere, eller rapporter det."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Gandi kan ikke nås akkurat nå. Ingenting ble lagret: prøv igjen senere."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi kan ikke nås akkurat nå: prøv igjen senere."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi fant ikke denne ressursen."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi avviste de innsendte dataene."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi avviste tokenet for denne kontoen, som kan være ugyldig eller utløpt: erstatt tokenet for "
+"kontoen."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi avviste denne operasjonen: tokenet mangler kanskje nødvendig tillatelse eller er utløpt."
 
 # needs-review
 msgid ""
@@ -66,6 +102,14 @@ msgid ""
 msgstr ""
 "Gandi avviste dette tokenet for dette miljøet. Ingenting ble lagret: be assistenten åpne en ny "
 "side, og skriv deretter inn et gyldig token."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Ingen Gandi-konto er satt opp: legg til en først."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Ingen konto har dette navnet: vis kontoene for å kontrollere navnet."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -111,10 +155,34 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Kontoen {account} finnes ikke lenger. Ingenting ble lagret."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Bekreftelsen ble ikke gitt i tide: ingenting ble endret."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Systemets nøkkelring er utilgjengelig. Ingenting ble lagret: lås den opp eller installer den, og "
 "prøv igjen."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Systemets nøkkelring er utilgjengelig: lås den opp eller installer den, og prøv igjen."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Operasjonen er i konflikt med ressursens nåværende tilstand hos Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Operasjonen ble avvist: ingenting ble endret."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Siden for å skrive inn tokenet kunne ikke åpnes i en nettleser."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Innstillingene for gandi-mcp kan ikke leses eller lagres: kontroller innstillingsfilen."
 
 # needs-review
 msgid ""
@@ -123,6 +191,30 @@ msgid ""
 msgstr ""
 "Innstillingene for gandi-mcp kan ikke lagres. Ingenting ble lagret: kontroller innstillingsfilen,"
 " og prøv igjen."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Tokenet for denne kontoen mangler i nøkkelringen: erstatt tokenet for kontoen."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Denne kontoen er skrivebeskyttet: skriveoperasjoner avvises."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Dette kontonavnet er ikke gyldig: bruk 1 til 40 bokstaver, sifre, bindestreker eller enkle "
+"mellomrom."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr ""
+"Denne bekreftelsen er ukjent, allerede brukt eller gjelder en annen operasjon: ingenting ble "
+"endret."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Dette er ikke et gyldig Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -137,6 +229,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Denne forespørselen ble avvist. Ingenting ble endret."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Dette verktøyet kan bare brukes fra Gandi-appen."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "For mange forespørsler ble sendt til Gandi: vent et minutt, og prøv igjen."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Bekreftelsen din kunne ikke innhentes (ingen dialog, ingen nettleser): ingenting ble endret."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "tillate skriveoperasjoner på kontoen {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "lese kontoens identitet"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "fjerne kontoen {account} og tokenet fra denne datamaskinen"
 

@@ -9,6 +9,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from gandi_mcp import __version__, main
+from gandi_mcp.i18n.system_locale import system_locale
 from gandi_mcp.main import (
     PRODUCTION_URL,
     SANDBOX_URL,
@@ -29,7 +30,7 @@ def write(tmp_path: Path, content: str) -> Path:
 
 def test_defaults_without_configuration_file() -> None:
     assert load_configuration(None) == {
-        "app": {"version": __version__},
+        "app": {"version": __version__, "locale": system_locale()},
         "logging": {"level": "WARNING"},
         "preferences": {"path": default_preferences_path()},
         "gandi": {

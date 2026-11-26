@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lb\n"
@@ -19,9 +19,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Et gëtt schonn e Kont mat dësem Numm: wielt en aneren Numm."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Et gëtt schonn e Kont mam Numm {account}. Näischt gouf gespäichert."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "En onerwaarte Feeler ass geschitt: näischt gouf geännert."
 
 # needs-review
 msgid "Confirm"
@@ -56,8 +64,38 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Gitt de Personal Access Token vum Testkont (Sandbox) {account} an."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi huet onerwaart geäntwert: probéiert méi spéit nach eng Kéier, oder mellt et."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Gandi ass de Moment net erreechbar. Näischt gouf gespäichert: probéiert méi spéit nach eng Kéier."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi ass de Moment net erreechbar: probéiert méi spéit nach eng Kéier."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi huet dës Ressource net fonnt."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi huet déi geschéckten Donnéeën refuséiert."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi huet den Token vun dësem Kont refuséiert, dee vläicht ongülteg oder ofgelaf ass: ersetzt "
+"den Token vum Kont."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr ""
+"Gandi huet dës Operatioun refuséiert: dem Token feelt vläicht déi néideg Berechtegung, oder en "
+"ass ofgelaf."
 
 # needs-review
 msgid ""
@@ -66,6 +104,14 @@ msgid ""
 msgstr ""
 "Gandi huet dësen Token fir dës Ëmfeld refuséiert. Näischt gouf gespäichert: frot den Assistent, "
 "eng nei Säit opzemaachen, a gitt dann e gültegen Token an."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Et ass kee Gandi-Kont agestallt: setzt fir d'éischt een derbäi."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Kee Kont huet dësen Numm: weist d'Konten un, fir den Numm ze kontrolléieren."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -111,10 +157,38 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "De Kont {account} gëtt et net méi. Näischt gouf gespäichert."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "D'Confirmatioun gouf net zäitgerecht ginn: näischt gouf geännert."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "De Schlësselbund vum System ass net disponibel. Näischt gouf gespäichert: entspäert oder "
 "installéiert en, a probéiert dann nach eng Kéier."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr ""
+"De Schlësselbund vum System ass net disponibel: entspäert oder installéiert en, a probéiert dann "
+"nach eng Kéier."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "D'Operatioun widdersprécht dem aktuellen Zoustand vun der Ressource bei Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "D'Operatioun gouf refuséiert: näischt gouf geännert."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "D'Säit fir den Token anzeginn konnt net an engem Browser opgemaach ginn."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr ""
+"D'Astellunge vu gandi-mcp kënnen net gelies oder gespäichert ginn: kontrolléiert "
+"d'Astellungsdatei."
 
 # needs-review
 msgid ""
@@ -123,6 +197,30 @@ msgid ""
 msgstr ""
 "D'Astellunge vu gandi-mcp kënnen net gespäichert ginn. Näischt gouf gespäichert: kontrolléiert "
 "d'Astellungsdatei a probéiert dann nach eng Kéier."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Den Token vun dësem Kont feelt am Schlësselbund: ersetzt den Token vum Kont."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Dëse Kont ass nëmmen ze liesen: Schreifoperatioune ginn refuséiert."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Dësen Numm vum Kont ass net gülteg: benotzt 1 bis 40 Buschtawen, Zifferen, Bindestricher oder "
+"eenzel Espacen."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr ""
+"Dës Confirmatioun ass onbekannt, schonn benotzt oder fir eng aner Operatioun: näischt gouf "
+"geännert."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Dëst ass kee gültege Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -139,6 +237,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Dës Ufro gouf refuséiert. Näischt gouf geännert."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Dëst Tool kann nëmmen aus der Gandi-App benotzt ginn."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Et goufen ze vill Ufroen u Gandi geschéckt: waart eng Minutt, a probéiert dann nach eng Kéier."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Är Confirmatioun konnt net gefrot ginn (keen Dialog, kee Browser): näischt gouf geännert."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "Schreifoperatiounen um Kont {account} erlaben"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "d'Identitéit vum Kont liesen"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "de Kont {account} a säin Token vun dësem Computer ewechhuelen"
 

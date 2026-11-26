@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sr_Latn\n"
@@ -20,9 +20,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Nalog sa ovim nazivom već postoji: izaberite drugi naziv."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Nalog sa nazivom {account} već postoji. Ništa nije sačuvano."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Došlo je do neočekivane greške: ništa nije promenjeno."
 
 # needs-review
 msgid "Confirm"
@@ -57,8 +65,34 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Unesite Personal Access Token testnog naloga (sandbox) {account}."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi je odgovorio na neočekivan način: pokušajte kasnije ili to prijavite."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Gandi trenutno nije dostupan. Ništa nije sačuvano: pokušajte ponovo kasnije."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi trenutno nije dostupan: pokušajte ponovo kasnije."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi nije pronašao ovaj resurs."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi je odbio poslate podatke."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr "Gandi je odbio token ovog naloga, koji je možda neispravan ili istekao: zamenite token naloga."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi je odbio ovu operaciju: tokenu možda nedostaje potrebna dozvola ili je istekao."
 
 # needs-review
 msgid ""
@@ -67,6 +101,14 @@ msgid ""
 msgstr ""
 "Gandi je odbio ovaj token za ovo okruženje. Ništa nije sačuvano: zamolite asistenta da otvori "
 "novu stranicu, zatim unesite ispravan token."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Nijedan Gandi nalog nije podešen: prvo dodajte jedan."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Nijedan nalog nema ovaj naziv: prikažite listu naloga da proverite naziv."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -112,10 +154,34 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Nalog {account} više ne postoji. Ništa nije sačuvano."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Potvrda nije data na vreme: ništa nije promenjeno."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Privezak ključeva sistema nije dostupan. Ništa nije sačuvano: otključajte ga ili instalirajte, "
 "zatim pokušajte ponovo."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Privezak ključeva sistema nije dostupan: otključajte ga ili instalirajte, zatim pokušajte ponovo."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Operacija je u sukobu sa trenutnim stanjem resursa kod Gandija."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Operacija je odbijena: ništa nije promenjeno."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Stranica za unos tokena nije mogla da se otvori u pregledaču."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Podešavanja gandi-mcp ne mogu da se pročitaju ni sačuvaju: proverite datoteku podešavanja."
 
 # needs-review
 msgid ""
@@ -124,6 +190,28 @@ msgid ""
 msgstr ""
 "Podešavanja gandi-mcp ne mogu da se sačuvaju. Ništa nije sačuvano: proverite datoteku "
 "podešavanja, zatim pokušajte ponovo."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Token ovog naloga nedostaje u privesku ključeva: zamenite token naloga."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Ovaj nalog je samo za čitanje: operacije upisa se odbijaju."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Ovaj naziv naloga nije ispravan: koristite od 1 do 40 slova, cifara, crtica ili pojedinačnih "
+"razmaka."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Ova potvrda je nepoznata, već iskorišćena ili za drugu operaciju: ništa nije promenjeno."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Ovo nije ispravan Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -138,6 +226,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Ovaj zahtev je odbijen. Ništa nije promenjeno."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Ova alatka može da se koristi samo iz aplikacije Gandi."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Gandiju je poslato previše zahteva: sačekajte minut, zatim pokušajte ponovo."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Vaša potvrda nije mogla da se zatraži (nema dijaloga, nema pregledača): ništa nije promenjeno."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "dozvoliti operacije upisa na nalogu {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "čitanje identiteta naloga"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "ukloniti nalog {account} i njegov token sa ovog računara"
 

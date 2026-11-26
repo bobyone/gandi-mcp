@@ -21,3 +21,9 @@ All notable changes are documented here. The format follows
 - Configuration keys for the preferences file, the Gandi base URLs and
   timeout, the confirmation and token entry validity, and the free input
   limit; unknown keys are rejected. (#4)
+- Gandi accounts: tools to list, add, rename, make default, make read-only,
+  re-authenticate, move between production and sandbox, and remove accounts.
+  Personal Access Tokens are typed on a local page (never in the
+  conversation), checked with Gandi and kept in the OS keyring; preferences
+  are kept in a local JSON file. Destructive and billable operations are
+  confirmed by the user through elicitation or a local page. (#4)

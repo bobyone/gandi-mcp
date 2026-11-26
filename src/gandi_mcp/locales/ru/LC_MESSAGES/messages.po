@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -20,9 +20,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Учётная запись с таким именем уже существует: выберите другое имя."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Учётная запись с именем {account} уже существует. Ничего не сохранено."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Произошла непредвиденная ошибка: ничего не изменено."
 
 # needs-review
 msgid "Confirm"
@@ -57,8 +65,36 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Введите Personal Access Token тестовой учётной записи (sandbox) {account}."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi ответил непредвиденным образом: повторите попытку позже или сообщите об этом."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Сейчас не удаётся связаться с Gandi. Ничего не сохранено: повторите попытку позже."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Сейчас не удаётся связаться с Gandi: повторите попытку позже."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi не нашёл этот ресурс."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi отклонил отправленные данные."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi отклонил токен этой учётной записи: возможно, он недействителен или истёк. Замените токен "
+"учётной записи."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi отклонил эту операцию: возможно, у токена нет нужного разрешения или истёк его срок."
 
 # needs-review
 msgid ""
@@ -67,6 +103,14 @@ msgid ""
 msgstr ""
 "Gandi отклонил этот токен для данной среды. Ничего не сохранено: попросите ассистента открыть "
 "новую страницу и введите действительный токен."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Не настроено ни одной учётной записи Gandi: сначала добавьте её."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Нет учётной записи с таким именем: выведите список учётных записей, чтобы проверить имя."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -112,10 +156,34 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Учётной записи {account} больше нет. Ничего не сохранено."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Подтверждение не было дано вовремя: ничего не изменено."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Связка ключей системы недоступна. Ничего не сохранено: разблокируйте или установите её и "
 "повторите попытку."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Связка ключей системы недоступна: разблокируйте или установите её и повторите попытку."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Операция конфликтует с текущим состоянием ресурса в Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Операция отклонена: ничего не изменено."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Не удалось открыть в браузере страницу для ввода токена."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Не удаётся прочитать или сохранить настройки gandi-mcp: проверьте файл настроек."
 
 # needs-review
 msgid ""
@@ -124,6 +192,30 @@ msgid ""
 msgstr ""
 "Не удаётся сохранить настройки gandi-mcp. Ничего не сохранено: проверьте файл настроек и "
 "повторите попытку."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Токен этой учётной записи отсутствует в связке ключей: замените токен учётной записи."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Эта учётная запись только для чтения: операции записи отклоняются."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Это имя учётной записи недопустимо: используйте от 1 до 40 букв, цифр, дефисов или одиночных "
+"пробелов."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr ""
+"Это подтверждение неизвестно, уже использовано или относится к другой операции: ничего не "
+"изменено."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Это недействительный Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -138,6 +230,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Этот запрос отклонён. Ничего не изменено."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Этот инструмент можно использовать только из приложения Gandi."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "В Gandi отправлено слишком много запросов: подождите минуту и повторите попытку."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Не удалось запросить ваше подтверждение (нет диалога, нет браузера): ничего не изменено."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "разрешить операции записи в учётной записи {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "чтение идентичности учётной записи"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "удалить учётную запись {account} и её токен с этого компьютера"
 

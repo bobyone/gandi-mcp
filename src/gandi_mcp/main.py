@@ -16,6 +16,7 @@ import platformdirs
 
 from gandi_mcp import __version__
 from gandi_mcp.container import ApplicationContainer
+from gandi_mcp.i18n.system_locale import system_locale
 
 LOG_LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
 DEFAULT_LOG_LEVEL = "WARNING"
@@ -136,7 +137,7 @@ def load_configuration(path: Path | None) -> dict[str, Any]:
     unknown = sorted(set(raw) - known)
     if unknown:
         raise ConfigurationError(f"unknown configuration section: {', '.join(unknown)}")
-    configuration: dict[str, Any] = {"app": {"version": __version__}}
+    configuration: dict[str, Any] = {"app": {"version": __version__, "locale": system_locale()}}
     for setting in SETTINGS:
         section = raw.get(setting.section, {})
         if not isinstance(section, dict):

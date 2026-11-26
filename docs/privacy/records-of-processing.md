@@ -25,18 +25,18 @@ The software runs on the user's computer. Its authors receive no data.
 | Recipients | Gandi SAS (France), service provider of the controller; the provider of the LLM used by the MCP client (for example Anthropic or OpenAI), which receives tool results. |
 | Transfers outside the EU | Depending on the LLM provider: [for example United States, under the provider's data processing terms and transfer mechanism]. Gandi processes data in the EU. |
 | Retention | The software stores no Gandi data: it fetches it on demand and keeps it in memory for the duration of a tool call. Retention by the LLM provider follows its own policy and the client's settings: [to complete]. |
-| Security measures | HTTPS to the Gandi API; logs contain no personal data nor secret; tool results are marked as untrusted data; destructive and billable operations require confirmation. |
+| Security measures | HTTPS to the Gandi API; logs contain no personal data nor secret; tool results are marked as untrusted data; destructive and billable operations require the user's confirmation, given outside the model (MCP App dialog, elicitation or local page); read-only accounts refuse every write operation. |
 
-## P2. Storage of Personal Access Tokens
+## P2. Management of the accounts and their Personal Access Tokens
 
 | Field | Description |
 | --- | --- |
 | Controller | [Same as P1] |
-| Purpose | Authenticate to the Gandi API on behalf of each configured account. |
+| Purpose | Configure the Gandi accounts used by the software and authenticate to the Gandi API on their behalf. |
 | Legal basis | [Same as P1] |
 | Data subjects | The user. |
-| Data categories | Account name chosen by the user; Gandi Personal Access Token (secret). |
-| Recipients | None. The token is sent only to the Gandi API; it never reaches the model. |
-| Transfers outside the EU | None. |
-| Retention | Until the user removes the account in the software, or the token expires at Gandi. |
-| Security measures | Stored in the operating system keyring only, never in a file nor in logs; entered in the MCP App UI through an app-only tool, or through a temporary localhost page protected by a single-use token. |
+| Data categories | Account settings: name chosen by the user, environment (production or sandbox), read-only flag, default account. Gandi Personal Access Token (secret). Gandi identity behind the token (user name and full name), read when the token is saved, displayed to the user and never stored. |
+| Recipients | Gandi SAS, to which the token is sent to authenticate each request and which returns the identity. The provider of the LLM receives the account settings in tool results, never the token nor the identity. |
+| Transfers outside the EU | Account settings: depending on the LLM provider, as in P1. Token and identity: none. |
+| Retention | Account settings and token: until the user removes the account in the software (the token may expire earlier at Gandi). Token entry sessions and pending confirmations: in memory only, at most `token_entry.timeout_seconds` (default 10 minutes) and `confirmation.timeout_seconds` (default 5 minutes). |
+| Security measures | The token is kept in the operating system keyring only, never in a file nor in logs, and never passes through the model: it is entered in the MCP App UI through an app-only tool, or on a local page served on `127.0.0.1` only, protected by a single-use code and shown through URL elicitation or the browser, never through the model. Account settings are kept in a local preferences file without any secret, written atomically. |

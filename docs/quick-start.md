@@ -5,7 +5,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 # Quick-start
 
-> Pre-alpha: the server starts but exposes no Gandi tool yet.
+> Pre-alpha: only the account management is available yet.
 
 ## 1. Install the prerequisites
 
@@ -55,6 +55,16 @@ Personal Access Token in this file.
 ```text
 uvx --from git+https://github.com/bobyone/gandi-mcp gandi-mcp --version
 ```
+
+On Linux, a Secret Service keyring (GNOME Keyring, KWallet or KeePassXC) must
+be running: tokens are stored there.
+
+## 5. Add your first account
+
+Ask your assistant: "Add my Gandi sandbox account". A page opens for you to
+paste your Personal Access Token; never paste it in the conversation. See
+[Add a Gandi account](how-to/add-a-gandi-account.md) and
+[Use the Gandi sandbox](how-to/use-the-sandbox.md).
 
 ## From a clone (contributors, pull request testing)
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lt\n"
@@ -20,9 +20,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Paskyra tokiu pavadinimu jau yra: pasirinkite kitą pavadinimą."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Paskyra pavadinimu {account} jau yra. Niekas neišsaugota."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Įvyko netikėta klaida: niekas nepakeista."
 
 # needs-review
 msgid "Confirm"
@@ -57,8 +65,36 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Įveskite bandomosios paskyros (sandbox) {account} Personal Access Token."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi atsakė netikėtai: bandykite vėliau arba praneškite apie tai."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Šiuo metu nepavyksta pasiekti Gandi. Niekas neišsaugota: bandykite vėliau."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Šiuo metu nepavyksta pasiekti Gandi: bandykite vėliau."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi nerado šio ištekliaus."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi atmetė pateiktus duomenis."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi atmetė šios paskyros prieigos raktą, kuris gali būti negaliojantis arba pasibaigęs: "
+"pakeiskite paskyros raktą."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi atmetė šią operaciją: raktui gali trūkti reikiamo leidimo arba jis pasibaigęs."
 
 # needs-review
 msgid ""
@@ -67,6 +103,14 @@ msgid ""
 msgstr ""
 "Gandi atmetė šį prieigos raktą šiai aplinkai. Niekas neišsaugota: paprašykite asistento atidaryti"
 " naują puslapį ir įveskite galiojantį raktą."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Nesukonfigūruota jokia Gandi paskyra: pirmiausia pridėkite paskyrą."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Nėra paskyros tokiu pavadinimu: peržiūrėkite paskyrų sąrašą ir patikrinkite pavadinimą."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -112,10 +156,34 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Paskyros {account} nebėra. Niekas neišsaugota."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Patvirtinimas nebuvo pateiktas laiku: niekas nepakeista."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Sistemos raktinė nepasiekiama. Niekas neišsaugota: atrakinkite arba įdiekite ją ir bandykite dar "
 "kartą."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Sistemos raktinė nepasiekiama: atrakinkite arba įdiekite ją ir bandykite dar kartą."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Operacija prieštarauja dabartinei ištekliaus būsenai Gandi sistemoje."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Operacija atmesta: niekas nepakeista."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Rakto įvedimo puslapio nepavyko atidaryti naršyklėje."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Nepavyksta nuskaityti ar išsaugoti gandi-mcp nuostatų: patikrinkite nuostatų failą."
 
 # needs-review
 msgid ""
@@ -124,6 +192,28 @@ msgid ""
 msgstr ""
 "Nepavyksta išsaugoti gandi-mcp nuostatų. Niekas neišsaugota: patikrinkite nuostatų failą ir "
 "bandykite dar kartą."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Šios paskyros rakto nėra raktinėje: pakeiskite paskyros raktą."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Ši paskyra skirta tik skaityti: rašymo operacijos atmetamos."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Šis paskyros pavadinimas netinkamas: naudokite nuo 1 iki 40 raidžių, skaitmenų, brūkšnelių arba "
+"pavienių tarpų."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Šis patvirtinimas nežinomas, jau panaudotas arba skirtas kitai operacijai: niekas nepakeista."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Tai nėra galiojantis Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -138,6 +228,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Ši užklausa atmesta. Niekas nepakeista."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Šį įrankį galima naudoti tik iš Gandi programos."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Į Gandi išsiųsta per daug užklausų: palaukite minutę ir bandykite dar kartą."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Nepavyko paprašyti jūsų patvirtinimo (nėra dialogo, nėra naršyklės): niekas nepakeista."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "leisti rašymo operacijas paskyroje {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "nuskaityti paskyros tapatybę"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "pašalinti paskyrą {account} ir jos raktą iš šio kompiuterio"
 

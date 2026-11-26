@@ -59,4 +59,11 @@ form or URL elicitation, some render the MCP App, some support neither.
   elicitation nor the MCP App, destructive and billable operations cannot be
   confirmed; the error explains it.
 - Trust in app-only tools relies on the host not exposing them to the model,
-  as the MCP Apps specification requires.
+  as the MCP Apps specification requires. A client that does not render the
+  MCP App may still list them to its model: app-only tools therefore refuse
+  calls from clients that did not negotiate the MCP Apps extension.
+- From protocol revision 2026-07-28, a server cannot send requests to the
+  client during a tool call: elicitation goes through input-required results.
+  That path is not implemented yet; on such sessions elicitation is treated as
+  unavailable and confirmations use the local page. Supporting input-required
+  elicitation is deferred to a later decision.

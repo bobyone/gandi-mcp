@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mt\n"
@@ -20,9 +20,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Diġà hemm kont b'dan l-isem: agħżel isem ieħor."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Diġà hemm kont imsejjaħ {account}. Xejn ma ġie salvat."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Seħħ żball mhux mistenni: xejn ma nbidel."
 
 # needs-review
 msgid "Confirm"
@@ -57,8 +65,36 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Daħħal il-Personal Access Token tal-kont tat-test (sandbox) {account}."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi wieġeb b'mod mhux mistenni: erġa' pprova aktar tard, jew irrapportah."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Gandi mhux disponibbli bħalissa. Xejn ma ġie salvat: erġa' pprova aktar tard."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi mhux disponibbli bħalissa: erġa' pprova aktar tard."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi ma sabx din ir-riżorsa."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi irrifjuta d-data mibgħuta."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr ""
+"Gandi irrifjuta t-token ta' dan il-kont, li jista' jkun invalidu jew skadut: ibdel it-token tal-"
+"kont."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi irrifjuta din l-operazzjoni: it-token jista' jkun nieqes mill-permess meħtieġ jew skada."
 
 # needs-review
 msgid ""
@@ -67,6 +103,14 @@ msgid ""
 msgstr ""
 "Gandi irrifjuta dan it-token għal dan l-ambjent. Xejn ma ġie salvat: itlob lill-assistent jiftaħ "
 "paġna ġdida, imbagħad daħħal token validu."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Ebda kont ta' Gandi mhu kkonfigurat: żid wieħed l-ewwel."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "L-ebda kont m'għandu dan l-isem: elenka l-kontijiet biex tiċċekkja l-isem."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -112,10 +156,34 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Il-kont {account} m'għadux jeżisti. Xejn ma ġie salvat."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Il-konferma ma ngħatatx fil-ħin: xejn ma nbidel."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Iċ-ċirku taċ-ċwievet tas-sistema mhux disponibbli. Xejn ma ġie salvat: iftħu jew installah, "
 "imbagħad erġa' pprova."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Iċ-ċirku taċ-ċwievet tas-sistema mhux disponibbli: iftħu jew installah, imbagħad erġa' pprova."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "L-operazzjoni tmur kontra l-istat attwali tar-riżorsa għand Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "L-operazzjoni ġiet irrifjutata: xejn ma nbidel."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Il-paġna biex iddaħħal it-token ma setgħetx tinfetaħ f'browser."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Il-preferenzi ta' gandi-mcp ma jistgħux jinqraw jew jiġu salvati: iċċekkja l-fajl tal-preferenzi."
 
 # needs-review
 msgid ""
@@ -124,6 +192,26 @@ msgid ""
 msgstr ""
 "Il-preferenzi ta' gandi-mcp ma jistgħux jiġu salvati. Xejn ma ġie salvat: iċċekkja l-fajl tal-"
 "preferenzi, imbagħad erġa' pprova."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "It-token ta' dan il-kont nieqes miċ-ċirku taċ-ċwievet: ibdel it-token tal-kont."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Dan il-kont huwa għall-qari biss: l-operazzjonijiet tal-kitba huma rrifjutati."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr "Dan l-isem tal-kont mhuwiex validu: uża minn 1 sa 40 ittra, ċifra, sing jew spazju wieħed."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Din il-konferma mhix magħrufa, diġà ntużat jew hija għal operazzjoni oħra: xejn ma nbidel."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Dan mhuwiex Personal Access Token validu."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -138,6 +226,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Din it-talba ġiet irrifjutata. Xejn ma nbidel."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Din l-għodda tista' tintuża biss mill-app ta' Gandi."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Intbagħtu wisq talbiet lil Gandi: stenna minuta, imbagħad erġa' pprova."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Il-konferma tiegħek ma setgħetx tintalab (l-ebda djalogu, l-ebda browser): xejn ma nbidel."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "tippermetti operazzjonijiet tal-kitba fuq il-kont {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "taqra l-identità tal-kont"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "tneħħi l-kont {account} u t-token tiegħu minn dan il-kompjuter"
 

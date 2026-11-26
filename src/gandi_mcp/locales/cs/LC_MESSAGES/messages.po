@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs\n"
@@ -19,9 +19,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Účet s tímto názvem již existuje: zvolte jiný název."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Účet s názvem {account} již existuje. Nic nebylo uloženo."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Došlo k neočekávané chybě: nic nebylo změněno."
 
 # needs-review
 msgid "Confirm"
@@ -56,8 +64,34 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Zadejte Personal Access Token testovacího účtu (sandbox) {account}."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi odpovědělo neočekávaným způsobem: zkuste to později nebo to nahlaste."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Gandi je momentálně nedostupné. Nic nebylo uloženo: zkuste to později."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi je momentálně nedostupné: zkuste to později."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi tento prostředek nenašlo."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi odmítlo odeslaná data."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr "Gandi odmítlo token tohoto účtu, který může být neplatný nebo prošlý: nahraďte token účtu."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi tuto operaci odmítlo: token možná nemá potřebné oprávnění nebo vypršel."
 
 # needs-review
 msgid ""
@@ -66,6 +100,14 @@ msgid ""
 msgstr ""
 "Gandi tento token pro toto prostředí odmítl. Nic nebylo uloženo: požádejte asistenta o otevření "
 "nové stránky a zadejte platný token."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Není nastaven žádný účet Gandi: nejprve nějaký přidejte."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Žádný účet nemá tento název: vypište účty a název zkontrolujte."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -111,10 +153,34 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Účet {account} již neexistuje. Nic nebylo uloženo."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Potvrzení nebylo včas uděleno: nic nebylo změněno."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Klíčenka systému není dostupná. Nic nebylo uloženo: odemkněte ji nebo nainstalujte a zkuste to "
 "znovu."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Klíčenka systému není dostupná: odemkněte ji nebo nainstalujte a zkuste to znovu."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Operace je v rozporu s aktuálním stavem prostředku u Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Operace byla odmítnuta: nic nebylo změněno."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Stránku pro zadání tokenu se nepodařilo otevřít v prohlížeči."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "Předvolby gandi-mcp nelze načíst ani uložit: zkontrolujte soubor předvoleb."
 
 # needs-review
 msgid ""
@@ -123,6 +189,26 @@ msgid ""
 msgstr ""
 "Předvolby gandi-mcp nelze uložit. Nic nebylo uloženo: zkontrolujte soubor předvoleb a zkuste to "
 "znovu."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Token tohoto účtu v klíčence chybí: nahraďte token účtu."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Tento účet je jen pro čtení: operace zápisu jsou odmítány."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr "Tento název účtu není platný: použijte 1 až 40 písmen, číslic, spojovníků nebo jednotlivých mezer."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Toto potvrzení je neznámé, již použité nebo pro jinou operaci: nic nebylo změněno."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Toto není platný Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -137,6 +223,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Tento požadavek byl odmítnut. Nic nebylo změněno."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Tento nástroj lze použít pouze z aplikace Gandi."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Do Gandi bylo odesláno příliš mnoho požadavků: počkejte minutu a zkuste to znovu."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "O vaše potvrzení nebylo možné požádat (žádný dialog, žádný prohlížeč): nic nebylo změněno."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "povolit operace zápisu v účtu {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "načtení identity účtu"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "odebrat účet {account} a jeho token z tohoto počítače"
 

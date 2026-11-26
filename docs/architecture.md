@@ -24,8 +24,12 @@ flowchart LR
   (`dependency-injector`). Singletons use the container scope.
 - **Protocol** (`gandi_mcp.protocol`): adapts the business core to MCP (tools,
   resources, MCP App).
-- **Business core** and **Gandi implementations**: added per batch, each notion
-  in its own directory, from the general abstraction to its implementations.
+- **Business core**: `accounts` (account rules), `operations` (Gandi calls and
+  their common rules), `confirmation` (chain of confirmation channels),
+  `token_entry` (token entry sessions), `interaction` (elicitation, browser),
+  `i18n` (translation).
+- **Technical implementations**: `secrets/keyring`, `preferences/json`,
+  `gandi/http`, `local_pages/starlette`, `interaction/system`, `i18n/babel`.
 
 Source tree and tests mirror each other (`src/gandi_mcp/<notion>/`,
 `tests/<notion>/`).
@@ -357,9 +361,29 @@ Behavior and limits:
 | Parameter | Type | Default | Required | Description |
 | --- | --- | --- | --- | --- |
 | `version` | string | none | yes | Version advertised to clients (`app.version`, set by the entry point from the package metadata). |
+| `tool_modules` | sequence of `ToolModule` | none | no | Groups of tools registered on the server. |
+| `closers` | sequence of async callables | none | no | Called when the server stops (HTTP client, local page server). |
 
 Creates the `MCPServer` named `gandi-mcp`, with instructions telling the model
-that tool results are untrusted data.
+that tool results are untrusted data, never to ask for a token in the
+conversation and never to invent a confirmation identifier.
+
+### Protocol adapters: `gandi_mcp.protocol`
+
+| Component | Role |
+| --- | --- |
+| `ToolModule` | Abstraction: `register(server)` adds the tools of a notion. |
+| `tools.accounts_tools.AccountsTools` | `list_accounts`, `add_account`, `update_account`, `replace_account_token`, `change_account_environment`, `remove_account`. No tool receives or returns a token; token changes open a token entry session; removing an account and turning read-only off need a confirmation (pending results carry `confirmation_id`). |
+| `McpUserInteraction` | `UserInteraction` over MCP elicitation for one call. From protocol revision 2026-07-28 (no request from the server during a call), elicitation is treated as unavailable, so confirmations use the local page (ADR 4). |
+| `ErrorPresenter` | Maps each business exception to a translated explanation with its remedy (system language); Gandi details are appended and marked as untrusted; unknown exceptions are logged and shown as a generic error. |
+
+### Wiring: `gandi_mcp.container.ApplicationContainer`
+
+Every component is a container singleton. The entry point adds `app.version`
+and `app.locale` (the system language, from `gandi_mcp.i18n.system_locale`) to
+the validated configuration. The confirmation channels are wired in the order
+`AppChannel`, `ElicitationChannel`, `LocalLinkChannel`; the local page server
+implements both page ports and uses the longest of the two page timeouts.
 
 ## Development tooling
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,9 +19,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Un compte porte déjà ce nom : choisissez-en un autre."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Un compte s'appelle déjà {account}. Rien n'a été enregistré."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Une erreur inattendue s'est produite : rien n'a été modifié."
 
 # needs-review
 msgid "Confirm"
@@ -56,8 +64,34 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Saisissez le Personal Access Token du compte de test (sandbox) {account}."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi a répondu de façon inattendue : réessayez plus tard ou signalez-le."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Gandi est injoignable pour le moment. Rien n'a été enregistré : réessayez plus tard."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandi est injoignable pour le moment : réessayez plus tard."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi n'a pas trouvé cette ressource."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi a refusé les données envoyées."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr "Gandi a refusé le jeton de ce compte, peut-être invalide ou expiré : remplacez le jeton du compte."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi a refusé cette opération : le jeton n'a peut-être pas la permission nécessaire ou a expiré."
 
 # needs-review
 msgid ""
@@ -66,6 +100,14 @@ msgid ""
 msgstr ""
 "Gandi a refusé ce jeton pour cet environnement. Rien n'a été enregistré : demandez à l'assistant "
 "d'ouvrir une nouvelle page, puis saisissez un jeton valide."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Aucun compte Gandi n'est configuré : ajoutez-en un d'abord."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Aucun compte ne porte ce nom : listez les comptes pour vérifier le nom."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -113,10 +155,36 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Le compte {account} n'existe plus. Rien n'a été enregistré."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "La confirmation n'a pas été donnée à temps : rien n'a été modifié."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Le trousseau du système est indisponible. Rien n'a été enregistré : déverrouillez-le ou "
 "installez-le, puis réessayez."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Le trousseau du système est indisponible : déverrouillez-le ou installez-le, puis réessayez."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "L'opération est en conflit avec l'état actuel de la ressource chez Gandi."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "L'opération a été refusée : rien n'a été modifié."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "La page de saisie du jeton n'a pas pu être ouverte dans un navigateur."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr ""
+"Les préférences de gandi-mcp ne peuvent être ni lues ni enregistrées : vérifiez le fichier de "
+"préférences."
 
 # needs-review
 msgid ""
@@ -125,6 +193,30 @@ msgid ""
 msgstr ""
 "Les préférences de gandi-mcp ne peuvent pas être enregistrées. Rien n'a été enregistré : vérifiez"
 " le fichier de préférences, puis réessayez."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Le jeton de ce compte manque dans le trousseau : remplacez le jeton du compte."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Ce compte est en lecture seule : les opérations d'écriture sont refusées."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Ce nom de compte n'est pas valide : utilisez de 1 à 40 lettres, chiffres, tirets ou espaces "
+"simples."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr ""
+"Cette confirmation est inconnue, déjà utilisée ou destinée à une autre opération : rien n'a été "
+"modifié."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Ce n'est pas un Personal Access Token valide."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -139,6 +231,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Cette requête a été refusée. Rien n'a été modifié."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Cet outil ne peut être utilisé que depuis l'application Gandi."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Trop de requêtes ont été envoyées à Gandi : attendez une minute, puis réessayez."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Votre confirmation n'a pas pu être demandée (ni dialogue, ni navigateur) : rien n'a été modifié."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "autoriser les opérations d'écriture sur le compte {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "lire l'identité du compte"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "supprimer le compte {account} et son jeton de cet ordinateur"
 

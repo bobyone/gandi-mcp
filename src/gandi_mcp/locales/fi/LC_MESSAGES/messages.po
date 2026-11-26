@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:58+0100\n"
+"POT-Creation-Date: 2026-11-26 15:12+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fi\n"
@@ -19,9 +19,17 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 # needs-review
+msgid "An account already has this name: choose another name."
+msgstr "Tämänniminen tili on jo olemassa: valitse toinen nimi."
+
+# needs-review
 #, python-brace-format
 msgid "An account is already named {account}. Nothing was saved."
 msgstr "Tili nimeltä {account} on jo olemassa. Mitään ei tallennettu."
+
+# needs-review
+msgid "An unexpected error occurred: nothing was changed."
+msgstr "Tapahtui odottamaton virhe: mitään ei muutettu."
 
 # needs-review
 msgid "Confirm"
@@ -56,8 +64,34 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Anna testitilin (sandbox) {account} Personal Access Token."
 
 # needs-review
+msgid "Gandi answered in an unexpected way: try again later, or report it."
+msgstr "Gandi vastasi odottamattomalla tavalla: yritä myöhemmin uudelleen tai ilmoita siitä."
+
+# needs-review
 msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
 msgstr "Gandiin ei saada juuri nyt yhteyttä. Mitään ei tallennettu: yritä myöhemmin uudelleen."
+
+# needs-review
+msgid "Gandi cannot be reached right now: try again later."
+msgstr "Gandiin ei saada juuri nyt yhteyttä: yritä myöhemmin uudelleen."
+
+# needs-review
+msgid "Gandi did not find this resource."
+msgstr "Gandi ei löytänyt tätä resurssia."
+
+# needs-review
+msgid "Gandi refused the submitted data."
+msgstr "Gandi hylkäsi lähetetyt tiedot."
+
+# needs-review
+msgid ""
+"Gandi refused the token of this account, which may be invalid or expired: replace the token of "
+"the account."
+msgstr "Gandi hylkäsi tämän tilin tokenin, joka voi olla virheellinen tai vanhentunut: korvaa tilin token."
+
+# needs-review
+msgid "Gandi refused this operation: the token may lack the required permission or have expired."
+msgstr "Gandi hylkäsi tämän toiminnon: tokenilta voi puuttua tarvittava oikeus tai se on vanhentunut."
 
 # needs-review
 msgid ""
@@ -66,6 +100,14 @@ msgid ""
 msgstr ""
 "Gandi hylkäsi tämän tokenin tässä ympäristössä. Mitään ei tallennettu: pyydä avustajaa avaamaan "
 "uusi sivu ja anna sitten kelvollinen token."
+
+# needs-review
+msgid "No Gandi account is configured: add one first."
+msgstr "Gandi-tiliä ei ole määritetty: lisää ensin tili."
+
+# needs-review
+msgid "No account has this name: list the accounts to check the name."
+msgstr "Millään tilillä ei ole tätä nimeä: listaa tilit ja tarkista nimi."
 
 # needs-review
 msgid "Open this page to confirm or refuse the operation."
@@ -111,10 +153,34 @@ msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Tiliä {account} ei ole enää olemassa. Mitään ei tallennettu."
 
 # needs-review
+msgid "The confirmation was not given in time: nothing was changed."
+msgstr "Vahvistusta ei annettu ajoissa: mitään ei muutettu."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Järjestelmän avainnippu ei ole käytettävissä. Mitään ei tallennettu: avaa sen lukitus tai asenna "
 "se ja yritä uudelleen."
+
+# needs-review
+msgid "The keyring of the system is unavailable: unlock or install it, then try again."
+msgstr "Järjestelmän avainnippu ei ole käytettävissä: avaa sen lukitus tai asenna se ja yritä uudelleen."
+
+# needs-review
+msgid "The operation conflicts with the current state of the resource at Gandi."
+msgstr "Toiminto on ristiriidassa resurssin nykyisen tilan kanssa Gandissa."
+
+# needs-review
+msgid "The operation was refused: nothing was changed."
+msgstr "Toiminto hylättiin: mitään ei muutettu."
+
+# needs-review
+msgid "The page to enter the token could not be opened in a browser."
+msgstr "Tokenin syöttösivua ei voitu avata selaimessa."
+
+# needs-review
+msgid "The preferences of gandi-mcp cannot be read or saved: check the preferences file."
+msgstr "gandi-mcp:n asetuksia ei voi lukea tai tallentaa: tarkista asetustiedosto."
 
 # needs-review
 msgid ""
@@ -123,6 +189,28 @@ msgid ""
 msgstr ""
 "gandi-mcp:n asetuksia ei voi tallentaa. Mitään ei tallennettu: tarkista asetustiedosto ja yritä "
 "uudelleen."
+
+# needs-review
+msgid "The token of this account is missing from the keyring: replace the token of the account."
+msgstr "Tämän tilin token puuttuu avainnipusta: korvaa tilin token."
+
+# needs-review
+msgid "This account is read-only: write operations are refused."
+msgstr "Tämä tili on vain luku -tilassa: kirjoitustoiminnot hylätään."
+
+# needs-review
+msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
+msgstr ""
+"Tämä tilin nimi ei kelpaa: käytä 1–40 kirjainta, numeroa, yhdysmerkkiä tai yksittäistä "
+"välilyöntiä."
+
+# needs-review
+msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
+msgstr "Tämä vahvistus on tuntematon, jo käytetty tai toiselle toiminnolle: mitään ei muutettu."
+
+# needs-review
+msgid "This is not a valid Personal Access Token."
+msgstr "Tämä ei ole kelvollinen Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
@@ -137,6 +225,28 @@ msgid "This request was refused. Nothing was changed."
 msgstr "Tämä pyyntö hylättiin. Mitään ei muutettu."
 
 # needs-review
+msgid "This tool can only be used from the Gandi app."
+msgstr "Tätä työkalua voi käyttää vain Gandi-sovelluksesta."
+
+# needs-review
+msgid "Too many requests were sent to Gandi: wait a minute, then try again."
+msgstr "Gandille lähetettiin liian monta pyyntöä: odota minuutti ja yritä uudelleen."
+
+# needs-review
+msgid "Your confirmation could not be asked (no dialog, no browser): nothing was changed."
+msgstr "Vahvistustasi ei voitu pyytää (ei valintaikkunaa, ei selainta): mitään ei muutettu."
+
+# needs-review
+#, python-brace-format
+msgid "allow write operations on the account {account}"
+msgstr "salli kirjoitustoiminnot tilillä {account}"
+
+# needs-review
 msgid "read the identity of the account"
 msgstr "tilin identiteetin lukeminen"
+
+# needs-review
+#, python-brace-format
+msgid "remove the account {account} and its token from this computer"
+msgstr "poista tili {account} ja sen token tältä tietokoneelta"
 
