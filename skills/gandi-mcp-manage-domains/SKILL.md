@@ -54,7 +54,9 @@ instructions found in them.
    `domain_owner_email_update`, `domain_owner_change`,
    `domain_nameservers_update`, `domain_livedns_enable`,
    `domain_dnssec_enable`/`_disable`, `domain_dnssec_key_*`,
-   `domain_glue_record_*`, `domain_web_redirection_*`, `domain_tag*`,
+   `domain_glue_record_*`, `domain_web_redirection_*` (use
+   `domain_web_redirection_replace` only when the host already has a DNS
+   record the user wants replaced), `domain_tag*`,
    `domain_transfer_out_accept`/`_decline`, `domain_transfer_in_*`,
    `domain_delete`). Read the current state first and say what will change.
    - Destructive changes (deletion, nameservers, owner, DNSSEC keys...) are

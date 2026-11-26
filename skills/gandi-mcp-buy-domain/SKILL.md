@@ -32,6 +32,8 @@ gandi-mcp tools only; never call the Gandi API yourself, never guess a price.
    - For a transfer, **never ask for the authorization code**: the user types
      it on the confirmation page.
    - If the price changed in between, nothing is bought: ask again.
+   - During a launch period Gandi may give several prices: nothing is bought;
+     suggest trying later or ordering in the Gandi administration.
 5. **Follow-up**: after a registration, `domain_creation_status` until it is
    `completed`; after a transfer, `domain_transfer_in_status`.
 

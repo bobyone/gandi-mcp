@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Tests of the order rules (algorithm G), with doubles."""
 
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from decimal import Decimal
 
@@ -11,7 +12,7 @@ from gandi_mcp.accounts.account_draft import AccountDraft
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
-from gandi_mcp.accounts.exceptions import ReadOnlyAccountError
+from gandi_mcp.accounts.exceptions import AccountChangedError, ReadOnlyAccountError
 from gandi_mcp.accounts.organization_id import OrganizationId
 from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChannel
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
@@ -63,11 +64,14 @@ class StubQuotes(QuoteProvider):
     prices: list[str] = field(default_factory=lambda: ["24.96"])
     failure: Exception | None = None
     requests: list[QuoteRequest] = field(default_factory=list)
+    on_second_quote: Callable[[], Awaitable[None]] | None = None
 
     async def quote(
         self, environment: Environment, token: PersonalAccessToken, request: QuoteRequest
     ) -> Quote:
         self.requests.append(request)
+        if len(self.requests) == 2 and self.on_second_quote is not None:
+            await self.on_second_quote()
         if self.failure is not None:
             raise self.failure
         price = self.prices.pop(0) if len(self.prices) > 1 else self.prices[0]
@@ -298,3 +302,30 @@ async def test_a_refused_transfer_never_echoes_its_code(setup: Setup) -> None:
         await setup.orders.run(transfer, None, ConfirmationContext(), first.confirmation_id)
 
     assert raised.value.details == ()
+
+
+async def test_an_account_made_read_only_meanwhile_does_not_buy(setup: Setup) -> None:
+    async def lock() -> None:
+        await setup.accounts.update(AccountName("Perso"), read_only=True)
+
+    setup.quotes.on_second_quote = lock
+    setup.client.outcomes.append(GandiResponse(200, {"status": "success"}))
+
+    with pytest.raises(ReadOnlyAccountError):
+        await setup.orders.run(register(), None, ConfirmationContext(ScriptedInteraction()))
+
+    assert [call.dry_run for call in setup.client.calls] == [True]
+
+
+async def test_an_account_moved_meanwhile_does_not_buy(setup: Setup) -> None:
+    async def move() -> None:
+        await setup.accounts.remove(AccountName("Perso"))
+        await setup.accounts.add(AccountDraft(AccountName("Perso"), Environment.SANDBOX), TOKEN)
+
+    setup.quotes.on_second_quote = move
+    setup.client.outcomes.append(GandiResponse(200, {"status": "success"}))
+
+    with pytest.raises(AccountChangedError):
+        await setup.orders.run(register(), None, ConfirmationContext(ScriptedInteraction()))
+
+    assert len(setup.client.calls) == 1

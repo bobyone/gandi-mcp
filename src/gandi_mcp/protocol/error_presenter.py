@@ -31,6 +31,7 @@ from gandi_mcp.content.long_text_filter import LongTextFilter
 from gandi_mcp.domains.contacts.exceptions import InvalidContactError
 from gandi_mcp.domains.exceptions import InvalidDomainInputError, InvalidDomainNameError
 from gandi_mcp.domains.quotes.exceptions import (
+    AmbiguousPriceError,
     NoPriceForDurationError,
     NotAvailableError,
     QuoteUnavailableError,
@@ -116,6 +117,10 @@ UNKNOWN_ORGANIZATION = N_(
 )
 NOT_AVAILABLE = N_("This domain is not available for registration: nothing was bought.")
 NO_PRICE = N_("Gandi gives no price for this duration: choose another duration.")
+AMBIGUOUS_PRICE = N_(
+    "Gandi gives several prices for this domain right now (launch period): nothing was "
+    "bought. Try again later, or order it in the Gandi administration."
+)
 QUOTE_UNAVAILABLE = N_(
     "Gandi could not give a price right now: nothing was bought. Try again in a moment."
 )
@@ -134,6 +139,7 @@ MESSAGES: Mapping[type[Exception], Message] = {
     PriceChangedError: PRICE_CHANGED,
     NotAvailableError: NOT_AVAILABLE,
     NoPriceForDurationError: NO_PRICE,
+    AmbiguousPriceError: AMBIGUOUS_PRICE,
     QuoteUnavailableError: QUOTE_UNAVAILABLE,
     InvalidContactError: INVALID_CONTACT,
     SecretInputMissingError: SECRET_MISSING,

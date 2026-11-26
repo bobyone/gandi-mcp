@@ -187,6 +187,18 @@ CALLS: dict[str, tuple[dict[str, Any], str, tuple[str, ...], Any]] = {
             "override": False,
         },
     ),
+    "domain_web_redirection_replace": (
+        {"domain": "example.com", "host": "www.example.com", "url": "https://example.org/"},
+        "POST",
+        (*D, "webredirs"),
+        {
+            "host": "www.example.com",
+            "url": "https://example.org/",
+            "type": "http301",
+            "protocol": "https",
+            "override": True,
+        },
+    ),
     "domain_web_redirection_update": (
         {"domain": "example.com", "host": "www.example.com", "type": "http302"},
         "PATCH",
@@ -237,7 +249,7 @@ CALLS: dict[str, tuple[dict[str, Any], str, tuple[str, ...], Any]] = {
         None,
     ),
     "domain_transfer_in_code_update": (
-        {"domain": "example.com"},
+        {"domain": "example.com", "organization_id": "5A53EDC7-B514-416A-98C2-2D477A288EB9"},
         "PUT",
         ("domain", "transferin", "example.com", "authinfo"),
         {"authinfo": "Auth-123"},
@@ -442,6 +454,7 @@ async def test_a_typed_code_is_never_echoed_to_the_model(
         "domain_authorization_code_reset",
         "domain_tags_replace",
         "domain_owner_email_update",
+        "domain_web_redirection_replace",
     ],
 )
 async def test_risky_changes_wait_for_the_confirmation(setup: Setup, name: str) -> None:
@@ -451,4 +464,38 @@ async def test_risky_changes_wait_for_the_confirmation(setup: Setup, name: str) 
         result = data(await session.call_tool(name, arguments))
 
     assert result["status"] == "confirmation_pending"
+    assert setup.gandi.calls == []
+
+
+async def test_the_transfer_code_is_corrected_for_its_organization(setup: Setup) -> None:
+    arguments, *_ = CALLS["domain_transfer_in_code_update"]
+
+    async with Client(setup.server) as session:
+        first = data(await session.call_tool("domain_transfer_in_code_update", arguments))
+        setup.pending.answer(first["confirmation_id"], True, SecretValue("Auth-123"))
+        data(
+            await session.call_tool(
+                "domain_transfer_in_code_update",
+                {**arguments, "confirmation_id": first["confirmation_id"]},
+            )
+        )
+        other = await session.call_tool(
+            "domain_transfer_in_code_update",
+            {"domain": "example.com", "confirmation_id": first["confirmation_id"]},
+        )
+
+    assert setup.gandi.calls[0].query == {"sharing_id": "5a53edc7-b514-416a-98c2-2d477a288eb9"}
+    assert other.is_error  # the same confirmation cannot serve another organization
+
+
+async def test_a_confirmed_write_stops_if_the_account_became_read_only(setup: Setup) -> None:
+    async with Client(setup.server) as session:
+        first = data(await session.call_tool("domain_delete", {"domain": "example.com"}))
+        setup.pending.answer(first["confirmation_id"], True)
+        await setup.accounts.update(AccountName("Perso"), read_only=True)
+        second = await session.call_tool(
+            "domain_delete", {"domain": "example.com", "confirmation_id": first["confirmation_id"]}
+        )
+
+    assert error_text(second).endswith(READ_ONLY.singular)
     assert setup.gandi.calls == []

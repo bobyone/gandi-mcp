@@ -9,6 +9,7 @@ from gandi_mcp.domains.exceptions import InvalidDomainInputError
 from gandi_mcp.domains.money import Money
 from gandi_mcp.domains.quotes.domain_process import DomainProcess
 from gandi_mcp.domains.quotes.exceptions import (
+    AmbiguousPriceError,
     NoPriceForDurationError,
     NotAvailableError,
     QuoteUnavailableError,
@@ -51,14 +52,29 @@ def _product(data: JsonValue, process: DomainProcess) -> dict[str, JsonValue]:
 
 
 def _band(product: dict[str, JsonValue], years: int) -> dict[str, JsonValue]:
+    """The one price band of the duration.
+
+    Several bands with different prices match during registration phases (early
+    access, sunrise...); the applicable one cannot be told apart, so the quote is
+    refused rather than guessed.
+    """
     prices = product.get("prices")
+    matching: list[dict[str, JsonValue]] = []
     for band in prices if isinstance(prices, list) else []:
         if not isinstance(band, dict) or band.get("duration_unit", YEAR) != YEAR:
             continue
         low, high = band.get("min_duration"), band.get("max_duration")
         if isinstance(low, int) and isinstance(high, int) and low <= years <= high:
-            return band
-    raise NoPriceForDurationError(f"no price for {years} years")
+            matching.append(band)
+    if not matching:
+        raise NoPriceForDurationError(f"no price for {years} years")
+    amounts = {
+        (_amount(band.get("price_after_taxes")), _amount(band.get("price_before_taxes")))
+        for band in matching
+    }
+    if len(amounts) > 1:
+        raise AmbiguousPriceError(f"{len(amounts)} different prices for {years} years")
+    return matching[0]
 
 
 class GandiQuoteProvider(QuoteProvider):

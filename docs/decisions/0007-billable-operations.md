@@ -29,7 +29,9 @@ registration and transfer in.
      is the one given with the call, else the account preference, else none
      (`sharing_id`);
   2. quote the order (`QuoteProvider`, `GandiQuoteProvider`): the yearly price
-     of the band containing the duration, times the duration;
+     of the band containing the duration, times the duration; when several
+     bands give different prices (registration phases), the quote is refused
+     rather than guessed;
   3. on the first call, check it with a dry run when supported; only a `200`
      answer with `status: success` counts as a successful check;
   4. ask for a confirmation whose subject binds the operation, the account
@@ -37,7 +39,8 @@ registration and transfer in.
      paying organization; its description shows the price formatted in the
      user's language;
   5. quote again just before ordering: any difference, up or down, cancels
-     the order (`PriceChangedError`);
+     the order (`PriceChangedError`); then check again that the account is
+     the same and may still write;
   6. order; registration and transfer in also send `price`, `currency` and,
      for a premium domain, `enforce_premium`, so that Gandi refuses a
      different price.

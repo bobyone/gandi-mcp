@@ -47,7 +47,15 @@ class RedirectionWriteTools(ToolModule):
                 domain_endpoints.WEB_REDIRECTION_CREATE,
                 "Create a web redirection",
                 "Redirect a host of the domain to a URL (permanent http301, temporary "
-                "http302, or cloak in a frame).",
+                "http302, or cloak in a frame). Fails if the host already has a DNS record: "
+                "use domain_web_redirection_replace to replace it.",
+            ),
+            (
+                self.domain_web_redirection_replace,
+                domain_endpoints.WEB_REDIRECTION_REPLACE,
+                "Create a web redirection replacing a DNS record",
+                "Redirect a host to a URL, replacing the DNS record the host already has, "
+                "which can interrupt the service on that host.",
             ),
             (
                 self.domain_web_redirection_update,
@@ -74,26 +82,81 @@ class RedirectionWriteTools(ToolModule):
         *,
         type: RedirectionType = "http301",
         protocol: Protocol = "https",
-        override: OverrideParameter = False,
         account: AccountParameter = None,
     ) -> dict[str, Any]:
-        """Create a web redirection."""
+        """Create a web redirection, without replacing any DNS record."""
+        return await self._create(
+            ctx,
+            domain,
+            host=host,
+            url=url,
+            redirection_type=type,
+            protocol=protocol,
+            account=account,
+            replace=False,
+            confirmation_id=None,
+        )
 
+    async def domain_web_redirection_replace(
+        self,
+        domain: DomainParameter,
+        host: HostParameter,
+        url: UrlParameter,
+        ctx: Context[Any, Any],
+        *,
+        type: RedirectionType = "http301",
+        protocol: Protocol = "https",
+        confirmation_id: ConfirmationIdParameter = None,
+        account: AccountParameter = None,
+    ) -> dict[str, Any]:
+        """Create a web redirection replacing the DNS record of the host, after confirmation."""
+        return await self._create(
+            ctx,
+            domain,
+            host=host,
+            url=url,
+            redirection_type=type,
+            protocol=protocol,
+            account=account,
+            replace=True,
+            confirmation_id=confirmation_id,
+        )
+
+    async def _create(
+        self,
+        ctx: Context[Any, Any],
+        domain: str,
+        *,
+        host: str,
+        url: str,
+        redirection_type: str,
+        protocol: str,
+        account: str | None,
+        replace: bool,
+        confirmation_id: str | None,
+    ) -> dict[str, Any]:
         def body() -> JsonValue:
             return {
                 "host": DomainName(host).value,
                 "url": RedirectionUrl(url).value,
-                "type": type,
+                "type": redirection_type,
                 "protocol": protocol,
-                "override": override,
+                "override": replace,
             }
 
         return await self._runner.write(
             ctx,
-            domain_endpoints.WEB_REDIRECTION_CREATE,
+            domain_endpoints.WEB_REDIRECTION_REPLACE
+            if replace
+            else domain_endpoints.WEB_REDIRECTION_CREATE,
             account,
             lambda: {"domain": DomainName(domain).value},
             body=body,
+            description_params=lambda: {
+                "host": DomainName(host).unicode,
+                "url": RedirectionUrl(url).value,
+            },
+            confirmation_id=confirmation_id,
         )
 
     async def domain_web_redirection_update(

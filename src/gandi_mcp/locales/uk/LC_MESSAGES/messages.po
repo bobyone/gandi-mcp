@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 23:34+0100\n"
+"POT-Creation-Date: 2026-11-27 00:10+0100\n"
 "PO-Revision-Date: 2026-11-26 10:52+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uk\n"
@@ -112,6 +112,14 @@ msgstr "Gandi не знайшов цей ресурс."
 # needs-review
 msgid "Gandi gives no price for this duration: choose another duration."
 msgstr "Gandi не вказує ціну на цей строк: виберіть інший строк."
+
+# needs-review
+msgid ""
+"Gandi gives several prices for this domain right now (launch period): nothing was bought. Try "
+"again later, or order it in the Gandi administration."
+msgstr ""
+"Gandi зараз вказує кілька цін на цей домен (період запуску): нічого не придбано. Спробуйте "
+"пізніше або замовте його в панелі керування Gandi."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -401,6 +409,11 @@ msgstr ""
 # needs-review
 msgid "read the identity of the account"
 msgstr "читання ідентичності облікового запису"
+
+# needs-review
+#, python-brace-format
+msgid "redirect {host} to {url}, replacing its current DNS record"
+msgstr "переспрямувати {host} на {url}, замінивши його поточний DNS-запис"
 
 # needs-review
 #, python-brace-format

@@ -182,16 +182,26 @@ class DomainToolRunner:
         path_values: Callable[[], Mapping[str, str]],
         *,
         body: Callable[[], JsonValue] | None = None,
+        query: Callable[[], Mapping[str, QueryValue | None]] | None = None,
+        description_params: Callable[[], Mapping[str, object]] | None = None,
         confirmation_id: str | None = None,
     ) -> dict[str, Any]:
         """Change something through ``endpoint``; confirmed when its category says so.
 
-        Path values and body are given as functions, so that their validation errors
-        are explained like the others.
+        Path values, query, body and the parameters of the confirmation description
+        (the path values by default) are given as functions, so that their validation
+        errors are explained like the others.
         """
 
         async def run() -> dict[str, Any]:
-            operation = EndpointOperation(endpoint, path_values(), None, body() if body else None)
+            values = path_values()
+            operation = EndpointOperation(
+                endpoint,
+                values,
+                query() if query else None,
+                body() if body else None,
+                description_params() if description_params else values,
+            )
             outcome = await self._executor.run(
                 operation,
                 AccountName(account) if account is not None else None,

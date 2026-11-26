@@ -126,7 +126,11 @@ operation's dry run, if any: a refusal raises `DryRunRejectedError`, and an
 answer other than `200` with `status: success` raises
 `GandiUnexpectedResponseError` (`operations.dry_run.dry_run_details`). When the
 user typed a secret, Gandi error details are dropped and every text of the
-result containing the secret is hidden (`operations.secret_echo`). It returns an `UntrustedResult` (data and `total_count`), or
+result containing the secret is hidden (`operations.secret_echo`). Just
+before a write, the account is resolved again (`operations.write_access`):
+`ReadOnlyAccountError` if it became read-only, `AccountChangedError` if its
+identity or environment changed; the `OrderExecutor` does the same after the
+price re-check, then reads the token again. It returns an `UntrustedResult` (data and `total_count`), or
 a pending `ConfirmationDecision` to resume with its identifier.
 
 ### Billable operation: `gandi_mcp.operations.billable_operation.BillableOperation`
@@ -499,6 +503,8 @@ of the requested `process` (or the only product without one), checks the
 availability status for `create` only (Gandi says to ignore it for the other
 processes), finds the price band (`min_duration`..`max_duration`, in years)
 containing the duration, and multiplies its yearly prices by the duration.
+Several matching bands with different prices (registration phases) raise
+`AmbiguousPriceError` instead of guessing.
 Prices are read as `Decimal` from their textual form.
 
 ### Contact minimization: `gandi_mcp.domains.contacts.contact_redactor.ContactRedactor`
@@ -576,9 +582,9 @@ conversation and never to invent a confirmation identifier.
 | `tools.domains.domain_settings_tools.DomainSettingsTools` | `domain_autorenew_update`, `domain_transfer_lock`, `domain_reachability_resend`, `domain_claims_accept`; `domain_transfer_unlock`, `domain_authorization_code_reset`, `domain_delete` (confirmed). |
 | `tools.domains.contact_tools.ContactTools` | `domain_contacts_update`, `domain_owner_update` (confirmed, dry run, email unchanged), `domain_owner_email_update` (its confirmation states the ICANN designated-agent authorization before any request is sent to Gandi with `icann_contract_accept`), `domain_owner_change` (confirmed without an amount, dry run), `domain_owner_change_resend`. |
 | `tools.domains.nameserver_write_tools.NameserverWriteTools` | `domain_nameservers_update`, `domain_livedns_enable`, `domain_dnssec_disable`, `domain_dnssec_keys_replace`, `domain_dnssec_key_delete`, `domain_glue_record_delete` (confirmed); `domain_dnssec_enable`, `domain_dnssec_key_add`, `domain_glue_record_create`, `domain_glue_record_update`. |
-| `tools.domains.redirection_write_tools.RedirectionWriteTools` | `domain_web_redirection_create`, `domain_web_redirection_update`, `domain_web_redirection_delete` (confirmed). |
+| `tools.domains.redirection_write_tools.RedirectionWriteTools` | `domain_web_redirection_create` (fails if the host has a DNS record), `domain_web_redirection_replace` (confirmed: replaces that record; the confirmation shows the host and the target), `domain_web_redirection_update`, `domain_web_redirection_delete` (confirmed). |
 | `tools.domains.tag_tools.TagTools` | `domain_tag_add`, `domain_tags_update`; `domain_tags_replace`, `domain_tags_delete` (confirmed). |
-| `tools.domains.transfer_write_tools.TransferWriteTools` | `domain_transfer_out_accept` (confirmed), `domain_transfer_out_decline` (both with the domain's authorization code typed on the confirmation page), `domain_transfer_in_relaunch`, `domain_transfer_in_code_update` (code typed on the confirmation page), `domain_transfer_in_resend`. |
+| `tools.domains.transfer_write_tools.TransferWriteTools` | `domain_transfer_out_accept` (confirmed), `domain_transfer_out_decline` (both with the domain's authorization code typed on the confirmation page), `domain_transfer_in_relaunch`, `domain_transfer_in_code_update` (code typed on the confirmation page; optional `organization_id` sent as `sharing_id`), `domain_transfer_in_resend`. |
 | `tools.domains.domain_order_runner.DomainOrderRunner` | Shared by the order tools: builds the `BillableOperation` (validation errors explained), runs the `OrderExecutor`, returns the pending confirmation or `status: ordered` with the untrusted, minimized result and the follow-up tool. |
 | `tools.domains.order_tools.OrderTools` | `domain_register` (duration, owner and optional admin, tech, bill contacts), `domain_renew`, `domain_restore`, `domain_transfer_in` (the authorization code is typed on the confirmation page); all take `paying_organization`, `confirmation_id` and `account`. |
 | `tools.domains.transfer_tools.TransferTools` | `domain_owner_change_status`, `domain_transfer_in_status`, `domain_transfer_in_check` (sends no authorization code). |

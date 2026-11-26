@@ -21,5 +21,9 @@ class NoPriceForDurationError(QuoteError):
     """Gandi gives no price for this operation and duration."""
 
 
+class AmbiguousPriceError(QuoteError):
+    """Gandi gives several different prices for this duration (registration phases)."""
+
+
 class QuoteUnavailableError(QuoteError):
     """Gandi could not compute the quote yet: try again later."""

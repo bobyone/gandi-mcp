@@ -12,6 +12,7 @@ from gandi_mcp.domains.domain_name import DomainName
 from gandi_mcp.domains.money import Money
 from gandi_mcp.domains.quotes.domain_process import DomainProcess
 from gandi_mcp.domains.quotes.exceptions import (
+    AmbiguousPriceError,
     NoPriceForDurationError,
     NotAvailableError,
     QuoteUnavailableError,
@@ -245,3 +246,68 @@ async def test_single_product_without_process() -> None:
 async def test_unexpected_answers(data: JsonValue) -> None:
     with pytest.raises(GandiUnexpectedResponseError):
         await quote(data, request())
+
+
+# "Availability and price for premium domains" (Gandi documentation): two one-year
+# prices for the same registration, during registration periods.
+PREMIUM: JsonValue = {
+    "currency": "EUR",
+    "grid": "A",
+    "products": [
+        {
+            "status": "available",
+            "periods": [
+                {
+                    "name": "eap5",
+                    "starts_at": "2019-02-25T16:00:00Z",
+                    "ends_at": "2020-03-28T15:59:59Z",
+                },
+                {"name": "golive", "starts_at": "2020-03-28T16:00:00Z"},
+            ],
+            "name": "example.com",
+            "process": "create",
+            "prices": [
+                {
+                    "max_duration": 1,
+                    "duration_unit": "y",
+                    "min_duration": 1,
+                    "discount": False,
+                    "price_after_taxes": 878.44,
+                    "price_before_taxes": 732.03,
+                    "type": "premium",
+                },
+                {
+                    "max_duration": 1,
+                    "duration_unit": "y",
+                    "min_duration": 1,
+                    "discount": False,
+                    "price_after_taxes": 775.12,
+                    "price_before_taxes": 645.93,
+                    "type": "premium",
+                },
+            ],
+        }
+    ],
+}
+
+
+async def test_several_prices_for_the_same_duration_are_refused() -> None:
+    with pytest.raises(AmbiguousPriceError):
+        await quote(PREMIUM, request())
+
+
+async def test_identical_overlapping_bands_are_one_price() -> None:
+    band: dict[str, JsonValue] = {
+        "min_duration": 1,
+        "max_duration": 1,
+        "price_after_taxes": 12,
+        "price_before_taxes": 10,
+    }
+    data: JsonValue = {
+        "currency": "EUR",
+        "products": [{"status": "available", "process": "create", "prices": [band, dict(band)]}],
+    }
+
+    result, _client = await quote(data, request())
+
+    assert result.price == Money(Decimal(12), "EUR")  # type: ignore[attr-defined]

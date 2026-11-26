@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 23:34+0100\n"
+"POT-Creation-Date: 2026-11-27 00:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,6 +88,12 @@ msgid "Gandi did not find this resource."
 msgstr ""
 
 msgid "Gandi gives no price for this duration: choose another duration."
+msgstr ""
+
+msgid ""
+"Gandi gives several prices for this domain right now (launch period): "
+"nothing was bought. Try again later, or order it in the Gandi "
+"administration."
 msgstr ""
 
 msgid "Gandi refused the submitted data."
@@ -329,6 +335,10 @@ msgid ""
 msgstr ""
 
 msgid "read the identity of the account"
+msgstr ""
+
+#, python-brace-format
+msgid "redirect {host} to {url}, replacing its current DNS record"
 msgstr ""
 
 #, python-brace-format

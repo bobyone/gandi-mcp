@@ -32,6 +32,7 @@ REPLACE_DNSSEC_KEYS = N_("replace all the DNSSEC keys of {domain}")
 DELETE_DNSSEC_KEY = N_("delete the DNSSEC key {id} of {domain}")
 DELETE_GLUE_RECORD = N_("delete the glue record {host} of {domain}")
 DELETE_WEB_REDIRECTION = N_("delete the web redirection of {host}")
+REPLACE_WITH_WEB_REDIRECTION = N_("redirect {host} to {url}, replacing its current DNS record")
 DELETE_TAGS = N_("remove all the tags of {domain}")
 ACCEPT_TRANSFER_OUT = N_(
     "accept the transfer of {domain} to another registrar: it will leave Gandi"

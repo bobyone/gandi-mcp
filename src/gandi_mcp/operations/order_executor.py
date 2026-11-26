@@ -25,6 +25,7 @@ from gandi_mcp.operations.dry_run import dry_run_details
 from gandi_mcp.operations.exceptions import DryRunRejectedError, PriceChangedError
 from gandi_mcp.operations.secret_echo import scrubbed, without_details
 from gandi_mcp.operations.untrusted_result import UntrustedResult
+from gandi_mcp.operations.write_access import still_writable
 from gandi_mcp.secrets.secret_store import SecretStore
 
 PRICE_FOR_ORGANIZATION = N_("{price}, paid by the organization {organization}")
@@ -119,6 +120,8 @@ class OrderExecutor:
         current = await self._quotes.quote(account.environment, token, request)
         if current.price != quote.price:
             raise PriceChangedError("the price changed since the confirmation")
+        account = await still_writable(self._accounts, account)
+        token = await self._secrets.get(account.secret_key)
         secret = decision.secret
         try:
             response = await operation.order(

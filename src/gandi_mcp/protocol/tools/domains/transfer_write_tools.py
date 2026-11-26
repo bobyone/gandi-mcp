@@ -8,8 +8,10 @@ from mcp.server import MCPServer
 from mcp.server.mcpserver import Context
 from pydantic import Field
 
+from gandi_mcp.accounts.organization_id import OrganizationId
 from gandi_mcp.domains.domain_name import DomainName
 from gandi_mcp.domains.write_values import EmailAddress
+from gandi_mcp.gandi.gandi_client import QueryValue
 from gandi_mcp.gandi.gandi_response import JsonValue
 from gandi_mcp.operations.domain import domain_endpoints
 from gandi_mcp.operations.domain.domain_endpoint import DomainEndpoint
@@ -113,16 +115,31 @@ class TransferWriteTools(ToolModule):
         self,
         domain: DomainParameter,
         ctx: Context[Any, Any],
+        *,
+        organization_id: Annotated[
+            str | None,
+            Field(
+                default=None,
+                description="Organization the transfer was started for, if not the user's own.",
+                max_length=36,
+            ),
+        ] = None,
         confirmation_id: ConfirmationIdParameter = None,
         account: AccountParameter = None,
     ) -> dict[str, Any]:
         """Give a new authorization code, typed by the user on the confirmation page."""
-        return await self._write(
+
+        def query() -> dict[str, QueryValue | None]:
+            organization = OrganizationId(organization_id) if organization_id else None
+            return {"sharing_id": str(organization) if organization else None}
+
+        return await self._runner.write(
             ctx,
             domain_endpoints.TRANSFER_IN_CODE_UPDATE,
-            domain,
             account,
-            {},
+            lambda: {"domain": DomainName(domain).value},
+            body=lambda: {},
+            query=query,
             confirmation_id=confirmation_id,
         )
 

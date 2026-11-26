@@ -204,6 +204,13 @@ GLUE_RECORD_DELETE = DomainEndpoint(
 WEB_REDIRECTION_CREATE = DomainEndpoint(
     "domain_web_redirection_create", "POST", (*DOMAIN, "webredirs"), WRITE
 )
+WEB_REDIRECTION_REPLACE = DomainEndpoint(
+    "domain_web_redirection_replace",
+    "POST",
+    (*DOMAIN, "webredirs"),
+    DESTRUCTIVE,
+    description=messages.REPLACE_WITH_WEB_REDIRECTION,
+)
 WEB_REDIRECTION_UPDATE = DomainEndpoint(
     "domain_web_redirection_update", "PATCH", (*DOMAIN, "webredirs", "{host}"), WRITE
 )
@@ -256,6 +263,7 @@ TRANSFER_IN_CODE_UPDATE = DomainEndpoint(
     "PUT",
     ("domain", "transferin", "{domain}", "authinfo"),
     WRITE,
+    frozenset({"sharing_id"}),
     description=messages.UPDATE_TRANSFER_CODE,
     secret_field="authinfo",  # noqa: S106 - name of the body field, not a secret
     secret_label=AUTHORIZATION_CODE,
@@ -288,6 +296,7 @@ WRITE_ENDPOINTS: tuple[DomainEndpoint, ...] = (
     GLUE_RECORD_UPDATE,
     GLUE_RECORD_DELETE,
     WEB_REDIRECTION_CREATE,
+    WEB_REDIRECTION_REPLACE,
     WEB_REDIRECTION_UPDATE,
     WEB_REDIRECTION_DELETE,
     TAG_ADD,

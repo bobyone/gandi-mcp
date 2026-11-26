@@ -21,6 +21,7 @@ from gandi_mcp.operations.exceptions import DryRunRejectedError
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.secret_echo import scrubbed, without_details
 from gandi_mcp.operations.untrusted_result import UntrustedResult
+from gandi_mcp.operations.write_access import still_writable
 from gandi_mcp.secrets.secret_store import SecretStore
 
 logger = logging.getLogger(__name__)
@@ -86,6 +87,8 @@ class OperationExecutor:
             secret = decision.secret
             if secret_input is not None and secret is None:
                 raise SecretInputMissingError(f"{operation.name} needs a secret")
+        if operation.category.is_write:
+            account = await still_writable(self._accounts, account)
         token = await self._secrets.get(account.secret_key)
         try:
             response = await operation.execute(self._client, account.environment, token, secret)
