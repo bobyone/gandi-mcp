@@ -40,9 +40,11 @@ The second command prints a `deny` decision. With Codex, also run
 `tests/tools/assistant_guard/test_codex_profile.py` enforces the committed
 permission profile with `codex sandbox` on synthetic files: protected files
 must be unreadable, their examples readable. It runs when the Codex CLI is on
-the `PATH` (or `CODEX_CLI` gives its path) and its sandbox is available; on
-Windows this requires the elevated sandbox backend, otherwise the test is
-skipped. The CI job `Codex permission profile` runs it on Linux with
+the `PATH` (or `CODEX_CLI` gives its path) and its sandbox is available,
+otherwise it is skipped. On Windows, deny-read rules need the elevated sandbox
+backend: run the test with `CODEX_WINDOWS_SANDBOX=elevated` (installing the
+backend needs administrator rights once). The CI jobs `Codex permission
+profile` run it on Linux and on Windows (elevated backend) with
 `CODEX_PROFILE_REQUIRED=1`, so it can never be skipped there.
 
 ## Change the rules
