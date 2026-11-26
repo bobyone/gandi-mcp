@@ -367,3 +367,19 @@ async def test_errors_without_account(setup: Setup) -> None:
         result = await session.call_tool("remove_account", {"name": "Perso"})
 
     assert "No Gandi account is configured" in error_text(result)
+
+
+async def test_a_confirmation_does_not_apply_to_a_replaced_account(setup: Setup) -> None:
+    await add(setup, "Perso")
+
+    async with client(setup) as session:
+        first = data(await session.call_tool("remove_account", {"name": "Perso"}))
+        setup.pending.answer(first["confirmation_id"], True)
+        await setup.accounts.remove(AccountName("Perso"))
+        await add(setup, "Perso")
+        resumed = await session.call_tool(
+            "remove_account", {"name": "Perso", "confirmation_id": first["confirmation_id"]}
+        )
+
+    assert "for another operation" in error_text(resumed)
+    assert len(await setup.accounts.list()) == 1

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 15:12+0100\n"
+"POT-Creation-Date: 2026-11-26 17:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: az\n"
@@ -205,6 +205,14 @@ msgstr "Bu hesab yalnız oxumaq üçündür: yazma əməliyyatları rədd edilir
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "Bu hesab adı etibarlı deyil: 1-dən 40-a qədər hərf, rəqəm, defis və ya tək boşluq istifadə edin."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Bu hesab bu arada əvəz olunub və ya başqa mühitə köçürülüb: heç nə dəyişdirilmədi, hesabı "
+"yoxlayın və yenidən cəhd edin."
 
 # needs-review
 msgid "This confirmation is unknown, already used or for another operation: nothing was changed."

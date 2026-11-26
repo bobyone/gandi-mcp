@@ -79,8 +79,14 @@ an account. It depends on a `PreferencesStore`, a `SecretStore` and a
 | `change_environment(name, environment, token)` | Verifies the token in the new environment; restores the previous token if saving fails. |
 | `remove(name)` | Removes the account, then its token; a removed default account is replaced by the first remaining one in alphabetical order. Returns an `AccountRemoval` (`new_default`, `token_removed`, false when the secret store was unavailable). |
 
+`set_read_only`, `replace_token`, `change_environment` and `remove` accept an
+`expected` `AccountReference` (opaque key and environment of the account the
+user saw): when the account no longer matches it, they raise
+`AccountChangedError` before any change or Gandi request.
+
 Exceptions derive from `AccountError`: `InvalidAccountNameError`,
-`DuplicateAccountError`, `AccountNotFoundError`, `NoAccountError`,
+`DuplicateAccountError`, `AccountNotFoundError`, `AccountChangedError`,
+`NoAccountError`,
 `ReadOnlyAccountError`, `TokenRejectedError`. Secret store, preferences and
 Gandi errors pass through.
 
@@ -92,7 +98,7 @@ A command: one Gandi call on behalf of an account (ADR 4).
 | --- | --- |
 | `name` | Stable identifier, for example `domain.renew`. |
 | `category` | `OperationCategory`: `read`, `write`, `destructive` or `billable`; the last two are writes and need a confirmation. |
-| `parameters()` | Parameters defining what the operation does; with `name`, they form its `subject()`, to which a confirmation is bound. |
+| `parameters()` | Parameters defining what the operation does; with `name`, they form its `subject()`. The executor binds a confirmation to this subject, the account identity and its environment. |
 | `describe()` | `LocalizedText` shown when asking for a confirmation. |
 | `execute(client, environment, token)` | Calls Gandi; raises `GandiError`. |
 

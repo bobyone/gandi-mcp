@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 15:12+0100\n"
+"POT-Creation-Date: 2026-11-26 17:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -205,6 +205,14 @@ msgstr "Ez a fiók csak olvasható: az írási műveleteket elutasítjuk."
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "Ez a fióknév érvénytelen: 1–40 betűt, számjegyet, kötőjelet vagy egyszeres szóközt használjon."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Ezt a fiókot időközben lecserélték vagy másik környezetbe helyezték: semmi sem változott, "
+"ellenőrizze a fiókot, és próbálja újra."
 
 # needs-review
 msgid "This confirmation is unknown, already used or for another operation: nothing was changed."

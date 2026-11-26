@@ -10,10 +10,12 @@ from dataclasses import replace
 from gandi_mcp.accounts.account import Account
 from gandi_mcp.accounts.account_draft import AccountDraft
 from gandi_mcp.accounts.account_name import AccountName
+from gandi_mcp.accounts.account_reference import AccountReference
 from gandi_mcp.accounts.account_removal import AccountRemoval
 from gandi_mcp.accounts.account_summary import AccountSummary
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.accounts.exceptions import (
+    AccountChangedError,
     AccountNotFoundError,
     DuplicateAccountError,
     NoAccountError,
@@ -127,29 +129,38 @@ class AccountService:
             await self._preferences.save(replace(preferences, default_account=account.name))
             return AccountSummary.of(account, account.name)
 
-    async def set_read_only(self, name: AccountName, read_only: bool) -> AccountSummary:
+    async def set_read_only(
+        self, name: AccountName, read_only: bool, expected: AccountReference | None = None
+    ) -> AccountSummary:
         """Turn the read-only flag of an account on or off.
 
         Raises:
-            AccountNotFoundError, NoAccountError.
+            AccountNotFoundError, NoAccountError, AccountChangedError (the account no
+            longer matches ``expected``).
         """
         async with self._lock:
             preferences = await self._preferences.load()
-            account = self._find(preferences, name)
+            account = self._find(preferences, name, expected)
             changed = replace(account, read_only=read_only)
             await self._save_replacing(preferences, account, changed, preferences.default_account)
             return AccountSummary.of(changed, preferences.default_account)
 
-    async def replace_token(self, name: AccountName, token: PersonalAccessToken) -> VerifiedAccount:
+    async def replace_token(
+        self,
+        name: AccountName,
+        token: PersonalAccessToken,
+        expected: AccountReference | None = None,
+    ) -> VerifiedAccount:
         """Verify a new token in the account environment, then replace the old one.
 
         Raises:
-            AccountNotFoundError, NoAccountError, TokenRejectedError (old token kept),
-            GandiError, SecretStoreError.
+            AccountNotFoundError, NoAccountError, AccountChangedError (checked before any
+            Gandi request), TokenRejectedError (old token kept), GandiError,
+            SecretStoreError.
         """
         async with self._lock:
             preferences = await self._preferences.load()
-            account = self._find(preferences, name)
+            account = self._find(preferences, name, expected)
             identity = await self._verifier.verify(account.environment, token)
             await self._secrets.put(account.secret_key, token)
             logger.info("account token replaced")
@@ -158,17 +169,22 @@ class AccountService:
             )
 
     async def change_environment(
-        self, name: AccountName, environment: Environment, token: PersonalAccessToken
+        self,
+        name: AccountName,
+        environment: Environment,
+        token: PersonalAccessToken,
+        expected: AccountReference | None = None,
     ) -> VerifiedAccount:
         """Move an account to another environment, with a token valid there.
 
         Raises:
-            AccountNotFoundError, NoAccountError, TokenRejectedError (nothing changed),
-            GandiError, SecretStoreError, PreferencesError (old token restored).
+            AccountNotFoundError, NoAccountError, AccountChangedError (checked before any
+            Gandi request), TokenRejectedError (nothing changed), GandiError,
+            SecretStoreError, PreferencesError (old token restored).
         """
         async with self._lock:
             preferences = await self._preferences.load()
-            account = self._find(preferences, name)
+            account = self._find(preferences, name, expected)
             identity = await self._verifier.verify(environment, token)
             previous = await self._secrets.get(account.secret_key)
             changed = replace(account, environment=environment)
@@ -185,18 +201,21 @@ class AccountService:
                 AccountSummary.of(changed, preferences.default_account), identity
             )
 
-    async def remove(self, name: AccountName) -> AccountRemoval:
+    async def remove(
+        self, name: AccountName, expected: AccountReference | None = None
+    ) -> AccountRemoval:
         """Remove an account and its token.
 
         If it was the default account, the first remaining account in alphabetical
         order becomes the default one.
 
         Raises:
-            AccountNotFoundError, NoAccountError, PreferencesError (nothing removed).
+            AccountNotFoundError, NoAccountError, AccountChangedError,
+            PreferencesError (nothing removed).
         """
         async with self._lock:
             preferences = await self._preferences.load()
-            account = self._find(preferences, name)
+            account = self._find(preferences, name, expected)
             remaining = tuple(item for item in preferences.accounts if item is not account)
             new_default: AccountName | None = None
             default = preferences.default_account
@@ -209,13 +228,19 @@ class AccountService:
             return AccountRemoval(account.name, new_default, token_removed)
 
     @staticmethod
-    def _find(preferences: Preferences, name: AccountName | None) -> Account:
+    def _find(
+        preferences: Preferences,
+        name: AccountName | None,
+        expected: AccountReference | None = None,
+    ) -> Account:
         if not preferences.accounts:
             raise NoAccountError("no account is configured")
         wanted = name if name is not None else preferences.default_account
         account = preferences.find(wanted) if wanted is not None else None
         if account is None:
             raise AccountNotFoundError(f"no account is named {name}")
+        if expected is not None and account.reference != expected:
+            raise AccountChangedError(f"the account {account.name} changed")
         return account
 
     @staticmethod

@@ -35,8 +35,12 @@ form or URL elicitation, some render the MCP App, some support neither.
   refused. The page listens on `127.0.0.1` only and carries a single-use code.
 - A **pending confirmation** is answered on the page only. The model then
   calls the tool again with the same arguments and the confirmation
-  identifier: it is accepted once, for the same subject (the operation and its
-  parameters), until it expires (`confirmation.timeout_seconds`). An unknown,
+  identifier: it is accepted once, for the same subject, until it expires
+  (`confirmation.timeout_seconds`), even once accepted. The subject is the
+  operation, its parameters, the stable identity of the account (its opaque
+  key) and its environment: an account replaced under the same name or moved
+  to another environment no longer matches, and the change itself checks the
+  account again under the account lock (`AccountChangedError`). An unknown,
   used or mismatching identifier is refused. Nothing survives a restart.
 - Operations are **commands** (`Operation`: name, category, parameters,
   description, execution). `OperationExecutor` applies the rules once: account

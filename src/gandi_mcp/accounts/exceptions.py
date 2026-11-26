@@ -19,6 +19,13 @@ class AccountNotFoundError(AccountError):
     """Raised when no account has the given name."""
 
 
+class AccountChangedError(AccountError):
+    """Raised when an account no longer matches what the user confirmed or saw.
+
+    It was replaced under the same name, or moved to another environment.
+    """
+
+
 class NoAccountError(AccountError):
     """Raised when an account is needed but none is configured."""
 

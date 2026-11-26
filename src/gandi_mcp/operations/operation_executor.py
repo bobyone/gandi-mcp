@@ -24,7 +24,8 @@ class OperationExecutor:
 
     1. Resolve the account (named, otherwise the default one).
     2. Refuse a write operation on a read-only account.
-    3. Ask for a confirmation before a destructive or billable operation.
+    3. Ask for a confirmation before a destructive or billable operation, bound to
+       the operation, its parameters, the account identity and its environment.
     4. Read the token and call Gandi in the account environment.
     5. Return the data, marked as untrusted.
     """
@@ -59,7 +60,7 @@ class OperationExecutor:
             raise ReadOnlyAccountError(f"the account {account.name} is read-only")
         if operation.category.needs_confirmation:
             request = ConfirmationRequest(
-                operation.subject(),
+                f"{operation.subject()}@{account.reference.fingerprint()}",
                 operation.category,
                 operation.describe(),
                 account.name,

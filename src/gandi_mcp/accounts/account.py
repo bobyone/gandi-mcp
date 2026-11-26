@@ -5,6 +5,7 @@
 from dataclasses import dataclass, replace
 
 from gandi_mcp.accounts.account_name import AccountName
+from gandi_mcp.accounts.account_reference import AccountReference
 from gandi_mcp.accounts.environment import Environment
 
 
@@ -24,6 +25,11 @@ class Account:
     environment: Environment
     read_only: bool
     secret_key: str
+
+    @property
+    def reference(self) -> AccountReference:
+        """The stable identity of the account and its current environment."""
+        return AccountReference(self.secret_key, self.environment)
 
     def renamed(self, name: AccountName) -> "Account":
         """Return the same account under another name."""

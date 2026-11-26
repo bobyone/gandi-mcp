@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 15:12+0100\n"
+"POT-Creation-Date: 2026-11-26 17:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sl\n"
@@ -202,6 +202,14 @@ msgstr "Ta račun je samo za branje: operacije pisanja so zavrnjene."
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "To ime računa ni veljavno: uporabite od 1 do 40 črk, števk, vezajev ali posameznih presledkov."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Ta račun je bil medtem zamenjan ali premaknjen v drugo okolje: nič ni bilo spremenjeno, preverite"
+" račun in poskusite znova."
 
 # needs-review
 msgid "This confirmation is unknown, already used or for another operation: nothing was changed."

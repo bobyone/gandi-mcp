@@ -16,7 +16,7 @@ from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_context import ConfirmationContext
 from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
-from gandi_mcp.confirmation.exceptions import ConfirmationRefusedError
+from gandi_mcp.confirmation.exceptions import ConfirmationMismatchError, ConfirmationRefusedError
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
 from gandi_mcp.gandi.exceptions import GandiNotFoundError
 from gandi_mcp.gandi.gandi_response import GandiResponse
@@ -180,3 +180,22 @@ async def test_no_account() -> None:
 
     with pytest.raises(NoAccountError):
         await executor.run(ScriptedOperation(OperationCategory.READ), None, ConfirmationContext())
+
+
+async def test_a_confirmation_is_bound_to_the_account_environment(setup: Setup) -> None:
+    operation = ScriptedOperation(OperationCategory.DESTRUCTIVE)
+    first = await setup.executor.run(operation, None, ConfirmationContext())
+    assert isinstance(first, ConfirmationDecision)
+    assert first.confirmation_id is not None
+    setup.pending.answer(first.confirmation_id, True)
+    production = PersonalAccessToken("pat_production_01234567")
+    verifier = setup.accounts._verifier  # test inspection of the double
+    assert isinstance(verifier, StubTokenVerifier)
+    verifier.accept(Environment.PRODUCTION, production)
+    await setup.accounts.change_environment(
+        AccountName("Perso"), Environment.PRODUCTION, production
+    )
+
+    with pytest.raises(ConfirmationMismatchError):
+        await setup.executor.run(operation, None, ConfirmationContext(), first.confirmation_id)
+    assert setup.client.calls == []

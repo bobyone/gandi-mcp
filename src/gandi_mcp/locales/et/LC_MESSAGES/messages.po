@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 15:12+0100\n"
+"POT-Creation-Date: 2026-11-26 17:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: et\n"
@@ -201,6 +201,14 @@ msgstr "See konto on kirjutuskaitstud: kirjutustoimingud lükatakse tagasi."
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "See kontonimi pole kehtiv: kasutage 1 kuni 40 tähte, numbrit, sidekriipsu või üksikut tühikut."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"See konto on vahepeal asendatud või teise keskkonda teisaldatud: midagi ei muudetud, kontrollige "
+"kontot ja proovige uuesti."
 
 # needs-review
 msgid "This confirmation is unknown, already used or for another operation: nothing was changed."

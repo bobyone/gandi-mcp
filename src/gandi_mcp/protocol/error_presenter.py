@@ -8,6 +8,7 @@ from collections.abc import Mapping
 from mcp.server.mcpserver.exceptions import ToolError
 
 from gandi_mcp.accounts.exceptions import (
+    AccountChangedError,
     AccountNotFoundError,
     DuplicateAccountError,
     InvalidAccountNameError,
@@ -48,6 +49,10 @@ INVALID_NAME = N_(
     "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 )
 READ_ONLY = N_("This account is read-only: write operations are refused.")
+ACCOUNT_CHANGED = N_(
+    "This account was replaced or moved to another environment in the meantime: "
+    "nothing was changed, check the account and try again."
+)
 TOKEN_REFUSED = N_(
     "Gandi refused the token of this account, which may be invalid or expired: replace the "
     "token of the account."
@@ -88,6 +93,7 @@ MESSAGES: Mapping[type[Exception], Message] = {
     DuplicateAccountError: DUPLICATE_ACCOUNT,
     InvalidAccountNameError: INVALID_NAME,
     ReadOnlyAccountError: READ_ONLY,
+    AccountChangedError: ACCOUNT_CHANGED,
     TokenRejectedError: TOKEN_REFUSED,
     GandiAuthenticationError: TOKEN_REFUSED,
     GandiPermissionError: PERMISSION,

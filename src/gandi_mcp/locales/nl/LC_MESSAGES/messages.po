@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 15:12+0100\n"
+"POT-Creation-Date: 2026-11-26 17:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nl\n"
@@ -211,6 +211,14 @@ msgstr "Dit account is alleen-lezen: schrijfbewerkingen worden geweigerd."
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "Deze accountnaam is ongeldig: gebruik 1 tot 40 letters, cijfers, koppeltekens of enkele spaties."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Dit account is intussen vervangen of naar een andere omgeving verplaatst: er is niets gewijzigd, "
+"controleer het account en probeer het opnieuw."
 
 # needs-review
 msgid "This confirmation is unknown, already used or for another operation: nothing was changed."

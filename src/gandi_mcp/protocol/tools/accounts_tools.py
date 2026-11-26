@@ -264,7 +264,7 @@ class AccountsTools(ToolModule):
         target_name = AccountName(new_name) if new_name is not None else account.name
         if read_only is False and account.read_only:
             request = ConfirmationRequest(
-                f"accounts.allow_writes:{account.name.key}",
+                f"accounts.allow_writes:{account.reference.fingerprint()}",
                 OperationCategory.WRITE,
                 LocalizedText(ALLOW_WRITES, {"account": str(account.name)}),
                 account.name,
@@ -277,7 +277,7 @@ class AccountsTools(ToolModule):
         if target_name.value != account.name.value:
             result = await self._accounts.rename(account.name, target_name)
         if read_only is not None and read_only != account.read_only:
-            result = await self._accounts.set_read_only(target_name, read_only)
+            result = await self._accounts.set_read_only(target_name, read_only, account.reference)
         if make_default:
             result = await self._accounts.set_default(target_name)
         if result is None:
@@ -291,7 +291,7 @@ class AccountsTools(ToolModule):
         """Remove an account once the user confirmed it."""
         account = await self._accounts.resolve(AccountName(name))
         request = ConfirmationRequest(
-            f"accounts.remove:{account.name.key}",
+            f"accounts.remove:{account.reference.fingerprint()}",
             OperationCategory.DESTRUCTIVE,
             LocalizedText(REMOVE_ACCOUNT, {"account": str(account.name)}),
             account.name,
@@ -300,7 +300,7 @@ class AccountsTools(ToolModule):
         decision = await self._confirmation.confirm(request, context, confirmation_id)
         if not decision.accepted:
             return pending(decision)
-        removal = await self._accounts.remove(account.name)
+        removal = await self._accounts.remove(account.name, account.reference)
         return {
             "status": "removed",
             "account": str(removal.removed),

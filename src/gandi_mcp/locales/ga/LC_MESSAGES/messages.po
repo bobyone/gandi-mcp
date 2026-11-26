@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 15:12+0100\n"
+"POT-Creation-Date: 2026-11-26 17:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ga\n"
@@ -212,6 +212,14 @@ msgstr "Is cuntas inléite amháin é seo: diúltaítear d'oibríochtaí scríbh
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "Níl an t-ainm cuntais seo bailí: úsáid 1 go 40 litir, digit, fleiscín nó spás aonair."
+
+# needs-review
+msgid ""
+"This account was replaced or moved to another environment in the meantime: nothing was changed, "
+"check the account and try again."
+msgstr ""
+"Athsholáthraíodh an cuntas seo nó bogadh go timpeallacht eile é idir an dá linn: níor athraíodh "
+"aon rud, seiceáil an cuntas agus bain triail eile as."
 
 # needs-review
 msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
