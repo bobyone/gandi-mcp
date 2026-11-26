@@ -52,7 +52,8 @@ COVERED_EXAMPLE_NAMES: dict[str, str] = {
 def deny_rules() -> dict[str, str]:
     """Return one ``deny`` glob per protected file pattern and directory."""
     rules = {f"**/{pattern}": "deny" for pattern in PROTECTED_FILE_PATTERNS}
-    rules.update({f"**/{directory}": "deny" for directory in PROTECTED_DIRECTORIES})
+    # A trailing /** denies the whole subtree; the bare directory glob does not.
+    rules.update({f"**/{directory}/**": "deny" for directory in PROTECTED_DIRECTORIES})
     return rules
 
 
