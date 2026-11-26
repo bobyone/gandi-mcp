@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Protocol tests of the MCP App tools, with an in-memory client declaring MCP Apps."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
 
 import mcp_types as types
@@ -279,4 +279,23 @@ async def test_remove_from_the_app_with_elicitation(setup: Setup) -> None:
 
     assert removed["status"] == "removed"
     assert setup.browser.opened == []
+    assert setup.secrets.tokens == {}
+
+
+async def test_a_pending_removal_is_finished_from_the_app(setup: Setup) -> None:
+    await setup.accounts.add(AccountDraft(AccountName("Perso"), Environment.SANDBOX), TOKEN)
+    preferences_store = setup.accounts._preferences  # test setup of the double
+    assert isinstance(preferences_store, InMemoryPreferencesStore)
+    stored = preferences_store.preferences
+    preferences_store.preferences = replace(
+        stored, accounts=tuple(replace(a, removal_pending=True) for a in stored.accounts)
+    )
+
+    async with client(setup, elicitation=True) as session:
+        listed = data(await session.call_tool("app_list_accounts", {}))
+        removed = data(await session.call_tool("app_remove_account", {"name": "Perso"}))
+
+    assert listed["accounts"][0]["removal_pending"]
+    assert removed["status"] == "removed"
+    assert await setup.accounts.list() == ()
     assert setup.secrets.tokens == {}

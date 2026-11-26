@@ -72,16 +72,24 @@ class AccountService:
             for account in _sorted(preferences.accounts)
         )
 
-    async def resolve(self, name: AccountName | None = None) -> Account:
+    async def resolve(
+        self, name: AccountName | None = None, *, allow_pending: bool = False
+    ) -> Account:
         """Return the named account, or the default one when no name is given.
+
+        Args:
+            name: Account name, or ``None`` for the default account.
+            allow_pending: Accept an account whose removal was interrupted; only the
+                removal flow sets it, to finish that removal.
 
         Raises:
             NoAccountError: if no account is configured.
             AccountNotFoundError: if no account has this name.
-            AccountRemovalPendingError: if its removal was interrupted.
+            AccountRemovalPendingError: if its removal was interrupted and
+                ``allow_pending`` is not set.
         """
         preferences = await self._preferences.load()
-        return self._find(preferences, name)
+        return self._find(preferences, name, allow_pending=allow_pending)
 
     async def add(self, draft: AccountDraft, token: PersonalAccessToken) -> VerifiedAccount:
         """Verify the token, then keep it and the account; the first one becomes default.

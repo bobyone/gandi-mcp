@@ -71,7 +71,7 @@ an account. It depends on a `PreferencesStore`, a `SecretStore` and a
 | Operation | Contract |
 | --- | --- |
 | `list()` | Accounts sorted by name, as `AccountSummary` (name, environment, read-only flag, default flag; no secret). |
-| `resolve(name=None)` | The named account, else the default one. `NoAccountError`, `AccountNotFoundError`. |
+| `resolve(name=None, *, allow_pending=False)` | The named account, else the default one. `NoAccountError`, `AccountNotFoundError`, `AccountRemovalPendingError` (only the removal flow sets `allow_pending`, to finish an interrupted removal). |
 | `add(draft, token)` | Checks the name is free (`DuplicateAccountError`), verifies the token in the chosen environment (`TokenRejectedError`), stores the token, then the account; the first account becomes the default. If saving the preferences fails, the token is removed again. Returns a `VerifiedAccount` (summary and `AccountIdentity`). |
 | `update(name, *, new_name, read_only, make_default, expected, writes_confirmed)` | Checks everything under the preferences transaction (expected account, free name, and `writes_confirmed` when allowing writes on an account read-only at that moment: `WritesNotConfirmedError` otherwise), then applies the rename, the read-only flag and the default flag in one save; a refusal changes nothing. Keeps the token; a case-only rename is saved. |
 | `rename`, `set_default`, `set_read_only` | Shortcuts of `update`. |

@@ -296,8 +296,8 @@ class AccountsTools(ToolModule):
     async def remove(
         self, name: str, context: ConfirmationContext, confirmation_id: str | None = None
     ) -> dict[str, Any]:
-        """Remove an account once the user confirmed it."""
-        account = await self._accounts.resolve(AccountName(name))
+        """Remove an account once the user confirmed it; also finishes a pending removal."""
+        account = await self._accounts.resolve(AccountName(name), allow_pending=True)
         request = ConfirmationRequest(
             f"accounts.remove:{account.reference.fingerprint()}",
             OperationCategory.DESTRUCTIVE,

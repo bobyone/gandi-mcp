@@ -3,7 +3,7 @@
 """Protocol tests of the account tools, with an in-memory MCP client and doubles."""
 
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Any
 
 import mcp_types as types
@@ -430,3 +430,50 @@ async def test_a_confirmed_update_never_touches_a_replaced_account(setup: Setup)
 
     assert resumed.is_error
     assert await setup.accounts.resolve() == replacement
+
+
+async def persist_pending_removal(setup: Setup, name: str) -> str:
+    """Store an account as an interrupted removal: marked, token still in the keyring."""
+    await add(setup, name)
+    preferences_store = setup.accounts._preferences  # test setup of the double
+    assert isinstance(preferences_store, InMemoryPreferencesStore)
+    stored = preferences_store.preferences
+    account = stored.find(AccountName(name))
+    assert account is not None
+    marked = replace(account, removal_pending=True)
+    preferences_store.preferences = replace(
+        stored, accounts=tuple(marked if a is account else a for a in stored.accounts)
+    )
+    return account.secret_key
+
+
+async def test_a_pending_removal_is_finished_by_remove_account(setup: Setup) -> None:
+    key = await persist_pending_removal(setup, "Perso")
+
+    async with client(setup, User()) as session:
+        listed = data(await session.call_tool("list_accounts", {}))
+        refused = await session.call_tool("update_account", {"name": "Perso", "read_only": True})
+        removed = data(await session.call_tool("remove_account", {"name": "Perso"}))
+
+    assert listed["accounts"][0]["removal_pending"]
+    assert "interrupted" in error_text(refused)
+    assert removed["status"] == "removed"
+    assert await setup.accounts.list() == ()
+    assert key not in setup.secrets.tokens
+
+
+async def test_a_pending_removal_still_needs_a_confirmation(setup: Setup) -> None:
+    key = await persist_pending_removal(setup, "Perso")
+
+    async with client(setup) as session:
+        first = data(await session.call_tool("remove_account", {"name": "Perso"}))
+        setup.pending.answer(first["confirmation_id"], True)
+        done = data(
+            await session.call_tool(
+                "remove_account", {"name": "Perso", "confirmation_id": first["confirmation_id"]}
+            )
+        )
+
+    assert first["status"] == "confirmation_pending"
+    assert done["status"] == "removed"
+    assert key not in setup.secrets.tokens
