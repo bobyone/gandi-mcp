@@ -383,3 +383,18 @@ async def test_a_confirmation_does_not_apply_to_a_replaced_account(setup: Setup)
 
     assert "for another operation" in error_text(resumed)
     assert len(await setup.accounts.list()) == 1
+
+
+async def test_token_pages_are_bound_to_the_account_shown(setup: Setup) -> None:
+    await add(setup, "Perso")
+    reference = (await setup.accounts.resolve()).reference
+
+    async with client(setup) as session:
+        data(await session.call_tool("replace_account_token", {"name": "Perso"}))
+        data(
+            await session.call_tool(
+                "change_account_environment", {"name": "Perso", "environment": "production"}
+            )
+        )
+
+    assert [s.target.expected for s in setup.token_page.opened] == [reference, reference]

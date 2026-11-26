@@ -23,6 +23,10 @@ TOKEN_REJECTED = N_(
 )
 DUPLICATE_ACCOUNT = N_("An account is already named {account}. Nothing was saved.")
 ACCOUNT_GONE = N_("The account {account} no longer exists. Nothing was saved.")
+ACCOUNT_CHANGED = N_(
+    "The account {account} was replaced or moved to another environment while this "
+    "page was open. Nothing was saved: ask the assistant to open a new page."
+)
 GANDI_UNAVAILABLE = N_("Gandi cannot be reached right now. Nothing was saved: try again later.")
 KEYRING_UNAVAILABLE = N_(
     "The keyring of the system is unavailable. Nothing was saved: unlock or install it, "

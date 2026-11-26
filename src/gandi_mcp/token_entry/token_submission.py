@@ -26,5 +26,7 @@ class TokenSubmission:
             draft = AccountDraft(target.name, target.environment, target.read_only)
             return await self._accounts.add(draft, token)
         if target.purpose is TokenPurpose.REPLACE:
-            return await self._accounts.replace_token(target.name, token)
-        return await self._accounts.change_environment(target.name, target.environment, token)
+            return await self._accounts.replace_token(target.name, token, target.expected)
+        return await self._accounts.change_environment(
+            target.name, target.environment, token, target.expected
+        )

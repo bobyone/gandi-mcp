@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 17:58+0100\n"
+"POT-Creation-Date: 2026-11-26 18:00+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ga\n"
@@ -160,6 +160,15 @@ msgstr ""
 #, python-brace-format
 msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Níl an cuntas {account} ann a thuilleadh. Níor sábháladh aon rud."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"Athsholáthraíodh an cuntas {account} nó bogadh go timpeallacht eile é fad a bhí an leathanach seo"
+" oscailte. Níor sábháladh aon rud: iarr ar an gcúntóir leathanach nua a oscailt."
 
 # needs-review
 msgid "The confirmation was not given in time: nothing was changed."

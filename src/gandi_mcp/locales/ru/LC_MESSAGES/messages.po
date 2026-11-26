@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 17:58+0100\n"
+"POT-Creation-Date: 2026-11-26 18:00+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -154,6 +154,15 @@ msgstr "Учётная запись {account} сохранена для поль
 #, python-brace-format
 msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Учётной записи {account} больше нет. Ничего не сохранено."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"Пока эта страница была открыта, учётная запись {account} была заменена или перенесена в другую "
+"среду. Ничего не сохранено: попросите ассистента открыть новую страницу."
 
 # needs-review
 msgid "The confirmation was not given in time: nothing was changed."

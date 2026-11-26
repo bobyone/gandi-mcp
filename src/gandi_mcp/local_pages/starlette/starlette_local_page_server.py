@@ -21,6 +21,7 @@ from starlette.routing import Route
 
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.accounts.exceptions import (
+    AccountChangedError,
     AccountNotFoundError,
     DuplicateAccountError,
     NoAccountError,
@@ -382,6 +383,8 @@ class StarletteLocalPageServer(LocalPageServer):
             verified = await self._submission.submit(session.target, token)
         except TokenRejectedError:
             failure = messages.TOKEN_REJECTED
+        except AccountChangedError:
+            failure = messages.ACCOUNT_CHANGED
         except DuplicateAccountError:
             failure = messages.DUPLICATE_ACCOUNT
         except (AccountNotFoundError, NoAccountError):

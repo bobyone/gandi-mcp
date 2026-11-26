@@ -339,3 +339,23 @@ async def test_session_object_is_not_exposed(pages: Pages) -> None:
     url = await pages.server.open_token_entry(session, None)
 
     assert session.session_id not in url
+
+
+async def test_account_moved_while_the_replacement_page_is_open(pages: Pages) -> None:
+    await pages.accounts.add(AccountDraft(AccountName("Perso"), Environment.SANDBOX), TOKEN)
+    account = await pages.accounts.resolve(AccountName("Perso"))
+    target = TokenEntryTarget(
+        TokenPurpose.REPLACE, account.name, account.environment, expected=account.reference
+    )
+    url = await pages.server.open_token_entry(pages.sessions.open(target), None)
+    production = PersonalAccessToken("pat_production_01234567")
+    pages.verifier.accept(Environment.PRODUCTION, production)
+    await pages.accounts.change_environment(account.name, Environment.PRODUCTION, production)
+    calls = len(pages.verifier.calls)
+
+    response = await pages.http.post(url, data={"code": code_of(url), "token": TOKEN.reveal()})
+
+    assert response.status_code == 422
+    assert "moved to another environment" in response.text
+    assert len(pages.verifier.calls) == calls
+    assert pages.secrets.tokens[account.secret_key] == production

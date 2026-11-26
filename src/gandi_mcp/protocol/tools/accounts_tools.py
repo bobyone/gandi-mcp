@@ -218,7 +218,12 @@ class AccountsTools(ToolModule):
 
         async def run() -> dict[str, Any]:
             account = await self._accounts.resolve(AccountName(name))
-            target = TokenEntryTarget(TokenPurpose.REPLACE, account.name, account.environment)
+            target = TokenEntryTarget(
+                TokenPurpose.REPLACE,
+                account.name,
+                account.environment,
+                expected=account.reference,
+            )
             return await self._open_token_entry(target, ctx)
 
         return await self._guard(run)
@@ -234,7 +239,10 @@ class AccountsTools(ToolModule):
         async def run() -> dict[str, Any]:
             account = await self._accounts.resolve(AccountName(name))
             target = TokenEntryTarget(
-                TokenPurpose.CHANGE_ENVIRONMENT, account.name, Environment(environment)
+                TokenPurpose.CHANGE_ENVIRONMENT,
+                account.name,
+                Environment(environment),
+                expected=account.reference,
             )
             return await self._open_token_entry(target, ctx)
 

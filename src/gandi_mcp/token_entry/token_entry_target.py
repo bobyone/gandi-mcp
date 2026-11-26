@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 
 from gandi_mcp.accounts.account_name import AccountName
+from gandi_mcp.accounts.account_reference import AccountReference
 from gandi_mcp.accounts.environment import Environment
 
 
@@ -26,9 +27,13 @@ class TokenEntryTarget:
         name: Account name (new for ``ADD``, existing otherwise).
         environment: Environment the token must be valid in.
         read_only: Read-only flag of a new account (``ADD`` only).
+        expected: The existing account as the page shows it (``REPLACE`` and
+            ``CHANGE_ENVIRONMENT``): the token is refused, before any Gandi
+            request, if the account was replaced or moved meanwhile.
     """
 
     purpose: TokenPurpose
     name: AccountName
     environment: Environment
     read_only: bool = False
+    expected: AccountReference | None = None

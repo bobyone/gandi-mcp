@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 17:58+0100\n"
+"POT-Creation-Date: 2026-11-26 18:00+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: da\n"
@@ -151,6 +151,15 @@ msgstr "Kontoen {account} er gemt for Gandi-brugeren {username}. Du kan lukke de
 #, python-brace-format
 msgid "The account {account} no longer exists. Nothing was saved."
 msgstr "Kontoen {account} findes ikke længere. Intet blev gemt."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"The account {account} was replaced or moved to another environment while this page was open. "
+"Nothing was saved: ask the assistant to open a new page."
+msgstr ""
+"Mens denne side var åben, blev kontoen {account} erstattet eller flyttet til et andet miljø. "
+"Intet blev gemt: bed assistenten om at åbne en ny side."
 
 # needs-review
 msgid "The confirmation was not given in time: nothing was changed."
