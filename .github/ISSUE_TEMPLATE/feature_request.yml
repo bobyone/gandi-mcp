@@ -1,0 +1,35 @@
+# SPDX-FileCopyrightText: 2026 bobyone
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+name: Feature request
+description: Propose a new capability or a change.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        The design is then validated in this issue, step by step, before any
+        code (see CONTRIBUTING.md, section 2).
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What do you want to achieve, and why?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- The assistant can ..."
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Out of scope and constraints
+  - type: input
+    id: gandi-api
+    attributes:
+      label: Gandi API endpoints concerned
+      placeholder: "LiveDNS: /livedns/domains/{fqdn}/records"
