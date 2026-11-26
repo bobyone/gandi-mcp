@@ -34,7 +34,10 @@ already avoids the model through a local page (ADR 3, ADR 4).
   kept in memory with the accepted confirmation only, and handed to
   `Operation.execute(..., secret)` once, when the confirmation is consumed. It
   is never part of the operation fingerprint, never logged, and never returned
-  to the model.
+  to the model: Gandi error details are dropped for a request carrying a
+  secret, and any text of its result containing the secret is hidden, in case
+  Gandi echoes it. A confirmation holding a secret is dropped at its deadline
+  even when nobody resumes it.
 
 ## Alternatives considered
 

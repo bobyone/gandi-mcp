@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 23:07+0100\n"
+"POT-Creation-Date: 2026-11-26 23:34+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mt\n"
@@ -43,6 +43,10 @@ msgstr "Seħħ żball mhux mistenni: xejn ma nbidel."
 # needs-review
 msgid "Authorization code given by the current registrar"
 msgstr "Kodiċi ta' awtorizzazzjoni mogħti mir-reġistratur attwali"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "Kodiċi ta' awtorizzazzjoni tad-dominju (jidher fl-amministrazzjoni ta' Gandi)"
 
 # needs-review
 msgid "Confirm"
@@ -344,6 +348,20 @@ msgstr "ibdel id-dettalji tas-sid ta' {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"ibdel id-dettalji tas-sid ta' {domain}, inkluż l-indirizz tal-email: qed tawtorizza lil Gandi "
+"jaġixxi bħala l-Aġent Maħtur tiegħek skont ir-regoli tal-ICANN għal din il-bidla"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "irrifjuta t-trasferiment ta' {domain} lil reġistratur ieħor"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "ħassar iċ-ċavetta DNSSEC {id} ta' {domain}"
 
@@ -417,8 +435,18 @@ msgstr "ibdel iċ-ċwievet DNSSEC kollha ta' {domain}"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "ibdel it-tikketti kollha ta' {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "ibdel in-nameservers ta' {domain}; lista ħażina tagħmel id-dominju inaċċessibbli"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "irrisettja l-kodiċi ta' awtorizzazzjoni ta' {domain}: il-kodiċi attwali ma jibqax jaħdem"
 
 # needs-review
 #, python-brace-format
@@ -439,6 +467,11 @@ msgstr[1] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} snin: {price}
 msgstr[2] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} snin: {price} inklużi t-taxxi"
 msgstr[3] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} sena: {price} inklużi t-taxxi"
 msgstr[4] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} sena: {price} inklużi t-taxxi"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "iftaħ {domain}: imbagħad ikun jista' jiġi ttrasferit lil reġistratur ieħor"
 
 # needs-review
 #, python-brace-format

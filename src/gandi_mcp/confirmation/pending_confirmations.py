@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Registry of the confirmations answered on local pages, kept in memory."""
 
+import asyncio
 import secrets
 import time
 from collections.abc import Callable
@@ -19,6 +20,17 @@ from gandi_mcp.secrets.secret_value import SecretValue
 
 MAX_PENDING = 100
 
+type Scheduler = Callable[[float, Callable[[], None]], None]
+
+
+def loop_scheduler(delay: float, callback: Callable[[], None]) -> None:
+    """Call ``callback`` after ``delay`` seconds on the running event loop, if any."""
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        return
+    loop.call_later(delay, callback)
+
 
 class PendingConfirmations:
     """Hold pending confirmations until answered, used or expired.
@@ -26,13 +38,21 @@ class PendingConfirmations:
     The user answers on the local page (:meth:`answer`); the operation then gives the
     identifier back (:meth:`consume`), which succeeds once, for the same subject, before
     the deadline: an accepted confirmation not used in time expires too. Nothing
-    survives a restart of the server.
+    survives a restart of the server. A confirmation holding a typed secret is
+    dropped at its deadline even if nobody asks for it again (ADR 11).
     """
 
-    def __init__(self, timeout_seconds: float, clock: Callable[[], float] = time.monotonic) -> None:
-        """Keep confirmations for ``timeout_seconds``, measured with ``clock``."""
+    def __init__(
+        self,
+        timeout_seconds: float,
+        clock: Callable[[], float] = time.monotonic,
+        scheduler: Scheduler = loop_scheduler,
+    ) -> None:
+        """Keep confirmations for ``timeout_seconds``, measured with ``clock``;
+        ``scheduler`` runs the removal of secrets at their deadline."""
         self._timeout = timeout_seconds
         self._clock = clock
+        self._scheduler = scheduler
         self._items: dict[str, PendingConfirmation] = {}
 
     def create(self, request: ConfirmationRequest) -> PendingConfirmation:
@@ -79,6 +99,11 @@ class PendingConfirmations:
         kept = secret if accepted and asks_secret else None
         answered = replace(pending, state=state, secret=kept)
         self._items[confirmation_id] = answered
+        if kept is not None:
+            self._scheduler(
+                max(0.0, answered.deadline - self._clock()),
+                lambda: self._expire(confirmation_id, answered),
+            )
         return answered
 
     def consume(self, confirmation_id: str, subject: str) -> PendingConfirmation | None:
@@ -105,6 +130,11 @@ class PendingConfirmations:
     def cancel(self, confirmation_id: str) -> None:
         """Forget a confirmation, for example when its page could not be shown."""
         self._items.pop(confirmation_id, None)
+
+    def _expire(self, confirmation_id: str, answered: PendingConfirmation) -> None:
+        """Forget a confirmation holding a secret at its deadline, if still there."""
+        if self._items.get(confirmation_id) is answered:
+            del self._items[confirmation_id]
 
     def _live(self, confirmation_id: str) -> PendingConfirmation:
         pending = self._items.get(confirmation_id)

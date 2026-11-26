@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 23:07+0100\n"
+"POT-Creation-Date: 2026-11-26 23:34+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nn\n"
@@ -42,6 +42,10 @@ msgstr "Det oppstod ein uventa feil: ingenting vart endra."
 # needs-review
 msgid "Authorization code given by the current registrar"
 msgstr "Autorisasjonskode frå noverande registrar"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "Autorisasjonskoden til domenet (vist i Gandi-administrasjonen)"
 
 # needs-review
 msgid "Confirm"
@@ -343,6 +347,20 @@ msgstr "endre eigaropplysningane for {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"endre eigaropplysningane for {domain}, medrekna e-postadressa: du gjev Gandi fullmakt til å "
+"opptre som den utpeikte agenten din etter ICANN-reglane for denne endringa"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "avslå overføringa av {domain} til ein annan registrar"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "slett DNSSEC-nøkkelen {id} for {domain}"
 
@@ -410,8 +428,18 @@ msgstr "byt ut alle DNSSEC-nøklane for {domain}"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "byt ut alle merkelappane for {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "byt ut namnetenarane for {domain}; ei feil liste gjer domenet utilgjengeleg"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "tilbakestill autorisasjonskoden for {domain}: den noverande koden sluttar å verke"
 
 # needs-review
 #, python-brace-format
@@ -429,6 +457,11 @@ msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} includi
 msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
 msgstr[0] "overfør {domain} til Gandi med {count} års fornying: {price} inkl. avgifter"
 msgstr[1] "overfør {domain} til Gandi med {count} års fornying: {price} inkl. avgifter"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "lås opp {domain}: det kan då overførast til ein annan registrar"
 
 # needs-review
 #, python-brace-format

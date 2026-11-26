@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 23:07+0100\n"
+"POT-Creation-Date: 2026-11-26 23:34+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lt\n"
@@ -43,6 +43,10 @@ msgstr "Įvyko netikėta klaida: niekas nepakeista."
 # needs-review
 msgid "Authorization code given by the current registrar"
 msgstr "Dabartinio registratoriaus suteiktas autorizacijos kodas"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "Domeno autorizacijos kodas (rodomas Gandi administravime)"
 
 # needs-review
 msgid "Confirm"
@@ -346,6 +350,20 @@ msgstr "keisti {domain} savininko duomenis"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"keisti {domain} savininko duomenis, įskaitant el. pašto adresą: įgaliojate Gandi šiam pakeitimui "
+"veikti kaip jūsų paskirtąjį atstovą pagal ICANN taisykles"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "atmesti {domain} perkėlimą kitam registratoriui"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "ištrinti {domain} DNSSEC raktą {id}"
 
@@ -415,8 +433,18 @@ msgstr "pakeisti visus {domain} DNSSEC raktus"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "pakeisti visas {domain} žymas"
+
+# needs-review
+#, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "pakeisti {domain} vardų serverius; neteisingas sąrašas padaro domeną nepasiekiamą"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "atkurti {domain} autorizacijos kodą: dabartinis kodas nustos galioti"
 
 # needs-review
 #, python-brace-format
@@ -435,6 +463,11 @@ msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price}
 msgstr[0] "perkelti {domain} į Gandi su pratęsimu {count} metams: {price} su mokesčiais"
 msgstr[1] "perkelti {domain} į Gandi su pratęsimu {count} metams: {price} su mokesčiais"
 msgstr[2] "perkelti {domain} į Gandi su pratęsimu {count} metų: {price} su mokesčiais"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "atrakinti {domain}: tada jį bus galima perkelti kitam registratoriui"
 
 # needs-review
 #, python-brace-format

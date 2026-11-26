@@ -50,8 +50,17 @@ class ContactTools(ToolModule):
                 self.domain_owner_update,
                 domain_endpoints.OWNER_UPDATE,
                 "Update the owner details of a domain",
-                "Correct the details of the current owner (address, email, phone); the owner "
-                "stays the same person or organization. Checked by Gandi first.",
+                "Correct the details of the current owner (address, phone); the owner stays "
+                "the same person or organization. Keep the current email address: use "
+                "domain_owner_email_update to change it. Checked by Gandi first.",
+            ),
+            (
+                self.domain_owner_email_update,
+                domain_endpoints.OWNER_EMAIL_UPDATE,
+                "Update the owner details of a domain, including its email",
+                "Correct the details of the current owner, including its email address. The "
+                "user authorizes Gandi to act as their Designated Agent under the ICANN rules "
+                "by confirming outside the conversation. Checked by Gandi first.",
             ),
             (
                 self.domain_owner_change,
@@ -117,6 +126,31 @@ class ContactTools(ToolModule):
         return await self._runner.write(
             ctx,
             domain_endpoints.OWNER_UPDATE,
+            account,
+            lambda: {"domain": DomainName(domain).value},
+            body=body,
+            confirmation_id=confirmation_id,
+        )
+
+    async def domain_owner_email_update(
+        self,
+        domain: DomainParameter,
+        owner: ContactParameter,
+        ctx: Context[Any, Any],
+        confirmation_id: ConfirmationIdParameter = None,
+        account: AccountParameter = None,
+    ) -> dict[str, Any]:
+        """Update the owner details, email included, with the designated-agent consent."""
+
+        def body() -> JsonValue:
+            fields = owner.to_contact().to_json()
+            kept = {key: value for key, value in fields.items() if key not in FIXED_OWNER_FIELDS}
+            # The consent is given by the user's confirmation, whose text states it.
+            return {**kept, "icann_contract_accept": True}
+
+        return await self._runner.write(
+            ctx,
+            domain_endpoints.OWNER_EMAIL_UPDATE,
             account,
             lambda: {"domain": DomainName(domain).value},
             body=body,

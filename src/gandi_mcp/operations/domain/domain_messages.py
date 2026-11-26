@@ -6,6 +6,19 @@ from gandi_mcp.i18n.message import N_
 
 DELETE_DOMAIN = N_("delete the domain {domain}: it will be lost for good")
 UPDATE_OWNER = N_("change the owner details of {domain}")
+UPDATE_OWNER_EMAIL = N_(
+    "change the owner details of {domain}, including its email address: you authorize "
+    "Gandi to act as your Designated Agent under the ICANN rules for this change"
+)
+UNLOCK_TRANSFER = N_("unlock {domain}: it can then be transferred to another registrar")
+RESET_AUTHORIZATION_CODE = N_(
+    "reset the authorization code of {domain}: the current code stops working"
+)
+REPLACE_TAGS = N_("replace all the tags of {domain}")
+DECLINE_TRANSFER_OUT = N_("decline the transfer of {domain} to another registrar")
+DOMAIN_AUTHORIZATION_CODE = N_(
+    "Authorization code of the domain (shown in the Gandi administration)"
+)
 CHANGE_OWNER = N_(
     "give the domain {domain} to a new owner; Gandi may charge for it depending on the "
     "extension, and the amount is not known in advance"

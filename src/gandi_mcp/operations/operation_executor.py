@@ -13,11 +13,13 @@ from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
 from gandi_mcp.confirmation.confirmation_request import ConfirmationRequest
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.exceptions import SecretInputMissingError
+from gandi_mcp.gandi.exceptions import GandiError
 from gandi_mcp.gandi.gandi_client import GandiClient
 from gandi_mcp.gandi.gandi_response import SEE_OTHER
 from gandi_mcp.operations.dry_run import dry_run_details
 from gandi_mcp.operations.exceptions import DryRunRejectedError
 from gandi_mcp.operations.operation import Operation
+from gandi_mcp.operations.secret_echo import scrubbed, without_details
 from gandi_mcp.operations.untrusted_result import UntrustedResult
 from gandi_mcp.secrets.secret_store import SecretStore
 
@@ -85,10 +87,16 @@ class OperationExecutor:
             if secret_input is not None and secret is None:
                 raise SecretInputMissingError(f"{operation.name} needs a secret")
         token = await self._secrets.get(account.secret_key)
-        response = await operation.execute(self._client, account.environment, token, secret)
+        try:
+            response = await operation.execute(self._client, account.environment, token, secret)
+        except GandiError as error:
+            if secret is not None:
+                raise without_details(error) from None
+            raise
+        data = scrubbed(response.data, secret) if secret is not None else response.data
         logger.info("operation %s done (%s)", operation.name, account.environment.value)
         return UntrustedResult(
-            response.data,
+            data,
             response.total_count,
             response.filtered_count,
             completed=response.status == SEE_OTHER,

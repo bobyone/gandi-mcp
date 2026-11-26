@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Tests of the registry of confirmations answered on local pages."""
 
-from dataclasses import replace
+import asyncio
+from collections.abc import Callable
+from dataclasses import dataclass, field, replace
 
 import pytest
 
@@ -17,7 +19,7 @@ from gandi_mcp.confirmation.exceptions import (
     SecretInputMissingError,
 )
 from gandi_mcp.confirmation.pending_confirmation import PendingState
-from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
+from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations, loop_scheduler
 from gandi_mcp.confirmation.secret_input import SecretInput
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.i18n.message import Message
@@ -161,6 +163,16 @@ def test_expired_entries_are_purged_and_size_is_bounded(
     assert registry.get(third.confirmation_id) == third
 
 
+@dataclass
+class ManualScheduler:
+    """Records the scheduled callbacks; the test decides when they run."""
+
+    calls: list[tuple[float, Callable[[], None]]] = field(default_factory=list)
+
+    def __call__(self, delay: float, callback: Callable[[], None]) -> None:
+        self.calls.append((delay, callback))
+
+
 def secret_request() -> ConfirmationRequest:
     return replace(request(), secret_input=SecretInput(Message("Authorization code")))
 
@@ -187,3 +199,49 @@ def test_a_secret_is_dropped_when_refused_or_not_asked_for() -> None:
 
     assert registry.answer(refused.confirmation_id, False, SecretValue("x")).secret is None
     assert registry.answer(plain.confirmation_id, True, SecretValue("x")).secret is None
+
+
+def test_a_typed_secret_is_released_at_the_deadline_without_a_new_call() -> None:
+    clock, scheduler = Clock(), ManualScheduler()
+    registry = PendingConfirmations(300, clock, scheduler)
+    pending = registry.create(secret_request())
+    plain = registry.create(request("other"))
+    clock.now += 100
+
+    registry.answer(pending.confirmation_id, True, SecretValue("Auth-123"))
+    registry.answer(plain.confirmation_id, True)
+
+    assert len(scheduler.calls) == 1
+    delay, release = scheduler.calls[0]
+    assert delay == 200
+    release()
+    with pytest.raises(ConfirmationMismatchError):
+        registry.consume(pending.confirmation_id, pending.request.subject)
+    assert registry.consume(plain.confirmation_id, "other") is not None
+
+
+def test_a_late_release_keeps_a_newer_confirmation() -> None:
+    scheduler = ManualScheduler()
+    registry = PendingConfirmations(300, Clock(), scheduler)
+    pending = registry.create(secret_request())
+    registry.answer(pending.confirmation_id, True, SecretValue("Auth-123"))
+    registry.consume(pending.confirmation_id, pending.request.subject)
+
+    scheduler.calls[0][1]()
+
+    assert registry._items == {}
+
+
+@pytest.mark.anyio
+@pytest.mark.anyio
+async def test_the_default_scheduler_uses_the_running_loop() -> None:
+    called: list[bool] = []
+
+    loop_scheduler(0, lambda: called.append(True))
+    await asyncio.sleep(0.01)
+
+    assert called == [True]
+
+
+def test_the_default_scheduler_needs_a_loop() -> None:
+    loop_scheduler(0, lambda: None)  # no running loop: nothing is scheduled

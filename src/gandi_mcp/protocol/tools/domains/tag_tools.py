@@ -80,11 +80,17 @@ class TagTools(ToolModule):
         domain: DomainParameter,
         tags: TagsParameter,
         ctx: Context[Any, Any],
+        confirmation_id: ConfirmationIdParameter = None,
         account: AccountParameter = None,
     ) -> dict[str, Any]:
-        """Replace the tags."""
+        """Replace the tags, after confirmation (it can remove every tag)."""
         return await self._write(
-            ctx, domain_endpoints.TAGS_REPLACE, domain, account, lambda: {"tags": _tags(tags)}
+            ctx,
+            domain_endpoints.TAGS_REPLACE,
+            domain,
+            account,
+            lambda: {"tags": _tags(tags)},
+            confirmation_id=confirmation_id,
         )
 
     async def domain_tags_update(

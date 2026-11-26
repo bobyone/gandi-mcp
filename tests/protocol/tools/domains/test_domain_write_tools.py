@@ -19,6 +19,7 @@ from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
 from gandi_mcp.content.long_text_filter import LongTextFilter
 from gandi_mcp.domains.contacts.contact_redactor import ContactRedactor
+from gandi_mcp.gandi.exceptions import GandiValidationError
 from gandi_mcp.gandi.gandi_response import GandiResponse
 from gandi_mcp.interaction.link_presenter import LinkPresenter
 from gandi_mcp.operations.domain import domain_endpoints
@@ -80,8 +81,14 @@ CALLS: dict[str, tuple[dict[str, Any], str, tuple[str, ...], Any]] = {
         (*D, "autorenew"),
         {"enabled": True, "duration": 2, "org_id": "5a53edc7-b514-416a-98c2-2d477a288eb9"},
     ),
-    "domain_transfer_lock_update": (
-        {"domain": "example.com", "locked": False},
+    "domain_transfer_lock": (
+        {"domain": "example.com"},
+        "PATCH",
+        (*D, "status"),
+        {"clientTransferProhibited": True},
+    ),
+    "domain_transfer_unlock": (
+        {"domain": "example.com"},
         "PATCH",
         (*D, "status"),
         {"clientTransferProhibited": False},
@@ -106,6 +113,15 @@ CALLS: dict[str, tuple[dict[str, Any], str, tuple[str, ...], Any]] = {
         "PUT",
         (*D, "contacts", "owner"),
         {key: value for key, value in CONTACT_JSON.items() if key != "type"},
+    ),
+    "domain_owner_email_update": (
+        {"domain": "example.com", "owner": CONTACT},
+        "PUT",
+        (*D, "contacts", "owner"),
+        {
+            **{key: value for key, value in CONTACT_JSON.items() if key != "type"},
+            "icann_contract_accept": True,
+        },
     ),
     "domain_owner_change": (
         {"domain": "example.com", "owner": CONTACT},
@@ -206,13 +222,13 @@ CALLS: dict[str, tuple[dict[str, Any], str, tuple[str, ...], Any]] = {
         {"domain": "example.com"},
         "POST",
         (*D, "transferout"),
-        {"accept": True},
+        {"accept": True, "authinfo": "Auth-123"},
     ),
     "domain_transfer_out_decline": (
         {"domain": "example.com"},
         "POST",
         (*D, "transferout"),
-        {"accept": False},
+        {"accept": False, "authinfo": "Auth-123"},
     ),
     "domain_transfer_in_relaunch": (
         {"domain": "example.com"},
@@ -233,6 +249,7 @@ CALLS: dict[str, tuple[dict[str, Any], str, tuple[str, ...], Any]] = {
         {"email": "a@example.org"},
     ),
 }
+SECRET = {e.name for e in domain_endpoints.WRITE_ENDPOINTS if e.secret_field is not None}
 CONFIRMED = {endpoint.name for endpoint in domain_endpoints.WRITE_ENDPOINTS if endpoint.confirmed}
 DRY_RUN = {
     endpoint.name for endpoint in domain_endpoints.WRITE_ENDPOINTS if endpoint.supports_dry_run
@@ -325,7 +342,7 @@ async def test_every_write_sends_its_request(setup: Setup, name: str) -> None:
         result = data(await session.call_tool(name, arguments))
         if name in CONFIRMED:
             assert result["status"] == "confirmation_pending"
-            secret = SecretValue("Auth-123") if name == "domain_transfer_in_code_update" else None
+            secret = SecretValue("Auth-123") if name in SECRET else None
             setup.pending.answer(result["confirmation_id"], True, secret)
             result = data(
                 await session.call_tool(
@@ -389,4 +406,42 @@ async def test_writes_are_refused_on_a_read_only_account(setup: Setup) -> None:
         )
 
     assert text.endswith(READ_ONLY.singular)
+    assert setup.gandi.calls == []
+
+
+@pytest.mark.parametrize(
+    "outcome",
+    [
+        GandiResponse(200, {"message": "code Echo-123 accepted"}),
+        GandiValidationError("refused", ("wrong code Echo-123",)),
+    ],
+)
+async def test_a_typed_code_is_never_echoed_to_the_model(
+    setup: Setup, outcome: GandiResponse | Exception
+) -> None:
+    setup.gandi.outcomes.append(outcome)
+
+    async with Client(setup.server) as session:
+        first = data(
+            await session.call_tool("domain_transfer_in_code_update", {"domain": "example.com"})
+        )
+        setup.pending.answer(first["confirmation_id"], True, SecretValue("Echo-123"))
+        result = await session.call_tool(
+            "domain_transfer_in_code_update",
+            {"domain": "example.com", "confirmation_id": first["confirmation_id"]},
+        )
+
+    assert "Echo-123" not in json.dumps(result.model_dump(mode="json"))
+
+
+@pytest.mark.parametrize(
+    "name", ["domain_transfer_unlock", "domain_authorization_code_reset", "domain_tags_replace"]
+)
+async def test_risky_changes_wait_for_the_confirmation(setup: Setup, name: str) -> None:
+    arguments, *_ = CALLS[name]
+
+    async with Client(setup.server) as session:
+        result = data(await session.call_tool(name, arguments))
+
+    assert result["status"] == "confirmation_pending"
     assert setup.gandi.calls == []

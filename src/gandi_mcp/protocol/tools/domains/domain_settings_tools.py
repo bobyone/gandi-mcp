@@ -42,11 +42,16 @@ class DomainSettingsTools(ToolModule):
                 "before it expires and charges the paying organization.",
             ),
             (
-                self.domain_transfer_lock_update,
+                self.domain_transfer_lock,
                 domain_endpoints.TRANSFER_LOCK,
-                "Lock or unlock the transfer of a domain",
-                "Lock a domain against transfers to another registrar, or unlock it before "
-                "such a transfer.",
+                "Lock the transfer of a domain",
+                "Lock a domain against transfers to another registrar.",
+            ),
+            (
+                self.domain_transfer_unlock,
+                domain_endpoints.TRANSFER_UNLOCK,
+                "Unlock the transfer of a domain",
+                "Unlock a domain so that it can be transferred to another registrar.",
             ),
             (
                 self.domain_authorization_code_reset,
@@ -106,27 +111,50 @@ class DomainSettingsTools(ToolModule):
 
         return await self._write(ctx, domain_endpoints.AUTORENEW, domain, account, body)
 
-    async def domain_transfer_lock_update(
-        self,
-        domain: DomainParameter,
-        locked: Annotated[bool, Field(description="Lock (true) or unlock (false).")],
-        ctx: Context[Any, Any],
-        account: AccountParameter = None,
+    async def domain_transfer_lock(
+        self, domain: DomainParameter, ctx: Context[Any, Any], account: AccountParameter = None
     ) -> dict[str, Any]:
-        """Lock or unlock the transfer."""
+        """Lock the transfer."""
         return await self._write(
             ctx,
             domain_endpoints.TRANSFER_LOCK,
             domain,
             account,
-            lambda: {"clientTransferProhibited": locked},
+            lambda: {"clientTransferProhibited": True},
+        )
+
+    async def domain_transfer_unlock(
+        self,
+        domain: DomainParameter,
+        ctx: Context[Any, Any],
+        confirmation_id: ConfirmationIdParameter = None,
+        account: AccountParameter = None,
+    ) -> dict[str, Any]:
+        """Unlock the transfer, after confirmation."""
+        return await self._write(
+            ctx,
+            domain_endpoints.TRANSFER_UNLOCK,
+            domain,
+            account,
+            lambda: {"clientTransferProhibited": False},
+            confirmation_id=confirmation_id,
         )
 
     async def domain_authorization_code_reset(
-        self, domain: DomainParameter, ctx: Context[Any, Any], account: AccountParameter = None
+        self,
+        domain: DomainParameter,
+        ctx: Context[Any, Any],
+        confirmation_id: ConfirmationIdParameter = None,
+        account: AccountParameter = None,
     ) -> dict[str, Any]:
-        """Reset the authorization code."""
-        return await self._write(ctx, domain_endpoints.AUTHORIZATION_CODE_RESET, domain, account)
+        """Reset the authorization code, after confirmation."""
+        return await self._write(
+            ctx,
+            domain_endpoints.AUTHORIZATION_CODE_RESET,
+            domain,
+            account,
+            confirmation_id=confirmation_id,
+        )
 
     async def domain_reachability_resend(
         self, domain: DomainParameter, ctx: Context[Any, Any], account: AccountParameter = None

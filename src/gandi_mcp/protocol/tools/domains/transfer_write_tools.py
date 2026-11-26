@@ -35,13 +35,16 @@ class TransferWriteTools(ToolModule):
                 self.domain_transfer_out_accept,
                 domain_endpoints.TRANSFER_OUT_ACCEPT,
                 "Accept the transfer of a domain out of Gandi",
-                "Accept a pending transfer of a domain to another registrar: it leaves Gandi.",
+                "Accept a pending transfer of a domain to another registrar: it leaves Gandi. "
+                "Never ask the user for the authorization code: they type it on the "
+                "confirmation page.",
             ),
             (
                 self.domain_transfer_out_decline,
                 domain_endpoints.TRANSFER_OUT_DECLINE,
                 "Decline the transfer of a domain out of Gandi",
-                "Decline a pending transfer of a domain to another registrar.",
+                "Decline a pending transfer of a domain to another registrar. Never ask the "
+                "user for the authorization code: they type it on the confirmation page.",
             ),
             (
                 self.domain_transfer_in_relaunch,
@@ -84,11 +87,20 @@ class TransferWriteTools(ToolModule):
         )
 
     async def domain_transfer_out_decline(
-        self, domain: DomainParameter, ctx: Context[Any, Any], account: AccountParameter = None
+        self,
+        domain: DomainParameter,
+        ctx: Context[Any, Any],
+        confirmation_id: ConfirmationIdParameter = None,
+        account: AccountParameter = None,
     ) -> dict[str, Any]:
-        """Decline a transfer out."""
+        """Decline a transfer out; the code is typed on the confirmation page."""
         return await self._write(
-            ctx, domain_endpoints.TRANSFER_OUT_DECLINE, domain, account, {"accept": False}
+            ctx,
+            domain_endpoints.TRANSFER_OUT_DECLINE,
+            domain,
+            account,
+            {"accept": False},
+            confirmation_id=confirmation_id,
         )
 
     async def domain_transfer_in_relaunch(

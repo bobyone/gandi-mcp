@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 23:07+0100\n"
+"POT-Creation-Date: 2026-11-26 23:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,6 +34,9 @@ msgid "An unexpected error occurred: nothing was changed."
 msgstr ""
 
 msgid "Authorization code given by the current registrar"
+msgstr ""
+
+msgid "Authorization code of the domain (shown in the Gandi administration)"
 msgstr ""
 
 msgid "Confirm"
@@ -289,6 +292,17 @@ msgid "change the owner details of {domain}"
 msgstr ""
 
 #, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you "
+"authorize Gandi to act as your Designated Agent under the ICANN rules for"
+" this change"
+msgstr ""
+
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr ""
+
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr ""
 
@@ -342,9 +356,17 @@ msgid "replace all the DNSSEC keys of {domain}"
 msgstr ""
 
 #, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr ""
+
+#, python-brace-format
 msgid ""
 "replace the nameservers of {domain}; a wrong list makes the domain "
 "unreachable"
+msgstr ""
+
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr ""
 
 #, python-brace-format
@@ -366,6 +388,10 @@ msgid_plural ""
 "including taxes"
 msgstr[0] ""
 msgstr[1] ""
+
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr ""
 
 #, python-brace-format
 msgid "update the authorization code of the pending transfer of {domain}"

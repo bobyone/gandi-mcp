@@ -103,9 +103,20 @@ DELETE = DomainEndpoint(
     "domain_delete", "DELETE", DOMAIN, DESTRUCTIVE, description=messages.DELETE_DOMAIN
 )
 AUTORENEW = DomainEndpoint("domain_autorenew_update", "PATCH", (*DOMAIN, "autorenew"), WRITE)
-TRANSFER_LOCK = DomainEndpoint("domain_transfer_lock_update", "PATCH", (*DOMAIN, "status"), WRITE)
+TRANSFER_LOCK = DomainEndpoint("domain_transfer_lock", "PATCH", (*DOMAIN, "status"), WRITE)
+TRANSFER_UNLOCK = DomainEndpoint(
+    "domain_transfer_unlock",
+    "PATCH",
+    (*DOMAIN, "status"),
+    DESTRUCTIVE,
+    description=messages.UNLOCK_TRANSFER,
+)
 AUTHORIZATION_CODE_RESET = DomainEndpoint(
-    "domain_authorization_code_reset", "PUT", (*DOMAIN, "authinfo"), WRITE
+    "domain_authorization_code_reset",
+    "PUT",
+    (*DOMAIN, "authinfo"),
+    DESTRUCTIVE,
+    description=messages.RESET_AUTHORIZATION_CODE,
 )
 REACHABILITY_RESEND = DomainEndpoint(
     "domain_reachability_resend", "PATCH", (*DOMAIN, "reachability"), WRITE
@@ -118,6 +129,15 @@ OWNER_UPDATE = DomainEndpoint(
     (*DOMAIN, "contacts", "owner"),
     DESTRUCTIVE,
     description=messages.UPDATE_OWNER,
+    supports_dry_run=True,
+)
+# Same request, with the email unlocked: Gandi needs the ICANN designated-agent consent.
+OWNER_EMAIL_UPDATE = DomainEndpoint(
+    "domain_owner_email_update",
+    "PUT",
+    (*DOMAIN, "contacts", "owner"),
+    DESTRUCTIVE,
+    description=messages.UPDATE_OWNER_EMAIL,
     supports_dry_run=True,
 )
 OWNER_CHANGE = DomainEndpoint(
@@ -196,7 +216,13 @@ WEB_REDIRECTION_DELETE = DomainEndpoint(
     description=messages.DELETE_WEB_REDIRECTION,
 )
 TAG_ADD = DomainEndpoint("domain_tag_add", "POST", (*DOMAIN, "tags"), WRITE)
-TAGS_REPLACE = DomainEndpoint("domain_tags_replace", "PUT", (*DOMAIN, "tags"), WRITE)
+TAGS_REPLACE = DomainEndpoint(
+    "domain_tags_replace",
+    "PUT",
+    (*DOMAIN, "tags"),
+    DESTRUCTIVE,
+    description=messages.REPLACE_TAGS,
+)
 TAGS_UPDATE = DomainEndpoint("domain_tags_update", "PATCH", (*DOMAIN, "tags"), WRITE)
 TAGS_DELETE = DomainEndpoint(
     "domain_tags_delete", "DELETE", (*DOMAIN, "tags"), DESTRUCTIVE, description=messages.DELETE_TAGS
@@ -207,9 +233,17 @@ TRANSFER_OUT_ACCEPT = DomainEndpoint(
     (*DOMAIN, "transferout"),
     DESTRUCTIVE,
     description=messages.ACCEPT_TRANSFER_OUT,
+    secret_field="authinfo",  # noqa: S106 - name of the body field, not a secret
+    secret_label=messages.DOMAIN_AUTHORIZATION_CODE,
 )
 TRANSFER_OUT_DECLINE = DomainEndpoint(
-    "domain_transfer_out_decline", "POST", (*DOMAIN, "transferout"), WRITE
+    "domain_transfer_out_decline",
+    "POST",
+    (*DOMAIN, "transferout"),
+    WRITE,
+    description=messages.DECLINE_TRANSFER_OUT,
+    secret_field="authinfo",  # noqa: S106 - name of the body field, not a secret
+    secret_label=messages.DOMAIN_AUTHORIZATION_CODE,
 )
 TRANSFER_IN_RELAUNCH = DomainEndpoint(
     "domain_transfer_in_relaunch",
@@ -235,11 +269,13 @@ WRITE_ENDPOINTS: tuple[DomainEndpoint, ...] = (
     DELETE,
     AUTORENEW,
     TRANSFER_LOCK,
+    TRANSFER_UNLOCK,
     AUTHORIZATION_CODE_RESET,
     REACHABILITY_RESEND,
     CLAIMS_ACCEPT,
     CONTACTS_UPDATE,
     OWNER_UPDATE,
+    OWNER_EMAIL_UPDATE,
     OWNER_CHANGE,
     OWNER_CHANGE_RESEND,
     NAMESERVERS_UPDATE,

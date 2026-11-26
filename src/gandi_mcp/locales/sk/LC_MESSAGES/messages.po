@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 23:07+0100\n"
+"POT-Creation-Date: 2026-11-26 23:34+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sk\n"
@@ -42,6 +42,10 @@ msgstr "Vyskytla sa neočakávaná chyba: nič sa nezmenilo."
 # needs-review
 msgid "Authorization code given by the current registrar"
 msgstr "Autorizačný kód od súčasného registrátora"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "Autorizačný kód domény (zobrazený v administrácii Gandi)"
 
 # needs-review
 msgid "Confirm"
@@ -339,6 +343,20 @@ msgstr "zmeniť údaje vlastníka {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"zmeniť údaje vlastníka {domain} vrátane e-mailovej adresy: na túto zmenu splnomocňujete Gandi "
+"konať ako váš určený zástupca podľa pravidiel ICANN"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "odmietnuť prevod {domain} k inému registrátorovi"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "odstrániť kľúč DNSSEC {id} domény {domain}"
 
@@ -408,8 +426,18 @@ msgstr "nahradiť všetky kľúče DNSSEC domény {domain}"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "nahradiť všetky štítky domény {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "nahradiť menné servery {domain}; chybný zoznam znemožní prístup k doméne"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "obnoviť autorizačný kód {domain}: súčasný kód prestane platiť"
 
 # needs-review
 #, python-brace-format
@@ -428,6 +456,11 @@ msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price}
 msgstr[0] "previesť {domain} ku Gandi s predĺžením o {count} rok: {price} vrátane daní"
 msgstr[1] "previesť {domain} ku Gandi s predĺžením o {count} roky: {price} vrátane daní"
 msgstr[2] "previesť {domain} ku Gandi s predĺžením o {count} rokov: {price} vrátane daní"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "odomknúť {domain}: potom ju bude možné previesť k inému registrátorovi"
 
 # needs-review
 #, python-brace-format

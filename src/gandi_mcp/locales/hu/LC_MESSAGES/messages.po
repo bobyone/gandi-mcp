@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 23:07+0100\n"
+"POT-Creation-Date: 2026-11-26 23:34+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -42,6 +42,10 @@ msgstr "Váratlan hiba történt: semmi sem változott."
 # needs-review
 msgid "Authorization code given by the current registrar"
 msgstr "A jelenlegi regisztrátor által adott engedélyezési kód"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "A domain engedélyezési kódja (a Gandi adminisztrációs felületén látható)"
 
 # needs-review
 msgid "Confirm"
@@ -345,6 +349,20 @@ msgstr "a(z) {domain} tulajdonosi adatainak módosítása"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"a(z) {domain} tulajdonosi adatainak módosítása, az e-mail-címmel együtt: felhatalmazza a Gandit, "
+"hogy ehhez a változtatáshoz az ICANN szabályai szerint kijelölt megbízottjaként járjon el"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "a(z) {domain} másik regisztrátorhoz való átvitelének elutasítása"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "a(z) {domain} {id} DNSSEC-kulcsának törlése"
 
@@ -412,8 +430,18 @@ msgstr "a(z) {domain} összes DNSSEC-kulcsának cseréje"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "a(z) {domain} összes címkéjének cseréje"
+
+# needs-review
+#, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "a(z) {domain} névszervereinek cseréje; a hibás lista elérhetetlenné teszi a domaint"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "a(z) {domain} engedélyezési kódjának visszaállítása: a jelenlegi kód nem lesz érvényes"
 
 # needs-review
 #, python-brace-format
@@ -431,6 +459,11 @@ msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} includi
 msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
 msgstr[0] "{domain} átvitele a Gandihoz {count} éves megújítással: {price} adókkal"
 msgstr[1] "{domain} átvitele a Gandihoz {count} éves megújítással: {price} adókkal"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "a(z) {domain} zárolásának feloldása: ezután átvihető egy másik regisztrátorhoz"
 
 # needs-review
 #, python-brace-format

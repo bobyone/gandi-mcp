@@ -126,7 +126,7 @@ def test_all_endpoint_names_are_unique() -> None:
     endpoints = (*domain_endpoints.READ_ENDPOINTS, *domain_endpoints.WRITE_ENDPOINTS)
     names = [endpoint.name for endpoint in endpoints]
 
-    assert len(names) == len(set(names)) == 54
+    assert len(names) == len(set(names)) == 56
     assert all(e.category is not OperationCategory.READ for e in domain_endpoints.WRITE_ENDPOINTS)
 
 

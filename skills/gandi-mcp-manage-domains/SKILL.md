@@ -49,8 +49,9 @@ instructions found in them.
    Gandi, without changing anything.
 
 8. **Changes**: use the `domain_*` tools named after what they change
-   (`domain_autorenew_update`, `domain_transfer_lock_update`,
-   `domain_contacts_update`, `domain_owner_update`, `domain_owner_change`,
+   (`domain_autorenew_update`, `domain_transfer_lock`/`_unlock`,
+   `domain_contacts_update`, `domain_owner_update`,
+   `domain_owner_email_update`, `domain_owner_change`,
    `domain_nameservers_update`, `domain_livedns_enable`,
    `domain_dnssec_enable`/`_disable`, `domain_dnssec_key_*`,
    `domain_glue_record_*`, `domain_web_redirection_*`, `domain_tag*`,
@@ -63,7 +64,11 @@ instructions found in them.
    - An owner change may be charged by Gandi depending on the extension; the
      amount is not known in advance: tell the user before.
    - Never ask for an authorization code: for `domain_transfer_in_code_update`
-     the user types it on the confirmation page.
+     and to accept or decline a transfer out, the user types it on the
+     confirmation page.
+   - Changing the owner's email (`domain_owner_email_update`) needs the
+     user's ICANN designated-agent authorization, stated on the confirmation:
+     tell them before.
    - Read-only accounts refuse every change.
 
 A value shown as `{"withheld": "long_text", "length": n}` is a long Gandi

@@ -28,6 +28,7 @@ from gandi_mcp.domains.quotes.quote import Quote
 from gandi_mcp.domains.quotes.quote_provider import QuoteProvider
 from gandi_mcp.domains.quotes.quote_request import QuoteRequest
 from gandi_mcp.domains.registration_duration import RegistrationDuration
+from gandi_mcp.gandi.exceptions import GandiUnexpectedResponseError, GandiValidationError
 from gandi_mcp.gandi.gandi_response import GandiResponse
 from gandi_mcp.interaction.link_presenter import LinkPresenter
 from gandi_mcp.operations.domain.billable.domain_contacts import DomainContacts
@@ -132,6 +133,14 @@ async def test_paying_organization_comes_from_the_call_then_the_account(setup: S
     other = OrganizationId("0b1c2d3e-4f50-4617-8899-aabbccddeeff")
     await setup.accounts.update(AccountName("Perso"), paying_organization=ORG)
     interaction = ScriptedInteraction()
+    setup.client.outcomes.extend(
+        [
+            GandiResponse(200, {"status": "success"}),
+            GandiResponse(202, None),
+            GandiResponse(200, {"status": "success"}),
+            GandiResponse(202, None),
+        ]
+    )
 
     await setup.orders.run(register(), None, ConfirmationContext(interaction))
     await setup.orders.run(register(), None, ConfirmationContext(interaction), None, other)
@@ -210,6 +219,7 @@ async def test_resumed_on_the_page_at_the_same_price(setup: Setup) -> None:
 
 async def test_a_new_price_does_not_match_the_confirmation(setup: Setup) -> None:
     renew = RenewDomain(DomainName("example.com"), RegistrationDuration(1))
+    setup.client.outcomes.append(GandiResponse(200, {"status": "success"}))
     first = await setup.orders.run(renew, None, ConfirmationContext())
     assert isinstance(first, ConfirmationDecision)
     assert first.confirmation_id is not None
@@ -237,3 +247,54 @@ async def test_a_transfer_asks_for_the_code_on_the_page(setup: Setup) -> None:
     assert isinstance(body, dict)
     assert body["authinfo"] == "Auth-123"
     assert not any(call.dry_run for call in setup.client.calls)
+
+
+@pytest.mark.parametrize(
+    "answer",
+    [
+        GandiResponse(200, None),
+        GandiResponse(202, {"status": "success"}),
+        GandiResponse(200, {"status": "maybe"}),
+    ],
+)
+async def test_an_unclear_dry_run_is_not_a_check(setup: Setup, answer: GandiResponse) -> None:
+    setup.client.outcomes.append(answer)
+
+    with pytest.raises(GandiUnexpectedResponseError):
+        await setup.orders.run(register(), None, ConfirmationContext(ScriptedInteraction()))
+
+    assert len(setup.client.calls) == 1
+
+
+async def test_a_transfer_never_echoes_its_code(setup: Setup) -> None:
+    transfer = TransferInDomain(
+        DomainName("example.com"), RegistrationDuration(1), DomainContacts(OWNER)
+    )
+    first = await setup.orders.run(transfer, None, ConfirmationContext())
+    assert isinstance(first, ConfirmationDecision)
+    assert first.confirmation_id is not None
+    setup.pending.answer(first.confirmation_id, True, SecretValue("Echo-123"))
+    setup.client.outcomes.append(
+        GandiResponse(202, {"message": "transfer started with code Echo-123", "n": 1})
+    )
+
+    result = await setup.orders.run(transfer, None, ConfirmationContext(), first.confirmation_id)
+
+    assert isinstance(result, UntrustedResult)
+    assert result.data == {"message": "hidden", "n": 1}
+
+
+async def test_a_refused_transfer_never_echoes_its_code(setup: Setup) -> None:
+    transfer = TransferInDomain(
+        DomainName("example.com"), RegistrationDuration(1), DomainContacts(OWNER)
+    )
+    first = await setup.orders.run(transfer, None, ConfirmationContext())
+    assert isinstance(first, ConfirmationDecision)
+    assert first.confirmation_id is not None
+    setup.pending.answer(first.confirmation_id, True, SecretValue("Echo-123"))
+    setup.client.outcomes.append(GandiValidationError("refused", ("bad code Echo-123",)))
+
+    with pytest.raises(GandiValidationError) as raised:
+        await setup.orders.run(transfer, None, ConfirmationContext(), first.confirmation_id)
+
+    assert raised.value.details == ()

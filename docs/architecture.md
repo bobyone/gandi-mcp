@@ -122,7 +122,11 @@ resolves the account, refuses a write on a read-only account
 (`ReadOnlyAccountError`), asks for a confirmation when needed (destructive or
 billable category, or a secret to type), reads the token and calls Gandi with
 the typed secret. Before asking a confirmation on a first call, it runs the
-operation's dry run, if any: a refusal raises `DryRunRejectedError`. It returns an `UntrustedResult` (data and `total_count`), or
+operation's dry run, if any: a refusal raises `DryRunRejectedError`, and an
+answer other than `200` with `status: success` raises
+`GandiUnexpectedResponseError` (`operations.dry_run.dry_run_details`). When the
+user typed a secret, Gandi error details are dropped and every text of the
+result containing the secret is hidden (`operations.secret_echo`). It returns an `UntrustedResult` (data and `total_count`), or
 a pending `ConfirmationDecision` to resume with its identifier.
 
 ### Billable operation: `gandi_mcp.operations.billable_operation.BillableOperation`
@@ -388,9 +392,10 @@ characters) are kept; contact fields are never read.
 | `ElicitationChannel(translator)` | the client supports form elicitation | Asks "Confirm on the production/sandbox account {account}: {action}" in the user's language; anything but an acceptance raises `ConfirmationRefusedError`. |
 | `LocalLinkChannel(pending, page, presenter, translator)` | always (last resort); collects secrets | Registers a pending confirmation, shows its page through `LinkPresenter`; returns it as pending, or raises `ConfirmationUnavailableError` (and forgets it) when the page cannot be shown. |
 
-`PendingConfirmations(timeout_seconds, clock)` keeps at most 100 pending
+`PendingConfirmations(timeout_seconds, clock, scheduler)` keeps at most 100 pending
 confirmations in memory (`confirmation.timeout_seconds`), with random
-identifiers (128 bits).
+identifiers (128 bits). A confirmation holding a typed secret is dropped at its deadline by the
+`scheduler` (the running event loop by default), even if nobody uses it.
 
 ### Browser: `gandi_mcp.interaction.system.system_browser.SystemBrowser`
 
@@ -566,12 +571,12 @@ conversation and never to invent a confirmation identifier.
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
 | `tools.domains.domain_tool_runner.DomainToolRunner.write` | Shared by the write tools: builds the `EndpointOperation` (path values and body as functions, validation errors explained), runs it through the `OperationExecutor` with an optional `confirmation_id`, and returns the pending confirmation or `status: done` with the minimized result and the follow-up tool. `add_write_tool` annotates a tool `destructiveHint` for confirmed categories. |
-| `tools.domains.domain_settings_tools.DomainSettingsTools` | `domain_autorenew_update`, `domain_transfer_lock_update`, `domain_authorization_code_reset`, `domain_reachability_resend`, `domain_claims_accept`, `domain_delete` (confirmed). |
-| `tools.domains.contact_tools.ContactTools` | `domain_contacts_update`, `domain_owner_update` (confirmed, dry run), `domain_owner_change` (confirmed without an amount, dry run), `domain_owner_change_resend`. |
+| `tools.domains.domain_settings_tools.DomainSettingsTools` | `domain_autorenew_update`, `domain_transfer_lock`, `domain_reachability_resend`, `domain_claims_accept`; `domain_transfer_unlock`, `domain_authorization_code_reset`, `domain_delete` (confirmed). |
+| `tools.domains.contact_tools.ContactTools` | `domain_contacts_update`, `domain_owner_update` (confirmed, dry run, email unchanged), `domain_owner_email_update` (confirmed, dry run; its confirmation states the ICANN designated-agent authorization, then `icann_contract_accept` is sent), `domain_owner_change` (confirmed without an amount, dry run), `domain_owner_change_resend`. |
 | `tools.domains.nameserver_write_tools.NameserverWriteTools` | `domain_nameservers_update`, `domain_livedns_enable`, `domain_dnssec_disable`, `domain_dnssec_keys_replace`, `domain_dnssec_key_delete`, `domain_glue_record_delete` (confirmed); `domain_dnssec_enable`, `domain_dnssec_key_add`, `domain_glue_record_create`, `domain_glue_record_update`. |
 | `tools.domains.redirection_write_tools.RedirectionWriteTools` | `domain_web_redirection_create`, `domain_web_redirection_update`, `domain_web_redirection_delete` (confirmed). |
-| `tools.domains.tag_tools.TagTools` | `domain_tag_add`, `domain_tags_replace`, `domain_tags_update`, `domain_tags_delete` (confirmed). |
-| `tools.domains.transfer_write_tools.TransferWriteTools` | `domain_transfer_out_accept` (confirmed), `domain_transfer_out_decline`, `domain_transfer_in_relaunch`, `domain_transfer_in_code_update` (code typed on the confirmation page), `domain_transfer_in_resend`. |
+| `tools.domains.tag_tools.TagTools` | `domain_tag_add`, `domain_tags_update`; `domain_tags_replace`, `domain_tags_delete` (confirmed). |
+| `tools.domains.transfer_write_tools.TransferWriteTools` | `domain_transfer_out_accept` (confirmed), `domain_transfer_out_decline` (both with the domain's authorization code typed on the confirmation page), `domain_transfer_in_relaunch`, `domain_transfer_in_code_update` (code typed on the confirmation page), `domain_transfer_in_resend`. |
 | `tools.domains.domain_order_runner.DomainOrderRunner` | Shared by the order tools: builds the `BillableOperation` (validation errors explained), runs the `OrderExecutor`, returns the pending confirmation or `status: ordered` with the untrusted, minimized result and the follow-up tool. |
 | `tools.domains.order_tools.OrderTools` | `domain_register` (duration, owner and optional admin, tech, bill contacts), `domain_renew`, `domain_restore`, `domain_transfer_in` (the authorization code is typed on the confirmation page); all take `paying_organization`, `confirmation_id` and `account`. |
 | `tools.domains.transfer_tools.TransferTools` | `domain_owner_change_status`, `domain_transfer_in_status`, `domain_transfer_in_check` (sends no authorization code). |

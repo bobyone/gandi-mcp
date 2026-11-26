@@ -30,7 +30,8 @@ registration and transfer in.
      (`sharing_id`);
   2. quote the order (`QuoteProvider`, `GandiQuoteProvider`): the yearly price
      of the band containing the duration, times the duration;
-  3. on the first call, check it with a dry run when supported;
+  3. on the first call, check it with a dry run when supported; only a `200`
+     answer with `status: success` counts as a successful check;
   4. ask for a confirmation whose subject binds the operation, the account
      identity and environment, the price including taxes, its currency and the
      paying organization; its description shows the price formatted in the

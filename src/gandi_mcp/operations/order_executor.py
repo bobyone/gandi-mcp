@@ -15,6 +15,7 @@ from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.exceptions import SecretInputMissingError
 from gandi_mcp.domains.quotes.quote import Quote
 from gandi_mcp.domains.quotes.quote_provider import QuoteProvider
+from gandi_mcp.gandi.exceptions import GandiError
 from gandi_mcp.gandi.gandi_client import GandiClient
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.i18n.message import N_
@@ -22,6 +23,7 @@ from gandi_mcp.i18n.translator import Translator
 from gandi_mcp.operations.billable_operation import BillableOperation
 from gandi_mcp.operations.dry_run import dry_run_details
 from gandi_mcp.operations.exceptions import DryRunRejectedError, PriceChangedError
+from gandi_mcp.operations.secret_echo import scrubbed, without_details
 from gandi_mcp.operations.untrusted_result import UntrustedResult
 from gandi_mcp.secrets.secret_store import SecretStore
 
@@ -117,11 +119,18 @@ class OrderExecutor:
         current = await self._quotes.quote(account.environment, token, request)
         if current.price != quote.price:
             raise PriceChangedError("the price changed since the confirmation")
-        response = await operation.order(
-            self._client, account.environment, token, quote, secret=decision.secret
-        )
+        secret = decision.secret
+        try:
+            response = await operation.order(
+                self._client, account.environment, token, quote, secret=secret
+            )
+        except GandiError as error:
+            if secret is not None:
+                raise without_details(error) from None
+            raise
         logger.info("order %s done (%s)", operation.name, account.environment.value)
-        return UntrustedResult(response.data, response.total_count, response.filtered_count)
+        data = scrubbed(response.data, secret) if secret is not None else response.data
+        return UntrustedResult(data, response.total_count, response.filtered_count)
 
     def _described(
         self, operation: BillableOperation, quote: Quote, context: ConfirmationContext

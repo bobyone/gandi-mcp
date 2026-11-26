@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 23:07+0100\n"
+"POT-Creation-Date: 2026-11-26 23:34+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sl\n"
@@ -43,6 +43,10 @@ msgstr "Prišlo je do nepričakovane napake: nič ni bilo spremenjeno."
 # needs-review
 msgid "Authorization code given by the current registrar"
 msgstr "Avtorizacijska koda trenutnega registrarja"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "Avtorizacijska koda domene (prikazana v skrbništvu Gandi)"
 
 # needs-review
 msgid "Confirm"
@@ -340,6 +344,20 @@ msgstr "sprememba podatkov imetnika {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"sprememba podatkov imetnika {domain}, vključno z e-poštnim naslovom: Gandi pooblaščate, da za to "
+"spremembo deluje kot vaš imenovani zastopnik po pravilih ICANN"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "zavrnitev prenosa {domain} k drugemu registrarju"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "izbris ključa DNSSEC {id} domene {domain}"
 
@@ -411,8 +429,18 @@ msgstr "zamenjava vseh ključev DNSSEC domene {domain}"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "zamenjava vseh oznak domene {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "zamenjava imenskih strežnikov {domain}; napačen seznam naredi domeno nedosegljivo"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "ponastavitev avtorizacijske kode {domain}: trenutna koda ne bo več delovala"
 
 # needs-review
 #, python-brace-format
@@ -432,6 +460,11 @@ msgstr[0] "prenos {domain} k Gandiju s podaljšanjem za {count} leto: {price} z 
 msgstr[1] "prenos {domain} k Gandiju s podaljšanjem za {count} leti: {price} z davki"
 msgstr[2] "prenos {domain} k Gandiju s podaljšanjem za {count} leta: {price} z davki"
 msgstr[3] "prenos {domain} k Gandiju s podaljšanjem za {count} let: {price} z davki"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "odklep {domain}: nato jo bo mogoče prenesti k drugemu registrarju"
 
 # needs-review
 #, python-brace-format

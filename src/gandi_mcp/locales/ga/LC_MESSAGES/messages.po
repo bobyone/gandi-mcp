@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 23:07+0100\n"
+"POT-Creation-Date: 2026-11-26 23:34+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ga\n"
@@ -43,6 +43,10 @@ msgstr "Tharla earráid gan choinne: níor athraíodh aon rud."
 # needs-review
 msgid "Authorization code given by the current registrar"
 msgstr "Cód údaraithe ón gcláraitheoir reatha"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "Cód údaraithe an fhearainn (taispeántar é i riarachán Gandi)"
 
 # needs-review
 msgid "Confirm"
@@ -354,6 +358,20 @@ msgstr "sonraí úinéara {domain} a athrú"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"sonraí úinéara {domain} a athrú, an seoladh ríomhphoist san áireamh: údaraíonn tú do Gandi "
+"gníomhú mar do Ghníomhaire Ainmnithe faoi rialacha ICANN don athrú seo"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "diúltú d'aistriú {domain} chuig cláraitheoir eile"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "eochair DNSSEC {id} de {domain} a scriosadh"
 
@@ -427,8 +445,18 @@ msgstr "gach eochair DNSSEC de {domain} a athsholáthar"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "gach clib de {domain} a athsholáthar"
+
+# needs-review
+#, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "freastalaithe ainmneacha {domain} a athsholáthar; fágann liosta mícheart an fearann gan rochtain"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "cód údaraithe {domain} a athshocrú: stopfaidh an cód reatha ag obair"
 
 # needs-review
 #, python-brace-format
@@ -449,6 +477,11 @@ msgstr[1] "{domain} a aistriú chuig Gandi, le hathnuachan {count} bhliain: {pri
 msgstr[2] "{domain} a aistriú chuig Gandi, le hathnuachan {count} bliana: {price} lena n-áirítear cánacha"
 msgstr[3] "{domain} a aistriú chuig Gandi, le hathnuachan {count} mbliana: {price} lena n-áirítear cánacha"
 msgstr[4] "{domain} a aistriú chuig Gandi, le hathnuachan {count} bliain: {price} lena n-áirítear cánacha"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "{domain} a dhíghlasáil: is féidir é a aistriú chuig cláraitheoir eile ansin"
 
 # needs-review
 #, python-brace-format
