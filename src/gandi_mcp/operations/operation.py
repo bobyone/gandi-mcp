@@ -7,11 +7,13 @@ from abc import ABC, abstractmethod
 from collections.abc import Mapping
 
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.confirmation.secret_input import SecretInput
 from gandi_mcp.gandi.gandi_client import GandiClient
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
+from gandi_mcp.secrets.secret_value import SecretValue
 
 
 class Operation(ABC):
@@ -38,11 +40,22 @@ class Operation(ABC):
     def describe(self) -> LocalizedText:
         """Readable description, shown when the user is asked to confirm."""
 
+    def secret_input(self) -> SecretInput | None:
+        """The secret the user types with the confirmation, if the operation needs one.
+
+        Such an operation is always confirmed, whatever its category (ADR 11).
+        """
+        return None
+
     @abstractmethod
     async def execute(
-        self, client: GandiClient, environment: Environment, token: PersonalAccessToken
+        self,
+        client: GandiClient,
+        environment: Environment,
+        token: PersonalAccessToken,
+        secret: SecretValue | None = None,
     ) -> GandiResponse:
-        """Call Gandi.
+        """Call Gandi, with the secret typed by the user when one was asked.
 
         Raises:
             GandiError: if Gandi refuses or cannot be reached.

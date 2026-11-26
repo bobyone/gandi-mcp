@@ -17,3 +17,7 @@ class SecretNotFoundError(SecretStoreError):
 
 class InvalidTokenFormatError(SecretStoreError):
     """Raised when a Personal Access Token has an invalid format."""
+
+
+class InvalidSecretValueError(Exception):
+    """Raised when a secret typed by the user is empty, too long or not printable."""

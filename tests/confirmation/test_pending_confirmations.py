@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Tests of the registry of confirmations answered on local pages."""
 
+from dataclasses import replace
+
 import pytest
 
 from gandi_mcp.accounts.account_name import AccountName
@@ -12,12 +14,15 @@ from gandi_mcp.confirmation.exceptions import (
     ConfirmationExpiredError,
     ConfirmationMismatchError,
     ConfirmationRefusedError,
+    SecretInputMissingError,
 )
 from gandi_mcp.confirmation.pending_confirmation import PendingState
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
+from gandi_mcp.confirmation.secret_input import SecretInput
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.i18n.message import Message
 from gandi_mcp.operations.operation_category import OperationCategory
+from gandi_mcp.secrets.secret_value import SecretValue
 
 
 class Clock:
@@ -154,3 +159,31 @@ def test_expired_entries_are_purged_and_size_is_bounded(
         registry.get(first.confirmation_id)
     assert registry.get(second.confirmation_id) == second
     assert registry.get(third.confirmation_id) == third
+
+
+def secret_request() -> ConfirmationRequest:
+    return replace(request(), secret_input=SecretInput(Message("Authorization code")))
+
+
+def test_an_acceptance_needs_the_secret_asked_for() -> None:
+    registry = PendingConfirmations(300)
+    pending = registry.create(secret_request())
+
+    with pytest.raises(SecretInputMissingError):
+        registry.answer(pending.confirmation_id, True)
+    answered = registry.answer(pending.confirmation_id, True, SecretValue("Auth-123"))
+
+    assert answered.secret == SecretValue("Auth-123")
+    assert "Auth-123" not in repr(answered)
+    used = registry.consume(pending.confirmation_id, pending.request.subject)
+    assert used is not None
+    assert used.secret == SecretValue("Auth-123")
+
+
+def test_a_secret_is_dropped_when_refused_or_not_asked_for() -> None:
+    registry = PendingConfirmations(300)
+    refused = registry.create(secret_request())
+    plain = registry.create(request())
+
+    assert registry.answer(refused.confirmation_id, False, SecretValue("x")).secret is None
+    assert registry.answer(plain.confirmation_id, True, SecretValue("x")).secret is None

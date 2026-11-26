@@ -14,6 +14,7 @@ from gandi_mcp.operations.domain.domain_endpoint import PLACEHOLDER, DomainEndpo
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
+from gandi_mcp.secrets.secret_value import SecretValue
 
 
 class EndpointOperation(Operation):
@@ -84,7 +85,11 @@ class EndpointOperation(Operation):
         )
 
     async def execute(
-        self, client: GandiClient, environment: Environment, token: PersonalAccessToken
+        self,
+        client: GandiClient,
+        environment: Environment,
+        token: PersonalAccessToken,
+        secret: SecretValue | None = None,
     ) -> GandiResponse:
         return await client.request(
             environment,

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.confirmation.secret_input import SecretInput
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.operations.operation_category import OperationCategory
 
@@ -21,6 +22,8 @@ class ConfirmationRequest:
         description: Readable description of the operation.
         account: Account the operation acts on.
         environment: Environment of that account.
+        secret_input: A secret the user must type to confirm (ADR 11), if any; only
+            channels collecting secrets outside the model can ask for it.
     """
 
     subject: str
@@ -28,3 +31,4 @@ class ConfirmationRequest:
     description: LocalizedText
     account: AccountName
     environment: Environment
+    secret_input: SecretInput | None = None

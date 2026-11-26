@@ -33,6 +33,10 @@ class LocalLinkChannel(ConfirmationChannel):
         self._presenter = presenter
         self._translator = translator
 
+    @property
+    def collects_secrets(self) -> bool:
+        return True
+
     def available(self, context: ConfirmationContext) -> bool:
         return True
 

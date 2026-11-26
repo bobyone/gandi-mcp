@@ -47,8 +47,13 @@ from gandi_mcp.local_pages.starlette.page_renderer import (
     token_page,
 )
 from gandi_mcp.preferences.exceptions import PreferencesError
-from gandi_mcp.secrets.exceptions import InvalidTokenFormatError, SecretStoreError
+from gandi_mcp.secrets.exceptions import (
+    InvalidSecretValueError,
+    InvalidTokenFormatError,
+    SecretStoreError,
+)
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
+from gandi_mcp.secrets.secret_value import SecretValue
 from gandi_mcp.token_entry.exceptions import TokenEntryError
 from gandi_mcp.token_entry.token_entry_session import TokenEntrySession
 from gandi_mcp.token_entry.token_entry_sessions import TokenEntrySessions
@@ -419,29 +424,64 @@ class StarletteLocalPageServer(LocalPageServer):
             self._pages.pop(code, None)
             return self._outcome(locale, PageKind.CONFIRMATION, messages.PAGE_EXPIRED, False, 410)
         if form is None:
-            question = confirmation_prompt(self._translator, pending.request, locale)
-            confirmation_form = ConfirmationForm(
-                title=self._text(locale, messages.TITLE_CONFIRMATION),
-                question=question,
-                confirm=self._text(locale, messages.CONFIRM),
-                refuse=self._text(locale, messages.REFUSE),
-                code=code,
-            )
-            return self._respond(confirmation_page(html_language(locale), confirmation_form))
+            return self._confirmation_form(pending, code, locale)
+        return self._answer(pending, code, locale, form)
+
+    def _answer(
+        self, pending: PendingConfirmation, code: str, locale: str, form: dict[str, str]
+    ) -> Response:
+        """Record the decision posted on the confirmation page, with its secret if any."""
         decision = form.get("decision")
         if decision not in {"confirm", "refuse"}:
             return self._outcome(
                 locale, PageKind.CONFIRMATION, messages.REQUEST_REFUSED, False, 400
             )
+        accepted = decision == "confirm"
+        secret_input = pending.request.secret_input
+        secret = None
+        if accepted and secret_input is not None:
+            try:
+                secret = SecretValue(form.get("secret", ""), secret_input.max_length)
+            except InvalidSecretValueError:
+                return self._confirmation_form(pending, code, locale, invalid_secret=True)
         self._pages.pop(code, None)
         try:
-            self._pending.answer(pending.confirmation_id, decision == "confirm")
+            self._pending.answer(pending.confirmation_id, accepted, secret)
         except ConfirmationError:
             return self._outcome(locale, PageKind.CONFIRMATION, messages.PAGE_EXPIRED, False, 410)
-        accepted = decision == "confirm"
         return self._outcome(
             locale,
             PageKind.CONFIRMATION,
             messages.CONFIRMED if accepted else messages.REFUSED,
             accepted,
         )
+
+    def _confirmation_form(
+        self,
+        pending: PendingConfirmation,
+        code: str,
+        locale: str,
+        *,
+        invalid_secret: bool = False,
+    ) -> Response:
+        """Show the confirmation, with the secret field when one is asked (ADR 11)."""
+        secret_input = pending.request.secret_input
+        max_length = secret_input.max_length if secret_input is not None else 0
+        form = ConfirmationForm(
+            title=self._text(locale, messages.TITLE_CONFIRMATION),
+            question=confirmation_prompt(self._translator, pending.request, locale),
+            confirm=self._text(locale, messages.CONFIRM),
+            refuse=self._text(locale, messages.REFUSE),
+            code=code,
+            secret_label=(
+                self._text(locale, secret_input.label) if secret_input is not None else None
+            ),
+            secret_max_length=max_length,
+            error=(
+                self._text(locale, messages.SECRET_REQUIRED, max_length=max_length)
+                if invalid_secret
+                else None
+            ),
+        )
+        status = 422 if invalid_secret else 200
+        return self._respond(confirmation_page(html_language(locale), form), status)

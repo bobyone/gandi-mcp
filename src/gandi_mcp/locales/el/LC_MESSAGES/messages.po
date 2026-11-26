@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 20:20+0100\n"
+"POT-Creation-Date: 2026-11-26 22:24+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -66,6 +66,15 @@ msgstr "Εισαγάγετε το Personal Access Token του λογαριασ�
 #, python-brace-format
 msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Εισαγάγετε το Personal Access Token του δοκιμαστικού λογαριασμού (sandbox) {account}."
+
+# needs-review
+#, python-brace-format
+msgid ""
+"Enter the value asked for (at most {max_length} characters, no control character) to confirm, or "
+"refuse the operation."
+msgstr ""
+"Εισαγάγετε την τιμή που ζητείται (το πολύ {max_length} χαρακτήρες, χωρίς χαρακτήρες ελέγχου) για "
+"επιβεβαίωση ή απορρίψτε τη λειτουργία."
 
 # needs-review
 msgid "Gandi answered in an unexpected way: try again later, or report it."

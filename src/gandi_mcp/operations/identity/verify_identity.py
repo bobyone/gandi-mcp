@@ -12,6 +12,7 @@ from gandi_mcp.i18n.message import N_
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
+from gandi_mcp.secrets.secret_value import SecretValue
 
 DESCRIPTION = N_("read the identity of the account")
 
@@ -34,6 +35,10 @@ class VerifyIdentity(Operation):
         return LocalizedText(DESCRIPTION)
 
     async def execute(
-        self, client: GandiClient, environment: Environment, token: PersonalAccessToken
+        self,
+        client: GandiClient,
+        environment: Environment,
+        token: PersonalAccessToken,
+        secret: SecretValue | None = None,
     ) -> GandiResponse:
         return await client.request(environment, token, "GET", ("organization", "user-info"))

@@ -6,6 +6,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.confirmation.secret_input import SecretInput
 from gandi_mcp.gandi.gandi_client import GandiClient
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
 from gandi_mcp.i18n.localized_text import LocalizedText
@@ -13,6 +14,7 @@ from gandi_mcp.i18n.message import Message
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
+from gandi_mcp.secrets.secret_value import SecretValue
 
 
 @dataclass
@@ -23,6 +25,8 @@ class ScriptedOperation(Operation):
     target: str = "example.com"
     method: str = "DELETE"
     executed: list[Environment] = field(default_factory=list)
+    secret_label: Message | None = None
+    secrets: list[SecretValue | None] = field(default_factory=list)
 
     @property
     def name(self) -> str:
@@ -35,11 +39,19 @@ class ScriptedOperation(Operation):
     def parameters(self) -> Mapping[str, JsonValue]:
         return {"target": self.target}
 
+    def secret_input(self) -> SecretInput | None:
+        return SecretInput(self.secret_label, 64) if self.secret_label is not None else None
+
     def describe(self) -> LocalizedText:
         return LocalizedText(Message("delete {target}"), {"target": self.target})
 
     async def execute(
-        self, client: GandiClient, environment: Environment, token: PersonalAccessToken
+        self,
+        client: GandiClient,
+        environment: Environment,
+        token: PersonalAccessToken,
+        secret: SecretValue | None = None,
     ) -> GandiResponse:
         self.executed.append(environment)
+        self.secrets.append(secret)
         return await client.request(environment, token, self.method, ("test", self.target))

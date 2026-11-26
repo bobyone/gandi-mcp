@@ -100,28 +100,34 @@ A command: one Gandi call on behalf of an account (ADR 4).
 | `category` | `OperationCategory`: `read`, `write`, `destructive` or `billable`; the last two are writes and need a confirmation. |
 | `parameters()` | Parameters defining what the operation does; with `name`, they form its `subject()`. The executor binds a confirmation to this subject, the account identity and its environment. |
 | `describe()` | `LocalizedText` shown when asking for a confirmation. |
-| `execute(client, environment, token)` | Calls Gandi; raises `GandiError`. |
+| `secret_input()` | `SecretInput` the user types with the confirmation, or `None` (default); an operation needing one is always confirmed (ADR 11). |
+| `execute(client, environment, token, secret=None)` | Calls Gandi, with the `SecretValue` typed by the user when one was asked; raises `GandiError`. |
 
 `OperationExecutor.run(operation, account_name, context, confirmation_id=None)`
 resolves the account, refuses a write on a read-only account
-(`ReadOnlyAccountError`), asks for a confirmation when needed, reads the token
-and calls Gandi. It returns an `UntrustedResult` (data and `total_count`), or
+(`ReadOnlyAccountError`), asks for a confirmation when needed (destructive or
+billable category, or a secret to type), reads the token and calls Gandi with
+the typed secret. It returns an `UntrustedResult` (data and `total_count`), or
 a pending `ConfirmationDecision` to resume with its identifier.
 
 ### Confirmation channel: `gandi_mcp.confirmation.confirmation_channel.ConfirmationChannel`
 
 | Operation | Contract |
 | --- | --- |
+| `collects_secrets` | Whether the user can type a secret on this channel, outside the model; `False` by default. |
 | `available(context)` | Whether the channel can reach the user during this call (`ConfirmationContext`: user interaction, locale). |
 | `confirm(request, context)` | Returns an accepted or pending `ConfirmationDecision`; raises `ConfirmationRefusedError` or `ConfirmationUnavailableError`. |
 
-`ConfirmationService` tries its channels in order. Given a confirmation
-identifier, it resumes the pending confirmation instead (`PendingConfirmations`:
-accepted once, for the same subject, before its deadline, which also applies
-once it is accepted).
+`ConfirmationService` tries its channels in order, skipping those that do not
+collect secrets when the request has a `secret_input` (ADR 11). Given a
+confirmation identifier, it resumes the pending confirmation instead
+(`PendingConfirmations`: accepted once, for the same subject, before its
+deadline, which also applies once it is accepted); the accepted decision
+carries the typed `SecretValue`, if any.
 Exceptions derive from `ConfirmationError`: `ConfirmationRefusedError`,
 `ConfirmationExpiredError`, `ConfirmationUnavailableError`,
-`ConfirmationMismatchError`.
+`ConfirmationMismatchError`, `SecretInputMissingError` (an acceptance without
+the secret asked for).
 
 `ConfirmationPage` is the port of the local page where a pending confirmation is
 answered: `open_confirmation(pending, locale)` returns its URL, which is never
@@ -332,7 +338,7 @@ characters; the email and the other fields are ignored.
 | Channel | Available when | Behavior |
 | --- | --- | --- |
 | `ElicitationChannel(translator)` | the client supports form elicitation | Asks "Confirm on the production/sandbox account {account}: {action}" in the user's language; anything but an acceptance raises `ConfirmationRefusedError`. |
-| `LocalLinkChannel(pending, page, presenter, translator)` | always (last resort) | Registers a pending confirmation, shows its page through `LinkPresenter`; returns it as pending, or raises `ConfirmationUnavailableError` (and forgets it) when the page cannot be shown. |
+| `LocalLinkChannel(pending, page, presenter, translator)` | always (last resort); collects secrets | Registers a pending confirmation, shows its page through `LinkPresenter`; returns it as pending, or raises `ConfirmationUnavailableError` (and forgets it) when the page cannot be shown. |
 
 `PendingConfirmations(timeout_seconds, clock)` keeps at most 100 pending
 confirmations in memory (`confirmation.timeout_seconds`), with random
@@ -388,6 +394,20 @@ Behavior and limits:
 
 Invalid values raise `InvalidDomainNameError` or `InvalidDomainInputError`
 (both `DomainError`).
+
+### Secrets typed by the user: `gandi_mcp.secrets.secret_value.SecretValue`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `value` | string | none | yes | The secret, 1 to `max_length` characters, no control character. |
+| `max_length` | integer | `1024` | no | Longest accepted value. |
+
+Raises `InvalidSecretValueError`. `reveal()` returns the value; `repr` and `str`
+are masked and the object cannot be serialized. `SecretInput(label,
+max_length=1024)` (`gandi_mcp.confirmation.secret_input`) describes the field
+asked with a confirmation. On the local confirmation page, the field is required
+to confirm, not to refuse; an empty or invalid value shows the page again (422)
+without writing the value back (ADR 11).
 
 ### Contact minimization: `gandi_mcp.domains.contacts.contact_redactor.ContactRedactor`
 

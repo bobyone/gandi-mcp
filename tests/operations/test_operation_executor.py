@@ -20,11 +20,13 @@ from gandi_mcp.confirmation.exceptions import ConfirmationMismatchError, Confirm
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
 from gandi_mcp.gandi.exceptions import GandiNotFoundError
 from gandi_mcp.gandi.gandi_response import GandiResponse
+from gandi_mcp.i18n.message import Message
 from gandi_mcp.interaction.link_presenter import LinkPresenter
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.operations.operation_executor import OperationExecutor
 from gandi_mcp.operations.untrusted_result import UntrustedResult
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
+from gandi_mcp.secrets.secret_value import SecretValue
 from tests.doubles.fake_browser import FakeBrowser
 from tests.doubles.fake_confirmation_page import FakeConfirmationPage
 from tests.doubles.fake_gandi_client import FakeGandiClient
@@ -199,3 +201,34 @@ async def test_a_confirmation_is_bound_to_the_account_environment(setup: Setup) 
     with pytest.raises(ConfirmationMismatchError):
         await setup.executor.run(operation, None, ConfirmationContext(), first.confirmation_id)
     assert setup.client.calls == []
+
+
+async def test_an_operation_needing_a_secret_is_confirmed_on_the_page(setup: Setup) -> None:
+    interaction = ScriptedInteraction()
+    operation = ScriptedOperation(
+        OperationCategory.WRITE, method="PUT", secret_label=Message("Authorization code")
+    )
+
+    first = await setup.executor.run(operation, None, ConfirmationContext(interaction))
+    assert isinstance(first, ConfirmationDecision)
+    assert first.confirmation_id is not None
+    setup.pending.answer(first.confirmation_id, True, SecretValue("Auth-123"))
+    second = await setup.executor.run(
+        operation, None, ConfirmationContext(interaction), first.confirmation_id
+    )
+
+    assert isinstance(second, UntrustedResult)
+    assert operation.secrets == [SecretValue("Auth-123")]
+    assert "Confirm on" not in " ".join(interaction.questions)  # no form elicitation
+    assert "Auth-123" not in operation.subject()
+
+
+async def test_a_secret_operation_is_refused_on_a_read_only_account(setup: Setup) -> None:
+    operation = ScriptedOperation(
+        OperationCategory.WRITE, method="PUT", secret_label=Message("Authorization code")
+    )
+
+    with pytest.raises(ReadOnlyAccountError):
+        await setup.executor.run(operation, AccountName("Watch"), ConfirmationContext())
+
+    assert setup.pending._items == {}

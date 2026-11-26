@@ -12,6 +12,15 @@ from gandi_mcp.confirmation.confirmation_request import ConfirmationRequest
 class ConfirmationChannel(ABC):
     """One link of the chain of confirmation channels."""
 
+    @property
+    def collects_secrets(self) -> bool:
+        """Whether the user can type a secret on this channel, outside the model.
+
+        MCP form elicitation must not ask for sensitive data, so channels do not by
+        default.
+        """
+        return False
+
     @abstractmethod
     def available(self, context: ConfirmationContext) -> bool:
         """Whether this channel can reach the user for this call."""

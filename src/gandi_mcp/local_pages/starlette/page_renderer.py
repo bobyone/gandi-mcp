@@ -47,6 +47,9 @@ class ConfirmationForm:
     confirm: str
     refuse: str
     code: str
+    secret_label: str | None = None
+    secret_max_length: int = 0
+    error: str | None = None
 
 
 def _document(language: str, title: str, body: str) -> str:
@@ -84,13 +87,29 @@ def token_page(language: str, form: TokenForm) -> str:
 
 
 def confirmation_page(language: str, form: ConfirmationForm) -> str:
-    """Render the confirmation form with its two buttons."""
+    """Render the confirmation form with its two buttons, and its secret field if any.
+
+    The secret is never written back into the page, even after an error.
+    """
+    error = (
+        f'<p class="alert" role="alert">{escape(form.error)}</p>' if form.error is not None else ""
+    )
+    secret = ""
+    if form.secret_label is not None:
+        secret = (
+            f'<label for="secret">{escape(form.secret_label)}</label>'
+            '<input type="password" id="secret" name="secret" required '
+            f'maxlength="{form.secret_max_length}" autocomplete="off" spellcheck="false" '
+            'autocapitalize="off" autofocus>'
+        )
     body = (
-        f"<p>{escape(form.question)}</p>"
-        '<form method="post">'
+        f"{error}<p>{escape(form.question)}</p>"
+        '<form method="post" autocomplete="off">'
         f'<input type="hidden" name="code" value="{escape(form.code)}">'
+        f"{secret}"
         f'<button type="submit" name="decision" value="confirm">{escape(form.confirm)}</button>'
-        f'<button type="submit" name="decision" value="refuse">{escape(form.refuse)}</button>'
+        '<button type="submit" name="decision" value="refuse" formnovalidate>'
+        f"{escape(form.refuse)}</button>"
         "</form>"
     )
     return _document(language, form.title, body)

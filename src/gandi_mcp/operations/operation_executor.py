@@ -11,6 +11,7 @@ from gandi_mcp.confirmation.confirmation_context import ConfirmationContext
 from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
 from gandi_mcp.confirmation.confirmation_request import ConfirmationRequest
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
+from gandi_mcp.confirmation.exceptions import SecretInputMissingError
 from gandi_mcp.gandi.gandi_client import GandiClient
 from gandi_mcp.gandi.gandi_response import SEE_OTHER
 from gandi_mcp.operations.operation import Operation
@@ -25,8 +26,9 @@ class OperationExecutor:
 
     1. Resolve the account (named, otherwise the default one).
     2. Refuse a write operation on a read-only account.
-    3. Ask for a confirmation before a destructive or billable operation, bound to
-       the operation, its parameters, the account identity and its environment.
+    3. Ask for a confirmation before a destructive or billable operation, or one
+       needing a secret typed by the user, bound to the operation, its parameters,
+       the account identity and its environment.
     4. Read the token and call Gandi in the account environment.
     5. Return the data, marked as untrusted.
     """
@@ -59,19 +61,25 @@ class OperationExecutor:
         account = await self._accounts.resolve(account_name)
         if operation.category.is_write and account.read_only:
             raise ReadOnlyAccountError(f"the account {account.name} is read-only")
-        if operation.category.needs_confirmation:
+        secret_input = operation.secret_input()
+        secret = None
+        if operation.category.needs_confirmation or secret_input is not None:
             request = ConfirmationRequest(
                 f"{operation.subject()}@{account.reference.fingerprint()}",
                 operation.category,
                 operation.describe(),
                 account.name,
                 account.environment,
+                secret_input,
             )
             decision = await self._confirmation.confirm(request, context, confirmation_id)
             if not decision.accepted:
                 return decision
+            secret = decision.secret
+            if secret_input is not None and secret is None:
+                raise SecretInputMissingError(f"{operation.name} needs a secret")
         token = await self._secrets.get(account.secret_key)
-        response = await operation.execute(self._client, account.environment, token)
+        response = await operation.execute(self._client, account.environment, token, secret)
         logger.info("operation %s done (%s)", operation.name, account.environment.value)
         return UntrustedResult(
             response.data,
