@@ -72,6 +72,23 @@ exists) and raises `CorruptPreferencesError` otherwise.
 | `load()` | Returns the saved preferences, or empty ones. Raises `CorruptPreferencesError` (not understood) or `PreferencesUnavailableError` (unreadable). |
 | `save(preferences)` | Replaces the saved preferences atomically. Raises `PreferencesUnavailableError`. |
 
+### Gandi client: `gandi_mcp.gandi.gandi_client.GandiClient`
+
+Sends authenticated requests to the Gandi API v5 of an environment.
+
+| Operation | Contract |
+| --- | --- |
+| `request(environment, token, method, path, *, query=None, body=None)` | `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
+| `close()` | Releases network resources. |
+
+Errors: `GandiAuthenticationError` (401), `GandiPermissionError` (403),
+`GandiNotFoundError` (404), `GandiValidationError` (400, 422),
+`GandiConflictError` (409), `GandiRateLimitError` (429, with `retry_after`),
+`GandiUnavailableError` (network error, timeout, 5xx),
+`GandiUnexpectedResponseError` (any other status or an unreadable body). Each
+carries `details`: Gandi's explanations, bounded (10 entries of 300
+characters), untrusted.
+
 ## Implementations
 
 ### Entry point: `gandi_mcp.main`
@@ -156,6 +173,28 @@ Behavior and limits:
 - saving writes a temporary file in the same directory, flushes it to disk and
   replaces the previous file; on failure the previous file is kept and the
   temporary file removed.
+
+### Gandi client: `gandi_mcp.gandi.http.http_gandi_client.HttpGandiClient`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `base_urls` | mapping environment to URL | none | yes | `gandi.production_url` and `gandi.sandbox_url`. |
+| `timeout_seconds` | number | none | yes | `gandi.timeout_seconds`. |
+| `user_agent` | string | none | yes | `User-Agent` header (`gandi-mcp/<version>`). |
+| `transport` | `httpx2.AsyncBaseTransport` | network | no | Replaces the network in tests (`httpx2.MockTransport`). |
+
+Behavior and limits:
+
+- sends `Authorization: Bearer <token>`; the token is never logged;
+- redirects are not followed, so the token only reaches the configured base
+  URLs;
+- boolean query values are sent as `true`/`false`, lists as repeated
+  parameters;
+- logs (DEBUG) only the method, environment, status and duration: no path,
+  since it may contain personal data;
+- status translation is in `gandi_error_translator.translate_error`. Gandi
+  documents an expired token either as 401 or 403, so the user messages for
+  both suggest replacing the token.
 
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
