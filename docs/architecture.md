@@ -430,7 +430,9 @@ Behavior and limits:
 - pages have no script, escape every value, and are served with a strict
   Content Security Policy (`default-src 'none'`, hashed inline style,
   `form-action 'self'`, `frame-ancestors 'none'`), `Referrer-Policy:
-  no-referrer`, `Cache-Control: no-store`, `X-Frame-Options: DENY`;
+  same-origin` (with `no-referrer`, browsers would send `Origin: null` on the
+  form submission, which the origin check refuses), `Cache-Control: no-store`,
+  `X-Frame-Options: DENY`;
 - the language is the one of the call that opened the page, else the browser's
   `Accept-Language`, else English;
 - a token with an invalid format can be corrected on the same page; any other

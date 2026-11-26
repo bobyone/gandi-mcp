@@ -52,3 +52,8 @@ All notable changes are documented here. The format follows
   operations are confirmed by the user. (#5)
 - A confirmation can ask the user for a secret (such as an authorization
   code) on its local page, outside the model. (#5)
+
+### Fixed
+
+- Token and confirmation pages: form submissions from browsers were refused
+  (`Origin: null` caused by `Referrer-Policy: no-referrer`). (#10)

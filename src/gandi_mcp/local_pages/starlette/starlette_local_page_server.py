@@ -68,7 +68,9 @@ ADMIN_URLS = {
 }
 SECURITY_HEADERS = {
     "Content-Security-Policy": CONTENT_SECURITY_POLICY,
-    "Referrer-Policy": "no-referrer",
+    # "no-referrer" would make browsers send "Origin: null" on the form POST, which the
+    # origin check refuses; "same-origin" still sends nothing to other sites.
+    "Referrer-Policy": "same-origin",
     "Cache-Control": "no-store",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
