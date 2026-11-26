@@ -158,7 +158,7 @@ class AccountsTools(ToolModule):
 
     async def list_accounts(self) -> dict[str, Any]:
         """List the accounts."""
-        return await self._guard(self._list)
+        return await self._guard(self.listing)
 
     async def add_account(
         self,
@@ -200,36 +200,16 @@ class AccountsTools(ToolModule):
         confirmation_id: ConfirmationParameter = None,
     ) -> dict[str, Any]:
         """Rename an account, change its read-only flag or make it the default one."""
-
-        async def run() -> dict[str, Any]:
-            account = await self._accounts.resolve(AccountName(name))
-            target_name = AccountName(new_name) if new_name is not None else account.name
-            if read_only is False and account.read_only:
-                request = ConfirmationRequest(
-                    f"accounts.allow_writes:{account.name.key}",
-                    OperationCategory.WRITE,
-                    LocalizedText(ALLOW_WRITES, {"account": str(account.name)}),
-                    account.name,
-                    account.environment,
-                )
-                decision = await self._confirmation.confirm(
-                    request, self._context(ctx), confirmation_id
-                )
-                if not decision.accepted:
-                    return pending(decision)
-            result = None
-            if target_name.value != account.name.value:
-                result = await self._accounts.rename(account.name, target_name)
-            if read_only is not None and read_only != account.read_only:
-                result = await self._accounts.set_read_only(target_name, read_only)
-            if make_default:
-                result = await self._accounts.set_default(target_name)
-            if result is None:
-                listed = await self._accounts.list()
-                result = next(item for item in listed if item.name == target_name)
-            return {"status": "updated", "account": summary(result)}
-
-        return await self._guard(run)
+        return await self._guard(
+            lambda: self.update(
+                name,
+                new_name=new_name,
+                read_only=read_only,
+                make_default=make_default,
+                context=self._context(ctx),
+                confirmation_id=confirmation_id,
+            )
+        )
 
     async def replace_account_token(
         self, name: AccountNameParameter, ctx: Context[Any, Any]
@@ -267,33 +247,74 @@ class AccountsTools(ToolModule):
         confirmation_id: ConfirmationParameter = None,
     ) -> dict[str, Any]:
         """Remove an account after the user's confirmation."""
+        return await self._guard(lambda: self.remove(name, self._context(ctx), confirmation_id))
 
-        async def run() -> dict[str, Any]:
-            account = await self._accounts.resolve(AccountName(name))
+    async def update(
+        self,
+        name: str,
+        *,
+        new_name: str | None,
+        read_only: bool | None,
+        make_default: bool,
+        context: ConfirmationContext,
+        confirmation_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Apply account changes; allowing writes on a read-only account is confirmed."""
+        account = await self._accounts.resolve(AccountName(name))
+        target_name = AccountName(new_name) if new_name is not None else account.name
+        if read_only is False and account.read_only:
             request = ConfirmationRequest(
-                f"accounts.remove:{account.name.key}",
-                OperationCategory.DESTRUCTIVE,
-                LocalizedText(REMOVE_ACCOUNT, {"account": str(account.name)}),
+                f"accounts.allow_writes:{account.name.key}",
+                OperationCategory.WRITE,
+                LocalizedText(ALLOW_WRITES, {"account": str(account.name)}),
                 account.name,
                 account.environment,
             )
-            decision = await self._confirmation.confirm(
-                request, self._context(ctx), confirmation_id
-            )
+            decision = await self._confirmation.confirm(request, context, confirmation_id)
             if not decision.accepted:
                 return pending(decision)
-            removal = await self._accounts.remove(account.name)
-            return {
-                "status": "removed",
-                "account": str(removal.removed),
-                "new_default_account": str(removal.new_default) if removal.new_default else None,
-                "token_removed_from_keyring": removal.token_removed,
-            }
+        result = None
+        if target_name.value != account.name.value:
+            result = await self._accounts.rename(account.name, target_name)
+        if read_only is not None and read_only != account.read_only:
+            result = await self._accounts.set_read_only(target_name, read_only)
+        if make_default:
+            result = await self._accounts.set_default(target_name)
+        if result is None:
+            listed = await self._accounts.list()
+            result = next(item for item in listed if item.name == target_name)
+        return {"status": "updated", "account": summary(result)}
 
-        return await self._guard(run)
+    async def remove(
+        self, name: str, context: ConfirmationContext, confirmation_id: str | None = None
+    ) -> dict[str, Any]:
+        """Remove an account once the user confirmed it."""
+        account = await self._accounts.resolve(AccountName(name))
+        request = ConfirmationRequest(
+            f"accounts.remove:{account.name.key}",
+            OperationCategory.DESTRUCTIVE,
+            LocalizedText(REMOVE_ACCOUNT, {"account": str(account.name)}),
+            account.name,
+            account.environment,
+        )
+        decision = await self._confirmation.confirm(request, context, confirmation_id)
+        if not decision.accepted:
+            return pending(decision)
+        removal = await self._accounts.remove(account.name)
+        return {
+            "status": "removed",
+            "account": str(removal.removed),
+            "new_default_account": str(removal.new_default) if removal.new_default else None,
+            "token_removed_from_keyring": removal.token_removed,
+        }
 
-    async def _list(self) -> dict[str, Any]:
+    async def listing(self) -> dict[str, Any]:
+        """Describe every account for the model or the MCP App."""
         return {"accounts": [summary(account) for account in await self._accounts.list()]}
+
+    async def guard(self, action: Callable[[], Awaitable[dict[str, Any]]]) -> dict[str, Any]:
+        """Run an action, turning business errors into explained tool errors."""
+        return await self._guard(action)
 
     async def _open_token_entry(
         self, target: TokenEntryTarget, ctx: Context[Any, Any]

@@ -21,6 +21,8 @@ from gandi_mcp.local_pages.starlette.starlette_local_page_server import (
 )
 from gandi_mcp.operations.operation_executor import OperationExecutor
 from gandi_mcp.preferences.json.json_preferences_store import JsonPreferencesStore
+from gandi_mcp.protocol.app.accounts_app_tools import AccountsAppTools
+from gandi_mcp.protocol.app.app_resource import load_app_html
 from gandi_mcp.protocol.error_presenter import ErrorPresenter
 from gandi_mcp.protocol.server_factory import create_server
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools
@@ -109,9 +111,18 @@ class ApplicationContainer(containers.DeclarativeContainer):
         AccountsTools, account_service, confirmation, token_entry, error_presenter, translator
     )
 
+    accounts_app_tools = providers.Singleton(
+        AccountsAppTools,
+        account_service,
+        accounts_tools,
+        translator,
+        providers.Callable(load_app_html),
+    )
+
     server = providers.Singleton(
         create_server,
         version=config.app.version,
         tool_modules=providers.List(accounts_tools),
+        app_modules=providers.List(accounts_app_tools),
         closers=providers.List(gandi_client.provided.close, local_pages.provided.close),
     )

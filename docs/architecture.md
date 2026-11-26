@@ -377,6 +377,22 @@ conversation and never to invent a confirmation identifier.
 | `McpUserInteraction` | `UserInteraction` over MCP elicitation for one call. From protocol revision 2026-07-28 (no request from the server during a call), elicitation is treated as unavailable, so confirmations use the local page (ADR 4). |
 | `ErrorPresenter` | Maps each business exception to a translated explanation with its remedy (system language); Gandi details are appended and marked as untrusted; unknown exceptions are logged and shown as a generic error. |
 
+### MCP App: `gandi_mcp.protocol.app` and `ui/`
+
+| Component | Role |
+| --- | --- |
+| `AppModule` | Abstraction: `register(apps)` adds UI resources and UI-bound tools to the MCP Apps extension. |
+| `app.app_resource` | Serves `ui://gandi/app.html` (`text/html;profile=mcp-app`, empty CSP domains) from `protocol/app/static/app.html`, built from `ui/` and committed (ADR 5); `AppResourceMissingError` when missing. |
+| `app.accounts_app_tools.AccountsAppTools` | `open_gandi_app` (model and app) and the app-only tools `app_list_accounts`, `app_add_account`, `app_update_account`, `app_replace_account_token`, `app_change_account_environment`, `app_remove_account`. Only these receive a token. They refuse clients that did not negotiate MCP Apps, and use `ConfirmationContext(from_app=True)`: the App dialog is the confirmation. |
+
+The UI (`ui/src/`, TypeScript, React-Bootstrap) has the same layering:
+`api/accounts-api.ts` (abstraction `AccountsApi`), `api/mcp/mcp-accounts-api.ts`
+(calls the app-only tools through the host), `components/` (the "Accounts"
+screen: table, add, rename, replace token, change environment, set as default,
+read-only on and off, remove with a confirmation dialog), `i18n/` (language of
+the host, then of the browser, then English; ICU catalogs). The host style
+variables theme Bootstrap through its CSS variables (`theme.css`).
+
 ### Wiring: `gandi_mcp.container.ApplicationContainer`
 
 Every component is a container singleton. The entry point adds `app.version`
@@ -391,5 +407,8 @@ implements both page ports and uses the longest of the two page timeouts.
 | --- | --- |
 | `scripts/check_translations.py` | Checks catalogs against the code and the declared locales (`locales/locales.toml`): missing or undeclared catalogs, missing, unused or obsolete keys, empty translations, parameters differing in any plural form; counts translations awaiting review. |
 | `scripts/check_licenses.py` | Checks that runtime dependencies are compatible with `GPL-2.0-or-later`, evaluating SPDX expressions with operator precedence; platform-specific dependencies are checked on their platform (CI runs it on each OS). |
+| `scripts/check_ui_translations.py` | Checks the ICU catalogs of the MCP App: keys used in the code, keys and ICU arguments identical to English, plural `other` forms, one catalog per target locale; keeps the glossary table of UI labels in sync (`--write-glossary`). |
+| `scripts/check_npm_licenses.py` | Checks the licenses of the runtime npm packages of `ui/package-lock.json` (those that can be bundled in `app.html`). |
+| `ui/scripts/third-party-notices.mjs` | Writes `THIRD_PARTY_NOTICES.md` next to `app.html` at build time. |
 | `scripts/check_dco.py` | Checks the `Signed-off-by` trailers of every commit of a range, merges included. |
 | `tools/assistant_guard/` | PreToolUse hook shared by Claude Code and Codex: `policy.py` (client-independent rules), `adapters.py` (one adapter per client), `hook.py` (entry point), `codex_profile.py` (Codex sandbox rules and test samples derived from the policy). |

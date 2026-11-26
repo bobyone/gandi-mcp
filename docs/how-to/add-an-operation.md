@@ -17,8 +17,9 @@ Create one file per operation in the directory of its notion, for example
 
 ```python
 class RenewDomain(Operation):
-    def __init__(self, fqdn: DomainName, years: int) -> None:
-        ...  # validate the parameters here (type, format, bounds)
+    def __init__(
+        self, fqdn: DomainName, years: int
+    ) -> None: ...  # validate the parameters here (type, format, bounds)
 
     @property
     def name(self) -> str:
@@ -36,7 +37,10 @@ class RenewDomain(Operation):
 
     async def execute(self, client, environment, token) -> GandiResponse:
         return await client.request(
-            environment, token, "POST", ("domain", "domains", str(self._fqdn), "renew"),
+            environment,
+            token,
+            "POST",
+            ("domain", "domains", str(self._fqdn), "renew"),
             body={"duration": self._years},
         )
 ```

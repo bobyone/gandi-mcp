@@ -24,6 +24,7 @@ operating system keyring and never reaches the model.
   [use the Gandi sandbox](docs/how-to/use-the-sandbox.md),
   [add a Gandi operation](docs/how-to/add-an-operation.md),
   [run the checks](docs/how-to/run-the-checks.md),
+  [build and test the MCP App](docs/how-to/build-the-ui.md),
   [add a language](docs/how-to/add-a-language.md),
   [configure the assistant guard](docs/how-to/configure-the-assistant-guard.md)
 - [Glossary](docs/glossary.md)

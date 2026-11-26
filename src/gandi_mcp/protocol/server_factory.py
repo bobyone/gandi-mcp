@@ -8,7 +8,9 @@ from collections.abc import AsyncIterator, Awaitable, Callable, Sequence
 from typing import Any
 
 from mcp.server import MCPServer
+from mcp.server.apps import Apps
 
+from gandi_mcp.protocol.app_module import AppModule
 from gandi_mcp.protocol.tool_module import ToolModule
 
 SERVER_NAME = "gandi-mcp"
@@ -28,6 +30,7 @@ def create_server(
     version: str,
     tool_modules: Sequence[ToolModule] = (),
     closers: Sequence[Callable[[], Awaitable[None]]] = (),
+    app_modules: Sequence[AppModule] = (),
 ) -> MCPServer:
     """Create the MCP server.
 
@@ -35,6 +38,7 @@ def create_server(
         version: Version of the application, advertised to clients.
         tool_modules: Groups of tools to register.
         closers: Called when the server stops, to release resources.
+        app_modules: MCP App resources and tools, served through the Apps extension.
 
     Returns:
         A server with the tools of every module.
@@ -51,6 +55,9 @@ def create_server(
                 except Exception:
                     logger.exception("a resource could not be released")
 
+    apps = Apps()
+    for app_module in app_modules:
+        app_module.register(apps)
     server: MCPServer = MCPServer(
         name=SERVER_NAME,
         title=SERVER_TITLE,
@@ -58,6 +65,7 @@ def create_server(
         version=version,
         website_url="https://github.com/bobyone/gandi-mcp",
         lifespan=lifespan,
+        extensions=[apps] if app_modules else None,
     )
     for module in tool_modules:
         module.register(server)

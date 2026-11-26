@@ -13,14 +13,17 @@ only drives its steps with the project commands.
 2. **Design**: unless it is a typo or a local fix, post the design steps 0 to 3
    of `CONTRIBUTING.md` in the issue, one at a time, and wait for the
    maintainer's agreement after each. Use terms from `docs/glossary.md`.
-3. **Environment**: `uv sync`, then `uv run pre-commit install`.
+3. **Environment**: `uv sync`, then `uv run pre-commit install`. To change the
+   MCP App in `ui/`, check that Node 24+ is on the `PATH` and run
+   `npm ci --prefix ui` (see `docs/how-to/build-the-ui.md`).
 4. **Branch**: `git switch -c <issue>-<short-description>`.
 5. **Implement** the validated design. If it must change, stop and propose the
    change in the issue. Update docs, glossary, translations, skills,
    `CHANGELOG.md`, `gandi-mcp.example.toml`, records of processing and SPDX
    headers in the same commits.
 6. **Check**: `uv run pre-commit run --all-files`. Fix failures; never bypass
-   the hook.
+   the hook. When the UI build changed `src/gandi_mcp/protocol/app/static/`,
+   add those files and commit again.
 7. **Commit**: `git commit -s -m "#<issue> - <message>"`, atomic commits, no AI
    attribution lines.
 8. **Pull request**: push the branch to your fork, then `gh pr create` with

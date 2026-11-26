@@ -40,16 +40,20 @@ ADR supersedes an old one).
 
 ## 3. Set up the development environment
 
-Prerequisites: [uv](https://docs.astral.sh/uv/) and Git.
+Prerequisites: [uv](https://docs.astral.sh/uv/) and Git; to change the MCP App
+in `ui/`, also Node 24 LTS or later.
 
 ```text
 gh repo fork bobyone/gandi-mcp --clone
 cd gandi-mcp
 uv sync
+npm ci --prefix ui        # only to change the MCP App
 uv run pre-commit install
 ```
 
-Run the checks as described in [docs/how-to/run-the-checks.md](docs/how-to/run-the-checks.md).
+Run the checks as described in [docs/how-to/run-the-checks.md](docs/how-to/run-the-checks.md)
+and, for the UI, [docs/how-to/build-the-ui.md](docs/how-to/build-the-ui.md): the
+built `app.html` is committed and rebuilt by the hook.
 The hook runs them on every commit; never bypass it.
 
 ## 4. Follow the conventions

@@ -27,3 +27,6 @@ All notable changes are documented here. The format follows
   conversation), checked with Gandi and kept in the OS keyring; preferences
   are kept in a local JSON file. Destructive and billable operations are
   confirmed by the user through elicitation or a local page. (#4)
+- MCP App: an "Accounts" screen (React-Bootstrap, themed by the host, in 43
+  languages) to add, rename, re-authenticate, move, lock and remove accounts;
+  tokens typed there go to app-only tools, never to the model. (#4)

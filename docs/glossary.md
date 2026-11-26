@@ -6,29 +6,31 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Glossary
 
 One concept, one term, used everywhere (UI, messages, documentation, code,
-API). Add a term here before using it. UI labels are given per language once
-the term appears in the UI; until then the column says "not displayed".
+API). Add a term here before using it. The "UI label" column gives the English
+label of a term displayed in the MCP App and its catalog key; its label in each
+language is in the table below, generated from the UI catalogs. A term not shown
+in the UI says "not displayed".
 
 | Term | Definition | Code identifier | UI label |
 | --- | --- | --- | --- |
 | Gandi | The registrar and hosting provider whose public API v5 this project uses. | `gandi` | Gandi (never translated) |
 | Gandi API | The Gandi public HTTP API, version 5. | `gandi_api` | not displayed |
-| Sandbox | The Gandi test environment, where operations have no real effect nor cost; it has its own accounts and tokens. | `sandbox` | not displayed yet |
+| Sandbox | The Gandi test environment, where operations have no real effect nor cost; it has its own accounts and tokens. | `sandbox` | Sandbox (`environment.sandbox`) |
 | Personal mode | The local MCP server running on the user's computer over `stdio`. | `personal_mode` | not displayed |
 | MCP App | The UI provided by the server and rendered by the MCP client. | `mcp_app` | not displayed |
 | Tool | An operation exposed by the server to the MCP client. | `tool` | not displayed |
-| Account | A Gandi identity configured in the personal mode: a name chosen by the user and a Personal Access Token. | `account` | not displayed yet |
-| Default account | The account used when a tool call names no account. | `default_account` | not displayed yet |
-| Personal Access Token (PAT) | A Gandi secret granting API rights to an account; stored in the OS keyring only. | `personal_access_token` | not displayed yet |
-| Confirmation | The user's explicit agreement, requested by the server, before a destructive or billable operation. | `confirmation` | not displayed yet |
+| Account | A Gandi identity configured in the personal mode: a name chosen by the user and a Personal Access Token. | `account` | not displayed |
+| Default account | The account used when a tool call names no account. | `default_account` | Default account (`status.default`) |
+| Personal Access Token (PAT) | A Gandi secret granting API rights to an account; stored in the OS keyring only. | `personal_access_token` | Personal Access Token (`field.token`; never translated) |
+| Confirmation | The user's explicit agreement, requested by the server, before a destructive or billable operation. | `confirmation` | not displayed |
 | Destructive operation | An operation that deletes or irreversibly changes a Gandi resource. | `destructive` | not displayed |
 | Billable operation | An operation that charges the Gandi account (purchase, renewal, transfer). | `billable` | not displayed |
-| Environment | The Gandi target of an account: production or sandbox. | `environment` | not displayed yet |
-| Production | The real Gandi environment, where operations have effects and costs. | `production` | not displayed yet |
-| Read-only account | An account whose write operations are all refused. | `read_only` | not displayed yet |
+| Environment | The Gandi target of an account: production or sandbox. | `environment` | Environment (`field.environment`) |
+| Production | The real Gandi environment, where operations have effects and costs. | `production` | Production (`environment.production`) |
+| Read-only account | An account whose write operations are all refused. | `read_only` | Read-only account (`field.readOnly`) |
 | Secret store | The operating system keyring, the only place where a Personal Access Token is kept. | `secret_store` | not displayed |
 | Preferences | Local settings without any secret: the accounts and the default account. | `preferences` | not displayed |
-| Token entry session | A local page to enter a Personal Access Token without the MCP App. | `token_entry_session` | not displayed yet |
+| Token entry session | A local page to enter a Personal Access Token without the MCP App. | `token_entry_session` | not displayed |
 | Operation | A call to Gandi on behalf of an account. | `operation` | not displayed |
 | Read operation | An operation that only reads Gandi resources. | `read_operation` | not displayed |
 | Write operation | An operation that changes Gandi resources; destructive and billable operations are write operations. | `write_operation` | not displayed |
@@ -36,3 +38,58 @@ the term appears in the UI; until then the column says "not displayed".
 | Local page | A temporary page served by the personal mode on `127.0.0.1`, protected by a single-use code, shown to the user through URL elicitation or the browser and never given to the model. | `local_page` | not displayed |
 | Pending confirmation | A confirmation waiting for the user's answer on a local page; its identifier, given back by the model, is valid once and for the same operation only. | `pending_confirmation` | not displayed |
 | Untrusted data | Content coming from tool results or free inputs, which may contain prompt injection. | `untrusted` | not displayed |
+
+## UI labels by language
+
+Generated from `ui/src/i18n/locales/`; to be reviewed by native speakers like
+the catalogs.
+
+<!-- ui-labels:start (generated by scripts/check_ui_translations.py) -->
+
+| Language | Environment | Production | Sandbox | Read-only account | Default account | Personal Access Token |
+| --- | --- | --- | --- | --- | --- | --- |
+| `az` | Mühit | İstehsal | Sandbox | Yalnız oxumaq üçün hesab | Defolt hesab | Personal Access Token |
+| `be` | Асяроддзе | Рабочае | Sandbox | Уліковы запіс толькі для чытання | Уліковы запіс па змаўчанні | Personal Access Token |
+| `bg` | Среда | Производствена | Sandbox | Акаунт само за четене | Акаунт по подразбиране | Personal Access Token |
+| `bs` | Okruženje | Produkcija | Sandbox | Račun samo za čitanje | Zadani račun | Personal Access Token |
+| `ca` | Entorn | Producció | Sandbox | Compte de només lectura | Compte predeterminat | Personal Access Token |
+| `cnr` | Okruženje | Produkcija | Sandbox | Nalog samo za čitanje | Podrazumijevani nalog | Personal Access Token |
+| `cs` | Prostředí | Produkce | Sandbox | Účet jen pro čtení | Výchozí účet | Personal Access Token |
+| `da` | Miljø | Produktion | Sandbox | Skrivebeskyttet konto | Standardkonto | Personal Access Token |
+| `de` | Umgebung | Produktion | Sandbox | Schreibgeschütztes Konto | Standardkonto | Personal Access Token |
+| `el` | Περιβάλλον | Παραγωγή | Sandbox | Λογαριασμός μόνο για ανάγνωση | Προεπιλεγμένος λογαριασμός | Personal Access Token |
+| `en` | Environment | Production | Sandbox | Read-only account | Default account | Personal Access Token |
+| `es` | Entorno | Producción | Sandbox | Cuenta de solo lectura | Cuenta predeterminada | Personal Access Token |
+| `et` | Keskkond | Tootmine | Sandbox | Kirjutuskaitstud konto | Vaikekonto | Personal Access Token |
+| `fi` | Ympäristö | Tuotanto | Sandbox | Vain luku -tili | Oletustili | Personal Access Token |
+| `fr` | Environnement | Production | Sandbox | Compte en lecture seule | Compte par défaut | Personal Access Token |
+| `ga` | Timpeallacht | Táirgeacht | Sandbox | Cuntas inléite amháin | Cuntas réamhshocraithe | Personal Access Token |
+| `hr` | Okruženje | Produkcija | Sandbox | Račun samo za čitanje | Zadani račun | Personal Access Token |
+| `hu` | Környezet | Éles | Sandbox | Csak olvasható fiók | Alapértelmezett fiók | Personal Access Token |
+| `hy` | Միջավայր | Աշխատանքային | Sandbox | Միայն կարդալու հաշիվ | Լռելյայն հաշիվ | Personal Access Token |
+| `is` | Umhverfi | Framleiðsla | Sandbox | Skrifvarinn reikningur | Sjálfgefinn reikningur | Personal Access Token |
+| `it` | Ambiente | Produzione | Sandbox | Account in sola lettura | Account predefinito | Personal Access Token |
+| `ka` | გარემო | სამუშაო | Sandbox | მხოლოდ წაკითხვის ანგარიში | ნაგულისხმევი ანგარიში | Personal Access Token |
+| `lb` | Ëmfeld | Produktioun | Sandbox | Nëmme liesbare Kont | Standardkont | Personal Access Token |
+| `lt` | Aplinka | Gamybinė | Sandbox | Tik skaitoma paskyra | Numatytoji paskyra | Personal Access Token |
+| `lv` | Vide | Ražošanas | Sandbox | Tikai lasāms konts | Noklusējuma konts | Personal Access Token |
+| `mk` | Околина | Продукциска | Sandbox | Сметка само за читање | Стандардна сметка | Personal Access Token |
+| `mt` | Ambjent | Produzzjoni | Sandbox | Kont għall-qari biss | Kont awtomatiku | Personal Access Token |
+| `nb` | Miljø | Produksjon | Sandbox | Skrivebeskyttet konto | Standardkonto | Personal Access Token |
+| `nl` | Omgeving | Productie | Sandbox | Alleen-lezenaccount | Standaardaccount | Personal Access Token |
+| `nn` | Miljø | Produksjon | Sandbox | Skriveverna konto | Standardkonto | Personal Access Token |
+| `pl` | Środowisko | Produkcja | Sandbox | Konto tylko do odczytu | Konto domyślne | Personal Access Token |
+| `pt` | Ambiente | Produção | Sandbox | Conta só de leitura | Conta predefinida | Personal Access Token |
+| `rm` | Ambient | Producziun | Sandbox | Conto mo per leger | Conto da standard | Personal Access Token |
+| `ro` | Mediu | Producție | Sandbox | Cont doar pentru citire | Cont implicit | Personal Access Token |
+| `ru` | Среда | Рабочая | Sandbox | Учётная запись только для чтения | Учётная запись по умолчанию | Personal Access Token |
+| `sk` | Prostredie | Produkcia | Sandbox | Účet len na čítanie | Predvolený účet | Personal Access Token |
+| `sl` | Okolje | Produkcija | Sandbox | Račun samo za branje | Privzeti račun | Personal Access Token |
+| `sq` | Mjedisi | Prodhim | Sandbox | Llogari vetëm për lexim | Llogaria parazgjedhje | Personal Access Token |
+| `sr-Cyrl` | Окружење | Продукција | Sandbox | Налог само за читање | Подразумевани налог | Personal Access Token |
+| `sr-Latn` | Okruženje | Produkcija | Sandbox | Nalog samo za čitanje | Podrazumevani nalog | Personal Access Token |
+| `sv` | Miljö | Produktion | Sandbox | Skrivskyddat konto | Standardkonto | Personal Access Token |
+| `tr` | Ortam | Üretim | Sandbox | Salt okunur hesap | Varsayılan hesap | Personal Access Token |
+| `uk` | Середовище | Робоче | Sandbox | Обліковий запис лише для читання | Обліковий запис за замовчуванням | Personal Access Token |
+
+<!-- ui-labels:end -->
