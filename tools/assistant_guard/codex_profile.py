@@ -2,13 +2,16 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Derive the Codex sandbox filesystem rules from the shared guard policy.
 
-Codex filesystem globs only support ``deny``. Each protected pattern of the policy
-becomes a ``deny`` glob; an example file covered by one of those globs (for example
-``.env.example`` under ``**/.env.*``) stays accessible through an exact-path ``write``
-entry. In the repository, those entries list the tracked example files.
+Each protected pattern of the policy becomes a ``deny`` glob. Codex cannot re-allow a
+file covered by a deny glob: globs only support ``deny``, and exact-path entries apply to
+directories. An example covered by a deny glob (for example ``.env.example`` under
+``**/.env.*``) is therefore unreadable in the Codex sandbox, while the hook allows it. The
+repository avoids this: no tracked example may be covered by a deny glob
+(:func:`colliding_examples`), and its examples use distinct names such as
+``gandi-mcp.example.toml``.
 
 The workspace rules of the ``gandi-mcp`` profile in ``.codex/config.toml`` must equal
-:func:`repository_rules`; a test enforces it. Print the expected TOML table with
+:func:`workspace_rules`; a test enforces it. Print the expected TOML table with
 ``python -m tools.assistant_guard.codex_profile``.
 """
 
@@ -28,8 +31,16 @@ from tools.assistant_guard.policy import (
 
 PROFILE_NAME = "gandi-mcp"
 SAMPLE_STEM = "prod"
-# One example name per allowed pattern, each also covered by a protected pattern.
+# One example name per allowed pattern, not covered by any deny glob.
 EXAMPLE_NAMES: dict[str, str] = {
+    "*.example": "settings.example",
+    "*.example.*": "gandi-mcp.example.toml",
+    "*.sample": "settings.sample",
+    "*.template": "message.template",
+    "*.pub": "signing.pub",
+}
+# One example name per allowed pattern, covered by a deny glob: unreadable under Codex.
+COVERED_EXAMPLE_NAMES: dict[str, str] = {
     "*.example": ".env.example",
     "*.example.*": "credentials.example.json",
     "*.sample": ".env.sample",
@@ -60,11 +71,9 @@ def colliding_examples(paths: Iterable[str]) -> list[str]:
     )
 
 
-def workspace_rules(examples: Iterable[str] = ()) -> dict[str, str]:
-    """Return the ``:workspace_roots`` table for the given example files."""
-    rules = {".": "write", **deny_rules()}
-    rules.update({path: "write" for path in colliding_examples(examples)})
-    return rules
+def workspace_rules() -> dict[str, str]:
+    """Return the ``:workspace_roots`` table: the workspace is writable, protected paths denied."""
+    return {".": "write", **deny_rules()}
 
 
 def tracked_files(root: Path) -> list[str]:
@@ -82,11 +91,6 @@ def tracked_files(root: Path) -> list[str]:
     return [path for path in output.split("\0") if path]
 
 
-def repository_rules(root: Path) -> dict[str, str]:
-    """Return the expected workspace rules of the repository's committed profile."""
-    return workspace_rules(tracked_files(root))
-
-
 def render_workspace_roots(rules: dict[str, str]) -> str:
     """Render a ``:workspace_roots`` table as TOML."""
     lines = [f'[permissions.{PROFILE_NAME}.filesystem.":workspace_roots"]']
@@ -102,8 +106,13 @@ def protected_samples() -> list[str]:
 
 
 def example_samples() -> list[str]:
-    """Return one synthetic relative path per allowed example pattern."""
+    """Return one synthetic example path per allowed pattern, not covered by a deny glob."""
     return [EXAMPLE_NAMES[pattern] for pattern in ALLOWED_EXAMPLE_PATTERNS]
+
+
+def covered_example_samples() -> list[str]:
+    """Return one synthetic example path per allowed pattern, covered by a deny glob."""
+    return [COVERED_EXAMPLE_NAMES[pattern] for pattern in ALLOWED_EXAMPLE_PATTERNS]
 
 
 def check_samples() -> list[str]:
@@ -112,12 +121,17 @@ def check_samples() -> list[str]:
         f"{name} should be protected" for name in protected_samples() if not is_protected_path(name)
     ]
     errors += [
-        f"{name} should be an allowed example covered by a deny glob"
+        f"{name} should be an allowed example not covered by a deny glob"
         for name in example_samples()
+        if is_protected_path(name) or colliding_examples([name])
+    ]
+    errors += [
+        f"{name} should be an allowed example covered by a deny glob"
+        for name in covered_example_samples()
         if name not in colliding_examples([name])
     ]
     return errors
 
 
 if __name__ == "__main__":
-    sys.stdout.write(render_workspace_roots(repository_rules(Path.cwd())))
+    sys.stdout.write(render_workspace_roots(workspace_rules()))

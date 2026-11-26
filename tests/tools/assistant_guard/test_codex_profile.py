@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Integration test of the committed Codex permission profile, enforced by ``codex sandbox``.
 
-Synthetic protected files and their examples are created in a temporary repository. The
-profile read from ``.codex/config.toml`` is applied with its workspace rules derived for that
-repository (``workspace_rules`` of its example files, the same derivation as the committed
-rules); it must deny the protected files and allow their examples.
+Synthetic protected files and examples are created in a temporary repository, and the
+profile read from ``.codex/config.toml`` is applied. It must deny every protected pattern and
+allow examples that no deny glob covers. Examples covered by a deny glob are denied: Codex
+cannot re-allow them (see ``tools/assistant_guard/codex_profile.py``).
 Skipped when the Codex CLI or its sandbox is not available (set ``CODEX_CLI`` to its path
 if it is not on the ``PATH``). With ``CODEX_PROFILE_REQUIRED=1`` (CI), an unavailable sandbox
 fails the test instead.
@@ -22,10 +22,9 @@ from typing import Any
 import pytest
 
 from tools.assistant_guard.codex_profile import (
-    PROFILE_NAME,
+    covered_example_samples,
     example_samples,
     protected_samples,
-    workspace_rules,
 )
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -44,7 +43,9 @@ DENIED = [*protected_samples(), *(f"sub/{name}" for name in protected_samples())
 # On case-insensitive file systems, a mixed-case name designates the protected file itself.
 if sys.platform in {"win32", "darwin"}:
     DENIED.append("sub/Gandi-MCP.TOML")
-# One example per allowed pattern (each also matching a protected pattern), and ordinary files.
+# Examples covered by a deny glob, which Codex cannot re-allow.
+COVERED = [*covered_example_samples(), *(f"sub/{name}" for name in covered_example_samples())]
+# One example per allowed pattern, not covered by any deny glob, and ordinary files.
 ALLOWED = [
     "README.md",
     "sub/notes.txt",
@@ -72,8 +73,6 @@ def inline_toml(value: Any) -> str:
 def profile_overrides() -> list[str]:
     with PROFILE_FILE.open("rb") as stream:
         configuration = tomllib.load(stream)
-    filesystem = configuration["permissions"][PROFILE_NAME]["filesystem"]
-    filesystem[":workspace_roots"] = workspace_rules(ALLOWED)
     return [
         "-c",
         f"default_permissions={inline_toml(configuration['default_permissions'])}",
@@ -111,7 +110,7 @@ def read_in_sandbox(repository: Path, relative: str) -> subprocess.CompletedProc
 def repository(tmp_path_factory: pytest.TempPathFactory) -> Path:
     path = tmp_path_factory.mktemp("codex-profile")
     subprocess.run([shutil.which("git") or "git", "init", "-q", str(path)], check=True)  # noqa: S603
-    for relative in DENIED + ALLOWED:
+    for relative in DENIED + COVERED + ALLOWED:
         target = path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text("synthetic-value\n", encoding="utf-8")
@@ -130,3 +129,13 @@ def test_profile_allows_examples_and_ordinary_files(repository: Path, relative: 
     result = read_in_sandbox(repository, relative)
 
     assert "synthetic-value" in result.stdout, result.stderr[-500:]
+
+
+@pytest.mark.parametrize("relative", COVERED)
+def test_codex_cannot_allow_examples_covered_by_a_deny_glob(
+    repository: Path, relative: str
+) -> None:
+    """Known Codex limitation: if this starts failing, covered examples can be re-allowed."""
+    result = read_in_sandbox(repository, relative)
+
+    assert "synthetic-value" not in result.stdout

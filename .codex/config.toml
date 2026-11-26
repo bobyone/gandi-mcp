@@ -3,7 +3,7 @@
 #
 # Project permission profile for Codex (beta feature): workspace writes allowed,
 # local environment configuration and credential files denied. Codex globs only
-# deny: tracked example files covered by a deny glob get an exact-path write entry.
+# deny and cannot re-allow a covered file: no tracked example may be covered.
 # The workspace rules are derived from the shared guard policy:
 # regenerate them with `uv run python -m tools.assistant_guard.codex_profile`
 # (tests/tools/assistant_guard/test_codex_profile_rules.py fails when they diverge).

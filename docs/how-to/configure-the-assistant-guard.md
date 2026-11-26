@@ -52,20 +52,23 @@ Edit `PROTECTED_FILE_PATTERNS`, `PROTECTED_DIRECTORIES`,
 `tests/tools/assistant_guard/`. Then:
 
 - regenerate the workspace rules of the Codex profile, which are derived from
-  the policy (a test fails while `.codex/config.toml` differs). Codex globs can
-  only deny: each protected pattern becomes a `deny` glob, and each tracked
-  example file covered by one of them (such as a future `.env.example`) gets an
-  exact-path `write` entry. Rerun the command after adding such an example:
+  the policy (a test fails while `.codex/config.toml` differs). Each protected
+  pattern becomes a `deny` glob:
 
   ```text
   uv run python -m tools.assistant_guard.codex_profile
   ```
 
   and paste the printed table in place of the `":workspace_roots"` table;
-- give every new allowed example pattern a sample name in
-  `EXAMPLE_NAMES` (`tools/assistant_guard/codex_profile.py`): the
-  integration test reads one synthetic file per pattern, at the root and in a
-  subdirectory;
+- give every new allowed example pattern two sample names in
+  `tools/assistant_guard/codex_profile.py`: one not covered by any deny glob
+  (`EXAMPLE_NAMES`, must stay readable) and one covered (`COVERED_EXAMPLE_NAMES`);
+  the integration test reads each, at the root and in a subdirectory;
+- name example files so that no protected pattern covers them (for example
+  `gandi-mcp.example.toml`, not `.env.example`): Codex globs only deny and
+  exact-path entries apply to directories, so the Codex sandbox cannot re-allow
+  a covered file, while the hook would. A test fails on any tracked example
+  covered by a deny glob;
 - keep the static Claude Code deny list in `.claude/settings.json` a subset of
   the policy: Claude Code deny rules win over any allow rule, so patterns whose
   examples must stay readable (such as `.env.*`) are left to the hook.
