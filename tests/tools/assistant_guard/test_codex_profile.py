@@ -28,7 +28,10 @@ SANDBOX_UNAVAILABLE = ("sandbox failed", "bwrap:")
 
 pytestmark = pytest.mark.skipif(CODEX is None and not REQUIRED, reason="Codex CLI not available")
 
-DENIED = [".env", "gandi-mcp.toml", "sub/Gandi-MCP.TOML", "sub/.env.local", "server.pem"]
+DENIED = [".env", "gandi-mcp.toml", "sub/.env.local", "server.pem"]
+# On case-insensitive file systems, a mixed-case name designates the protected file itself.
+if sys.platform in {"win32", "darwin"}:
+    DENIED.append("sub/Gandi-MCP.TOML")
 ALLOWED = ["README.md", ".env.example", "gandi-mcp.example.toml", "sub/notes.txt"]
 
 
