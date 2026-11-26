@@ -12,6 +12,7 @@ from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
 from gandi_mcp.confirmation.confirmation_request import ConfirmationRequest
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.gandi.gandi_client import GandiClient
+from gandi_mcp.gandi.gandi_response import SEE_OTHER
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.untrusted_result import UntrustedResult
 from gandi_mcp.secrets.secret_store import SecretStore
@@ -72,4 +73,9 @@ class OperationExecutor:
         token = await self._secrets.get(account.secret_key)
         response = await operation.execute(self._client, account.environment, token)
         logger.info("operation %s done (%s)", operation.name, account.environment.value)
-        return UntrustedResult(response.data, response.total_count)
+        return UntrustedResult(
+            response.data,
+            response.total_count,
+            response.filtered_count,
+            completed=response.status == SEE_OTHER,
+        )

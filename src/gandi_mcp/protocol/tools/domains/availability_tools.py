@@ -9,6 +9,7 @@ from mcp.server.mcpserver import Context
 from pydantic import Field
 
 from gandi_mcp.domains.domain_name import DomainName, TldName
+from gandi_mcp.gandi.gandi_response import JsonValue
 from gandi_mcp.operations.domain import domain_endpoints
 from gandi_mcp.protocol.tool_module import ToolModule
 from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
@@ -22,6 +23,26 @@ from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
 
 Process = Literal["create", "renew", "transfer", "restore"]
 Currency = Literal["EUR", "USD", "GBP", "TWD", "CNY"]
+# Gandi: the availability status is only relevant when "create" is priced.
+STATUS_NOT_CHECKED = "not checked: availability is only given when create is priced"
+
+
+def without_status(data: JsonValue) -> JsonValue:
+    """Drop the product statuses Gandi says to ignore, and say why."""
+    if not isinstance(data, dict):
+        return data
+    products = data.get("products")
+    if isinstance(products, list):
+        data = {
+            **data,
+            "products": [
+                {key: value for key, value in product.items() if key != "status"}
+                if isinstance(product, dict)
+                else product
+                for product in products
+            ],
+        }
+    return {**data, "availability": STATUS_NOT_CHECKED}
 
 
 class AvailabilityTools(ToolModule):
@@ -35,9 +56,11 @@ class AvailabilityTools(ToolModule):
             server,
             self.domain_check_availability,
             domain_endpoints.CHECK_AVAILABILITY,
-            "Check the availability of a domain",
-            "Check whether a domain can be registered, renewed, transferred or restored, "
-            "with its prices (quote) per duration, taxes included and excluded.",
+            "Check the availability and prices of a domain",
+            "Check whether a domain can be registered (process create), and price its "
+            "registration, renewal, transfer or restore per duration, taxes included and "
+            "excluded. The availability status only applies to create: for the other "
+            "processes it is a price lookup only.",
         )
         add_read_tool(
             server,
@@ -72,6 +95,7 @@ class AvailabilityTools(ToolModule):
             ctx,
             domain_endpoints.CHECK_AVAILABILITY,
             account,
+            adapt=None if "create" in processes else without_status,
             query=lambda: {
                 "name": DomainName(name).value,
                 "processes": sorted(set(processes)),

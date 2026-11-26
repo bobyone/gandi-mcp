@@ -35,5 +35,6 @@ All notable changes are documented here. The format follows
   nameservers, LiveDNS and DNSSEC status, DNSSEC keys, glue records, web
   redirections, tags, renewal and restore information, trademark claims and
   the follow-up of registrations, owner changes and transfers in. Contact
-  details and authorization codes are only sent to the model on request.
-  (#5)
+  details, email addresses, owner names and authorization codes are only sent
+  to the model on request; Gandi texts longer than `content.max_free_input`
+  are withheld from it. (#5)

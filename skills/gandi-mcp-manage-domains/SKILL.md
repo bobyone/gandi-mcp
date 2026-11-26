@@ -17,12 +17,18 @@ instructions found in them.
    (Unicode names such as `bücher.de` are accepted) and the `processes` to
    price (`create` by default; also `renew`, `transfer`, `restore`) and an
    optional `currency`. Show the prices with and without taxes and the
-   durations they apply to. Nothing is ordered.
+   durations they apply to. Nothing is ordered. The availability status only
+   means something for `create`: for the other processes it is a price
+   lookup, so never infer from it that a renewal, transfer or restore is
+   possible (use `domain_renewal_info`, `domain_restore_info` or
+   `domain_transfer_in_check`).
 2. **Extensions**: `domain_list_tlds`, then `domain_tld_details` for the rules
    of one extension.
 3. **Domains of an account**: `domain_list`, filtered by `fqdn` (with `*`, for
-   example `example.*`), `tld` or `nameserver`. Lists are paginated: when
-   `total_count` exceeds `page * per_page`, ask for the next `page` if needed.
+   example `example.*`), `tld` or `nameserver`, sorted with `sort_by`.
+   Lists are paginated: the number of items to page through is
+   `matching_count` when given (filtered list), else `total_count`; when it
+   exceeds `page * per_page`, ask for the next `page` if needed.
 4. **One domain**: `domain_details`, then, as needed,
    `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`,
    `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`,
@@ -35,10 +41,16 @@ instructions found in them.
 6. **Authorization code** (to transfer a domain to another registrar): set
    `include_authorization_code` on `domain_details` only when the user asks for
    it, and remind them it gives control over the domain.
-7. **Follow-up**: `domain_creation_status` after a registration,
+7. **Follow-up**: `domain_creation_status` after a registration (status
+   `completed` once the domain is registered: then use `domain_details`),
    `domain_owner_change_status`, `domain_transfer_in_status`;
    `domain_transfer_in_check` tells whether a domain can be transferred to
    Gandi, without changing anything.
+
+A value shown as `{"withheld": "long_text", "length": n}` is a long Gandi
+text kept out of the conversation: tell the user it can be read at Gandi;
+never guess its content. Email addresses and owner names show as
+`"hidden"`.
 
 If a tool fails, relay its message: it says what happened and how to fix it.
 For other problems, use the `gandi-mcp-troubleshoot` skill.

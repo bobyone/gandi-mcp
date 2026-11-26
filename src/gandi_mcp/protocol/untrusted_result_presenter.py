@@ -33,4 +33,6 @@ def present(
         framed["per_page"] = page.per_page
         if result.total_count is not None:
             framed["total_count"] = result.total_count
+        if result.filtered_count is not None:
+            framed["matching_count"] = result.filtered_count
     return framed

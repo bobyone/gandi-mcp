@@ -11,6 +11,7 @@ from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChann
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
+from gandi_mcp.content.long_text_filter import LongTextFilter
 from gandi_mcp.domains.contacts.contact_redactor import ContactRedactor
 from gandi_mcp.gandi.http.http_gandi_client import HttpGandiClient
 from gandi_mcp.i18n.babel.babel_translator import BabelTranslator, default_locales_directory
@@ -51,7 +52,8 @@ class ApplicationContainer(containers.DeclarativeContainer):
         ``app.locale`` (str or None, required): system language, set by the entry point.
         ``preferences.path``, ``gandi.production_url``, ``gandi.sandbox_url``,
         ``gandi.timeout_seconds``, ``confirmation.timeout_seconds``,
-        ``token_entry.timeout_seconds``: validated by the entry point.
+        ``token_entry.timeout_seconds``, ``content.max_free_input``: validated by the
+        entry point.
     """
 
     config = providers.Configuration(strict=True)
@@ -116,7 +118,11 @@ class ApplicationContainer(containers.DeclarativeContainer):
         AccountsTools, account_service, confirmation, token_entry, error_presenter, translator
     )
     domain_tool_runner = providers.Singleton(
-        DomainToolRunner, operation_executor, accounts_tools, providers.Singleton(ContactRedactor)
+        DomainToolRunner,
+        operation_executor,
+        accounts_tools,
+        providers.Singleton(ContactRedactor),
+        providers.Singleton(LongTextFilter, config.content.max_free_input),
     )
     tool_modules = providers.List(
         accounts_tools,

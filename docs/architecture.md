@@ -211,7 +211,7 @@ Command line: `gandi-mcp [--config PATH] [--version]`.
 | `gandi.timeout_seconds` | number, 1 to 300 | `30` | no | Timeout of one request to Gandi. |
 | `confirmation.timeout_seconds` | integer, 30 to 3600 | `300` | no | Validity of a confirmation request. |
 | `token_entry.timeout_seconds` | integer, 60 to 3600 | `600` | no | Validity of a token entry session. |
-| `content.max_free_input` | integer, 1 to 10000 | `280` | no | Longest free input passed to the model as is. |
+| `content.max_free_input` | integer, 1 to 10000 | `280` | no | Longest free input or Gandi text passed to the model as is; longer Gandi texts are withheld. |
 
 Behavior and limits:
 
@@ -302,7 +302,10 @@ Behavior and limits:
 
 - sends `Authorization: Bearer <token>`; the token is never logged;
 - redirects are not followed, so the token only reaches the configured base
-  URLs;
+  URLs; a `303 See Other` (a completed registration) is returned as a
+  response with its `location`, other redirects are errors;
+- `Total-Count` and `Filtered-Count` become `total_count` and
+  `filtered_count`;
 - boolean query values are sent as `true`/`false`, lists as repeated
   parameters;
 - logs (DEBUG) only the method, environment, status and duration: no path,
@@ -386,15 +389,29 @@ Invalid values raise `InvalidDomainNameError` or `InvalidDomainInputError`
 ### Contact minimization: `gandi_mcp.domains.contacts.contact_redactor.ContactRedactor`
 
 `apply(data, *, include_contact_details=False, include_authorization_code=False)`
-returns a filtered copy of Gandi data (ADR 9): at any depth, a contact under
-`owner`, `admin`, `bill` or `tech` (a mapping with personal fields such as
-`email` or `streetaddr`) keeps only `type`, `country`, `same_as_owner` and
-`details: "hidden"`; `authinfo` becomes `"hidden"`.
+returns a filtered copy of Gandi data (ADR 10). At any depth and whatever its
+key, a contact (a mapping under `owner`, `admin`, `bill` or `tech`, with an
+address, name or phone field, or with a `name` next to an `email`) keeps only
+`type`, `country`, `cc`, `same_as_owner` and `details: "hidden"`; text fields
+whose name ends with `email`, and `domain_owner`, become `"hidden"` unless
+contact details are requested; `authinfo` becomes `"hidden"` unless the
+authorization code is requested.
+
+### Long texts: `gandi_mcp.content.long_text_filter.LongTextFilter`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `max_length` | integer, at least 1 | none | yes | `content.max_free_input`. |
+
+`apply(data)` replaces, at any depth, every text longer than `max_length` by
+`{"withheld": "long_text", "length": n}` (ADR 10). `public_key` and `digest`
+values made of base64 or hexadecimal characters only are kept.
 
 ### Untrusted results: `gandi_mcp.protocol.untrusted_result_presenter.present`
 
 Frames Gandi data for the model as `{"notice", "untrusted_data"}`, plus
-`page`, `per_page` and `total_count` for a list.
+`page`, `per_page`, `total_count` and, for a filtered list, `matching_count`
+(`Filtered-Count`).
 
 ### Endpoint catalogue: `gandi_mcp.operations.domain`
 
@@ -428,9 +445,9 @@ conversation and never to invent a confirmation identifier.
 | --- | --- |
 | `ToolModule` | Abstraction: `register(server)` adds the tools of a notion. |
 | `tools.accounts_tools.AccountsTools` | `list_accounts`, `add_account`, `update_account`, `replace_account_token`, `change_account_environment`, `remove_account`. No tool receives or returns a token; token changes open a token entry session; removing an account and turning read-only off need a confirmation (pending results carry `confirmation_id`). |
-| `tools.domains.domain_tool_runner.DomainToolRunner` | Shared by the domain tool modules: `read(ctx, endpoint, account, path_values=None, *, query=None, body=None, page=None, include_contact_details=False, include_authorization_code=False)` builds the `EndpointOperation` (path values and query are given as functions, so that their validation errors are explained like the others), runs it through the `OperationExecutor`, minimizes contacts with the `ContactRedactor` and frames the result with `present`. `add_read_tool` registers a tool named after its endpoint with the read annotations (`readOnlyHint`, `idempotentHint`, `openWorldHint`). |
-| `tools.domains.availability_tools.AvailabilityTools` | `domain_check_availability` (name, `processes` among `create`, `renew`, `transfer`, `restore`, optional `currency`), `domain_list_tlds`, `domain_tld_details`. |
-| `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status`, `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
+| `tools.domains.domain_tool_runner.DomainToolRunner` | Shared by the domain tool modules: `read(ctx, endpoint, account, path_values=None, *, query=None, body=None, page=None, include_contact_details=False, include_authorization_code=False)` builds the `EndpointOperation` (path values and query are given as functions, so that their validation errors are explained like the others), runs it through the `OperationExecutor`, applies the optional `adapt` function of the tool, minimizes personal data with the `ContactRedactor`, withholds long texts with the `LongTextFilter` and frames the result with `present`. A completed operation (`303`) returns `{"status": "completed", "next_step"}` when the tool gives `when_completed`, and is an unexpected answer otherwise. `add_read_tool` registers a tool named after its endpoint with the read annotations (`readOnlyHint`, `idempotentHint`, `openWorldHint`). |
+| `tools.domains.availability_tools.AvailabilityTools` | `domain_check_availability` (name, `processes` among `create`, `renew`, `transfer`, `restore`, optional `currency`; without `create`, the product statuses, which Gandi says to ignore, are dropped and `availability` says so), `domain_list_tlds`, `domain_tld_details`. |
+| `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`, `sort_by` by name, expiry or creation date, `-` to reverse), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status` (`completed` once registered), `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
 | `tools.domains.transfer_tools.TransferTools` | `domain_owner_change_status`, `domain_transfer_in_status`, `domain_transfer_in_check` (sends no authorization code). |

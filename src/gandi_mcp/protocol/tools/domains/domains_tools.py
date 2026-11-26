@@ -24,6 +24,15 @@ from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
 )
 
 FQDN_PATTERN = r"^[\w.*-]+$"
+SortOrder = Literal[
+    "fqdn",
+    "-fqdn",
+    "dates.registry_ends_at",
+    "-dates.registry_ends_at",
+    "dates.created_at",
+    "-dates.created_at",
+]
+REGISTRATION_COMPLETED = "The registration is complete. Call domain_details to describe the domain."
 
 
 class DomainsTools(ToolModule):
@@ -38,7 +47,8 @@ class DomainsTools(ToolModule):
             self.domain_list,
             domain_endpoints.LIST_DOMAINS,
             "List the domains",
-            "List the domains of the account, with their expiry dates and status.",
+            "List the domains of the account, with their expiry dates and status. Use "
+            "matching_count, when given, to know how many domains match the filters.",
         )
         add_read_tool(
             server,
@@ -61,7 +71,8 @@ class DomainsTools(ToolModule):
                 self.domain_creation_status,
                 domain_endpoints.CREATION_STATUS,
                 "Follow the registration of a domain",
-                "Show the progress of a domain registration after its order.",
+                "Show the progress of a domain registration after its order, or that it "
+                "is complete.",
             ),
             (
                 self.domain_tags,
@@ -113,6 +124,13 @@ class DomainsTools(ToolModule):
             Literal["abc", "livedns", "other"] | None,
             Field(default=None, description="Only domains using these nameservers."),
         ] = None,
+        sort_by: Annotated[
+            SortOrder | None,
+            Field(
+                default=None,
+                description="Sort order, by name (default) or date; a leading - reverses it.",
+            ),
+        ] = None,
         account: AccountParameter = None,
     ) -> dict[str, Any]:
         """List the domains of the account."""
@@ -124,6 +142,7 @@ class DomainsTools(ToolModule):
                 "fqdn": fqdn,
                 "tld": TldName(tld).value if tld is not None else None,
                 "nameserver": nameserver,
+                "sort_by": sort_by,
             },
             page=(page, per_page),
         )
@@ -166,7 +185,13 @@ class DomainsTools(ToolModule):
         self, domain: DomainParameter, ctx: Context[Any, Any], account: AccountParameter = None
     ) -> dict[str, Any]:
         """Follow the registration of a domain."""
-        return await self._read(ctx, domain_endpoints.CREATION_STATUS, domain, account)
+        return await self._runner.read(
+            ctx,
+            domain_endpoints.CREATION_STATUS,
+            account,
+            lambda: {"domain": DomainName(domain).value},
+            when_completed=REGISTRATION_COMPLETED,
+        )
 
     async def domain_tags(
         self, domain: DomainParameter, ctx: Context[Any, Any], account: AccountParameter = None

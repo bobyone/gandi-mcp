@@ -5,7 +5,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 # 9. Minimization of domain contacts and authorization codes sent to the model
 
-- Status: accepted
+- Status: superseded by [ADR 10](0010-model-visible-results.md)
 - Date: 2026-11-26
 - Issue: #5
 

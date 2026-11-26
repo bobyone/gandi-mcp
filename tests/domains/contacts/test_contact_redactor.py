@@ -77,3 +77,63 @@ def test_contacts_are_found_at_any_depth_and_in_lists() -> None:
 def test_empty_authorization_code_stays_empty() -> None:
     assert ContactRedactor().apply({"authinfo": None}) == {"authinfo": None}
     assert ContactRedactor.summary("x") == "x"
+
+
+def test_owner_change_and_authorization_emails_are_hidden() -> None:
+    # Documented shapes of GET /domain/changeowner/{domain} and /domain/transferin/{domain}.
+    status: JsonValue = {
+        "step": "WAIT",
+        "params": {
+            "answer_new_owner": "T",
+            "new_owner_email": "alice@example.org",
+            "old_owner_email": "john@doe.com",
+            "old_admin_email": "",
+        },
+        "foa": [{"answer": "T", "email": "admin@example.org", "inner_step": "waiting"}],
+    }
+
+    filtered = ContactRedactor().apply(status)
+
+    assert filtered == {
+        "step": "WAIT",
+        "params": {
+            "answer_new_owner": "T",
+            "new_owner_email": HIDDEN,
+            "old_owner_email": HIDDEN,
+            "old_admin_email": "",
+        },
+        "foa": [{"answer": "T", "email": HIDDEN, "inner_step": "waiting"}],
+    }
+    assert ContactRedactor().apply(status, include_contact_details=True) == status
+
+
+def test_trademark_claim_contacts_and_holders_are_summarized() -> None:
+    # Documented shape of GET /domain/domains/{domain}/claims.
+    person: JsonValue = {
+        "name": "Ada Lovelace",
+        "org": "Example Ltd",
+        "email": "ada@example.org",
+        "street": "1 rue de Paris",
+        "city": "Paris",
+        "pc": "75001",
+        "cc": "FR",
+        "phone": "+33.123456789",
+    }
+    claims: JsonValue = {
+        "claims": [{"mark_name": "Example", "contacts": [person], "holders": [person]}]
+    }
+
+    filtered = ContactRedactor().apply(claims)
+
+    summary = {"cc": "FR", "details": HIDDEN}
+    assert filtered == {
+        "claims": [{"mark_name": "Example", "contacts": [summary], "holders": [summary]}]
+    }
+
+
+def test_owner_names_of_domain_lists_are_hidden() -> None:
+    listing: JsonValue = [{"fqdn": "example.net", "owner": "alice_doe", "domain_owner": "Alice"}]
+
+    assert ContactRedactor().apply(listing) == [
+        {"fqdn": "example.net", "owner": "alice_doe", "domain_owner": HIDDEN}
+    ]

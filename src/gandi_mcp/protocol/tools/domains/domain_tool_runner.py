@@ -11,8 +11,10 @@ from mcp_types import ToolAnnotations
 from pydantic import Field
 
 from gandi_mcp.accounts.account_name import AccountName
+from gandi_mcp.content.long_text_filter import LongTextFilter
 from gandi_mcp.domains.contacts.contact_redactor import ContactRedactor
 from gandi_mcp.domains.page_request import MAX_PAGE, MAX_PER_PAGE, PageRequest
+from gandi_mcp.gandi.exceptions import GandiUnexpectedResponseError
 from gandi_mcp.gandi.gandi_client import QueryValue
 from gandi_mcp.gandi.gandi_response import JsonValue
 from gandi_mcp.operations.domain.domain_endpoint import DomainEndpoint
@@ -70,11 +72,16 @@ class DomainToolRunner:
     """Run a domain endpoint for a tool call and describe its result for the model."""
 
     def __init__(
-        self, executor: OperationExecutor, accounts: AccountsTools, redactor: ContactRedactor
+        self,
+        executor: OperationExecutor,
+        accounts: AccountsTools,
+        redactor: ContactRedactor,
+        long_texts: LongTextFilter,
     ) -> None:
         self._executor = executor
         self._accounts = accounts
         self._redactor = redactor
+        self._long_texts = long_texts
 
     async def read(
         self,
@@ -88,11 +95,16 @@ class DomainToolRunner:
         page: tuple[int, int] | None = None,
         include_contact_details: bool = False,
         include_authorization_code: bool = False,
+        adapt: Callable[[JsonValue], JsonValue] | None = None,
+        when_completed: str | None = None,
     ) -> dict[str, Any]:
         """Read through ``endpoint``; errors become explained tool errors.
 
         Path values and query are given as functions, so that their validation errors
-        are explained like the others.
+        are explained like the others. ``adapt`` rewrites the data of this endpoint
+        before it is filtered. ``when_completed`` is the next step given to the model
+        when Gandi reports the followed operation as complete; without it, such an
+        answer is unexpected.
         """
 
         async def run() -> dict[str, Any]:
@@ -111,11 +123,16 @@ class DomainToolRunner:
                 result, UntrustedResult
             ):  # pragma: no cover - reads are never confirmed
                 raise TypeError("a read operation cannot wait for a confirmation")
+            if result.completed:
+                if when_completed is None:
+                    raise GandiUnexpectedResponseError(f"{endpoint.name}: unexpected redirect")
+                return {"status": "completed", "next_step": when_completed}
+            data = adapt(result.data) if adapt else result.data
             data = self._redactor.apply(
-                result.data,
+                data,
                 include_contact_details=include_contact_details,
                 include_authorization_code=include_authorization_code,
             )
-            return present(result, data, request)
+            return present(result, self._long_texts.apply(data), request)
 
         return await self._accounts.guard(run)
