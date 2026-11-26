@@ -27,22 +27,36 @@ Currency = Literal["EUR", "USD", "GBP", "TWD", "CNY"]
 STATUS_NOT_CHECKED = "not checked: availability is only given when create is priced"
 
 
-def without_status(data: JsonValue) -> JsonValue:
-    """Drop the product statuses Gandi says to ignore, and say why."""
-    if not isinstance(data, dict):
+def _keeps_status(product: dict[str, JsonValue], only_create: bool) -> bool:
+    process = product.get("process")
+    return process == "create" if process is not None else only_create
+
+
+def keep_create_status(data: JsonValue, processes: list[str]) -> JsonValue:
+    """Drop the product statuses Gandi says to ignore, and say why.
+
+    Each product has its own ``process``: only the status of ``create`` products is
+    kept. A product without ``process`` keeps it only when only create was priced.
+    """
+    products = data.get("products") if isinstance(data, dict) else None
+    if not isinstance(data, dict) or not isinstance(products, list):
         return data
-    products = data.get("products")
-    if isinstance(products, list):
-        data = {
-            **data,
-            "products": [
-                {key: value for key, value in product.items() if key != "status"}
-                if isinstance(product, dict)
-                else product
-                for product in products
-            ],
-        }
-    return {**data, "availability": STATUS_NOT_CHECKED}
+    only_create = set(processes) == {"create"}
+    shown: list[JsonValue] = []
+    dropped = False
+    for product in products:
+        if (
+            isinstance(product, dict)
+            and "status" in product
+            and not _keeps_status(product, only_create)
+        ):
+            without = {key: value for key, value in product.items() if key != "status"}
+            without["availability"] = STATUS_NOT_CHECKED
+            shown.append(without)
+            dropped = True
+        else:
+            shown.append(product)
+    return {**data, "products": shown} if dropped else data
 
 
 class AvailabilityTools(ToolModule):
@@ -95,7 +109,7 @@ class AvailabilityTools(ToolModule):
             ctx,
             domain_endpoints.CHECK_AVAILABILITY,
             account,
-            adapt=None if "create" in processes else without_status,
+            adapt=lambda data: keep_create_status(data, list(processes)),
             query=lambda: {
                 "name": DomainName(name).value,
                 "processes": sorted(set(processes)),

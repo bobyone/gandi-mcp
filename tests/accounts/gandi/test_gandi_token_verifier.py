@@ -40,6 +40,15 @@ async def test_returns_the_identity_from_user_info() -> None:
     assert call.token == TOKEN
 
 
+async def test_only_a_200_answer_verifies_the_token() -> None:
+    client = FakeGandiClient([GandiResponse(303, {"username": "mallory"})])
+
+    with pytest.raises(GandiUnexpectedResponseError):
+        await GandiTokenVerifier(client).verify(Environment.SANDBOX, TOKEN)
+
+    assert not client.calls[0].accept_see_other
+
+
 async def test_bounds_and_cleans_the_fields() -> None:
     client = FakeGandiClient([GandiResponse(200, {"username": " " + "u" * 500, "name": " "})])
 

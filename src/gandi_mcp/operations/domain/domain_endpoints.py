@@ -26,7 +26,13 @@ LIST_DOMAINS = DomainEndpoint(
     PAGE | {"fqdn", "tld", "nameserver", "sort_by", "sharing_id"},
 )
 DETAILS = DomainEndpoint("domain_details", "GET", DOMAIN, READ)
-CREATION_STATUS = DomainEndpoint("domain_creation_status", "GET", (*DOMAIN, "createstatus"), READ)
+CREATION_STATUS = DomainEndpoint(
+    "domain_creation_status",
+    "GET",
+    (*DOMAIN, "createstatus"),
+    READ,
+    completes_with_see_other=True,
+)
 CONTACTS = DomainEndpoint("domain_contacts", "GET", (*DOMAIN, "contacts"), READ)
 NAMESERVERS = DomainEndpoint("domain_nameservers", "GET", (*DOMAIN, "nameservers"), READ)
 LIVEDNS_STATUS = DomainEndpoint("domain_livedns_status", "GET", (*DOMAIN, "livedns"), READ)

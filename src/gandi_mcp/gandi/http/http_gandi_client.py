@@ -92,6 +92,7 @@ class HttpGandiClient(GandiClient):
         *,
         query: Mapping[str, QueryValue] | None = None,
         body: JsonValue = None,
+        accept_see_other: bool = False,
     ) -> GandiResponse:
         verb = method.upper()
         if verb not in METHODS:
@@ -122,8 +123,10 @@ class HttpGandiClient(GandiClient):
             (time.monotonic() - started) * 1000,
         )
         data = _decode(response)
-        # 303 marks a completed operation (registration status); it is never followed.
-        if not response.is_success and response.status_code != SEE_OTHER:
+        # 303 marks a completed operation, only where the caller expects it; it is
+        # never followed.
+        see_other = accept_see_other and response.status_code == SEE_OTHER
+        if not response.is_success and not see_other:
             raise translate_error(response.status_code, data, response.headers)
         return GandiResponse(
             status=response.status_code,

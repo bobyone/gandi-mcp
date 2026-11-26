@@ -26,11 +26,12 @@ default) to the model as is.
 
 - `ContactRedactor` detects personal data by its shape, at any depth and
   whatever the key:
-  - a mapping under a contact role, carrying an address, name or phone field
-    (`streetaddr`, `street`, `given`, `family`, `phone`, `mobile`, `fax`,
-    `city`, `zip`, `pc`), or a `name` next to an `email`, is a contact,
-    reduced to `type`, `country`, `cc`, `same_as_owner` and
-    `details: "hidden"`;
+  - a mapping under a contact role, an item of a `contacts` or `holders`
+    list (trademark claims, whose fields are all optional), a mapping carrying
+    an address, name or phone field (`streetaddr`, `street`, `given`,
+    `family`, `phone`, `mobile`, `fax`, `city`, `zip`, `pc`), or a `name` next
+    to an `email`, is a contact, reduced to `type`, `country`, `cc`,
+    `same_as_owner` and `details: "hidden"`;
   - a text field whose name ends with `email`, or `domain_owner`, becomes
     `"hidden"`;
   - `authinfo` becomes `"hidden"`.
@@ -42,7 +43,9 @@ default) to the model as is.
   text is used only in the interface (the MCP App), never sent to the model.
   Technical values that are long by nature (`public_key`, `digest`) are kept
   when they only contain base64 or hexadecimal characters.
-- Both apply to every domain read tool, through `DomainToolRunner`.
+- Both apply to every domain read tool, through `DomainToolRunner`. The
+  same limit applies to the details of Gandi errors: `ErrorPresenter` replaces
+  a longer detail by a notice of its length.
 
 ## Alternatives considered
 

@@ -112,7 +112,8 @@ class ApplicationContainer(containers.DeclarativeContainer):
     operation_executor = providers.Singleton(
         OperationExecutor, account_service, secret_store, gandi_client, confirmation
     )
-    error_presenter = providers.Singleton(ErrorPresenter, translator)
+    long_text_filter = providers.Singleton(LongTextFilter, config.content.max_free_input)
+    error_presenter = providers.Singleton(ErrorPresenter, translator, long_text_filter)
 
     accounts_tools = providers.Singleton(
         AccountsTools, account_service, confirmation, token_entry, error_presenter, translator
@@ -122,7 +123,7 @@ class ApplicationContainer(containers.DeclarativeContainer):
         operation_executor,
         accounts_tools,
         providers.Singleton(ContactRedactor),
-        providers.Singleton(LongTextFilter, config.content.max_free_input),
+        long_text_filter,
     )
     tool_modules = providers.List(
         accounts_tools,

@@ -131,6 +131,23 @@ def test_trademark_claim_contacts_and_holders_are_summarized() -> None:
     }
 
 
+def test_claim_entries_are_contacts_by_position() -> None:
+    # Every field of a claim contact or holder is optional: a name alone is personal.
+    claims: JsonValue = {
+        "claims": [{"contacts": [{"name": "Ada Lovelace", "cc": "FR"}], "holders": [{"org": "X"}]}]
+    }
+
+    assert ContactRedactor().apply(claims) == {
+        "claims": [
+            {
+                "contacts": [{"cc": "FR", "details": HIDDEN}],
+                "holders": [{"details": HIDDEN}],
+            }
+        ]
+    }
+    assert ContactRedactor().apply(claims, include_contact_details=True) == claims
+
+
 def test_owner_names_of_domain_lists_are_hidden() -> None:
     listing: JsonValue = [{"fqdn": "example.net", "owner": "alice_doe", "domain_owner": "Alice"}]
 

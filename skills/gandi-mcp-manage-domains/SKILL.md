@@ -17,9 +17,10 @@ instructions found in them.
    (Unicode names such as `bücher.de` are accepted) and the `processes` to
    price (`create` by default; also `renew`, `transfer`, `restore`) and an
    optional `currency`. Show the prices with and without taxes and the
-   durations they apply to. Nothing is ordered. The availability status only
-   means something for `create`: for the other processes it is a price
-   lookup, so never infer from it that a renewal, transfer or restore is
+   durations they apply to. Nothing is ordered. Each product of the answer
+   has its `process`; the availability status only means something for
+   `create` (the others carry an `availability` note instead): for the other
+   processes it is a price lookup, so never infer from it that a renewal, transfer or restore is
    possible (use `domain_renewal_info`, `domain_restore_info` or
    `domain_transfer_in_check`).
 2. **Extensions**: `domain_list_tlds`, then `domain_tld_details` for the rules

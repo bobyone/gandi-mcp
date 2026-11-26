@@ -93,4 +93,5 @@ class EndpointOperation(Operation):
             self.segments(),
             query=self._query or None,
             body=self._body,
+            accept_see_other=self._endpoint.completes_with_see_other,
         )

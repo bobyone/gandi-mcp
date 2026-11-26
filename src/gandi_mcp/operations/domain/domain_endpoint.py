@@ -26,6 +26,8 @@ class DomainEndpoint:
         description: What the user confirms; required for confirmed categories.
         supports_dry_run: Whether Gandi accepts the ``Dry-Run`` header.
         follow_up: Name of the tool following the resulting asynchronous operation.
+        completes_with_see_other: Gandi documents a ``303 See Other`` once the
+            followed operation is complete (registration status).
     """
 
     name: str
@@ -36,6 +38,7 @@ class DomainEndpoint:
     description: Message | None = None
     supports_dry_run: bool = False
     follow_up: str | None = None
+    completes_with_see_other: bool = False
 
     def __post_init__(self) -> None:
         if self.method not in METHODS:

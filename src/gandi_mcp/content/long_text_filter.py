@@ -28,13 +28,17 @@ class LongTextFilter:
             raise ValueError("max_length must be positive")
         self._max_length = max_length
 
+    def allows(self, text: str) -> bool:
+        """Tell whether an external text may be passed to the model as is."""
+        return len(text) <= self._max_length
+
     def apply(self, data: JsonValue, key: str | None = None) -> JsonValue:
         """Return a copy of ``data`` with its long texts withheld, at any depth."""
         if isinstance(data, list):
             return [self.apply(item, key) for item in data]
         if isinstance(data, dict):
             return {name: self.apply(value, name) for name, value in data.items()}
-        if isinstance(data, str) and len(data) > self._max_length:
+        if isinstance(data, str) and not self.allows(data):
             if key in TECHNICAL_FIELDS and TECHNICAL_VALUE.match(data):
                 return data
             return {"withheld": WITHHELD, "length": len(data)}

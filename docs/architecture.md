@@ -302,8 +302,10 @@ Behavior and limits:
 
 - sends `Authorization: Bearer <token>`; the token is never logged;
 - redirects are not followed, so the token only reaches the configured base
-  URLs; a `303 See Other` (a completed registration) is returned as a
-  response with its `location`, other redirects are errors;
+  URLs; a `303 See Other` is returned as a response with its `location`
+  only when the caller passes `accept_see_other=True` (endpoints declaring
+  `completes_with_see_other`, i.e. the registration status); any other
+  redirect is an error;
 - `Total-Count` and `Filtered-Count` become `total_count` and
   `filtered_count`;
 - boolean query values are sent as `true`/`false`, lists as repeated
@@ -390,8 +392,9 @@ Invalid values raise `InvalidDomainNameError` or `InvalidDomainInputError`
 
 `apply(data, *, include_contact_details=False, include_authorization_code=False)`
 returns a filtered copy of Gandi data (ADR 10). At any depth and whatever its
-key, a contact (a mapping under `owner`, `admin`, `bill` or `tech`, with an
-address, name or phone field, or with a `name` next to an `email`) keeps only
+key, a contact (a mapping under `owner`, `admin`, `bill` or `tech`, an item
+of a `contacts` or `holders` list, a mapping with an address, name or phone
+field, or with a `name` next to an `email`) keeps only
 `type`, `country`, `cc`, `same_as_owner` and `details: "hidden"`; text fields
 whose name ends with `email`, and `domain_owner`, become `"hidden"` unless
 contact details are requested; `authinfo` becomes `"hidden"` unless the
@@ -403,7 +406,8 @@ authorization code is requested.
 | --- | --- | --- | --- | --- |
 | `max_length` | integer, at least 1 | none | yes | `content.max_free_input`. |
 
-`apply(data)` replaces, at any depth, every text longer than `max_length` by
+`allows(text)` tells whether a text fits the limit. `apply(data)` replaces,
+at any depth, every text longer than `max_length` by
 `{"withheld": "long_text", "length": n}` (ADR 10). `public_key` and `digest`
 values made of base64 or hexadecimal characters only are kept.
 
@@ -418,8 +422,8 @@ Frames Gandi data for the model as `{"notice", "untrusted_data"}`, plus
 `DomainEndpoint` describes one endpoint of the Domain API (ADR 8): `name` (also
 the tool name), `method`, `path` (segments, `{placeholder}` segments filled
 with validated values), `category`, accepted `query` parameters,
-`description` (required for confirmed categories), `supports_dry_run` and
-`follow_up`. `domain_endpoints.py` lists them.
+`description` (required for confirmed categories), `supports_dry_run`,
+`follow_up` and `completes_with_see_other`. `domain_endpoints.py` lists them.
 
 `EndpointOperation(endpoint, path_values, query=None, body=None,
 description_params=None)` runs a specification: it raises
@@ -446,13 +450,13 @@ conversation and never to invent a confirmation identifier.
 | `ToolModule` | Abstraction: `register(server)` adds the tools of a notion. |
 | `tools.accounts_tools.AccountsTools` | `list_accounts`, `add_account`, `update_account`, `replace_account_token`, `change_account_environment`, `remove_account`. No tool receives or returns a token; token changes open a token entry session; removing an account and turning read-only off need a confirmation (pending results carry `confirmation_id`). |
 | `tools.domains.domain_tool_runner.DomainToolRunner` | Shared by the domain tool modules: `read(ctx, endpoint, account, path_values=None, *, query=None, body=None, page=None, include_contact_details=False, include_authorization_code=False)` builds the `EndpointOperation` (path values and query are given as functions, so that their validation errors are explained like the others), runs it through the `OperationExecutor`, applies the optional `adapt` function of the tool, minimizes personal data with the `ContactRedactor`, withholds long texts with the `LongTextFilter` and frames the result with `present`. A completed operation (`303`) returns `{"status": "completed", "next_step"}` when the tool gives `when_completed`, and is an unexpected answer otherwise. `add_read_tool` registers a tool named after its endpoint with the read annotations (`readOnlyHint`, `idempotentHint`, `openWorldHint`). |
-| `tools.domains.availability_tools.AvailabilityTools` | `domain_check_availability` (name, `processes` among `create`, `renew`, `transfer`, `restore`, optional `currency`; without `create`, the product statuses, which Gandi says to ignore, are dropped and `availability` says so), `domain_list_tlds`, `domain_tld_details`. |
+| `tools.domains.availability_tools.AvailabilityTools` | `domain_check_availability` (name, `processes` among `create`, `renew`, `transfer`, `restore`, optional `currency`; the status of each product whose `process` is not `create`, which Gandi says to ignore, is dropped and replaced by an `availability` note), `domain_list_tlds`, `domain_tld_details`. |
 | `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`, `sort_by` by name, expiry or creation date, `-` to reverse), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status` (`completed` once registered), `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
 | `tools.domains.transfer_tools.TransferTools` | `domain_owner_change_status`, `domain_transfer_in_status`, `domain_transfer_in_check` (sends no authorization code). |
 | `McpUserInteraction` | `UserInteraction` over MCP elicitation for one call. From protocol revision 2026-07-28 (no request from the server during a call), elicitation is treated as unavailable, so confirmations use the local page (ADR 4). |
-| `ErrorPresenter` | Maps each business exception (including `InvalidDomainNameError` and `InvalidDomainInputError`) to a translated explanation with its remedy (system language); Gandi details are appended and marked as untrusted; unknown exceptions are logged and shown as a generic error. |
+| `ErrorPresenter` | Maps each business exception (including `InvalidDomainNameError` and `InvalidDomainInputError`) to a translated explanation with its remedy (system language); Gandi details are appended and marked as untrusted, a detail longer than `content.max_free_input` being replaced by a notice of its length; unknown exceptions are logged and shown as a generic error. |
 
 ### MCP App: `gandi_mcp.protocol.app` and `ui/`
 
