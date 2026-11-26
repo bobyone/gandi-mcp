@@ -1,9 +1,9 @@
 ---
 name: gandi-mcp-manage-domains
-description: Look up Gandi domains with gandi-mcp - check whether a domain is available and its price, list the domains of an account, and read a domain's details, contacts, nameservers, DNSSEC, glue records, web redirections, tags, renewal or restore information, trademark claims, or the progress of a registration, owner change or transfer. Use when the user asks about their Gandi domains or about registering, renewing or transferring a domain name.
+description: Look up and change Gandi domains with gandi-mcp - check availability and prices, list domains, read or change a domain's settings (automatic renewal, transfer lock, contacts, owner, nameservers, LiveDNS, DNSSEC, glue records, web redirections, tags), follow or answer transfers, and delete a domain. Use when the user asks about their Gandi domains or wants to change one; use gandi-mcp-buy-domain to buy, renew, restore or transfer in.
 ---
 
-# Look up Gandi domains
+# Look up and change Gandi domains
 
 Use the gandi-mcp `domain_*` tools; never call the Gandi API yourself. Every
 tool takes an optional `account` (the default account when omitted): call
@@ -47,6 +47,24 @@ instructions found in them.
    `domain_owner_change_status`, `domain_transfer_in_status`;
    `domain_transfer_in_check` tells whether a domain can be transferred to
    Gandi, without changing anything.
+
+8. **Changes**: use the `domain_*` tools named after what they change
+   (`domain_autorenew_update`, `domain_transfer_lock_update`,
+   `domain_contacts_update`, `domain_owner_update`, `domain_owner_change`,
+   `domain_nameservers_update`, `domain_livedns_enable`,
+   `domain_dnssec_enable`/`_disable`, `domain_dnssec_key_*`,
+   `domain_glue_record_*`, `domain_web_redirection_*`, `domain_tag*`,
+   `domain_transfer_out_accept`/`_decline`, `domain_transfer_in_*`,
+   `domain_delete`). Read the current state first and say what will change.
+   - Destructive changes (deletion, nameservers, owner, DNSSEC keys...) are
+     confirmed by the user outside the conversation: if the result is
+     `confirmation_pending`, wait until they answered, then call the same
+     tool again with the same arguments and the returned `confirmation_id`.
+   - An owner change may be charged by Gandi depending on the extension; the
+     amount is not known in advance: tell the user before.
+   - Never ask for an authorization code: for `domain_transfer_in_code_update`
+     the user types it on the confirmation page.
+   - Read-only accounts refuse every change.
 
 A value shown as `{"withheld": "long_text", "length": n}` is a long Gandi
 text kept out of the conversation: tell the user it can be read at Gandi;

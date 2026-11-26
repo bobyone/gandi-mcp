@@ -45,3 +45,10 @@ All notable changes are documented here. The format follows
   user at its price (in their language) and priced again just before buying;
   the transfer authorization code is typed on the confirmation page, never in
   the conversation. (#5)
+- Domain settings: automatic renewal, transfer lock, authorization code,
+  contacts and owner (details or change, checked with a dry run), nameservers,
+  LiveDNS, DNSSEC and its keys, glue records, web redirections, tags, transfer
+  out answer and transfer in follow-up, and domain deletion. Destructive
+  operations are confirmed by the user. (#5)
+- A confirmation can ask the user for a secret (such as an authorization
+  code) on its local page, outside the model. (#5)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:51+0100\n"
+"POT-Creation-Date: 2026-11-26 23:07+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sl\n"
@@ -325,8 +325,52 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "sprejem prenosa {domain} k drugemu registrarju: zapustila bo Gandi"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "dovoliti operacije pisanja v računu {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "sprememba podatkov imetnika {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "izbris ključa DNSSEC {id} domene {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "izbris domene {domain}: za vedno bo izgubljena"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "izbris zapisa glue {host} domene {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "izbris spletne preusmeritve {host}"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "izklop DNSSEC za {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"predaja domene {domain} novemu imetniku; Gandi jo lahko glede na končnico zaračuna, znesek pa "
+"vnaprej ni znan"
 
 # needs-review
 msgid "read the identity of the account"
@@ -340,6 +384,11 @@ msgstr[0] "registracija {domain} za {count} leto: {price} z davki"
 msgstr[1] "registracija {domain} za {count} leti: {price} z davki"
 msgstr[2] "registracija {domain} za {count} leta: {price} z davki"
 msgstr[3] "registracija {domain} za {count} let: {price} z davki"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "odstranitev vseh oznak domene {domain}"
 
 # needs-review
 #, python-brace-format
@@ -357,8 +406,23 @@ msgstr[3] "podaljšanje {domain} za {count} let: {price} z davki"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "zamenjava vseh ključev DNSSEC domene {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "zamenjava imenskih strežnikov {domain}; napačen seznam naredi domeno nedosegljivo"
+
+# needs-review
+#, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "obnovitev {domain}: {price} z davki"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "preklop {domain} na imenske strežnike Gandi LiveDNS namesto trenutnih"
 
 # needs-review
 #, python-brace-format
@@ -368,6 +432,11 @@ msgstr[0] "prenos {domain} k Gandiju s podaljšanjem za {count} leto: {price} z 
 msgstr[1] "prenos {domain} k Gandiju s podaljšanjem za {count} leti: {price} z davki"
 msgstr[2] "prenos {domain} k Gandiju s podaljšanjem za {count} leta: {price} z davki"
 msgstr[3] "prenos {domain} k Gandiju s podaljšanjem za {count} let: {price} z davki"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "posodobitev avtorizacijske kode prenosa {domain}, ki je v teku"
 
 # needs-review
 #, python-brace-format

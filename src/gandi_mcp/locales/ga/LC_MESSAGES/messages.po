@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:51+0100\n"
+"POT-Creation-Date: 2026-11-26 23:07+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ga\n"
@@ -339,8 +339,52 @@ msgstr "Níorbh fhéidir do dheimhniú a iarraidh (gan dialóg, gan bhrabhsála�
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "glacadh le haistriú {domain} chuig cláraitheoir eile: fágfaidh sé Gandi"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "oibríochtaí scríbhneoireachta a cheadú ar an gcuntas {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "sonraí úinéara {domain} a athrú"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "eochair DNSSEC {id} de {domain} a scriosadh"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "an fearann {domain} a scriosadh: caillfear go deo é"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "taifead glue {host} de {domain} a scriosadh"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "atreorú gréasáin {host} a scriosadh"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "DNSSEC a dhíchumasú do {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"an fearann {domain} a thabhairt d'úinéir nua; féadfaidh Gandi táille a ghearradh air ag brath ar "
+"an iarmhír, agus níl an méid ar eolas roimh ré"
 
 # needs-review
 msgid "read the identity of the account"
@@ -355,6 +399,11 @@ msgstr[1] "{domain} a chlárú ar feadh {count} bhliain: {price} lena n-áiríte
 msgstr[2] "{domain} a chlárú ar feadh {count} bliana: {price} lena n-áirítear cánacha"
 msgstr[3] "{domain} a chlárú ar feadh {count} mbliana: {price} lena n-áirítear cánacha"
 msgstr[4] "{domain} a chlárú ar feadh {count} bliain: {price} lena n-áirítear cánacha"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "gach clib de {domain} a bhaint"
 
 # needs-review
 #, python-brace-format
@@ -373,8 +422,23 @@ msgstr[4] "{domain} a athnuachan ar feadh {count} bliain: {price} lena n-áirít
 
 # needs-review
 #, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "gach eochair DNSSEC de {domain} a athsholáthar"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "freastalaithe ainmneacha {domain} a athsholáthar; fágann liosta mícheart an fearann gan rochtain"
+
+# needs-review
+#, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "{domain} a athchóiriú: {price} lena n-áirítear cánacha"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "{domain} a aistriú chuig freastalaithe ainmneacha Gandi LiveDNS, in ionad na gcinn reatha"
 
 # needs-review
 #, python-brace-format
@@ -385,6 +449,11 @@ msgstr[1] "{domain} a aistriú chuig Gandi, le hathnuachan {count} bhliain: {pri
 msgstr[2] "{domain} a aistriú chuig Gandi, le hathnuachan {count} bliana: {price} lena n-áirítear cánacha"
 msgstr[3] "{domain} a aistriú chuig Gandi, le hathnuachan {count} mbliana: {price} lena n-áirítear cánacha"
 msgstr[4] "{domain} a aistriú chuig Gandi, le hathnuachan {count} bliain: {price} lena n-áirítear cánacha"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "cód údaraithe an aistrithe ar feitheamh de {domain} a nuashonrú"
 
 # needs-review
 #, python-brace-format

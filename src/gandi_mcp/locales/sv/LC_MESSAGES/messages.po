@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:51+0100\n"
+"POT-Creation-Date: 2026-11-26 23:07+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sv\n"
@@ -324,8 +324,52 @@ msgstr "Din bekräftelse kunde inte efterfrågas (ingen dialog, ingen webbläsar
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "godkänn flytten av {domain} till en annan registrar: den lämnar Gandi"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "tillåta skrivåtgärder på kontot {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "ändra ägaruppgifterna för {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "radera DNSSEC-nyckeln {id} för {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "radera domänen {domain}: den går förlorad för gott"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "radera glue-posten {host} för {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "radera webbomdirigeringen för {host}"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "inaktivera DNSSEC för {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"överlåt domänen {domain} till en ny ägare; Gandi kan ta betalt för det beroende på ändelsen, och "
+"beloppet är inte känt i förväg"
 
 # needs-review
 msgid "read the identity of the account"
@@ -337,6 +381,11 @@ msgid "register {domain} for {count} year: {price} including taxes"
 msgid_plural "register {domain} for {count} years: {price} including taxes"
 msgstr[0] "registrera {domain} i {count} år: {price} inkl. skatter"
 msgstr[1] "registrera {domain} i {count} år: {price} inkl. skatter"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "ta bort alla taggar från {domain}"
 
 # needs-review
 #, python-brace-format
@@ -352,8 +401,23 @@ msgstr[1] "förnya {domain} i {count} år: {price} inkl. skatter"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "ersätt alla DNSSEC-nycklar för {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "ersätt namnservrarna för {domain}; en felaktig lista gör domänen onåbar"
+
+# needs-review
+#, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "återställ {domain}: {price} inkl. skatter"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "byt {domain} till Gandi LiveDNS-namnservrarna i stället för de nuvarande"
 
 # needs-review
 #, python-brace-format
@@ -361,6 +425,11 @@ msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} includi
 msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
 msgstr[0] "flytta {domain} till Gandi med {count} års förnyelse: {price} inkl. skatter"
 msgstr[1] "flytta {domain} till Gandi med {count} års förnyelse: {price} inkl. skatter"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "uppdatera auktoriseringskoden för den pågående flytten av {domain}"
 
 # needs-review
 #, python-brace-format

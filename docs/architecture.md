@@ -114,13 +114,15 @@ A command: one Gandi call on behalf of an account (ADR 4).
 | `parameters()` | Parameters defining what the operation does; with `name`, they form its `subject()`. The executor binds a confirmation to this subject, the account identity and its environment. |
 | `describe()` | `LocalizedText` shown when asking for a confirmation. |
 | `secret_input()` | `SecretInput` the user types with the confirmation, or `None` (default); an operation needing one is always confirmed (ADR 11). |
+| `check(client, environment, token)` | Gandi dry run of the operation, or `None` (default) when Gandi offers none. |
 | `execute(client, environment, token, secret=None)` | Calls Gandi, with the `SecretValue` typed by the user when one was asked; raises `GandiError`. |
 
 `OperationExecutor.run(operation, account_name, context, confirmation_id=None)`
 resolves the account, refuses a write on a read-only account
 (`ReadOnlyAccountError`), asks for a confirmation when needed (destructive or
 billable category, or a secret to type), reads the token and calls Gandi with
-the typed secret. It returns an `UntrustedResult` (data and `total_count`), or
+the typed secret. Before asking a confirmation on a first call, it runs the
+operation's dry run, if any: a refusal raises `DryRunRejectedError`. It returns an `UntrustedResult` (data and `total_count`), or
 a pending `ConfirmationDecision` to resume with its identifier.
 
 ### Billable operation: `gandi_mcp.operations.billable_operation.BillableOperation`
@@ -439,6 +441,11 @@ Behavior and limits:
 | `PageRequest` | `page` from 1 to 1000, `per_page` from 1 to 100. |
 | `RegistrationDuration` | 1 to 10 years; each extension may allow fewer. |
 | `Money` | A finite non-negative `Decimal` amount and a three-letter currency code (upper case). |
+| `IpAddress` | IPv4 or IPv6, compressed form. |
+| `DnssecKeySpec` | Algorithm 0 to 255, type `none`, `zsk` or `ksk`, strict base64 public key of at most 4096 characters; `DnssecKeyId` is 1 to 64 letters, digits, `-` or `_`. |
+| `TagName` | 1 to 100 characters, whitespace collapsed, no control character. |
+| `RedirectionUrl` | `http` or `https` URL of at most 2048 characters whose host is a domain name. |
+| `EmailAddress` | An address of at most 254 characters. |
 
 Invalid values raise `InvalidDomainNameError` or `InvalidDomainInputError`
 (both `DomainError`).
@@ -522,13 +529,18 @@ Frames Gandi data for the model as `{"notice", "untrusted_data"}`, plus
 the tool name), `method`, `path` (segments, `{placeholder}` segments filled
 with validated values), `category`, accepted `query` parameters,
 `description` (required for confirmed categories), `supports_dry_run`,
-`follow_up` and `completes_with_see_other`. `domain_endpoints.py` lists them.
+`follow_up`, `completes_with_see_other`, `secret_field` and `secret_label` (a
+body field filled with a secret typed with the confirmation; such an endpoint
+is always `confirmed`). `domain_endpoints.py` lists them: `READ_ENDPOINTS`
+(22) and `WRITE_ENDPOINTS` (32: writes and destructive operations; orders are
+`BillableOperation` classes).
 
 `EndpointOperation(endpoint, path_values, query=None, body=None,
 description_params=None)` runs a specification: it raises
 `InvalidDomainInputError` when a placeholder has no value, a value is empty or
 contains `/`, or a query parameter is not accepted; `None` query values are
-dropped.
+dropped. Its `check()` sends the request with `Dry-Run: 1` when the endpoint
+supports it, and `execute()` adds the typed secret to the body.
 
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
@@ -553,6 +565,13 @@ conversation and never to invent a confirmation identifier.
 | `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`, `sort_by` by name, expiry or creation date, `-` to reverse), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status` (`completed` once registered), `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
+| `tools.domains.domain_tool_runner.DomainToolRunner.write` | Shared by the write tools: builds the `EndpointOperation` (path values and body as functions, validation errors explained), runs it through the `OperationExecutor` with an optional `confirmation_id`, and returns the pending confirmation or `status: done` with the minimized result and the follow-up tool. `add_write_tool` annotates a tool `destructiveHint` for confirmed categories. |
+| `tools.domains.domain_settings_tools.DomainSettingsTools` | `domain_autorenew_update`, `domain_transfer_lock_update`, `domain_authorization_code_reset`, `domain_reachability_resend`, `domain_claims_accept`, `domain_delete` (confirmed). |
+| `tools.domains.contact_tools.ContactTools` | `domain_contacts_update`, `domain_owner_update` (confirmed, dry run), `domain_owner_change` (confirmed without an amount, dry run), `domain_owner_change_resend`. |
+| `tools.domains.nameserver_write_tools.NameserverWriteTools` | `domain_nameservers_update`, `domain_livedns_enable`, `domain_dnssec_disable`, `domain_dnssec_keys_replace`, `domain_dnssec_key_delete`, `domain_glue_record_delete` (confirmed); `domain_dnssec_enable`, `domain_dnssec_key_add`, `domain_glue_record_create`, `domain_glue_record_update`. |
+| `tools.domains.redirection_write_tools.RedirectionWriteTools` | `domain_web_redirection_create`, `domain_web_redirection_update`, `domain_web_redirection_delete` (confirmed). |
+| `tools.domains.tag_tools.TagTools` | `domain_tag_add`, `domain_tags_replace`, `domain_tags_update`, `domain_tags_delete` (confirmed). |
+| `tools.domains.transfer_write_tools.TransferWriteTools` | `domain_transfer_out_accept` (confirmed), `domain_transfer_out_decline`, `domain_transfer_in_relaunch`, `domain_transfer_in_code_update` (code typed on the confirmation page), `domain_transfer_in_resend`. |
 | `tools.domains.domain_order_runner.DomainOrderRunner` | Shared by the order tools: builds the `BillableOperation` (validation errors explained), runs the `OrderExecutor`, returns the pending confirmation or `status: ordered` with the untrusted, minimized result and the follow-up tool. |
 | `tools.domains.order_tools.OrderTools` | `domain_register` (duration, owner and optional admin, tech, bill contacts), `domain_renew`, `domain_restore`, `domain_transfer_in` (the authorization code is typed on the confirmation page); all take `paying_organization`, `confirmation_id` and `account`. |
 | `tools.domains.transfer_tools.TransferTools` | `domain_owner_change_status`, `domain_transfer_in_status`, `domain_transfer_in_check` (sends no authorization code). |

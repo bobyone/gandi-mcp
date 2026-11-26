@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:51+0100\n"
+"POT-Creation-Date: 2026-11-26 23:07+0100\n"
 "PO-Revision-Date: 2026-11-26 10:52+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: tr\n"
@@ -324,8 +324,52 @@ msgstr "Onayınız istenemedi (iletişim kutusu yok, tarayıcı yok): hiçbir ş
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "{domain} alan adının başka bir kayıt kuruluşuna aktarımını kabul et: Gandi'den ayrılacak"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "{account} hesabında yazma işlemlerine izin vermek"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "{domain} sahibinin bilgilerini değiştir"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "{domain} alan adının {id} DNSSEC anahtarını sil"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "{domain} alan adını sil: kalıcı olarak kaybolacak"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "{domain} alan adının {host} glue kaydını sil"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "{host} web yönlendirmesini sil"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "{domain} için DNSSEC'i devre dışı bırak"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"{domain} alan adını yeni bir sahibe ver; Gandi uzantıya göre ücret alabilir ve tutar önceden "
+"bilinmiyor"
 
 # needs-review
 msgid "read the identity of the account"
@@ -337,6 +381,11 @@ msgid "register {domain} for {count} year: {price} including taxes"
 msgid_plural "register {domain} for {count} years: {price} including taxes"
 msgstr[0] "{domain} alan adını {count} yıllığına kaydet: vergiler dahil {price}"
 msgstr[1] "{domain} alan adını {count} yıllığına kaydet: vergiler dahil {price}"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "{domain} alan adının tüm etiketlerini kaldır"
 
 # needs-review
 #, python-brace-format
@@ -352,8 +401,23 @@ msgstr[1] "{domain} alan adını {count} yıllığına yenile: vergiler dahil {p
 
 # needs-review
 #, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "{domain} alan adının tüm DNSSEC anahtarlarını değiştir"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "{domain} ad sunucularını değiştir; yanlış bir liste alan adını erişilemez yapar"
+
+# needs-review
+#, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "{domain} alan adını geri yükle: vergiler dahil {price}"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "{domain} alan adını mevcutların yerine Gandi LiveDNS ad sunucularına geçir"
 
 # needs-review
 #, python-brace-format
@@ -361,6 +425,11 @@ msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} includi
 msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
 msgstr[0] "{domain} alan adını {count} yıllık yenilemeyle Gandi'ye aktar: vergiler dahil {price}"
 msgstr[1] "{domain} alan adını {count} yıllık yenilemeyle Gandi'ye aktar: vergiler dahil {price}"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "{domain} alan adının bekleyen aktarımının yetki kodunu güncelle"
 
 # needs-review
 #, python-brace-format

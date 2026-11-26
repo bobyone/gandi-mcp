@@ -47,6 +47,15 @@ class Operation(ABC):
         """
         return None
 
+    async def check(
+        self, client: GandiClient, environment: Environment, token: PersonalAccessToken
+    ) -> GandiResponse | None:
+        """Check the operation without performing it (Gandi dry run), when possible.
+
+        Returns ``None`` (default) when Gandi offers no dry run for it.
+        """
+        return None
+
     @abstractmethod
     async def execute(
         self,

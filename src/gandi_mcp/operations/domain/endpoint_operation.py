@@ -5,6 +5,7 @@
 from collections.abc import Mapping
 
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.confirmation.secret_input import SecretInput
 from gandi_mcp.domains.exceptions import InvalidDomainInputError
 from gandi_mcp.gandi.gandi_client import GandiClient, QueryValue
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
@@ -14,7 +15,7 @@ from gandi_mcp.operations.domain.domain_endpoint import PLACEHOLDER, DomainEndpo
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
-from gandi_mcp.secrets.secret_value import SecretValue
+from gandi_mcp.secrets.secret_value import MAX_SECRET_LENGTH, SecretValue
 
 
 class EndpointOperation(Operation):
@@ -77,6 +78,10 @@ class EndpointOperation(Operation):
         message = self._endpoint.description or Message(self._endpoint.name)
         return LocalizedText(message, self._description_params)
 
+    def secret_input(self) -> SecretInput | None:
+        label = self._endpoint.secret_label
+        return SecretInput(label, MAX_SECRET_LENGTH) if label is not None else None
+
     def segments(self) -> tuple[str, ...]:
         """The path with its placeholders filled."""
         return tuple(
@@ -97,6 +102,28 @@ class EndpointOperation(Operation):
             self._endpoint.method,
             self.segments(),
             query=self._query or None,
-            body=self._body,
+            body=self._with_secret(secret),
             accept_see_other=self._endpoint.completes_with_see_other,
         )
+
+    async def check(
+        self, client: GandiClient, environment: Environment, token: PersonalAccessToken
+    ) -> GandiResponse | None:
+        if not self._endpoint.supports_dry_run:
+            return None
+        return await client.request(
+            environment,
+            token,
+            self._endpoint.method,
+            self.segments(),
+            query=self._query or None,
+            body=self._body,
+            dry_run=True,
+        )
+
+    def _with_secret(self, secret: SecretValue | None) -> JsonValue:
+        field = self._endpoint.secret_field
+        if field is None or secret is None:
+            return self._body
+        body = self._body if isinstance(self._body, dict) else {}
+        return {**body, field: secret.reveal()}

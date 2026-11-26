@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:51+0100\n"
+"POT-Creation-Date: 2026-11-26 23:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -277,7 +277,41 @@ msgid ""
 msgstr ""
 
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr ""
+
+#, python-brace-format
 msgid "allow write operations on the account {account}"
+msgstr ""
+
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr ""
+
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr ""
+
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr ""
+
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr ""
+
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr ""
+
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it "
+"depending on the extension, and the amount is not known in advance"
 msgstr ""
 
 msgid "read the identity of the account"
@@ -290,6 +324,10 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr ""
+
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr ""
 
@@ -300,7 +338,23 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"replace the nameservers of {domain}; a wrong list makes the domain "
+"unreachable"
+msgstr ""
+
+#, python-brace-format
 msgid "restore {domain}: {price} including taxes"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"switch {domain} to the Gandi LiveDNS nameservers, replacing its current "
+"ones"
 msgstr ""
 
 #, python-brace-format
@@ -312,6 +366,10 @@ msgid_plural ""
 "including taxes"
 msgstr[0] ""
 msgstr[1] ""
+
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr ""
 
 #, python-brace-format
 msgid "{price}, paid by the organization {organization}"

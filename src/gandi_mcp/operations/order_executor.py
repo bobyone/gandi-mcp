@@ -16,35 +16,18 @@ from gandi_mcp.confirmation.exceptions import SecretInputMissingError
 from gandi_mcp.domains.quotes.quote import Quote
 from gandi_mcp.domains.quotes.quote_provider import QuoteProvider
 from gandi_mcp.gandi.gandi_client import GandiClient
-from gandi_mcp.gandi.gandi_response import GandiResponse
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.i18n.message import N_
 from gandi_mcp.i18n.translator import Translator
 from gandi_mcp.operations.billable_operation import BillableOperation
+from gandi_mcp.operations.dry_run import dry_run_details
 from gandi_mcp.operations.exceptions import DryRunRejectedError, PriceChangedError
 from gandi_mcp.operations.untrusted_result import UntrustedResult
 from gandi_mcp.secrets.secret_store import SecretStore
 
 PRICE_FOR_ORGANIZATION = N_("{price}, paid by the organization {organization}")
-MAX_DETAILS = 10
 
 logger = logging.getLogger(__name__)
-
-
-def _dry_run_details(response: GandiResponse) -> tuple[str, ...] | None:
-    """The errors of a failed dry run, or ``None`` when Gandi accepted it."""
-    data = response.data
-    if not isinstance(data, dict) or data.get("status") != "error":
-        return None
-    errors = data.get("errors")
-    details: list[str] = []
-    for error in errors if isinstance(errors, list) else []:
-        if isinstance(error, dict):
-            parts = (error.get("name"), error.get("description"))
-            text = ": ".join(part for part in parts if isinstance(part, str) and part.strip())
-            if text:
-                details.append(" ".join(text.split()))
-    return tuple(details[:MAX_DETAILS])
 
 
 class OrderExecutor:
@@ -103,7 +86,7 @@ class OrderExecutor:
             checked = await operation.order(
                 self._client, account.environment, token, quote, dry_run=True
             )
-            details = _dry_run_details(checked)
+            details = dry_run_details(checked)
             if details is not None:
                 raise DryRunRejectedError("Gandi refused the order when checking it", details)
         secret_input = operation.secret_input()

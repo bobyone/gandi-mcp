@@ -18,12 +18,15 @@ from gandi_mcp.protocol.tool_module import ToolModule
 from gandi_mcp.protocol.tools.domains.contact_parameter import ContactParameter
 from gandi_mcp.protocol.tools.domains.domain_order_runner import (
     BILLABLE,
-    ConfirmationIdParameter,
     DomainOrderRunner,
     DurationParameter,
     PayingOrganizationParameter,
 )
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import AccountParameter, DomainParameter
+from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
+    AccountParameter,
+    ConfirmationIdParameter,
+    DomainParameter,
+)
 
 ORDER_RULES = (
     " The price is checked with Gandi and shown to the user, who confirms outside the "

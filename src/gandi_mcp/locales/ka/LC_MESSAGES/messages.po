@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:51+0100\n"
+"POT-Creation-Date: 2026-11-26 23:07+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ka\n"
@@ -324,8 +324,52 @@ msgstr "თქვენი დადასტურების მოთხო�
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "{domain}-ის სხვა რეგისტრატორთან გადატანის მიღება: ის დატოვებს Gandi-ს"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "ჩაწერის ოპერაციების დაშვება ანგარიშზე {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "{domain}-ის მფლობელის მონაცემების შეცვლა"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "{domain}-ის DNSSEC გასაღების {id} წაშლა"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "დომენის {domain} წაშლა: ის სამუდამოდ დაიკარგება"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "{domain}-ის glue ჩანაწერის {host} წაშლა"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "{host}-ის ვებ გადამისამართების წაშლა"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "DNSSEC-ის გამორთვა {domain}-ისთვის"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"დომენის {domain} ახალი მფლობელისთვის გადაცემა; Gandi-მ შეიძლება ამისთვის გადასახადი დააწესოს "
+"გაფართოების მიხედვით და თანხა წინასწარ უცნობია"
 
 # needs-review
 msgid "read the identity of the account"
@@ -337,6 +381,11 @@ msgid "register {domain} for {count} year: {price} including taxes"
 msgid_plural "register {domain} for {count} years: {price} including taxes"
 msgstr[0] "{domain}-ის რეგისტრაცია {count} წლით: {price} გადასახადების ჩათვლით"
 msgstr[1] "{domain}-ის რეგისტრაცია {count} წლით: {price} გადასახადების ჩათვლით"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "{domain}-ის ყველა ტეგის მოხსნა"
 
 # needs-review
 #, python-brace-format
@@ -352,8 +401,23 @@ msgstr[1] "{domain}-ის განახლება {count} წლით: {pr
 
 # needs-review
 #, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "{domain}-ის ყველა DNSSEC გასაღების ჩანაცვლება"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "{domain}-ის სახელების სერვერების ჩანაცვლება; არასწორი სია დომენს მიუწვდომელს ხდის"
+
+# needs-review
+#, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "{domain}-ის აღდგენა: {price} გადასახადების ჩათვლით"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "{domain}-ის გადაყვანა Gandi LiveDNS სახელების სერვერებზე მიმდინარეების ნაცვლად"
 
 # needs-review
 #, python-brace-format
@@ -361,6 +425,11 @@ msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} includi
 msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
 msgstr[0] "{domain}-ის გადატანა Gandi-ში {count} წლიანი განახლებით: {price} გადასახადების ჩათვლით"
 msgstr[1] "{domain}-ის გადატანა Gandi-ში {count} წლიანი განახლებით: {price} გადასახადების ჩათვლით"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "{domain}-ის მიმდინარე გადატანის ავტორიზაციის კოდის განახლება"
 
 # needs-review
 #, python-brace-format

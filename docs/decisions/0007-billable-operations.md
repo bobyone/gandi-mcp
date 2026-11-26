@@ -56,8 +56,10 @@ registration and transfer in.
 ## Consequences
 
 - An order costs up to four Gandi calls (quote, dry run, quote, order).
-- Owner change is not covered: Gandi gives no price for it through
-  `/domain/check`.
+- The owner change is not an order: Gandi gives no price for it through
+  `/domain/check`. It is a confirmed operation without an amount, checked with a
+  dry run, whose confirmation says that Gandi may charge for it depending on the
+  extension.
 - Assumptions to check on the sandbox: the band prices are yearly, `price` is
   compared before taxes, and `/domain/check` prices renewal, restore and
   transfer.

@@ -6,6 +6,7 @@ import logging
 
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
+from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.accounts.exceptions import ReadOnlyAccountError
 from gandi_mcp.confirmation.confirmation_context import ConfirmationContext
 from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
@@ -14,6 +15,8 @@ from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.exceptions import SecretInputMissingError
 from gandi_mcp.gandi.gandi_client import GandiClient
 from gandi_mcp.gandi.gandi_response import SEE_OTHER
+from gandi_mcp.operations.dry_run import dry_run_details
+from gandi_mcp.operations.exceptions import DryRunRejectedError
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.untrusted_result import UntrustedResult
 from gandi_mcp.secrets.secret_store import SecretStore
@@ -28,7 +31,8 @@ class OperationExecutor:
     2. Refuse a write operation on a read-only account.
     3. Ask for a confirmation before a destructive or billable operation, or one
        needing a secret typed by the user, bound to the operation, its parameters,
-       the account identity and its environment.
+       the account identity and its environment. A confirmed operation is first
+       checked with a Gandi dry run when it offers one.
     4. Read the token and call Gandi in the account environment.
     5. Return the data, marked as untrusted.
     """
@@ -64,6 +68,8 @@ class OperationExecutor:
         secret_input = operation.secret_input()
         secret = None
         if operation.category.needs_confirmation or secret_input is not None:
+            if confirmation_id is None:
+                await self._check(operation, account.environment, account.secret_key)
             request = ConfirmationRequest(
                 f"{operation.subject()}@{account.reference.fingerprint()}",
                 operation.category,
@@ -87,3 +93,10 @@ class OperationExecutor:
             response.filtered_count,
             completed=response.status == SEE_OTHER,
         )
+
+    async def _check(self, operation: Operation, environment: Environment, key: str) -> None:
+        token = await self._secrets.get(key)
+        checked = await operation.check(self._client, environment, token)
+        details = dry_run_details(checked) if checked is not None else None
+        if details is not None:
+            raise DryRunRejectedError("Gandi refused the operation when checking it", details)

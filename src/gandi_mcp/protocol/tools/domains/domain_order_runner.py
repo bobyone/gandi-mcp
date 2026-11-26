@@ -24,15 +24,6 @@ BILLABLE = ToolAnnotations(
     read_only_hint=False, destructive_hint=False, idempotent_hint=False, open_world_hint=True
 )
 
-ConfirmationIdParameter = Annotated[
-    str | None,
-    Field(
-        default=None,
-        description="Identifier returned by a pending confirmation, once the user has "
-        "answered on the page opened in their browser. Never invent one.",
-        max_length=64,
-    ),
-]
 PayingOrganizationParameter = Annotated[
     str | None,
     Field(

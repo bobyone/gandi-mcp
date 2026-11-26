@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:51+0100\n"
+"POT-Creation-Date: 2026-11-26 23:07+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sk\n"
@@ -324,8 +324,52 @@ msgstr "O vaše potvrdenie nebolo možné požiadať (žiadny dialóg, žiadny p
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "prijať prevod {domain} k inému registrátorovi: opustí Gandi"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "povoliť operácie zápisu v účte {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "zmeniť údaje vlastníka {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "odstrániť kľúč DNSSEC {id} domény {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "odstrániť doménu {domain}: bude nenávratne stratená"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "odstrániť glue záznam {host} domény {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "odstrániť webové presmerovanie {host}"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "vypnúť DNSSEC pre {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"odovzdať doménu {domain} novému vlastníkovi; Gandi to môže podľa koncovky spoplatniť a suma nie "
+"je vopred známa"
 
 # needs-review
 msgid "read the identity of the account"
@@ -338,6 +382,11 @@ msgid_plural "register {domain} for {count} years: {price} including taxes"
 msgstr[0] "zaregistrovať {domain} na {count} rok: {price} vrátane daní"
 msgstr[1] "zaregistrovať {domain} na {count} roky: {price} vrátane daní"
 msgstr[2] "zaregistrovať {domain} na {count} rokov: {price} vrátane daní"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "odobrať všetky štítky domény {domain}"
 
 # needs-review
 #, python-brace-format
@@ -354,8 +403,23 @@ msgstr[2] "predĺžiť {domain} o {count} rokov: {price} vrátane daní"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "nahradiť všetky kľúče DNSSEC domény {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "nahradiť menné servery {domain}; chybný zoznam znemožní prístup k doméne"
+
+# needs-review
+#, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "obnoviť {domain}: {price} vrátane daní"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "prepnúť {domain} na menné servery Gandi LiveDNS namiesto súčasných"
 
 # needs-review
 #, python-brace-format
@@ -364,6 +428,11 @@ msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price}
 msgstr[0] "previesť {domain} ku Gandi s predĺžením o {count} rok: {price} vrátane daní"
 msgstr[1] "previesť {domain} ku Gandi s predĺžením o {count} roky: {price} vrátane daní"
 msgstr[2] "previesť {domain} ku Gandi s predĺžením o {count} rokov: {price} vrátane daní"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "aktualizovať autorizačný kód prebiehajúceho prevodu {domain}"
 
 # needs-review
 #, python-brace-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:51+0100\n"
+"POT-Creation-Date: 2026-11-26 23:07+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -336,8 +336,52 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "accettare il trasferimento di {domain} a un altro registrar: lascerà Gandi"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "consentire le operazioni di scrittura sull'account {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "modificare i dati dell'intestatario di {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "eliminare la chiave DNSSEC {id} di {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "eliminare il dominio {domain}: andrà perso per sempre"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "eliminare il record glue {host} di {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "eliminare il reindirizzamento web di {host}"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "disattivare DNSSEC per {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"cedere il dominio {domain} a un nuovo intestatario; Gandi può addebitarlo secondo l'estensione e "
+"l'importo non è noto in anticipo"
 
 # needs-review
 msgid "read the identity of the account"
@@ -350,6 +394,11 @@ msgid_plural "register {domain} for {count} years: {price} including taxes"
 msgstr[0] "registrare {domain} per {count} anno: {price} tasse incluse"
 msgstr[1] "registrare {domain} per {count} anni: {price} tasse incluse"
 msgstr[2] "registrare {domain} per {count} anni: {price} tasse incluse"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "rimuovere tutte le etichette di {domain}"
 
 # needs-review
 #, python-brace-format
@@ -366,8 +415,23 @@ msgstr[2] "rinnovare {domain} per {count} anni: {price} tasse incluse"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "sostituire tutte le chiavi DNSSEC di {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "sostituire i nameserver di {domain}; un elenco errato rende il dominio irraggiungibile"
+
+# needs-review
+#, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "ripristinare {domain}: {price} tasse incluse"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "passare {domain} ai nameserver Gandi LiveDNS, al posto di quelli attuali"
 
 # needs-review
 #, python-brace-format
@@ -376,6 +440,11 @@ msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price}
 msgstr[0] "trasferire {domain} a Gandi, con {count} anno di rinnovo: {price} tasse incluse"
 msgstr[1] "trasferire {domain} a Gandi, con {count} anni di rinnovo: {price} tasse incluse"
 msgstr[2] "trasferire {domain} a Gandi, con {count} anni di rinnovo: {price} tasse incluse"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "aggiornare il codice di autorizzazione del trasferimento in corso di {domain}"
 
 # needs-review
 #, python-brace-format

@@ -32,13 +32,19 @@ from gandi_mcp.protocol.error_presenter import ErrorPresenter
 from gandi_mcp.protocol.server_factory import create_server
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools
 from gandi_mcp.protocol.tools.domains.availability_tools import AvailabilityTools
+from gandi_mcp.protocol.tools.domains.contact_tools import ContactTools
 from gandi_mcp.protocol.tools.domains.domain_order_runner import DomainOrderRunner
+from gandi_mcp.protocol.tools.domains.domain_settings_tools import DomainSettingsTools
 from gandi_mcp.protocol.tools.domains.domain_tool_runner import DomainToolRunner
 from gandi_mcp.protocol.tools.domains.domains_tools import DomainsTools
 from gandi_mcp.protocol.tools.domains.nameserver_tools import NameserverTools
+from gandi_mcp.protocol.tools.domains.nameserver_write_tools import NameserverWriteTools
 from gandi_mcp.protocol.tools.domains.order_tools import OrderTools
 from gandi_mcp.protocol.tools.domains.redirection_tools import RedirectionTools
+from gandi_mcp.protocol.tools.domains.redirection_write_tools import RedirectionWriteTools
+from gandi_mcp.protocol.tools.domains.tag_tools import TagTools
 from gandi_mcp.protocol.tools.domains.transfer_tools import TransferTools
+from gandi_mcp.protocol.tools.domains.transfer_write_tools import TransferWriteTools
 from gandi_mcp.protocol.tools.organization_tools import OrganizationTools
 from gandi_mcp.secrets.keyring.keyring_secret_store import KeyringSecretStore
 from gandi_mcp.token_entry.token_entry_service import TokenEntryService
@@ -160,6 +166,12 @@ class ApplicationContainer(containers.DeclarativeContainer):
         providers.Singleton(RedirectionTools, domain_tool_runner),
         providers.Singleton(TransferTools, domain_tool_runner),
         providers.Singleton(OrderTools, domain_order_runner),
+        providers.Singleton(ContactTools, domain_tool_runner),
+        providers.Singleton(DomainSettingsTools, domain_tool_runner),
+        providers.Singleton(NameserverWriteTools, domain_tool_runner),
+        providers.Singleton(RedirectionWriteTools, domain_tool_runner),
+        providers.Singleton(TagTools, domain_tool_runner),
+        providers.Singleton(TransferWriteTools, domain_tool_runner),
     )
 
     accounts_app_tools = providers.Singleton(

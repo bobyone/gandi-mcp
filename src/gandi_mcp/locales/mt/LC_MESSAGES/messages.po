@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:51+0100\n"
+"POT-Creation-Date: 2026-11-26 23:07+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mt\n"
@@ -329,8 +329,52 @@ msgstr "Il-konferma tiegħek ma setgħetx tintalab (l-ebda djalogu, l-ebda brows
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "aċċetta t-trasferiment ta' {domain} lil reġistratur ieħor: se jħalli lil Gandi"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "tippermetti operazzjonijiet tal-kitba fuq il-kont {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "ibdel id-dettalji tas-sid ta' {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "ħassar iċ-ċavetta DNSSEC {id} ta' {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "ħassar id-dominju {domain}: se jintilef għal dejjem"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "ħassar ir-rekord glue {host} ta' {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "ħassar ir-ridirezzjoni web ta' {host}"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "iddiżattiva d-DNSSEC għal {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"agħti d-dominju {domain} lil sid ġdid; Gandi jista' jitlob ħlas għalih skont l-estensjoni, u "
+"l-ammont mhuwiex magħruf minn qabel"
 
 # needs-review
 msgid "read the identity of the account"
@@ -345,6 +389,11 @@ msgstr[1] "irreġistra {domain} għal {count} snin: {price} inklużi t-taxxi"
 msgstr[2] "irreġistra {domain} għal {count} snin: {price} inklużi t-taxxi"
 msgstr[3] "irreġistra {domain} għal {count} sena: {price} inklużi t-taxxi"
 msgstr[4] "irreġistra {domain} għal {count} sena: {price} inklużi t-taxxi"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "neħħi t-tikketti kollha ta' {domain}"
 
 # needs-review
 #, python-brace-format
@@ -363,8 +412,23 @@ msgstr[4] "ġedded {domain} għal {count} sena: {price} inklużi t-taxxi"
 
 # needs-review
 #, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "ibdel iċ-ċwievet DNSSEC kollha ta' {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "ibdel in-nameservers ta' {domain}; lista ħażina tagħmel id-dominju inaċċessibbli"
+
+# needs-review
+#, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "irrestawra {domain}: {price} inklużi t-taxxi"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "aqleb {domain} għan-nameservers ta' Gandi LiveDNS, minflok dawk attwali"
 
 # needs-review
 #, python-brace-format
@@ -375,6 +439,11 @@ msgstr[1] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} snin: {price}
 msgstr[2] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} snin: {price} inklużi t-taxxi"
 msgstr[3] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} sena: {price} inklużi t-taxxi"
 msgstr[4] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} sena: {price} inklużi t-taxxi"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "aġġorna l-kodiċi ta' awtorizzazzjoni tat-trasferiment pendenti ta' {domain}"
 
 # needs-review
 #, python-brace-format
