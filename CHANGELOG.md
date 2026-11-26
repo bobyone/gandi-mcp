@@ -18,3 +18,6 @@ All notable changes are documented here. The format follows
   languages, CI on Windows, macOS and Linux, assistant guard for Claude Code
   and Codex, plugin and skills skeleton, REUSE compliance, records of
   processing. (#1)
+- Configuration keys for the preferences file, the Gandi base URLs and
+  timeout, the confirmation and token entry validity, and the free input
+  limit; unknown keys are rejected. (#4)

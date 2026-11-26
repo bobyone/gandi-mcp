@@ -2,39 +2,111 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Unit tests of the entry point."""
 
+import tomllib
 from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
 
 from gandi_mcp import __version__, main
-from gandi_mcp.main import ConfigurationError, build_container, load_configuration
+from gandi_mcp.main import (
+    PRODUCTION_URL,
+    SANDBOX_URL,
+    ConfigurationError,
+    build_container,
+    default_preferences_path,
+    load_configuration,
+)
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def write(tmp_path: Path, content: str) -> Path:
+    path = tmp_path / "gandi-mcp.toml"
+    path.write_text(content, encoding="utf-8")
+    return path
 
 
 def test_defaults_without_configuration_file() -> None:
     assert load_configuration(None) == {
         "app": {"version": __version__},
         "logging": {"level": "WARNING"},
+        "preferences": {"path": default_preferences_path()},
+        "gandi": {
+            "production_url": PRODUCTION_URL,
+            "sandbox_url": SANDBOX_URL,
+            "timeout_seconds": 30.0,
+        },
+        "confirmation": {"timeout_seconds": 300},
+        "token_entry": {"timeout_seconds": 600},
+        "content": {"max_free_input": 280},
     }
 
 
-def test_reads_log_level_from_file(tmp_path: Path) -> None:
-    path = tmp_path / "gandi-mcp.toml"
-    path.write_text('[logging]\nlevel = "debug"\n', encoding="utf-8")
+def test_default_preferences_path_is_in_the_user_configuration_directory() -> None:
+    path = default_preferences_path()
 
-    assert load_configuration(path)["logging"]["level"] == "DEBUG"
+    assert path.name == "preferences.json"
+    assert path.parent.name == "gandi-mcp"
+
+
+def test_example_file_gives_the_defaults() -> None:
+    configuration = load_configuration(ROOT / "gandi-mcp.example.toml")
+
+    assert configuration == load_configuration(None)
+
+
+def test_example_file_lists_every_section() -> None:
+    with (ROOT / "gandi-mcp.example.toml").open("rb") as stream:
+        sections = set(tomllib.load(stream))
+
+    assert sections == {setting.section for setting in main.SETTINGS}
+
+
+def test_reads_values_from_file(tmp_path: Path) -> None:
+    path = write(
+        tmp_path,
+        '[logging]\nlevel = "debug"\n'
+        '[preferences]\npath = "~/prefs.json"\n'
+        '[gandi]\nsandbox_url = "http://127.0.0.1:8080/v5"\ntimeout_seconds = 5\n'
+        "[confirmation]\ntimeout_seconds = 60\n",
+    )
+
+    configuration = load_configuration(path)
+
+    assert configuration["logging"]["level"] == "DEBUG"
+    assert configuration["preferences"]["path"] == Path("~/prefs.json").expanduser()
+    assert configuration["gandi"]["sandbox_url"] == "http://127.0.0.1:8080/v5/"
+    assert configuration["gandi"]["timeout_seconds"] == 5.0
+    assert configuration["confirmation"]["timeout_seconds"] == 60
 
 
 @pytest.mark.parametrize(
     "content",
-    ['[logging]\nlevel = "LOUD"\n', 'logging = "INFO"\n', "not = [toml\n"],
+    [
+        '[logging]\nlevel = "LOUD"\n',
+        'logging = "INFO"\n',
+        "not = [toml\n",
+        "[unknown]\nkey = 1\n",
+        "[gandi]\nretries = 3\n",
+        '[preferences]\npath = ""\n',
+        "[preferences]\npath = 3\n",
+        '[gandi]\nproduction_url = "http://api.gandi.net/v5/"\n',
+        '[gandi]\nproduction_url = "https://api.gandi.net/v5/?a=1"\n',
+        '[gandi]\nproduction_url = "https:///v5/"\n',
+        "[gandi]\nproduction_url = 1\n",
+        "[gandi]\ntimeout_seconds = 0\n",
+        "[gandi]\ntimeout_seconds = true\n",
+        '[gandi]\ntimeout_seconds = "30"\n',
+        "[confirmation]\ntimeout_seconds = 10\n",
+        "[confirmation]\ntimeout_seconds = 60.5\n",
+        "[token_entry]\ntimeout_seconds = 100000\n",
+        "[content]\nmax_free_input = 0\n",
+    ],
 )
 def test_rejects_invalid_configuration(tmp_path: Path, content: str) -> None:
-    path = tmp_path / "gandi-mcp.toml"
-    path.write_text(content, encoding="utf-8")
-
     with pytest.raises(ConfigurationError):
-        load_configuration(path)
+        load_configuration(write(tmp_path, content))
 
 
 def test_rejects_missing_file(tmp_path: Path) -> None:

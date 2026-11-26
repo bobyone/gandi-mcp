@@ -24,7 +24,12 @@ classifiers = [
 dependencies = [
   "babel>=2.19,<3",
   "dependency-injector>=4.49,<5",
+  "httpx2>=2.16,<3",
+  "keyring>=25.7,<26",
   "mcp>=2.3,<3",
+  "platformdirs>=4.14,<5",
+  "starlette>=1.10,<2",
+  "uvicorn>=0.54,<1",
 ]
 
 [project.urls]
@@ -43,7 +48,6 @@ dev = [
   "pre-commit>=4.7,<5",
   "pytest>=9.2,<10",
   "pytest-cov>=7.1,<8",
-  "respx>=0.23,<1",
   "reuse>=6.3,<7",
   "ruff>=0.17,<1",
 ]

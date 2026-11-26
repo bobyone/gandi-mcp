@@ -3,9 +3,34 @@
 #
 # Example configuration for gandi-mcp. Copy it to gandi-mcp.toml (never committed)
 # and pass it with: gandi-mcp --config gandi-mcp.toml
+# Every key is optional; the values below are the defaults.
 # Secrets (Gandi Personal Access Tokens) never go in this file: they are stored
 # in the operating system keyring.
 
 [logging]
 # One of DEBUG, INFO, WARNING, ERROR, CRITICAL. Default: WARNING.
 level = "WARNING"
+
+[preferences]
+# Preferences file (accounts and default account, no secret).
+# Default: <user configuration directory of the OS>/gandi-mcp/preferences.json
+# path = "~/gandi-mcp/preferences.json"
+
+[gandi]
+# Base URLs of the Gandi API v5, per environment (https only).
+production_url = "https://api.gandi.net/v5/"
+sandbox_url = "https://api.sandbox.gandi.net/v5/"
+# Timeout of a request to Gandi, in seconds (1 to 300).
+timeout_seconds = 30
+
+[confirmation]
+# Validity of a confirmation request, in seconds (30 to 3600).
+timeout_seconds = 300
+
+[token_entry]
+# Validity of a token entry session (local page), in seconds (60 to 3600).
+timeout_seconds = 600
+
+[content]
+# Longest free input passed to the model as is, in characters (1 to 10000).
+max_free_input = 280

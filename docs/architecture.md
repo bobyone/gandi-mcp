@@ -43,10 +43,19 @@ Command line: `gandi-mcp [--config PATH] [--version]`.
 | Configuration key | Type | Default | Required | Description |
 | --- | --- | --- | --- | --- |
 | `logging.level` | string, one of `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL` (case-insensitive) | `WARNING` | no | Log level. |
+| `preferences.path` | path (`~` expanded) | `<user configuration directory>/gandi-mcp/preferences.json` | no | Preferences file (accounts, default account; no secret). |
+| `gandi.production_url` | https URL, without query nor fragment | `https://api.gandi.net/v5/` | no | Base URL of the production environment. |
+| `gandi.sandbox_url` | https URL, without query nor fragment | `https://api.sandbox.gandi.net/v5/` | no | Base URL of the sandbox environment. |
+| `gandi.timeout_seconds` | number, 1 to 300 | `30` | no | Timeout of one request to Gandi. |
+| `confirmation.timeout_seconds` | integer, 30 to 3600 | `300` | no | Validity of a confirmation request. |
+| `token_entry.timeout_seconds` | integer, 60 to 3600 | `600` | no | Validity of a token entry session. |
+| `content.max_free_input` | integer, 1 to 10000 | `280` | no | Longest free input passed to the model as is. |
 
 Behavior and limits:
 
 - without `--config`, defaults apply;
+- unknown sections or keys are rejected, so that a typo never goes unnoticed;
+- `http` base URLs are only accepted on `localhost` (local test servers);
 - an unreadable file, invalid TOML or an invalid value logs an error and exits
   with status 2;
 - logs go to stderr only: stdout carries the MCP protocol.
