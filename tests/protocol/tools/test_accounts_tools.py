@@ -184,8 +184,8 @@ async def test_add_account_opens_the_browser_without_elicitation(setup: Setup) -
         )
 
     assert result["status"] == "token_entry_page_shown"
-    assert setup.browser.opened
-    assert "http" not in json.dumps(result)
+    (token_url,) = setup.browser.opened
+    assert token_url not in json.dumps(result)
     target = setup.token_page.opened[0].target
     assert (target.purpose, str(target.name), target.read_only) == (
         TokenPurpose.ADD,
@@ -321,7 +321,13 @@ async def test_remove_account_refused(setup: Setup) -> None:
     assert len(await setup.accounts.list()) == 1
 
 
-async def test_remove_account_through_a_local_page(setup: Setup) -> None:
+async def test_remove_account_through_a_local_page(
+    setup: Setup, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(
+        "gandi_mcp.confirmation.pending_confirmations.secrets.token_urlsafe",
+        lambda _: "test_http_confirmation",
+    )
     await add(setup, "Perso")
 
     async with client(setup) as session:
@@ -340,8 +346,9 @@ async def test_remove_account_through_a_local_page(setup: Setup) -> None:
         )
 
     assert first["status"] == waiting["status"] == "confirmation_pending"
-    assert "http" not in json.dumps(first)
-    assert setup.browser.opened
+    (confirmation_url,) = setup.browser.opened
+    assert confirmation_url not in json.dumps(first)
+    assert confirmation_url not in json.dumps(waiting)
     assert done["status"] == "removed"
 
 
