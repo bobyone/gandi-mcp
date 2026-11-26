@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: 2026 bobyone
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+version = 1
+
+[[annotations]]
+path = [
+  "**/*.json",
+  "**/SKILL.md",
+  "uv.lock",
+  "src/gandi_mcp/py.typed",
+  "src/gandi_mcp/locales/**",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 bobyone"
+SPDX-License-Identifier = "GPL-2.0-or-later"
