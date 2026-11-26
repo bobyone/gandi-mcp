@@ -126,7 +126,7 @@ async def test_token_form_is_translated_and_hardened(pages: Pages) -> None:
     assert "du compte de test (sandbox) Perso." in response.text
     assert 'type="password"' in response.text
     assert "<script" not in response.text
-    assert "https://admin.sandbox.gandi.net/" in response.text
+    assert re.findall(r'<a href="([^"]*)"', response.text) == ["https://admin.sandbox.gandi.net/"]
     headers = response.headers
     assert "default-src 'none'" in headers["content-security-policy"]
     assert "frame-ancestors 'none'" in headers["content-security-policy"]
