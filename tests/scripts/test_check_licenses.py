@@ -28,6 +28,8 @@ from scripts.check_licenses import Requirement, UnsupportedExpressionError
         ("(MIT OR SSPL-1.0) AND SSPL-1.0", False),
         ("MIT OR (SSPL-1.0 AND Apache-2.0)", True),
         ("GPL-2.0-or-later WITH Classpath-exception-2.0", True),
+        ("Apache-2.0 WITH LLVM-exception OR SSPL-1.0", True),
+        ("(GPL-2.0-or-later WITH Classpath-exception-2.0) AND MIT", True),
         ("Proprietary; MIT License", False),
         ("MIT License; BSD License", True),
     ],
@@ -38,7 +40,20 @@ def test_is_allowed(expression: str, allowed: bool) -> None:
 
 @pytest.mark.parametrize(
     "expression",
-    ["", "MIT AND", "(MIT OR Apache-2.0", "MIT )", "OR MIT", "MIT WITH", "MIT WITH (", "( )"],
+    [
+        "",
+        "MIT AND",
+        "(MIT OR Apache-2.0",
+        "MIT )",
+        "OR MIT",
+        "MIT WITH",
+        "MIT WITH (",
+        "( )",
+        # Unreviewed exceptions fail closed, even on an allowed license.
+        "MIT WITH Unknown-exception",
+        "Apache-2.0 WITH Classpath-exception-2.0",
+        "GPL-2.0-or-later WITH Unknown-exception OR MIT",
+    ],
 )
 def test_unsupported_expressions_are_rejected(expression: str) -> None:
     with pytest.raises(UnsupportedExpressionError):

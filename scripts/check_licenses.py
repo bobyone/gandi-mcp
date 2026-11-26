@@ -7,7 +7,8 @@ Apache-2.0 dependencies are accepted because the project is distributed under
 
 License expressions follow SPDX precedence: ``WITH`` binds tightest, then ``AND``,
 then ``OR``; parentheses group. Several classifiers reported together (``A; B``)
-must all be allowed. Unsupported expressions are rejected.
+must all be allowed. Unsupported expressions are rejected, and so is any
+``<license> WITH <exception>`` pair not listed in ``ALLOWED_EXCEPTIONS`` after review.
 
 Dependencies restricted to other platforms by an environment marker are skipped:
 run the check on every supported platform (the CI does).
@@ -52,6 +53,16 @@ ALIASES = {
     "isc license (iscl)": "ISC",
     "mozilla public license 2.0 (mpl 2.0)": "MPL-2.0",
 }
+# License and exception pairs whose combined terms were reviewed as compatible.
+ALLOWED_EXCEPTIONS = frozenset(
+    {
+        # The exception was written to make Apache-2.0 code combinable with GPL-2.0.
+        ("Apache-2.0", "LLVM-exception"),
+        # Exceptions only add permissions to an allowed copyleft license.
+        ("GPL-2.0-or-later", "Classpath-exception-2.0"),
+        ("GPL-3.0-or-later", "GCC-exception-3.1"),
+    }
+)
 TOKEN_SEPARATOR = re.compile(r"(\(|\)|\bAND\b|\bOR\b|\bWITH\b)")
 OPERATORS = frozenset({"AND", "OR", "WITH"})
 
@@ -138,6 +149,11 @@ class _Parser:
             exception = self.take()
             if exception in OPERATORS or exception in {"(", ")"}:
                 raise UnsupportedExpressionError("exception identifier expected")
+            if (normalize(symbol), exception) not in ALLOWED_EXCEPTIONS:
+                raise UnsupportedExpressionError(
+                    f"license exception not reviewed: {symbol} WITH {exception}"
+                )
+            return True
         return normalize(symbol) in ALLOWED_LICENSES
 
 
