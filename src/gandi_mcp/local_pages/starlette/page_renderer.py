@@ -53,7 +53,7 @@ def _document(language: str, title: str, body: str) -> str:
     return (
         f'<!doctype html><html lang="{escape(language)}"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
-        f'<meta name="referrer" content="no-referrer"><title>{escape(title)}</title>'
+        f'<meta name="referrer" content="same-origin"><title>{escape(title)}</title>'
         f"<style>{STYLE}</style></head><body><main><h1>{escape(title)}</h1>{body}</main>"
         "</body></html>"
     )
