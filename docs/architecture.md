@@ -428,8 +428,14 @@ conversation and never to invent a confirmation identifier.
 | --- | --- |
 | `ToolModule` | Abstraction: `register(server)` adds the tools of a notion. |
 | `tools.accounts_tools.AccountsTools` | `list_accounts`, `add_account`, `update_account`, `replace_account_token`, `change_account_environment`, `remove_account`. No tool receives or returns a token; token changes open a token entry session; removing an account and turning read-only off need a confirmation (pending results carry `confirmation_id`). |
+| `tools.domains.domain_tool_runner.DomainToolRunner` | Shared by the domain tool modules: `read(ctx, endpoint, account, path_values=None, *, query=None, body=None, page=None, include_contact_details=False, include_authorization_code=False)` builds the `EndpointOperation` (path values and query are given as functions, so that their validation errors are explained like the others), runs it through the `OperationExecutor`, minimizes contacts with the `ContactRedactor` and frames the result with `present`. `add_read_tool` registers a tool named after its endpoint with the read annotations (`readOnlyHint`, `idempotentHint`, `openWorldHint`). |
+| `tools.domains.availability_tools.AvailabilityTools` | `domain_check_availability` (name, `processes` among `create`, `renew`, `transfer`, `restore`, optional `currency`), `domain_list_tlds`, `domain_tld_details`. |
+| `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status`, `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
+| `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
+| `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
+| `tools.domains.transfer_tools.TransferTools` | `domain_owner_change_status`, `domain_transfer_in_status`, `domain_transfer_in_check` (sends no authorization code). |
 | `McpUserInteraction` | `UserInteraction` over MCP elicitation for one call. From protocol revision 2026-07-28 (no request from the server during a call), elicitation is treated as unavailable, so confirmations use the local page (ADR 4). |
-| `ErrorPresenter` | Maps each business exception to a translated explanation with its remedy (system language); Gandi details are appended and marked as untrusted; unknown exceptions are logged and shown as a generic error. |
+| `ErrorPresenter` | Maps each business exception (including `InvalidDomainNameError` and `InvalidDomainInputError`) to a translated explanation with its remedy (system language); Gandi details are appended and marked as untrusted; unknown exceptions are logged and shown as a generic error. |
 
 ### MCP App: `gandi_mcp.protocol.app` and `ui/`
 
@@ -452,7 +458,8 @@ variables theme Bootstrap through its CSS variables (`theme.css`).
 
 Every component is a container singleton. The entry point adds `app.version`
 and `app.locale` (the system language, from `gandi_mcp.i18n.system_locale`) to
-the validated configuration. The confirmation channels are wired in the order
+the validated configuration. `tool_modules` lists the account tools, then the
+domain tool modules, which share one `DomainToolRunner`. The confirmation channels are wired in the order
 `ElicitationChannel`, `LocalLinkChannel`; the local page server
 implements both page ports and uses the longest of the two page timeouts.
 

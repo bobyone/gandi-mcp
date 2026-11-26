@@ -11,6 +11,7 @@ from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChann
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
+from gandi_mcp.domains.contacts.contact_redactor import ContactRedactor
 from gandi_mcp.gandi.http.http_gandi_client import HttpGandiClient
 from gandi_mcp.i18n.babel.babel_translator import BabelTranslator, default_locales_directory
 from gandi_mcp.interaction.link_presenter import LinkPresenter
@@ -25,6 +26,12 @@ from gandi_mcp.protocol.app.app_resource import load_app_html
 from gandi_mcp.protocol.error_presenter import ErrorPresenter
 from gandi_mcp.protocol.server_factory import create_server
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools
+from gandi_mcp.protocol.tools.domains.availability_tools import AvailabilityTools
+from gandi_mcp.protocol.tools.domains.domain_tool_runner import DomainToolRunner
+from gandi_mcp.protocol.tools.domains.domains_tools import DomainsTools
+from gandi_mcp.protocol.tools.domains.nameserver_tools import NameserverTools
+from gandi_mcp.protocol.tools.domains.redirection_tools import RedirectionTools
+from gandi_mcp.protocol.tools.domains.transfer_tools import TransferTools
 from gandi_mcp.secrets.keyring.keyring_secret_store import KeyringSecretStore
 from gandi_mcp.token_entry.token_entry_service import TokenEntryService
 from gandi_mcp.token_entry.token_entry_sessions import TokenEntrySessions
@@ -108,6 +115,17 @@ class ApplicationContainer(containers.DeclarativeContainer):
     accounts_tools = providers.Singleton(
         AccountsTools, account_service, confirmation, token_entry, error_presenter, translator
     )
+    domain_tool_runner = providers.Singleton(
+        DomainToolRunner, operation_executor, accounts_tools, providers.Singleton(ContactRedactor)
+    )
+    tool_modules = providers.List(
+        accounts_tools,
+        providers.Singleton(AvailabilityTools, domain_tool_runner),
+        providers.Singleton(DomainsTools, domain_tool_runner),
+        providers.Singleton(NameserverTools, domain_tool_runner),
+        providers.Singleton(RedirectionTools, domain_tool_runner),
+        providers.Singleton(TransferTools, domain_tool_runner),
+    )
 
     accounts_app_tools = providers.Singleton(
         AccountsAppTools,
@@ -120,7 +138,7 @@ class ApplicationContainer(containers.DeclarativeContainer):
     server = providers.Singleton(
         create_server,
         version=config.app.version,
-        tool_modules=providers.List(accounts_tools),
+        tool_modules=tool_modules,
         app_modules=providers.List(accounts_app_tools),
         closers=providers.List(gandi_client.provided.close, local_pages.provided.close),
     )

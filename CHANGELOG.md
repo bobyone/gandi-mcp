@@ -30,3 +30,10 @@ All notable changes are documented here. The format follows
 - MCP App: an "Accounts" screen (React-Bootstrap, themed by the host, in 43
   languages) to add, rename, re-authenticate, move, lock and remove accounts;
   tokens typed there go to app-only tools, never to the model. (#4)
+- Domains (read): tools to check availability and prices, list the
+  extensions, list and describe domains, and read their contacts,
+  nameservers, LiveDNS and DNSSEC status, DNSSEC keys, glue records, web
+  redirections, tags, renewal and restore information, trademark claims and
+  the follow-up of registrations, owner changes and transfers in. Contact
+  details and authorization codes are only sent to the model on request.
+  (#5)

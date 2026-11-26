@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 19:20+0100\n"
+"POT-Creation-Date: 2026-11-26 20:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A value is out of its allowed range or format: correct it."
+msgstr "Un valore è fuori dall'intervallo o dal formato consentito: correggilo."
 
 # needs-review
 msgid "An account already has this name: choose another name."
@@ -248,6 +252,10 @@ msgstr "Questo non è un Personal Access Token valido."
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
 msgstr "Questo non è un Personal Access Token valido: copialo di nuovo dall'amministrazione Gandi."
+
+# needs-review
+msgid "This name is not a valid domain name: check its spelling, e.g. example.com."
+msgstr "Questo nome non è un nome di dominio valido: verificane l'ortografia, ad es. example.com."
 
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
