@@ -277,6 +277,10 @@ Behavior and limits:
 - `transaction()` locks `<file>.lock` (`msvcrt` on Windows, `fcntl` elsewhere),
   waiting up to `lock_timeout_seconds` (10 s): several MCP clients may run their
   own gandi-mcp process on the same preferences;
+- file operations and the lock acquisition run in a worker thread that is
+  always allowed to finish (`blocking_call.run_to_completion`): a cancelled call
+  releases a lock obtained too late, and never releases the lock while a write
+  is still in progress;
 - an invalid file (JSON, structure, names, invariants), a file larger than
   1 MB or another format version raises `CorruptPreferencesError` and is never
   overwritten;

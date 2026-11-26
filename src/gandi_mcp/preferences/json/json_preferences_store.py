@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Preferences kept in a JSON file, written atomically."""
 
-import asyncio
 import contextlib
 import json
 import logging
@@ -17,6 +16,7 @@ from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.accounts.exceptions import InvalidAccountNameError
 from gandi_mcp.preferences.exceptions import CorruptPreferencesError, PreferencesUnavailableError
+from gandi_mcp.preferences.json.blocking_call import run_to_completion
 from gandi_mcp.preferences.json.file_lock import FileLock
 from gandi_mcp.preferences.preferences import Preferences
 from gandi_mcp.preferences.preferences_store import PreferencesStore
@@ -98,17 +98,19 @@ class JsonPreferencesStore(PreferencesStore):
     @contextlib.asynccontextmanager
     async def transaction(self) -> AsyncIterator[None]:
         lock = FileLock(self._path.with_name(self._path.name + ".lock"), self._lock_timeout)
-        await asyncio.to_thread(lock.acquire)
+        # Cancelled while waiting: the lock is released as soon as the worker gets it.
+        await run_to_completion(lock.acquire, undo=lambda _: lock.release())
         try:
             yield
         finally:
             lock.release()
 
     async def load(self) -> Preferences:
-        return await asyncio.to_thread(self._load)
+        return await run_to_completion(self._load)
 
     async def save(self, preferences: Preferences) -> None:
-        await asyncio.to_thread(self._save, preferences)
+        # Cancelled while writing: the write ends before the transaction releases the lock.
+        await run_to_completion(lambda: self._save(preferences))
 
     def _load(self) -> Preferences:
         try:

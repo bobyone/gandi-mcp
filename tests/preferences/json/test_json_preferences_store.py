@@ -4,6 +4,7 @@
 
 import asyncio
 import json
+import threading
 from pathlib import Path
 
 import pytest
@@ -164,3 +165,59 @@ async def test_transaction_times_out_when_another_holds_the_lock(tmp_path: Path)
                 pass
     async with second.transaction():
         assert await second.load() == Preferences()
+
+
+async def test_cancelled_while_waiting_for_the_lock_never_leaks_it(tmp_path: Path) -> None:
+    path = tmp_path / "preferences.json"
+    holder, waiter = JsonPreferencesStore(path), JsonPreferencesStore(path, 5)
+
+    async def wait_for_the_lock() -> None:
+        async with waiter.transaction():
+            pytest.fail("the cancelled transaction must not run")
+
+    async with holder.transaction():
+        task = asyncio.ensure_future(wait_for_the_lock())
+        await asyncio.sleep(0.2)
+        task.cancel()
+        await asyncio.sleep(0.05)
+    with pytest.raises(asyncio.CancelledError):
+        await task
+    # The worker of the cancelled transaction gets the lock once it is free.
+    await asyncio.sleep(0.5)
+
+    async with JsonPreferencesStore(path, 0.5).transaction():
+        pass
+
+
+async def test_cancelled_during_a_write_keeps_the_lock_until_it_ends(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "preferences.json"
+    store = JsonPreferencesStore(path)
+    writing, release = threading.Event(), threading.Event()
+    original = JsonPreferencesStore._save
+
+    def slow_save(self: JsonPreferencesStore, preferences: Preferences) -> None:
+        writing.set()
+        release.wait(5)
+        original(self, preferences)
+
+    monkeypatch.setattr(JsonPreferencesStore, "_save", slow_save)
+
+    async def change() -> None:
+        async with store.transaction():
+            await store.save(PREFERENCES)
+
+    task = asyncio.ensure_future(change())
+    await asyncio.to_thread(writing.wait, 5)
+    task.cancel()
+    await asyncio.sleep(0.05)
+
+    with pytest.raises(PreferencesUnavailableError):
+        async with JsonPreferencesStore(path, 0.2).transaction():
+            pass
+    release.set()
+    with pytest.raises(asyncio.CancelledError):
+        await task
+    async with JsonPreferencesStore(path, 0.5).transaction():
+        assert await JsonPreferencesStore(path).load() == PREFERENCES
