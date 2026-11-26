@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:47+0100\n"
+"POT-Creation-Date: 2026-11-26 14:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -20,6 +20,15 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Már létezik {account} nevű fiók. Semmi sem lett mentve."
+
+# needs-review
+msgid "Confirm"
+msgstr "Megerősítés"
+
+# needs-review
+#, python-brace-format
 msgid "Confirm on the production account {account}: {action}"
 msgstr "Megerősítés a(z) {account} éles fiókon: {action}"
 
@@ -29,8 +38,103 @@ msgid "Confirm on the sandbox account {account}: {action}"
 msgstr "Megerősítés a(z) {account} tesztfiókon (sandbox): {action}"
 
 # needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Megerősítés - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Hozzon létre tokent a Gandi adminisztrációs felületén"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Adja meg a(z) {account} éles fiók Personal Access Tokenjét."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Adja meg a(z) {account} tesztfiók (sandbox) Personal Access Tokenjét."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "A Gandi jelenleg nem érhető el. Semmi sem lett mentve: próbálja újra később."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"A Gandi elutasította ezt a tokent ehhez a környezethez. Semmi sem lett mentve: kérje meg az "
+"asszisztenst, hogy nyisson új oldalt, majd adjon meg érvényes tokent."
+
+# needs-review
 msgid "Open this page to confirm or refuse the operation."
 msgstr "Nyissa meg ezt az oldalt a művelet megerősítéséhez vagy elutasításához."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Nyissa meg ezt az oldalt a(z) {account} fiók Personal Access Tokenjének megadásához."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "A művelet megerősítve. Térjen vissza a beszélgetéshez, és kérje meg az asszisztenst a folytatásra."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "A művelet elutasítva. Semmi sem változott."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Elutasítás"
+
+# needs-review
+msgid "Save"
+msgstr "Mentés"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "A(z) {account} fiók mentve a(z) {username} Gandi-felhasználóhoz. Bezárhatja ezt az oldalt."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "A(z) {account} fiók már nem létezik. Semmi sem lett mentve."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"A rendszer kulcstartója nem érhető el. Semmi sem lett mentve: oldja fel vagy telepítse, majd "
+"próbálja újra."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"A gandi-mcp beállításai nem menthetők. Semmi sem lett mentve: ellenőrizze a beállítások fájlját, "
+"majd próbálja újra."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Ez nem érvényes Personal Access Token: másolja ki újra a Gandi adminisztrációs felületéről."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Ez az oldal lejárt, vagy már felhasználták. Semmi sem változott."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Ez a kérés el lett utasítva. Semmi sem változott."
 
 # needs-review
 msgid "read the identity of the account"

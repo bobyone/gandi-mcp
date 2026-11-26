@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:47+0100\n"
+"POT-Creation-Date: 2026-11-26 14:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -20,6 +20,15 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Υπάρχει ήδη λογαριασμός με το όνομα {account}. Δεν αποθηκεύτηκε τίποτα."
+
+# needs-review
+msgid "Confirm"
+msgstr "Επιβεβαίωση"
+
+# needs-review
+#, python-brace-format
 msgid "Confirm on the production account {account}: {action}"
 msgstr "Επιβεβαιώστε στον λογαριασμό παραγωγής {account}: {action}"
 
@@ -29,8 +38,105 @@ msgid "Confirm on the sandbox account {account}: {action}"
 msgstr "Επιβεβαιώστε στον δοκιμαστικό λογαριασμό (sandbox) {account}: {action}"
 
 # needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Επιβεβαίωση - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Δημιουργήστε ένα token στη διαχείριση της Gandi"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Εισαγάγετε το Personal Access Token του λογαριασμού παραγωγής {account}."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Εισαγάγετε το Personal Access Token του δοκιμαστικού λογαριασμού (sandbox) {account}."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Η Gandi δεν είναι προσβάσιμη αυτή τη στιγμή. Δεν αποθηκεύτηκε τίποτα: δοκιμάστε ξανά αργότερα."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Η Gandi απέρριψε αυτό το token για αυτό το περιβάλλον. Δεν αποθηκεύτηκε τίποτα: ζητήστε από τον "
+"βοηθό να ανοίξει νέα σελίδα και εισαγάγετε ένα έγκυρο token."
+
+# needs-review
 msgid "Open this page to confirm or refuse the operation."
 msgstr "Ανοίξτε αυτή τη σελίδα για να επιβεβαιώσετε ή να απορρίψετε τη λειτουργία."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Ανοίξτε αυτή τη σελίδα για να εισαγάγετε το Personal Access Token του λογαριασμού {account}."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Η λειτουργία επιβεβαιώθηκε. Επιστρέψτε στη συνομιλία και ζητήστε από τον βοηθό να συνεχίσει."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Η λειτουργία απορρίφθηκε. Δεν άλλαξε τίποτα."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Απόρριψη"
+
+# needs-review
+msgid "Save"
+msgstr "Αποθήκευση"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr ""
+"Ο λογαριασμός {account} αποθηκεύτηκε για τον χρήστη Gandi {username}. Μπορείτε να κλείσετε αυτή "
+"τη σελίδα."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Ο λογαριασμός {account} δεν υπάρχει πλέον. Δεν αποθηκεύτηκε τίποτα."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Η κλειδοθήκη του συστήματος δεν είναι διαθέσιμη. Δεν αποθηκεύτηκε τίποτα: ξεκλειδώστε ή "
+"εγκαταστήστε την και δοκιμάστε ξανά."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"Δεν είναι δυνατή η αποθήκευση των προτιμήσεων του gandi-mcp. Δεν αποθηκεύτηκε τίποτα: ελέγξτε το "
+"αρχείο προτιμήσεων και δοκιμάστε ξανά."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Αυτό δεν είναι έγκυρο Personal Access Token: αντιγράψτε το ξανά από τη διαχείριση της Gandi."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Αυτή η σελίδα έχει λήξει ή έχει ήδη χρησιμοποιηθεί. Δεν άλλαξε τίποτα."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Αυτό το αίτημα απορρίφθηκε. Δεν άλλαξε τίποτα."
 
 # needs-review
 msgid "read the identity of the account"

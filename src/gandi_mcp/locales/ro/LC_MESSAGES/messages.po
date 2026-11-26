@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:47+0100\n"
+"POT-Creation-Date: 2026-11-26 14:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ro\n"
@@ -21,6 +21,15 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Există deja un cont numit {account}. Nu s-a salvat nimic."
+
+# needs-review
+msgid "Confirm"
+msgstr "Confirmă"
+
+# needs-review
+#, python-brace-format
 msgid "Confirm on the production account {account}: {action}"
 msgstr "Confirmați în contul de producție {account}: {action}"
 
@@ -30,8 +39,105 @@ msgid "Confirm on the sandbox account {account}: {action}"
 msgstr "Confirmați în contul de test (sandbox) {account}: {action}"
 
 # needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Confirmare - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Creați un token în administrarea Gandi"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Introduceți Personal Access Token al contului de producție {account}."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Introduceți Personal Access Token al contului de test (sandbox) {account}."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Gandi nu poate fi contactat acum. Nu s-a salvat nimic: încercați din nou mai târziu."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi a refuzat acest token pentru acest mediu. Nu s-a salvat nimic: cereți asistentului să "
+"deschidă o pagină nouă, apoi introduceți un token valid."
+
+# needs-review
 msgid "Open this page to confirm or refuse the operation."
 msgstr "Deschideți această pagină pentru a confirma sau a refuza operațiunea."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Deschideți această pagină pentru a introduce Personal Access Token al contului {account}."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Operațiune confirmată. Reveniți la conversație și cereți asistentului să continue."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Operațiune refuzată. Nu s-a modificat nimic."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Refuză"
+
+# needs-review
+msgid "Save"
+msgstr "Salvează"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr ""
+"Contul {account} a fost salvat pentru utilizatorul Gandi {username}. Puteți închide această "
+"pagină."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Contul {account} nu mai există. Nu s-a salvat nimic."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Breloc-ul de chei al sistemului nu este disponibil. Nu s-a salvat nimic: deblocați-l sau "
+"instalați-l, apoi încercați din nou."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"Preferințele gandi-mcp nu pot fi salvate. Nu s-a salvat nimic: verificați fișierul de preferințe,"
+" apoi încercați din nou."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Acesta nu este un Personal Access Token valid: copiați-l din nou din administrarea Gandi."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Această pagină a expirat sau a fost deja folosită. Nu s-a modificat nimic."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Această cerere a fost refuzată. Nu s-a modificat nimic."
 
 # needs-review
 msgid "read the identity of the account"

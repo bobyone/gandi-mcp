@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:47+0100\n"
+"POT-Creation-Date: 2026-11-26 14:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ga\n"
@@ -21,6 +21,15 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Tá cuntas darb ainm {account} ann cheana. Níor sábháladh aon rud."
+
+# needs-review
+msgid "Confirm"
+msgstr "Deimhnigh"
+
+# needs-review
+#, python-brace-format
 msgid "Confirm on the production account {account}: {action}"
 msgstr "Deimhnigh ar an gcuntas táirgeachta {account}: {action}"
 
@@ -30,8 +39,107 @@ msgid "Confirm on the sandbox account {account}: {action}"
 msgstr "Deimhnigh ar an gcuntas tástála (sandbox) {account}: {action}"
 
 # needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Deimhniú - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Cruthaigh comhartha i riarachán Gandi"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Iontráil an Personal Access Token don chuntas táirgeachta {account}."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Iontráil an Personal Access Token don chuntas tástála (sandbox) {account}."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr ""
+"Ní féidir teagmháil a dhéanamh le Gandi faoi láthair. Níor sábháladh aon rud: bain triail eile as"
+" ar ball."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Dhiúltaigh Gandi an comhartha seo don timpeallacht seo. Níor sábháladh aon rud: iarr ar an "
+"gcúntóir leathanach nua a oscailt, ansin iontráil comhartha bailí."
+
+# needs-review
 msgid "Open this page to confirm or refuse the operation."
 msgstr "Oscail an leathanach seo chun an oibríocht a dheimhniú nó a dhiúltú."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Oscail an leathanach seo chun an Personal Access Token don chuntas {account} a iontráil."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Oibríocht deimhnithe. Fill ar an gcomhrá agus iarr ar an gcúntóir leanúint ar aghaidh."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Oibríocht diúltaithe. Níor athraíodh aon rud."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Diúltaigh"
+
+# needs-review
+msgid "Save"
+msgstr "Sábháil"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr ""
+"Tá an cuntas {account} sábháilte don úsáideoir Gandi {username}. Is féidir leat an leathanach seo"
+" a dhúnadh."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Níl an cuntas {account} ann a thuilleadh. Níor sábháladh aon rud."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Níl fáinne eochracha an chórais ar fáil. Níor sábháladh aon rud: díghlasáil nó suiteáil é, ansin "
+"bain triail eile as."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"Ní féidir sainroghanna gandi-mcp a shábháil. Níor sábháladh aon rud: seiceáil comhad na "
+"sainroghanna, ansin bain triail eile as."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Ní Personal Access Token bailí é seo: cóipeáil arís é ó riarachán Gandi."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Tá an leathanach seo imithe in éag nó úsáidte cheana. Níor athraíodh aon rud."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Diúltaíodh don iarratas seo. Níor athraíodh aon rud."
 
 # needs-review
 msgid "read the identity of the account"

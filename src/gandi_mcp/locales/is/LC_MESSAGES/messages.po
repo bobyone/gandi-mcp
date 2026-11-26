@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:47+0100\n"
+"POT-Creation-Date: 2026-11-26 14:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: is\n"
@@ -20,6 +20,15 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Það er þegar til reikningur sem heitir {account}. Ekkert var vistað."
+
+# needs-review
+msgid "Confirm"
+msgstr "Staðfesta"
+
+# needs-review
+#, python-brace-format
 msgid "Confirm on the production account {account}: {action}"
 msgstr "Staðfestu á framleiðslureikningnum {account}: {action}"
 
@@ -29,8 +38,103 @@ msgid "Confirm on the sandbox account {account}: {action}"
 msgstr "Staðfestu á prófunarreikningnum (sandbox) {account}: {action}"
 
 # needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Staðfesting - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Búðu til tóka í Gandi-stjórnborðinu"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Sláðu inn Personal Access Token framleiðslureikningsins {account}."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Sláðu inn Personal Access Token prófunarreikningsins (sandbox) {account}."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Ekki næst í Gandi núna. Ekkert var vistað: reyndu aftur síðar."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi hafnaði þessum tóka fyrir þetta umhverfi. Ekkert var vistað: biddu aðstoðarmanninn að opna "
+"nýja síðu og sláðu svo inn gildan tóka."
+
+# needs-review
 msgid "Open this page to confirm or refuse the operation."
 msgstr "Opnaðu þessa síðu til að staðfesta eða hafna aðgerðinni."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Opnaðu þessa síðu til að slá inn Personal Access Token reikningsins {account}."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Aðgerð staðfest. Farðu aftur í samtalið og biddu aðstoðarmanninn að halda áfram."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Aðgerð hafnað. Engu var breytt."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Hafna"
+
+# needs-review
+msgid "Save"
+msgstr "Vista"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "Reikningurinn {account} er vistaður fyrir Gandi-notandann {username}. Þú getur lokað þessari síðu."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Reikningurinn {account} er ekki lengur til. Ekkert var vistað."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Lyklakippa kerfisins er ekki tiltæk. Ekkert var vistað: aflæstu henni eða settu hana upp og "
+"reyndu aftur."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"Ekki er hægt að vista stillingar gandi-mcp. Ekkert var vistað: athugaðu stillingaskrána og reyndu"
+" aftur."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Þetta er ekki gilt Personal Access Token: afritaðu það aftur úr Gandi-stjórnborðinu."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Þessi síða er útrunnin eða hefur þegar verið notuð. Engu var breytt."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Þessari beiðni var hafnað. Engu var breytt."
 
 # needs-review
 msgid "read the identity of the account"

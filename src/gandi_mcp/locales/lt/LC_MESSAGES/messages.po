@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:47+0100\n"
+"POT-Creation-Date: 2026-11-26 14:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lt\n"
@@ -21,6 +21,15 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Paskyra pavadinimu {account} jau yra. Niekas neišsaugota."
+
+# needs-review
+msgid "Confirm"
+msgstr "Patvirtinti"
+
+# needs-review
+#, python-brace-format
 msgid "Confirm on the production account {account}: {action}"
 msgstr "Patvirtinkite gamybinėje paskyroje {account}: {action}"
 
@@ -30,8 +39,103 @@ msgid "Confirm on the sandbox account {account}: {action}"
 msgstr "Patvirtinkite bandomojoje paskyroje (sandbox) {account}: {action}"
 
 # needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Patvirtinimas - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Sukurkite prieigos raktą Gandi administravime"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Įveskite gamybinės paskyros {account} Personal Access Token."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Įveskite bandomosios paskyros (sandbox) {account} Personal Access Token."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Šiuo metu nepavyksta pasiekti Gandi. Niekas neišsaugota: bandykite vėliau."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi atmetė šį prieigos raktą šiai aplinkai. Niekas neišsaugota: paprašykite asistento atidaryti"
+" naują puslapį ir įveskite galiojantį raktą."
+
+# needs-review
 msgid "Open this page to confirm or refuse the operation."
 msgstr "Atidarykite šį puslapį, kad patvirtintumėte arba atmestumėte operaciją."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Atidarykite šį puslapį, kad įvestumėte paskyros {account} Personal Access Token."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Operacija patvirtinta. Grįžkite į pokalbį ir paprašykite asistento tęsti."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Operacija atmesta. Niekas nepakeista."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Atmesti"
+
+# needs-review
+msgid "Save"
+msgstr "Išsaugoti"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "Paskyra {account} išsaugota Gandi naudotojui {username}. Galite uždaryti šį puslapį."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Paskyros {account} nebėra. Niekas neišsaugota."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Sistemos raktinė nepasiekiama. Niekas neišsaugota: atrakinkite arba įdiekite ją ir bandykite dar "
+"kartą."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"Nepavyksta išsaugoti gandi-mcp nuostatų. Niekas neišsaugota: patikrinkite nuostatų failą ir "
+"bandykite dar kartą."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Tai nėra galiojantis Personal Access Token: nukopijuokite jį dar kartą iš Gandi administravimo."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Šio puslapio galiojimas baigėsi arba jis jau panaudotas. Niekas nepakeista."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Ši užklausa atmesta. Niekas nepakeista."
 
 # needs-review
 msgid "read the identity of the account"

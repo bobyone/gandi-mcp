@@ -130,6 +130,23 @@ Questions asked to the user through the MCP client, outside the model context.
 when it cannot. `LinkPresenter.present(url, message, interaction)` uses URL
 elicitation when available, otherwise the browser.
 
+### Token entry: `gandi_mcp.token_entry`
+
+A token entry session lets the user submit one token on a local page, for a
+`TokenEntryTarget` (add an account, replace its token, or change its
+environment).
+
+| Component | Contract |
+| --- | --- |
+| `TokenEntrySessions(timeout_seconds, clock)` | In-memory registry: `open(target)`, `peek(id)`, `use(id)` (once), `close(id)`; at most 20 sessions; `SessionUsedError`, `SessionExpiredError`. |
+| `TokenEntryPage` | Port of the page: `open_token_entry(session, locale)` returns its URL, never given to the model. |
+| `TokenEntryService.start(target, interaction, locale)` | Opens a session and shows its page (`LinkPresenter`); `TokenEntryUnavailableError` (session closed) when it cannot. |
+| `TokenSubmission.submit(target, token)` | Applies the token through `AccountService` (`add`, `replace_token` or `change_environment`). |
+
+### Local page server: `gandi_mcp.local_pages.local_page_server.LocalPageServer`
+
+Implements `ConfirmationPage` and `TokenEntryPage`; `close()` stops serving.
+
 ### Token verifier: `gandi_mcp.accounts.token_verifier.TokenVerifier`
 
 | Operation | Contract |
@@ -301,6 +318,39 @@ identifiers (128 bits).
 Opens `http://127.0.0.1` and `http://localhost` URLs only, in a new tab of the
 default browser (`webbrowser`), in a worker thread; any other URL raises
 `ValueError`.
+
+### Local page server: `gandi_mcp.local_pages.starlette.starlette_local_page_server.StarletteLocalPageServer`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `pending` | `PendingConfirmations` | none | yes | Pending confirmations answered on confirmation pages. |
+| `sessions` | `TokenEntrySessions` | none | yes | Token entry sessions. |
+| `submission` | `TokenSubmission` | none | yes | Applies a submitted token. |
+| `translator` | `Translator` | none | yes | Translates the pages. |
+| `page_timeout_seconds` | number | none | yes | Validity of a page: the longest of `confirmation.timeout_seconds` and `token_entry.timeout_seconds`. |
+| `clock` | callable | `time.monotonic` | no | Clock, for tests. |
+
+Behavior and limits:
+
+- an embedded Uvicorn server listens on `127.0.0.1`, on a random port; it
+  starts when a page is registered and stops when no page remains (checked
+  when a page expires) or on `close()`; it never installs signal handlers and
+  writes no access log, since URLs carry secret codes;
+- each page has its own 256-bit code in its path (`/token/<code>`,
+  `/confirm/<code>`), distinct from the identifiers known to the model, and
+  answers one submission;
+- requests are refused unless `Host` is `127.0.0.1:<port>`; a `POST` is
+  refused when `Origin` or `Sec-Fetch-Site` shows another site, when it is not
+  `application/x-www-form-urlencoded`, when its body exceeds 8 KB or when its
+  form does not repeat the page code;
+- pages have no script, escape every value, and are served with a strict
+  Content Security Policy (`default-src 'none'`, hashed inline style,
+  `form-action 'self'`, `frame-ancestors 'none'`), `Referrer-Policy:
+  no-referrer`, `Cache-Control: no-store`, `X-Frame-Options: DENY`;
+- the language is the one of the call that opened the page, else the browser's
+  `Accept-Language`, else English;
+- a token with an invalid format can be corrected on the same page; any other
+  outcome ends the session and is explained without technical detail.
 
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 

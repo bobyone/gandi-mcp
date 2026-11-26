@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:47+0100\n"
+"POT-Creation-Date: 2026-11-26 14:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,13 @@ msgstr ""
 "Generated-By: Babel 2.19.0\n"
 
 #, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+#, python-brace-format
 msgid "Confirm on the production account {account}: {action}"
 msgstr ""
 
@@ -25,7 +32,86 @@ msgstr ""
 msgid "Confirm on the sandbox account {account}: {action}"
 msgstr ""
 
+msgid "Confirmation - gandi-mcp"
+msgstr ""
+
+msgid "Create a token in the Gandi administration"
+msgstr ""
+
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr ""
+
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr ""
+
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr ""
+
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the"
+" assistant to open a new page, then enter a valid token."
+msgstr ""
+
 msgid "Open this page to confirm or refuse the operation."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Open this page to enter the Personal Access Token of the account "
+"{account}."
+msgstr ""
+
+msgid ""
+"Operation confirmed. Go back to the conversation and ask the assistant to"
+" continue."
+msgstr ""
+
+msgid "Operation refused. Nothing was changed."
+msgstr ""
+
+msgid "Personal Access Token"
+msgstr ""
+
+msgid "Personal Access Token - gandi-mcp"
+msgstr ""
+
+msgid "Refuse"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"The account {account} is saved for the Gandi user {username}. You can "
+"close this page."
+msgstr ""
+
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr ""
+
+msgid ""
+"The keyring of the system is unavailable. Nothing was saved: unlock or "
+"install it, then try again."
+msgstr ""
+
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check "
+"the preferences file, then try again."
+msgstr ""
+
+msgid ""
+"This is not a valid Personal Access Token: copy it again from the Gandi "
+"administration."
+msgstr ""
+
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr ""
+
+msgid "This request was refused. Nothing was changed."
 msgstr ""
 
 msgid "read the identity of the account"

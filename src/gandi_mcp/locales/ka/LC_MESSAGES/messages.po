@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:47+0100\n"
+"POT-Creation-Date: 2026-11-26 14:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ka\n"
@@ -20,6 +20,15 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "ანგარიში სახელით {account} უკვე არსებობს. არაფერი შენახულა."
+
+# needs-review
+msgid "Confirm"
+msgstr "დადასტურება"
+
+# needs-review
+#, python-brace-format
 msgid "Confirm on the production account {account}: {action}"
 msgstr "დაადასტურეთ სამუშაო ანგარიშზე {account}: {action}"
 
@@ -29,8 +38,103 @@ msgid "Confirm on the sandbox account {account}: {action}"
 msgstr "დაადასტურეთ სატესტო ანგარიშზე (sandbox) {account}: {action}"
 
 # needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "დადასტურება - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "შექმენით ტოკენი Gandi-ის ადმინისტრირებაში"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "შეიყვანეთ სამუშაო ანგარიშის {account} Personal Access Token."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "შეიყვანეთ სატესტო ანგარიშის (sandbox) {account} Personal Access Token."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Gandi ამჟამად მიუწვდომელია. არაფერი შენახულა: სცადეთ მოგვიანებით."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi-მ უარყო ეს ტოკენი ამ გარემოსთვის. არაფერი შენახულა: სთხოვეთ ასისტენტს ახალი გვერდის გახსნა "
+"და შეიყვანეთ სწორი ტოკენი."
+
+# needs-review
 msgid "Open this page to confirm or refuse the operation."
 msgstr "გახსენით ეს გვერდი ოპერაციის დასადასტურებლად ან უარსაყოფად."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "გახსენით ეს გვერდი ანგარიშის {account} Personal Access Token-ის შესაყვანად."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "ოპერაცია დადასტურებულია. დაბრუნდით საუბარში და სთხოვეთ ასისტენტს გაგრძელება."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "ოპერაცია უარყოფილია. არაფერი შეცვლილა."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "უარყოფა"
+
+# needs-review
+msgid "Save"
+msgstr "შენახვა"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "ანგარიში {account} შენახულია Gandi-ის მომხმარებლისთვის {username}. შეგიძლიათ დახუროთ ეს გვერდი."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "ანგარიში {account} აღარ არსებობს. არაფერი შენახულა."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"სისტემის გასაღებების საცავი მიუწვდომელია. არაფერი შენახულა: განბლოკეთ ან დააინსტალირეთ და სცადეთ "
+"ხელახლა."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"gandi-mcp-ის პარამეტრების შენახვა შეუძლებელია. არაფერი შენახულა: შეამოწმეთ პარამეტრების ფაილი და "
+"სცადეთ ხელახლა."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "ეს არ არის სწორი Personal Access Token: ხელახლა დააკოპირეთ Gandi-ის ადმინისტრირებიდან."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "ამ გვერდს ვადა გაუვიდა ან უკვე გამოყენებულია. არაფერი შეცვლილა."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "ეს მოთხოვნა უარყოფილია. არაფერი შეცვლილა."
 
 # needs-review
 msgid "read the identity of the account"

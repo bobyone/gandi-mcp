@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:47+0100\n"
+"POT-Creation-Date: 2026-11-26 14:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: bg\n"
@@ -20,6 +20,15 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Вече има акаунт с име {account}. Нищо не е запазено."
+
+# needs-review
+msgid "Confirm"
+msgstr "Потвърждаване"
+
+# needs-review
+#, python-brace-format
 msgid "Confirm on the production account {account}: {action}"
 msgstr "Потвърдете в производствения акаунт {account}: {action}"
 
@@ -29,8 +38,105 @@ msgid "Confirm on the sandbox account {account}: {action}"
 msgstr "Потвърдете в тестовия акаунт (sandbox) {account}: {action}"
 
 # needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Потвърждение - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Създайте токен в администрацията на Gandi"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Въведете Personal Access Token на производствения акаунт {account}."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Въведете Personal Access Token на тестовия акаунт (sandbox) {account}."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "В момента няма връзка с Gandi. Нищо не е запазено: опитайте отново по-късно."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi отказа този токен за тази среда. Нищо не е запазено: помолете асистента да отвори нова "
+"страница, след което въведете валиден токен."
+
+# needs-review
 msgid "Open this page to confirm or refuse the operation."
 msgstr "Отворете тази страница, за да потвърдите или откажете операцията."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Отворете тази страница, за да въведете Personal Access Token на акаунта {account}."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Операцията е потвърдена. Върнете се в разговора и помолете асистента да продължи."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Операцията е отказана. Нищо не е променено."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Отказване"
+
+# needs-review
+msgid "Save"
+msgstr "Запазване"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr ""
+"Акаунтът {account} е запазен за потребителя на Gandi {username}. Можете да затворите тази "
+"страница."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Акаунтът {account} вече не съществува. Нищо не е запазено."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Ключодържателят на системата е недостъпен. Нищо не е запазено: отключете го или го инсталирайте, "
+"след което опитайте отново."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"Предпочитанията на gandi-mcp не могат да бъдат запазени. Нищо не е запазено: проверете файла с "
+"предпочитания и опитайте отново."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Това не е валиден Personal Access Token: копирайте го отново от администрацията на Gandi."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Тази страница е изтекла или вече е използвана. Нищо не е променено."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Тази заявка е отказана. Нищо не е променено."
 
 # needs-review
 msgid "read the identity of the account"

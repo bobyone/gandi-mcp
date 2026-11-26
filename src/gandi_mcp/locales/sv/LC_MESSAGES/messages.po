@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 14:47+0100\n"
+"POT-Creation-Date: 2026-11-26 14:58+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sv\n"
@@ -20,6 +20,15 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "An account is already named {account}. Nothing was saved."
+msgstr "Det finns redan ett konto som heter {account}. Inget sparades."
+
+# needs-review
+msgid "Confirm"
+msgstr "Bekräfta"
+
+# needs-review
+#, python-brace-format
 msgid "Confirm on the production account {account}: {action}"
 msgstr "Bekräfta på produktionskontot {account}: {action}"
 
@@ -29,8 +38,103 @@ msgid "Confirm on the sandbox account {account}: {action}"
 msgstr "Bekräfta på testkontot (sandbox) {account}: {action}"
 
 # needs-review
+msgid "Confirmation - gandi-mcp"
+msgstr "Bekräftelse - gandi-mcp"
+
+# needs-review
+msgid "Create a token in the Gandi administration"
+msgstr "Skapa en token i Gandis administration"
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the production account {account}."
+msgstr "Ange Personal Access Token för produktionskontot {account}."
+
+# needs-review
+#, python-brace-format
+msgid "Enter the Personal Access Token of the sandbox account {account}."
+msgstr "Ange Personal Access Token för testkontot (sandbox) {account}."
+
+# needs-review
+msgid "Gandi cannot be reached right now. Nothing was saved: try again later."
+msgstr "Gandi kan inte nås just nu. Inget sparades: försök igen senare."
+
+# needs-review
+msgid ""
+"Gandi refused this token for this environment. Nothing was saved: ask the assistant to open a new"
+" page, then enter a valid token."
+msgstr ""
+"Gandi avvisade denna token för den här miljön. Inget sparades: be assistenten öppna en ny sida "
+"och ange sedan en giltig token."
+
+# needs-review
 msgid "Open this page to confirm or refuse the operation."
 msgstr "Öppna den här sidan för att bekräfta eller avvisa åtgärden."
+
+# needs-review
+#, python-brace-format
+msgid "Open this page to enter the Personal Access Token of the account {account}."
+msgstr "Öppna den här sidan för att ange Personal Access Token för kontot {account}."
+
+# needs-review
+msgid "Operation confirmed. Go back to the conversation and ask the assistant to continue."
+msgstr "Åtgärden är bekräftad. Gå tillbaka till konversationen och be assistenten fortsätta."
+
+# needs-review
+msgid "Operation refused. Nothing was changed."
+msgstr "Åtgärden avvisades. Inget ändrades."
+
+# needs-review
+msgid "Personal Access Token"
+msgstr "Personal Access Token"
+
+# needs-review
+msgid "Personal Access Token - gandi-mcp"
+msgstr "Personal Access Token - gandi-mcp"
+
+# needs-review
+msgid "Refuse"
+msgstr "Avvisa"
+
+# needs-review
+msgid "Save"
+msgstr "Spara"
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} is saved for the Gandi user {username}. You can close this page."
+msgstr "Kontot {account} har sparats för Gandi-användaren {username}. Du kan stänga den här sidan."
+
+# needs-review
+#, python-brace-format
+msgid "The account {account} no longer exists. Nothing was saved."
+msgstr "Kontot {account} finns inte längre. Inget sparades."
+
+# needs-review
+msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
+msgstr ""
+"Systemets nyckelring är inte tillgänglig. Inget sparades: lås upp eller installera den och försök"
+" igen."
+
+# needs-review
+msgid ""
+"The preferences of gandi-mcp cannot be saved. Nothing was saved: check the preferences file, then"
+" try again."
+msgstr ""
+"Inställningarna för gandi-mcp kan inte sparas. Inget sparades: kontrollera inställningsfilen och "
+"försök igen."
+
+# needs-review
+msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
+msgstr "Detta är inte en giltig Personal Access Token: kopiera den igen från Gandis administration."
+
+# needs-review
+msgid "This page has expired or was already used. Nothing was changed."
+msgstr "Den här sidan har gått ut eller redan använts. Inget ändrades."
+
+# needs-review
+msgid "This request was refused. Nothing was changed."
+msgstr "Denna begäran avvisades. Inget ändrades."
 
 # needs-review
 msgid "read the identity of the account"
