@@ -10,6 +10,25 @@ Each call to Gandi is an `Operation` (a command, see
 applies the common rules, so an operation only describes itself and calls
 Gandi.
 
+## Domain API endpoints: declare them in the catalogue
+
+For an endpoint of the Domain API, do not write an `Operation` class
+([ADR 8](../decisions/0008-endpoint-catalogue.md)):
+
+1. Add a `DomainEndpoint` to `src/gandi_mcp/operations/domain/domain_endpoints.py`
+   (name, method, path with `{placeholder}` segments, category, accepted query
+   parameters; a description for confirmed categories) and to the matching
+   tuple (`READ_ENDPOINTS`).
+2. Add the tool function to the domain tool module of its notion
+   (`src/gandi_mcp/protocol/tools/domains/`), register it with
+   `add_read_tool`, and call `DomainToolRunner.read`. Pass path values and
+   query as functions that build the validated values (`DomainName`,
+   `HostLabel`, `TldName`).
+3. Add its arguments and expected path to `CALLS` in
+   `tests/protocol/tools/domains/test_domain_tools.py`.
+
+The rest of this guide applies to operations that need their own class.
+
 ## 1. Write the operation
 
 Create one file per operation in the directory of its notion, for example

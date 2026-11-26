@@ -32,5 +32,6 @@ timeout_seconds = 300
 timeout_seconds = 600
 
 [content]
-# Longest free input passed to the model as is, in characters (1 to 10000).
+# Longest free input or Gandi text passed to the model as is, in characters
+# (1 to 10000). Longer Gandi texts are withheld from the model.
 max_free_input = 280

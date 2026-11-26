@@ -15,6 +15,7 @@ from gandi_mcp.gandi.gandi_client import GandiClient
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 
 USER_INFO_PATH = ("organization", "user-info")
+OK = 200
 MAX_FIELD_LENGTH = 200
 
 
@@ -37,6 +38,8 @@ class GandiTokenVerifier(TokenVerifier):
             raise TokenRejectedError(
                 f"Gandi refused the token in the {environment.value} environment"
             ) from error
+        if response.status != OK:
+            raise GandiUnexpectedResponseError(f"unexpected status {response.status}")
         data = response.data
         username = _bounded(data.get("username")) if isinstance(data, dict) else None
         if not isinstance(data, dict) or username is None:
