@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ka\n"
@@ -202,6 +202,10 @@ msgstr ""
 "სცადეთ ხელახლა."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "ამ ანგარიშის წაშლა შეწყდა: დასასრულებლად კვლავ წაშალეთ ანგარიში."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "ამ ანგარიშის ტოკენი გასაღებების საცავში არ არის: შეცვალეთ ანგარიშის ტოკენი."
 
@@ -212,6 +216,14 @@ msgstr "ეს ანგარიში მხოლოდ წაკითხვ
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "ანგარიშის ეს სახელი არასწორია: გამოიყენეთ 1-დან 40-მდე ასო, ციფრი, დეფისი ან ერთეული ჰარი."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"ეს ანგარიში ამასობაში მხოლოდ წაკითხვად გადაიყვანეს: არაფერი შეცვლილა. ხელახლა მოითხოვეთ ჩაწერის "
+"დაშვება და დაადასტურეთ."
 
 # needs-review
 msgid ""

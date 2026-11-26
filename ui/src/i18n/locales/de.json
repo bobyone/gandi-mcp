@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Schreibgeschützt",
   "status.default": "Standardkonto",
+  "status.removalPending": "Entfernen nicht abgeschlossen",
   "action.add": "Konto hinzufügen",
   "action.rename": "Umbenennen",
   "action.replaceToken": "Token ersetzen",

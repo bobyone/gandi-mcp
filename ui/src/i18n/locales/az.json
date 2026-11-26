@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Yalnız oxumaq",
   "status.default": "Defolt hesab",
+  "status.removalPending": "Silinmə yarımçıqdır",
   "action.add": "Hesab əlavə et",
   "action.rename": "Adını dəyiş",
   "action.replaceToken": "Tokeni dəyiş",

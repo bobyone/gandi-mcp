@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Alleen-lezen",
   "status.default": "Standaardaccount",
+  "status.removalPending": "Verwijdering onvoltooid",
   "action.add": "Account toevoegen",
   "action.rename": "Naam wijzigen",
   "action.replaceToken": "Token vervangen",

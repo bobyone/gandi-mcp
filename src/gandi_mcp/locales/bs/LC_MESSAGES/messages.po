@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: bs\n"
@@ -201,6 +201,10 @@ msgstr ""
 "pokušajte ponovo."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Uklanjanje ovog računa je prekinuto: ponovo uklonite račun da biste ga završili."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Token ovog računa nedostaje u privjesku ključeva: zamijenite token računa."
 
@@ -213,6 +217,14 @@ msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or s
 msgstr ""
 "Ovaj naziv računa nije ispravan: koristite od 1 do 40 slova, cifara, crtica ili pojedinačnih "
 "razmaka."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Ovaj račun je u međuvremenu postavljen samo za čitanje: ništa nije promijenjeno. Ponovo zatražite"
+" dozvolu pisanja i potvrdite je."
 
 # needs-review
 msgid ""

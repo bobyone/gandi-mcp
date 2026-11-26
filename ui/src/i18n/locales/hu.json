@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Csak olvasható",
   "status.default": "Alapértelmezett fiók",
+  "status.removalPending": "Befejezetlen eltávolítás",
   "action.add": "Fiók hozzáadása",
   "action.rename": "Átnevezés",
   "action.replaceToken": "Token cseréje",

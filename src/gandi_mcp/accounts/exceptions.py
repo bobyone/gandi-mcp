@@ -26,6 +26,14 @@ class AccountChangedError(AccountError):
     """
 
 
+class AccountRemovalPendingError(AccountError):
+    """Raised when an account whose removal was interrupted is used: remove it again."""
+
+
+class WritesNotConfirmedError(AccountError):
+    """Raised when allowing writes on an account that became read-only, unconfirmed."""
+
+
 class NoAccountError(AccountError):
     """Raised when an account is needed but none is configured."""
 

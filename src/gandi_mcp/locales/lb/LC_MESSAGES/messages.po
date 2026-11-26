@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lb\n"
@@ -208,6 +208,12 @@ msgstr ""
 "d'Astellungsdatei a probéiert dann nach eng Kéier."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr ""
+"D'Ewechhuele vun dësem Kont gouf ënnerbrach: huelt de Kont nach eng Kéier ewech, fir et "
+"ofzeschléissen."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Den Token vun dësem Kont feelt am Schlësselbund: ersetzt den Token vum Kont."
 
@@ -220,6 +226,14 @@ msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or s
 msgstr ""
 "Dësen Numm vum Kont ass net gülteg: benotzt 1 bis 40 Buschtawen, Zifferen, Bindestricher oder "
 "eenzel Espacen."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Dëse Kont gouf zënterhier nëmme liesbar gemaach: näischt gouf geännert. Frot nach eng Kéier, "
+"Schreiwen z'erlaben, a confirméiert et."
 
 # needs-review
 msgid ""

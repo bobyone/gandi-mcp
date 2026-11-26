@@ -39,8 +39,13 @@ def _account_from(entry: object) -> Account:
         raise CorruptPreferencesError("an account needs a secret key")
     if not isinstance(read_only, bool):
         raise CorruptPreferencesError("read_only must be a boolean")
+    removal_pending = entry.get("removal_pending", False)
+    if not isinstance(removal_pending, bool):
+        raise CorruptPreferencesError("removal_pending must be a boolean")
     try:
-        return Account(AccountName(name), Environment(environment), read_only, secret_key)
+        return Account(
+            AccountName(name), Environment(environment), read_only, secret_key, removal_pending
+        )
     except (InvalidAccountNameError, ValueError) as error:
         raise CorruptPreferencesError("an account has an invalid name or environment") from error
 
@@ -74,6 +79,7 @@ def _to_document(preferences: Preferences) -> dict[str, Any]:
                 "environment": account.environment.value,
                 "read_only": account.read_only,
                 "secret_key": account.secret_key,
+                **({"removal_pending": True} if account.removal_pending else {}),
             }
             for account in preferences.accounts
         ],

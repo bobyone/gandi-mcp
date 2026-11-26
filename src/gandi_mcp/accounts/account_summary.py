@@ -17,8 +17,15 @@ class AccountSummary:
     environment: Environment
     read_only: bool
     is_default: bool
+    removal_pending: bool = False
 
     @classmethod
     def of(cls, account: Account, default: AccountName | None) -> "AccountSummary":
         """Summarize an account, knowing the default account."""
-        return cls(account.name, account.environment, account.read_only, account.name == default)
+        return cls(
+            account.name,
+            account.environment,
+            account.read_only,
+            account.name == default,
+            account.removal_pending,
+        )

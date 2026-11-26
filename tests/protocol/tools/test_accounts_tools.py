@@ -151,8 +151,20 @@ async def test_list_accounts_never_shows_secrets(setup: Setup) -> None:
 
     assert result == {
         "accounts": [
-            {"name": "Perso", "environment": "sandbox", "read_only": False, "is_default": True},
-            {"name": "Pro", "environment": "sandbox", "read_only": False, "is_default": False},
+            {
+                "name": "Perso",
+                "environment": "sandbox",
+                "read_only": False,
+                "is_default": True,
+                "removal_pending": False,
+            },
+            {
+                "name": "Pro",
+                "environment": "sandbox",
+                "read_only": False,
+                "is_default": False,
+                "removal_pending": False,
+            },
         ]
     }
     text = json.dumps(result)
@@ -256,6 +268,7 @@ async def test_update_account(setup: Setup) -> None:
         "environment": "sandbox",
         "read_only": False,
         "is_default": True,
+        "removal_pending": False,
     }
     assert locked["account"]["read_only"]
     assert unchanged["account"]["name"] == "Perso"

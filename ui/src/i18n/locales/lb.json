@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Nëmme liesen",
   "status.default": "Standardkont",
+  "status.removalPending": "Ewechhuelen net ofgeschloss",
   "action.add": "Kont derbäisetzen",
   "action.rename": "Ëmbenennen",
   "action.replaceToken": "Token ersetzen",

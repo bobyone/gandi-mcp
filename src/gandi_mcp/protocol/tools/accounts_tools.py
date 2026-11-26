@@ -68,6 +68,7 @@ def summary(account: AccountSummary) -> dict[str, Any]:
         "environment": account.environment.value,
         "read_only": account.read_only,
         "is_default": account.is_default,
+        "removal_pending": account.removal_pending,
     }
 
 
@@ -270,7 +271,8 @@ class AccountsTools(ToolModule):
         """Apply account changes; allowing writes on a read-only account is confirmed."""
         account = await self._accounts.resolve(AccountName(name))
         target_name = AccountName(new_name) if new_name is not None else account.name
-        if read_only is False and account.read_only:
+        writes_confirmed = read_only is False and account.read_only
+        if writes_confirmed:
             request = ConfirmationRequest(
                 f"accounts.allow_writes:{account.reference.fingerprint()}",
                 OperationCategory.WRITE,
@@ -287,6 +289,7 @@ class AccountsTools(ToolModule):
             read_only=read_only,
             make_default=make_default,
             expected=account.reference,
+            writes_confirmed=writes_confirmed,
         )
         return {"status": "updated", "account": summary(result)}
 

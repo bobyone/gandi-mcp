@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Μόνο ανάγνωση",
   "status.default": "Προεπιλεγμένος λογαριασμός",
+  "status.removalPending": "Εκκρεμεί αφαίρεση",
   "action.add": "Προσθήκη λογαριασμού",
   "action.rename": "Μετονομασία",
   "action.replaceToken": "Αντικατάσταση token",

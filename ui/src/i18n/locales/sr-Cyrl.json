@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Само за читање",
   "status.default": "Подразумевани налог",
+  "status.removalPending": "Уклањање није завршено",
   "action.add": "Додај налог",
   "action.rename": "Преименуј",
   "action.replaceToken": "Замени токен",

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sq\n"
@@ -204,6 +204,10 @@ msgstr ""
 "preferencave, pastaj provoni përsëri."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Heqja e kësaj llogarie u ndërpre: hiqeni llogarinë sërish për ta përfunduar."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Tokeni i kësaj llogarie mungon në mbajtësen e çelësave: zëvendësoni tokenin e llogarisë."
 
@@ -216,6 +220,14 @@ msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or s
 msgstr ""
 "Ky emër llogarie nuk është i vlefshëm: përdorni nga 1 deri në 40 shkronja, shifra, viza ose "
 "hapësira të vetme."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Kjo llogari u bë vetëm për lexim ndërkohë: asgjë nuk u ndryshua. Kërkoni sërish lejimin e "
+"shkrimit dhe konfirmojeni."
 
 # needs-review
 msgid ""

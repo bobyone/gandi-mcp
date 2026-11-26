@@ -23,6 +23,7 @@ from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.accounts.exceptions import (
     AccountChangedError,
     AccountNotFoundError,
+    AccountRemovalPendingError,
     DuplicateAccountError,
     NoAccountError,
     TokenRejectedError,
@@ -387,7 +388,7 @@ class StarletteLocalPageServer(LocalPageServer):
             failure = messages.ACCOUNT_CHANGED
         except DuplicateAccountError:
             failure = messages.DUPLICATE_ACCOUNT
-        except (AccountNotFoundError, NoAccountError):
+        except (AccountNotFoundError, AccountRemovalPendingError, NoAccountError):
             failure = messages.ACCOUNT_GONE
         except SecretStoreError:
             failure = messages.KEYRING_UNAVAILABLE

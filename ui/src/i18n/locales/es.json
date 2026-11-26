@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Solo lectura",
   "status.default": "Cuenta predeterminada",
+  "status.removalPending": "Eliminación pendiente",
   "action.add": "Añadir cuenta",
   "action.rename": "Cambiar nombre",
   "action.replaceToken": "Sustituir token",

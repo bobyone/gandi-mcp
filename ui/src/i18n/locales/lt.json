@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Tik skaityti",
   "status.default": "Numatytoji paskyra",
+  "status.removalPending": "Šalinimas nebaigtas",
   "action.add": "Pridėti paskyrą",
   "action.rename": "Pervadinti",
   "action.replaceToken": "Pakeisti raktą",

@@ -18,11 +18,14 @@ from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.accounts.exceptions import (
     AccountChangedError,
     AccountNotFoundError,
+    AccountRemovalPendingError,
     DuplicateAccountError,
     NoAccountError,
+    WritesNotConfirmedError,
 )
 from gandi_mcp.accounts.token_verifier import TokenVerifier
 from gandi_mcp.accounts.verified_account import VerifiedAccount
+from gandi_mcp.preferences.exceptions import PreferencesError
 from gandi_mcp.preferences.preferences import Preferences
 from gandi_mcp.preferences.preferences_store import PreferencesStore
 from gandi_mcp.secrets.exceptions import SecretNotFoundError, SecretStoreError
@@ -30,6 +33,10 @@ from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 from gandi_mcp.secrets.secret_store import SecretStore
 
 logger = logging.getLogger(__name__)
+
+
+def _spelling(name: AccountName | None) -> str | None:
+    return name.value if name is not None else None
 
 
 def _sorted(accounts: tuple[Account, ...]) -> tuple[Account, ...]:
@@ -71,6 +78,7 @@ class AccountService:
         Raises:
             NoAccountError: if no account is configured.
             AccountNotFoundError: if no account has this name.
+            AccountRemovalPendingError: if its removal was interrupted.
         """
         preferences = await self._preferences.load()
         return self._find(preferences, name)
@@ -109,20 +117,25 @@ class AccountService:
         read_only: bool | None = None,
         make_default: bool = False,
         expected: AccountReference | None = None,
+        writes_confirmed: bool = False,
     ) -> AccountSummary:
         """Rename an account, change its read-only flag and make it the default one.
 
-        Everything is checked first, then applied in one save: a failure changes
-        nothing. Changing only the case of the name is allowed.
+        Everything is checked first, under the preferences transaction, then applied
+        in one save: a failure changes nothing. Changing only the case of the name
+        is allowed. Allowing writes on an account that is read-only at that moment
+        needs ``writes_confirmed``: the user confirmed it for this account.
 
         Raises:
             AccountNotFoundError, NoAccountError, DuplicateAccountError,
             AccountChangedError (the account no longer matches ``expected``),
-            PreferencesError.
+            WritesNotConfirmedError, AccountRemovalPendingError, PreferencesError.
         """
         async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
             account = self._find(preferences, name, expected)
+            if read_only is False and account.read_only and not writes_confirmed:
+                raise WritesNotConfirmedError(f"allowing writes on {account.name}")
             changed = account
             if new_name is not None and new_name.value != account.name.value:
                 if new_name != account.name:
@@ -133,7 +146,9 @@ class AccountService:
             default = preferences.default_account
             if make_default or default == account.name:
                 default = changed.name
-            if changed != account or default != preferences.default_account:
+            # Names compare ignoring case: compare their spelling too.
+            before = (account, account.name.value, _spelling(preferences.default_account))
+            if (changed, changed.name.value, _spelling(default)) != before:
                 await self._save_replacing(preferences, account, changed, default)
             return AccountSummary.of(changed, default)
 
@@ -154,15 +169,21 @@ class AccountService:
         return await self.update(name, make_default=True)
 
     async def set_read_only(
-        self, name: AccountName, read_only: bool, expected: AccountReference | None = None
+        self,
+        name: AccountName,
+        read_only: bool,
+        expected: AccountReference | None = None,
+        writes_confirmed: bool = False,
     ) -> AccountSummary:
         """Turn the read-only flag of an account on or off.
 
         Raises:
             AccountNotFoundError, NoAccountError, AccountChangedError (the account no
-            longer matches ``expected``).
+            longer matches ``expected``), WritesNotConfirmedError.
         """
-        return await self.update(name, read_only=read_only, expected=expected)
+        return await self.update(
+            name, read_only=read_only, expected=expected, writes_confirmed=writes_confirmed
+        )
 
     async def replace_token(
         self,
@@ -223,38 +244,46 @@ class AccountService:
     async def remove(
         self, name: AccountName, expected: AccountReference | None = None
     ) -> AccountRemoval:
-        """Remove an account and its token.
+        """Remove an account and its token, in steps that can always be resumed.
 
-        The token is removed first: when the secret store cannot remove it, the
-        account is kept, so that the removal can be retried. When saving the
-        preferences then fails, the token is put back, so that the account stays
-        usable. If it was the default account, the first remaining account in
-        alphabetical order becomes the default one.
+        1. The account is marked as removal pending, durably: until then, a failure
+           changes nothing.
+        2. The token is removed. If the secret store cannot remove it, the mark is
+           withdrawn, so that the account stays usable, and the error is raised.
+        3. The account is removed from the preferences.
+
+        Interrupted after step 1 (failure, cancellation, crash), the account stays
+        listed as removal pending: it can no longer be used, and removing it again
+        completes the removal. If it was the default account, the first remaining
+        account in alphabetical order becomes the default one.
 
         Raises:
             AccountNotFoundError, NoAccountError, AccountChangedError,
-            SecretStoreError, PreferencesError: nothing removed.
+            SecretStoreError (account kept, usable unless the mark could not be
+            withdrawn), PreferencesError (account kept, removal pending or untouched).
         """
         async with self._lock, self._preferences.transaction():
             preferences = await self._preferences.load()
-            account = self._find(preferences, name, expected)
+            account = self._find(preferences, name, expected, allow_pending=True)
+            if not account.removal_pending:
+                marked = replace(account, removal_pending=True)
+                await self._save_replacing(
+                    preferences, account, marked, preferences.default_account
+                )
+            try:
+                await self._forget_token(account.secret_key, missing_ok=True)
+            except SecretStoreError:
+                if not account.removal_pending:
+                    with contextlib.suppress(PreferencesError):
+                        await self._preferences.save(preferences)
+                raise
             remaining = tuple(item for item in preferences.accounts if item is not account)
             new_default: AccountName | None = None
             default = preferences.default_account
             if default == account.name:
                 default = _sorted(remaining)[0].name if remaining else None
                 new_default = default
-            try:
-                token: PersonalAccessToken | None = await self._secrets.get(account.secret_key)
-            except SecretNotFoundError:
-                token = None
-            await self._forget_token(account.secret_key, missing_ok=True)
-            try:
-                await self._preferences.save(Preferences(_sorted(remaining), default))
-            except Exception:
-                if token is not None:
-                    await self._restore_token(account.secret_key, token)
-                raise
+            await self._preferences.save(Preferences(_sorted(remaining), default))
             logger.info("account removed")
             return AccountRemoval(account.name, new_default)
 
@@ -263,6 +292,7 @@ class AccountService:
         preferences: Preferences,
         name: AccountName | None,
         expected: AccountReference | None = None,
+        allow_pending: bool = False,
     ) -> Account:
         if not preferences.accounts:
             raise NoAccountError("no account is configured")
@@ -272,6 +302,8 @@ class AccountService:
             raise AccountNotFoundError(f"no account is named {name}")
         if expected is not None and account.reference != expected:
             raise AccountChangedError(f"the account {account.name} changed")
+        if account.removal_pending and not allow_pending:
+            raise AccountRemovalPendingError(f"the removal of {account.name} is pending")
         return account
 
     @staticmethod
@@ -288,12 +320,6 @@ class AccountService:
     ) -> None:
         accounts = tuple(new if item is old else item for item in preferences.accounts)
         await self._preferences.save(Preferences(_sorted(accounts), default))
-
-    async def _restore_token(self, key: str, token: PersonalAccessToken) -> None:
-        try:
-            await self._secrets.put(key, token)
-        except SecretStoreError:
-            logger.error("a token could not be restored in the secret store")
 
     async def _forget_token(self, key: str, missing_ok: bool = False) -> None:
         try:

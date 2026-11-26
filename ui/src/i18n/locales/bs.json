@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Samo za čitanje",
   "status.default": "Zadani račun",
+  "status.removalPending": "Uklanjanje nije završeno",
   "action.add": "Dodaj račun",
   "action.rename": "Preimenuj",
   "action.replaceToken": "Zamijeni token",

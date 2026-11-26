@@ -30,6 +30,8 @@ or their browser) where they type it.
    conversation. If the result is `confirmation_pending`, wait until the user
    says they answered on the page, then call `remove_account` again with the
    same name and the returned `confirmation_id`. Never invent an identifier.
+   An account listed with `removal_pending: true` had its removal interrupted:
+   remove it again to finish.
 6. If a tool fails, relay its message: it says what happened and how to fix
    it. For keyring or browser problems, use the `gandi-mcp-troubleshoot`
    skill.

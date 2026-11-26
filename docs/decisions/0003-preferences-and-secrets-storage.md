@@ -39,6 +39,11 @@ a tool result or the model.
   read-modify-write under an exclusive lock on `<file>.lock`, shared by every
   gandi-mcp process: several MCP clients each run their own server on the same
   preferences, and none may lose another's change.
+- **Removal**: an account is first marked `removal_pending` in the
+  preferences, then its token is removed, then the account. Any interruption
+  after the mark leaves a durable pending removal, which removing the account
+  again completes: an account is never left listed as usable without its
+  token.
 
 ## Alternatives considered
 

@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "მხოლოდ წაკითხვა",
   "status.default": "ნაგულისხმევი ანგარიში",
+  "status.removalPending": "წაშლა დაუსრულებელია",
   "action.add": "ანგარიშის დამატება",
   "action.rename": "გადარქმევა",
   "action.replaceToken": "ტოკენის შეცვლა",

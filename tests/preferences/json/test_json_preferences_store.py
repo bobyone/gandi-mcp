@@ -221,3 +221,30 @@ async def test_cancelled_during_a_write_keeps_the_lock_until_it_ends(
         await task
     async with JsonPreferencesStore(path, 0.5).transaction():
         assert await JsonPreferencesStore(path).load() == PREFERENCES
+
+
+async def test_pending_removals_and_name_spelling_survive_a_reload(tmp_path: Path) -> None:
+    path = tmp_path / "preferences.json"
+    preferences = Preferences(
+        (Account(AccountName("Perso"), Environment.SANDBOX, False, "k1", removal_pending=True),),
+        AccountName("Perso"),
+    )
+
+    await JsonPreferencesStore(path).save(preferences)
+    loaded = await JsonPreferencesStore(path).load()
+
+    assert loaded == preferences
+    assert loaded.accounts[0].removal_pending
+    assert str(loaded.accounts[0].name) == "Perso"
+
+
+async def test_rejects_a_non_boolean_pending_removal(tmp_path: Path) -> None:
+    path = tmp_path / "preferences.json"
+    path.write_text(
+        '{"version": 1, "default_account": "A", "accounts": [{"name": "A", "environment":'
+        ' "sandbox", "read_only": false, "secret_key": "k", "removal_pending": "yes"}]}',
+        encoding="utf-8",
+    )
+
+    with pytest.raises(CorruptPreferencesError):
+        await JsonPreferencesStore(path).load()

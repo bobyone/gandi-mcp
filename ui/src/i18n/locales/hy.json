@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Միայն կարդալու",
   "status.default": "Լռելյայն հաշիվ",
+  "status.removalPending": "Հեռացումն անավարտ է",
   "action.add": "Ավելացնել հաշիվ",
   "action.rename": "Վերանվանել",
   "action.replaceToken": "Փոխարինել token-ը",

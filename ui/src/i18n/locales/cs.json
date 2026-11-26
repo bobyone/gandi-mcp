@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Jen pro čtení",
   "status.default": "Výchozí účet",
+  "status.removalPending": "Odebrání nedokončeno",
   "action.add": "Přidat účet",
   "action.rename": "Přejmenovat",
   "action.replaceToken": "Nahradit token",

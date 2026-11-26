@@ -29,6 +29,9 @@ description: Diagnose gandi-mcp problems (server not starting or not connected, 
      production). Replace it with `replace_account_token`;
    - "missing from the keyring": the keyring entry was deleted; replace the
      token;
+   - "removal of this account was interrupted" (`removal_pending: true` in
+     `list_accounts`): remove the account again with `remove_account` to
+     finish it;
    - "preferences cannot be read or saved": the preferences file is unreadable
      or was written by a newer version. Ask the user to check it (path:
      `preferences.path`, by default `gandi-mcp/preferences.json` in the user

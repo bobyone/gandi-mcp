@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Salt okunur",
   "status.default": "Varsayılan hesap",
+  "status.removalPending": "Kaldırma tamamlanmadı",
   "action.add": "Hesap ekle",
   "action.rename": "Yeniden adlandır",
   "action.replaceToken": "Tokenı değiştir",

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: is\n"
@@ -202,6 +202,10 @@ msgstr ""
 " aftur."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Fjarlæging þessa reiknings var rofin: fjarlægðu reikninginn aftur til að ljúka henni."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Tóka þessa reiknings vantar í lyklakippuna: skiptu um tóka reikningsins."
 
@@ -212,6 +216,14 @@ msgstr "Þessi reikningur er skrifvarinn: skrifaðgerðum er hafnað."
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "Þetta reikningsnafn er ekki gilt: notaðu 1 til 40 bókstafi, tölustafi, bandstrik eða stök bil."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Þessi reikningur var gerður skrifvarinn á meðan: engu var breytt. Biddu aftur um að leyfa skrif "
+"og staðfestu það."
 
 # needs-review
 msgid ""

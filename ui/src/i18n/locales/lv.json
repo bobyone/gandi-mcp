@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Tikai lasāms",
   "status.default": "Noklusējuma konts",
+  "status.removalPending": "Noņemšana nav pabeigta",
   "action.add": "Pievienot kontu",
   "action.rename": "Pārdēvēt",
   "action.replaceToken": "Aizstāt marķieri",

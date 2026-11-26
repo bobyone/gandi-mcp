@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Tylko do odczytu",
   "status.default": "Konto domyślne",
+  "status.removalPending": "Usuwanie niedokończone",
   "action.add": "Dodaj konto",
   "action.rename": "Zmień nazwę",
   "action.replaceToken": "Zastąp token",

@@ -9,6 +9,8 @@ export interface Account {
   readonly environment: Environment;
   readonly readOnly: boolean;
   readonly isDefault: boolean;
+  /** A removal was interrupted: removing the account again completes it. */
+  readonly removalPending: boolean;
 }
 
 export interface AccountDraft {

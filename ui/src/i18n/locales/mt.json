@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Għall-qari biss",
   "status.default": "Kont awtomatiku",
+  "status.removalPending": "Tneħħija mhux lesta",
   "action.add": "Żid kont",
   "action.rename": "Ibdel l-isem",
   "action.replaceToken": "Ibdel it-token",

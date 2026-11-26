@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -206,6 +206,10 @@ msgstr ""
 "file delle preferenze, poi riprova."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "La rimozione di questo account è stata interrotta: rimuovi di nuovo l'account per completarla."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Il token di questo account manca dal portachiavi: sostituisci il token dell'account."
 
@@ -216,6 +220,14 @@ msgstr "Questo account è in sola lettura: le operazioni di scrittura sono rifiu
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "Questo nome di account non è valido: usa da 1 a 40 lettere, cifre, trattini o spazi singoli."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Nel frattempo questo account è stato messo in sola lettura: non è stato modificato nulla. Chiedi "
+"di nuovo di consentire le scritture e confermalo."
 
 # needs-review
 msgid ""

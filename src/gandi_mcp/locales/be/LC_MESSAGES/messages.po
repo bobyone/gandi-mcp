@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: be\n"
@@ -203,6 +203,10 @@ msgid ""
 msgstr "Немагчыма захаваць налады gandi-mcp. Нічога не захавана: праверце файл налад і паспрабуйце зноў."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Выдаленне гэтага ўліковага запісу было перапынена: выдаліце ўліковы запіс яшчэ раз, каб завяршыць."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Токена гэтага ўліковага запісу няма ў сховішчы ключоў: заменіце токен уліковага запісу."
 
@@ -215,6 +219,14 @@ msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or s
 msgstr ""
 "Гэтая назва ўліковага запісу несапраўдная: выкарыстоўвайце ад 1 да 40 літар, лічбаў, злучкоў або "
 "адзінарных прабелаў."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Тым часам гэты ўліковы запіс зрабілі толькі для чытання: нічога не зменена. Папрасіце зноў "
+"дазволіць аперацыі запісу і пацвердзіце гэта."
 
 # needs-review
 msgid ""

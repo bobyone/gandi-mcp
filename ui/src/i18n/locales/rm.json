@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Mo per leger",
   "status.default": "Conto da standard",
+  "status.removalPending": "Allontanament betg terminà",
   "action.add": "Agiuntar in conto",
   "action.rename": "Renumnar",
   "action.replaceToken": "Remplazzar il token",

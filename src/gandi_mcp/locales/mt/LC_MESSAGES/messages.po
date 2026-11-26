@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mt\n"
@@ -203,6 +203,10 @@ msgstr ""
 "preferenzi, imbagħad erġa' pprova."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "It-tneħħija ta' dan il-kont ġiet interrotta: erġa' neħħi l-kont biex tlestiha."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "It-token ta' dan il-kont nieqes miċ-ċirku taċ-ċwievet: ibdel it-token tal-kont."
 
@@ -213,6 +217,14 @@ msgstr "Dan il-kont huwa għall-qari biss: l-operazzjonijiet tal-kitba huma rrif
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "Dan l-isem tal-kont mhuwiex validu: uża minn 1 sa 40 ittra, ċifra, sing jew spazju wieħed."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Dan il-kont sar għall-qari biss sadanittant: xejn ma nbidel. Erġa' itlob biex tippermetti "
+"l-kitba, u kkonfermaha."
 
 # needs-review
 msgid ""

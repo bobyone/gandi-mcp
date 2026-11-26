@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Skrifvarinn",
   "status.default": "Sjálfgefinn reikningur",
+  "status.removalPending": "Fjarlæging ólokið",
   "action.add": "Bæta við reikningi",
   "action.rename": "Endurnefna",
   "action.replaceToken": "Skipta um tóka",

@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Només lectura",
   "status.default": "Compte predeterminat",
+  "status.removalPending": "Supressió pendent",
   "action.add": "Afegeix un compte",
   "action.rename": "Canvia el nom",
   "action.replaceToken": "Substitueix el token",

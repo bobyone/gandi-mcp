@@ -10,11 +10,13 @@ from mcp.server.mcpserver.exceptions import ToolError
 from gandi_mcp.accounts.exceptions import (
     AccountChangedError,
     AccountNotFoundError,
+    AccountRemovalPendingError,
     DuplicateAccountError,
     InvalidAccountNameError,
     NoAccountError,
     ReadOnlyAccountError,
     TokenRejectedError,
+    WritesNotConfirmedError,
 )
 from gandi_mcp.confirmation.exceptions import (
     ConfirmationExpiredError,
@@ -49,6 +51,13 @@ INVALID_NAME = N_(
     "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 )
 READ_ONLY = N_("This account is read-only: write operations are refused.")
+REMOVAL_PENDING = N_(
+    "The removal of this account was interrupted: remove the account again to finish it."
+)
+WRITES_NOT_CONFIRMED = N_(
+    "This account was made read-only in the meantime: nothing was changed. Ask again "
+    "to allow write operations, and confirm it."
+)
 ACCOUNT_CHANGED = N_(
     "This account was replaced or moved to another environment in the meantime: "
     "nothing was changed, check the account and try again."
@@ -94,6 +103,8 @@ MESSAGES: Mapping[type[Exception], Message] = {
     InvalidAccountNameError: INVALID_NAME,
     ReadOnlyAccountError: READ_ONLY,
     AccountChangedError: ACCOUNT_CHANGED,
+    AccountRemovalPendingError: REMOVAL_PENDING,
+    WritesNotConfirmedError: WRITES_NOT_CONFIRMED,
     TokenRejectedError: TOKEN_REFUSED,
     GandiAuthenticationError: TOKEN_REFUSED,
     GandiPermissionError: PERMISSION,

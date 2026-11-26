@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:52+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: tr\n"
@@ -202,6 +202,10 @@ msgstr ""
 "ardından tekrar deneyin."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Bu hesabın kaldırılması yarıda kesildi: tamamlamak için hesabı yeniden kaldırın."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Bu hesabın tokenı anahtarlıkta yok: hesabın tokenını değiştirin."
 
@@ -212,6 +216,14 @@ msgstr "Bu hesap salt okunur: yazma işlemleri reddedilir."
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "Bu hesap adı geçerli değil: 1 ile 40 arasında harf, rakam, kısa çizgi veya tek boşluk kullanın."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Bu hesap bu arada salt okunur yapıldı: hiçbir şey değiştirilmedi. Yazmaya izin verilmesini "
+"yeniden isteyin ve onaylayın."
 
 # needs-review
 msgid ""

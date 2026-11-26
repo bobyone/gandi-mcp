@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Vain luku",
   "status.default": "Oletustili",
+  "status.removalPending": "Poisto kesken",
   "action.add": "Lisää tili",
   "action.rename": "Nimeä uudelleen",
   "action.replaceToken": "Korvaa token",

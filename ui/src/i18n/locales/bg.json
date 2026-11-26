@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Само за четене",
   "status.default": "Акаунт по подразбиране",
+  "status.removalPending": "Премахването не е завършено",
   "action.add": "Добавяне на акаунт",
   "action.rename": "Преименуване",
   "action.replaceToken": "Замяна на токена",

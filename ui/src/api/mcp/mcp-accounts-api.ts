@@ -25,6 +25,7 @@ interface WireAccount {
   environment: Environment;
   read_only: boolean;
   is_default: boolean;
+  removal_pending?: boolean;
 }
 
 function account(wire: WireAccount): Account {
@@ -33,6 +34,7 @@ function account(wire: WireAccount): Account {
     environment: wire.environment,
     readOnly: wire.read_only,
     isDefault: wire.is_default,
+    removalPending: wire.removal_pending === true,
   };
 }
 

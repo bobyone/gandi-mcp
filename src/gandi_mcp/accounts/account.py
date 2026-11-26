@@ -19,12 +19,15 @@ class Account:
         read_only: Whether every write operation is refused.
         secret_key: Opaque key of the token in the secret store; it does not change
             when the account is renamed.
+        removal_pending: Whether a removal started and did not finish; the account
+            can then only be removed again, which completes the removal.
     """
 
     name: AccountName
     environment: Environment
     read_only: bool
     secret_key: str
+    removal_pending: bool = False
 
     @property
     def reference(self) -> AccountReference:

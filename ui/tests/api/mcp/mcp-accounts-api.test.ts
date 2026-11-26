@@ -5,7 +5,13 @@ import { AccountsError } from "../../../src/api/account";
 import { McpAccountsApi, type ToolCaller } from "../../../src/api/mcp/mcp-accounts-api";
 
 const WIRE = { name: "Perso", environment: "sandbox", read_only: true, is_default: true };
-const ACCOUNT = { name: "Perso", environment: "sandbox", readOnly: true, isDefault: true };
+const ACCOUNT = {
+  name: "Perso",
+  environment: "sandbox",
+  readOnly: true,
+  isDefault: true,
+  removalPending: false,
+};
 
 function caller(result: Awaited<ReturnType<ToolCaller["callServerTool"]>>) {
   return { callServerTool: vi.fn().mockResolvedValue(result) };
@@ -17,6 +23,14 @@ describe("McpAccountsApi", () => {
 
     await expect(new McpAccountsApi(fake).list()).resolves.toEqual([ACCOUNT]);
     expect(fake.callServerTool).toHaveBeenCalledWith({ name: "app_list_accounts", arguments: {} });
+  });
+
+  it("reads the pending removal flag", async () => {
+    const fake = caller({ structuredContent: { accounts: [{ ...WIRE, removal_pending: true }] } });
+
+    await expect(new McpAccountsApi(fake).list()).resolves.toEqual([
+      { ...ACCOUNT, removalPending: true },
+    ]);
   });
 
   it("adds an account with its token", async () => {

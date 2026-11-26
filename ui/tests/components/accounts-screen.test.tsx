@@ -11,8 +11,20 @@ import { AccountsScreen } from "../../src/components/accounts-screen";
 import { createI18n } from "../../src/i18n/i18n";
 
 const TOKEN = "pat_0123456789abcdef";
-const PERSO: Account = { name: "Perso", environment: "sandbox", readOnly: false, isDefault: true };
-const PRO: Account = { name: "Pro", environment: "production", readOnly: true, isDefault: false };
+const PERSO: Account = {
+  name: "Perso",
+  environment: "sandbox",
+  readOnly: false,
+  isDefault: true,
+  removalPending: false,
+};
+const PRO: Account = {
+  name: "Pro",
+  environment: "production",
+  readOnly: true,
+  isDefault: false,
+  removalPending: false,
+};
 
 let i18n: I18n;
 
@@ -61,6 +73,12 @@ describe("AccountsScreen", () => {
     expect(within(rows[2]!).getByText("Production")).toBeInTheDocument();
     expect(within(rows[2]!).getByText("Read-only")).toBeInTheDocument();
     expect(screen.getByText("2 accounts")).toBeInTheDocument();
+  });
+
+  it("marks an account whose removal is not finished", async () => {
+    show(fakeApi([{ ...PRO, removalPending: true }]));
+
+    expect(await screen.findByText("Removal not finished")).toBeInTheDocument();
   });
 
   it("shows the loading state and the empty state", async () => {

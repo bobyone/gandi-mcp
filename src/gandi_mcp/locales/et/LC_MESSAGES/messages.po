@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: et\n"
@@ -200,6 +200,10 @@ msgstr ""
 "proovige uuesti."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Selle konto eemaldamine katkes: eemaldage konto uuesti, et see lõpule viia."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Selle konto token puudub võtmehoidjast: asendage konto token."
 
@@ -210,6 +214,14 @@ msgstr "See konto on kirjutuskaitstud: kirjutustoimingud lükatakse tagasi."
 # needs-review
 msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or single spaces."
 msgstr "See kontonimi pole kehtiv: kasutage 1 kuni 40 tähte, numbrit, sidekriipsu või üksikut tühikut."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"See konto muudeti vahepeal kirjutuskaitstuks: midagi ei muudetud. Paluge uuesti kirjutamist "
+"lubada ja kinnitage see."
 
 # needs-review
 msgid ""

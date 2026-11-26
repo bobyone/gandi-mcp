@@ -214,6 +214,11 @@ export function AccountsScreen({ api }: AccountsScreenProps) {
                   <td className="d-flex flex-wrap gap-1">
                     {account.isDefault && <Badge bg="primary">{t("status.default")}</Badge>}
                     {account.readOnly && <Badge bg="secondary">{t("status.readOnly")}</Badge>}
+                    {account.removalPending && (
+                      <Badge bg="warning" text="dark">
+                        {t("status.removalPending")}
+                      </Badge>
+                    )}
                   </td>
                   <td className="text-end">
                     <Dropdown align="end">

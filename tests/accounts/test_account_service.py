@@ -18,6 +18,7 @@ from gandi_mcp.accounts.exceptions import (
     DuplicateAccountError,
     NoAccountError,
     TokenRejectedError,
+    WritesNotConfirmedError,
 )
 from gandi_mcp.gandi.exceptions import GandiUnavailableError
 from gandi_mcp.preferences.exceptions import PreferencesUnavailableError
@@ -398,3 +399,29 @@ async def test_failed_removal_keeps_a_usable_account(world: World) -> None:
 
     assert await world.service.resolve() == account
     assert world.secrets.tokens == {account.secret_key: SANDBOX_TOKEN}
+
+
+async def test_allowing_writes_needs_a_confirmation_at_the_time_of_the_change(
+    world: World,
+) -> None:
+    await add(world, "Perso")
+    await world.service.set_read_only(AccountName("Perso"), True)
+
+    with pytest.raises(WritesNotConfirmedError):
+        await world.service.update(AccountName("Perso"), read_only=False)
+    assert (await world.service.resolve()).read_only
+
+    summary = await world.service.update(
+        AccountName("Perso"), read_only=False, writes_confirmed=True
+    )
+    assert not summary.read_only
+
+
+async def test_a_case_only_rename_is_saved(world: World) -> None:
+    await add(world, "perso", "Pro")
+
+    renamed = await world.service.rename(AccountName("perso"), AccountName("Perso"))
+
+    assert str(renamed.name) == "Perso"
+    assert [str(a.name) for a in await world.service.list()] == ["Perso", "Pro"]
+    assert str(world.preferences.preferences.default_account) == "Perso"

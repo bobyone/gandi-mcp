@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Skrivebeskyttet",
   "status.default": "Standardkonto",
+  "status.removalPending": "Fjernelse ikke fuldført",
   "action.add": "Tilføj konto",
   "action.rename": "Omdøb",
   "action.replaceToken": "Erstat token",

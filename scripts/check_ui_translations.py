@@ -39,6 +39,7 @@ GLOSSARY_KEYS = {
     "Read-only account": "field.readOnly",
     "Default account": "status.default",
     "Personal Access Token": "field.token",
+    "Pending removal": "status.removalPending",
 }
 SOURCE_LANGUAGE = "en"
 KEY_CALL = re.compile(r"""\bt\(\s*(["'`])((?:(?!\1).)+)\1""")

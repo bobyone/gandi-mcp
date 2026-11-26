@@ -13,6 +13,7 @@
   "environment.sandbox": "Sandbox",
   "status.readOnly": "Лише читання",
   "status.default": "Обліковий запис за замовчуванням",
+  "status.removalPending": "Видалення не завершено",
   "action.add": "Додати обліковий запис",
   "action.rename": "Перейменувати",
   "action.replaceToken": "Замінити токен",

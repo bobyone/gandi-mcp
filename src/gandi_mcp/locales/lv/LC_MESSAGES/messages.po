@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 18:00+0100\n"
+"POT-Creation-Date: 2026-11-26 19:20+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lv\n"
@@ -201,6 +201,10 @@ msgstr ""
 "mēģiniet vēlreiz."
 
 # needs-review
+msgid "The removal of this account was interrupted: remove the account again to finish it."
+msgstr "Šī konta noņemšana tika pārtraukta: noņemiet kontu vēlreiz, lai to pabeigtu."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Šī konta marķieris trūkst atslēgu saišķī: nomainiet konta marķieri."
 
@@ -213,6 +217,14 @@ msgid "This account name is not valid: use 1 to 40 letters, digits, hyphens or s
 msgstr ""
 "Šis konta nosaukums nav derīgs: izmantojiet no 1 līdz 40 burtiem, cipariem, defisēm vai "
 "atsevišķām atstarpēm."
+
+# needs-review
+msgid ""
+"This account was made read-only in the meantime: nothing was changed. Ask again to allow write "
+"operations, and confirm it."
+msgstr ""
+"Šis konts pa to laiku ir padarīts tikai lasāms: nekas netika mainīts. Vēlreiz palūdziet atļaut "
+"rakstīšanu un apstipriniet to."
 
 # needs-review
 msgid ""
