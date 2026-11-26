@@ -15,6 +15,7 @@ from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
 from gandi_mcp.content.long_text_filter import LongTextFilter
 from gandi_mcp.domains.contacts.contact_redactor import ContactRedactor
+from gandi_mcp.domains.quotes.gandi.gandi_quote_provider import GandiQuoteProvider
 from gandi_mcp.gandi.http.http_gandi_client import HttpGandiClient
 from gandi_mcp.i18n.babel.babel_translator import BabelTranslator, default_locales_directory
 from gandi_mcp.interaction.link_presenter import LinkPresenter
@@ -23,6 +24,7 @@ from gandi_mcp.local_pages.starlette.starlette_local_page_server import (
     StarletteLocalPageServer,
 )
 from gandi_mcp.operations.operation_executor import OperationExecutor
+from gandi_mcp.operations.order_executor import OrderExecutor
 from gandi_mcp.preferences.json.json_preferences_store import JsonPreferencesStore
 from gandi_mcp.protocol.app.accounts_app_tools import AccountsAppTools
 from gandi_mcp.protocol.app.app_resource import load_app_html
@@ -30,9 +32,11 @@ from gandi_mcp.protocol.error_presenter import ErrorPresenter
 from gandi_mcp.protocol.server_factory import create_server
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools
 from gandi_mcp.protocol.tools.domains.availability_tools import AvailabilityTools
+from gandi_mcp.protocol.tools.domains.domain_order_runner import DomainOrderRunner
 from gandi_mcp.protocol.tools.domains.domain_tool_runner import DomainToolRunner
 from gandi_mcp.protocol.tools.domains.domains_tools import DomainsTools
 from gandi_mcp.protocol.tools.domains.nameserver_tools import NameserverTools
+from gandi_mcp.protocol.tools.domains.order_tools import OrderTools
 from gandi_mcp.protocol.tools.domains.redirection_tools import RedirectionTools
 from gandi_mcp.protocol.tools.domains.transfer_tools import TransferTools
 from gandi_mcp.protocol.tools.organization_tools import OrganizationTools
@@ -116,6 +120,7 @@ class ApplicationContainer(containers.DeclarativeContainer):
         OperationExecutor, account_service, secret_store, gandi_client, confirmation
     )
     long_text_filter = providers.Singleton(LongTextFilter, config.content.max_free_input)
+    contact_redactor = providers.Singleton(ContactRedactor)
     error_presenter = providers.Singleton(ErrorPresenter, translator, long_text_filter)
 
     accounts_tools = providers.Singleton(
@@ -125,8 +130,20 @@ class ApplicationContainer(containers.DeclarativeContainer):
         DomainToolRunner,
         operation_executor,
         accounts_tools,
-        providers.Singleton(ContactRedactor),
+        contact_redactor,
         long_text_filter,
+    )
+    order_executor = providers.Singleton(
+        OrderExecutor,
+        account_service,
+        secret_store,
+        gandi_client,
+        confirmation,
+        quotes=providers.Singleton(GandiQuoteProvider, gandi_client),
+        translator=translator,
+    )
+    domain_order_runner = providers.Singleton(
+        DomainOrderRunner, order_executor, accounts_tools, contact_redactor, long_text_filter
     )
     organization_service = providers.Singleton(
         OrganizationService,
@@ -142,6 +159,7 @@ class ApplicationContainer(containers.DeclarativeContainer):
         providers.Singleton(NameserverTools, domain_tool_runner),
         providers.Singleton(RedirectionTools, domain_tool_runner),
         providers.Singleton(TransferTools, domain_tool_runner),
+        providers.Singleton(OrderTools, domain_order_runner),
     )
 
     accounts_app_tools = providers.Singleton(

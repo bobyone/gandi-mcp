@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:32+0100\n"
+"POT-Creation-Date: 2026-11-26 22:51+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ga\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A contact field is missing or badly formed: correct the contact."
+msgstr "Tá réimse teagmhála in easnamh nó mícheart: ceartaigh an teagmháil."
 
 # needs-review
 msgid "A value is out of its allowed range or format: correct it."
@@ -35,6 +39,10 @@ msgstr "Tá cuntas darb ainm {account} ann cheana. Níor sábháladh aon rud."
 # needs-review
 msgid "An unexpected error occurred: nothing was changed."
 msgstr "Tharla earráid gan choinne: níor athraíodh aon rud."
+
+# needs-review
+msgid "Authorization code given by the current registrar"
+msgstr "Cód údaraithe ón gcláraitheoir reatha"
 
 # needs-review
 msgid "Confirm"
@@ -92,8 +100,18 @@ msgid "Gandi cannot be reached right now: try again later."
 msgstr "Ní féidir teagmháil a dhéanamh le Gandi faoi láthair: bain triail eile as ar ball."
 
 # needs-review
+msgid "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+msgstr ""
+"Níorbh fhéidir le Gandi praghas a thabhairt anois: níor ceannaíodh aon rud. Bain triail eile as i"
+" gceann tamaillín."
+
+# needs-review
 msgid "Gandi did not find this resource."
 msgstr "Níor aimsigh Gandi an acmhainn seo."
+
+# needs-review
+msgid "Gandi gives no price for this duration: choose another duration."
+msgstr "Ní thugann Gandi praghas don tréimhse seo: roghnaigh tréimhse eile."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -112,6 +130,10 @@ msgid "Gandi refused this operation: the token may lack the required permission 
 msgstr ""
 "Dhiúltaigh Gandi an oibríocht seo: b'fhéidir nach bhfuil an cead riachtanach ag an gcomhartha nó "
 "go bhfuil sé imithe in éag."
+
+# needs-review
+msgid "Gandi refused this order when checking it: nothing was bought."
+msgstr "Dhiúltaigh Gandi don ordú seo agus é á sheiceáil: níor ceannaíodh aon rud."
 
 # needs-review
 msgid ""
@@ -222,6 +244,12 @@ msgstr ""
 "sainroghanna, ansin bain triail eile as."
 
 # needs-review
+msgid "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+msgstr ""
+"D'athraigh an praghas ón deimhniú: níor ceannaíodh aon rud. Iarr arís chun an praghas nua a "
+"fheiceáil."
+
+# needs-review
 msgid "The removal of this account was interrupted: remove the account again to finish it."
 msgstr "Cuireadh isteach ar bhaint an chuntais seo: bain an cuntas arís chun é a chríochnú."
 
@@ -230,6 +258,10 @@ msgid "The token of this account is missing from the keyring: replace the token 
 msgstr ""
 "Tá comhartha an chuntais seo ar iarraidh ón bhfáinne eochracha: athsholáthair comhartha an "
 "chuntais."
+
+# needs-review
+msgid "The value asked on the confirmation page is missing: nothing was changed."
+msgstr "Tá an luach a iarradh ar an leathanach deimhnithe in easnamh: níor athraíodh aon rud."
 
 # needs-review
 msgid "This account cannot use this organization: list its organizations to choose one."
@@ -264,6 +296,10 @@ msgstr ""
 # needs-review
 msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
 msgstr "Tá an deimhniú seo anaithnid, úsáidte cheana nó d'oibríocht eile: níor athraíodh aon rud."
+
+# needs-review
+msgid "This domain is not available for registration: nothing was bought."
+msgstr "Níl an fearann seo ar fáil le clárú: níor ceannaíodh aon rud."
 
 # needs-review
 msgid "This is not a valid Personal Access Token."
@@ -312,6 +348,46 @@ msgstr "aitheantas an chuntais a léamh"
 
 # needs-review
 #, python-brace-format
+msgid "register {domain} for {count} year: {price} including taxes"
+msgid_plural "register {domain} for {count} years: {price} including taxes"
+msgstr[0] "{domain} a chlárú ar feadh {count} bhliain: {price} lena n-áirítear cánacha"
+msgstr[1] "{domain} a chlárú ar feadh {count} bhliain: {price} lena n-áirítear cánacha"
+msgstr[2] "{domain} a chlárú ar feadh {count} bliana: {price} lena n-áirítear cánacha"
+msgstr[3] "{domain} a chlárú ar feadh {count} mbliana: {price} lena n-áirítear cánacha"
+msgstr[4] "{domain} a chlárú ar feadh {count} bliain: {price} lena n-áirítear cánacha"
+
+# needs-review
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr "an cuntas {account} agus a chomhartha a bhaint den ríomhaire seo"
+
+# needs-review
+#, python-brace-format
+msgid "renew {domain} for {count} year: {price} including taxes"
+msgid_plural "renew {domain} for {count} years: {price} including taxes"
+msgstr[0] "{domain} a athnuachan ar feadh {count} bhliain: {price} lena n-áirítear cánacha"
+msgstr[1] "{domain} a athnuachan ar feadh {count} bhliain: {price} lena n-áirítear cánacha"
+msgstr[2] "{domain} a athnuachan ar feadh {count} bliana: {price} lena n-áirítear cánacha"
+msgstr[3] "{domain} a athnuachan ar feadh {count} mbliana: {price} lena n-áirítear cánacha"
+msgstr[4] "{domain} a athnuachan ar feadh {count} bliain: {price} lena n-áirítear cánacha"
+
+# needs-review
+#, python-brace-format
+msgid "restore {domain}: {price} including taxes"
+msgstr "{domain} a athchóiriú: {price} lena n-áirítear cánacha"
+
+# needs-review
+#, python-brace-format
+msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} including taxes"
+msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
+msgstr[0] "{domain} a aistriú chuig Gandi, le hathnuachan {count} bhliain: {price} lena n-áirítear cánacha"
+msgstr[1] "{domain} a aistriú chuig Gandi, le hathnuachan {count} bhliain: {price} lena n-áirítear cánacha"
+msgstr[2] "{domain} a aistriú chuig Gandi, le hathnuachan {count} bliana: {price} lena n-áirítear cánacha"
+msgstr[3] "{domain} a aistriú chuig Gandi, le hathnuachan {count} mbliana: {price} lena n-áirítear cánacha"
+msgstr[4] "{domain} a aistriú chuig Gandi, le hathnuachan {count} bliain: {price} lena n-áirítear cánacha"
+
+# needs-review
+#, python-brace-format
+msgid "{price}, paid by the organization {organization}"
+msgstr "{price}, íoctha ag an eagraíocht {organization}"
 

@@ -12,7 +12,7 @@ class QuoteError(DomainError):
 class NotAvailableError(QuoteError):
     """The domain cannot be registered (taken, reserved, forbidden...)."""
 
-    def __init__(self, message: str, status: str) -> None:
+    def __init__(self, message: str, status: str = "unavailable") -> None:
         super().__init__(message)
         self.status = status
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:32+0100\n"
+"POT-Creation-Date: 2026-11-26 22:51+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lt\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A contact field is missing or badly formed: correct the contact."
+msgstr "Trūksta kontakto lauko arba jis neteisingas: pataisykite kontaktą."
 
 # needs-review
 msgid "A value is out of its allowed range or format: correct it."
@@ -35,6 +39,10 @@ msgstr "Paskyra pavadinimu {account} jau yra. Niekas neišsaugota."
 # needs-review
 msgid "An unexpected error occurred: nothing was changed."
 msgstr "Įvyko netikėta klaida: niekas nepakeista."
+
+# needs-review
+msgid "Authorization code given by the current registrar"
+msgstr "Dabartinio registratoriaus suteiktas autorizacijos kodas"
 
 # needs-review
 msgid "Confirm"
@@ -90,8 +98,16 @@ msgid "Gandi cannot be reached right now: try again later."
 msgstr "Šiuo metu nepavyksta pasiekti Gandi: bandykite vėliau."
 
 # needs-review
+msgid "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+msgstr "Gandi dabar negalėjo nurodyti kainos: niekas nebuvo nupirkta. Bandykite po akimirkos."
+
+# needs-review
 msgid "Gandi did not find this resource."
 msgstr "Gandi nerado šio ištekliaus."
+
+# needs-review
+msgid "Gandi gives no price for this duration: choose another duration."
+msgstr "Gandi nenurodo kainos šiai trukmei: pasirinkite kitą trukmę."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -108,6 +124,10 @@ msgstr ""
 # needs-review
 msgid "Gandi refused this operation: the token may lack the required permission or have expired."
 msgstr "Gandi atmetė šią operaciją: raktui gali trūkti reikiamo leidimo arba jis pasibaigęs."
+
+# needs-review
+msgid "Gandi refused this order when checking it: nothing was bought."
+msgstr "Gandi tikrindama atmetė šį užsakymą: niekas nebuvo nupirkta."
 
 # needs-review
 msgid ""
@@ -216,12 +236,22 @@ msgstr ""
 "bandykite dar kartą."
 
 # needs-review
+msgid "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+msgstr ""
+"Kaina pasikeitė po patvirtinimo: niekas nebuvo nupirkta. Paprašykite dar kartą, kad pamatytumėte "
+"naują kainą."
+
+# needs-review
 msgid "The removal of this account was interrupted: remove the account again to finish it."
 msgstr "Šios paskyros šalinimas buvo nutrauktas: pašalinkite paskyrą dar kartą, kad jį užbaigtumėte."
 
 # needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Šios paskyros rakto nėra raktinėje: pakeiskite paskyros raktą."
+
+# needs-review
+msgid "The value asked on the confirmation page is missing: nothing was changed."
+msgstr "Trūksta patvirtinimo puslapyje prašytos reikšmės: niekas nepakeista."
 
 # needs-review
 msgid "This account cannot use this organization: list its organizations to choose one."
@@ -256,6 +286,10 @@ msgstr ""
 # needs-review
 msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
 msgstr "Šis patvirtinimas nežinomas, jau panaudotas arba skirtas kitai operacijai: niekas nepakeista."
+
+# needs-review
+msgid "This domain is not available for registration: nothing was bought."
+msgstr "Šio domeno negalima registruoti: niekas nebuvo nupirkta."
 
 # needs-review
 msgid "This is not a valid Personal Access Token."
@@ -306,6 +340,40 @@ msgstr "nuskaityti paskyros tapatybę"
 
 # needs-review
 #, python-brace-format
+msgid "register {domain} for {count} year: {price} including taxes"
+msgid_plural "register {domain} for {count} years: {price} including taxes"
+msgstr[0] "registruoti {domain} {count} metams: {price} su mokesčiais"
+msgstr[1] "registruoti {domain} {count} metams: {price} su mokesčiais"
+msgstr[2] "registruoti {domain} {count} metų: {price} su mokesčiais"
+
+# needs-review
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr "pašalinti paskyrą {account} ir jos raktą iš šio kompiuterio"
+
+# needs-review
+#, python-brace-format
+msgid "renew {domain} for {count} year: {price} including taxes"
+msgid_plural "renew {domain} for {count} years: {price} including taxes"
+msgstr[0] "pratęsti {domain} {count} metams: {price} su mokesčiais"
+msgstr[1] "pratęsti {domain} {count} metams: {price} su mokesčiais"
+msgstr[2] "pratęsti {domain} {count} metų: {price} su mokesčiais"
+
+# needs-review
+#, python-brace-format
+msgid "restore {domain}: {price} including taxes"
+msgstr "atkurti {domain}: {price} su mokesčiais"
+
+# needs-review
+#, python-brace-format
+msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} including taxes"
+msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
+msgstr[0] "perkelti {domain} į Gandi su pratęsimu {count} metams: {price} su mokesčiais"
+msgstr[1] "perkelti {domain} į Gandi su pratęsimu {count} metams: {price} su mokesčiais"
+msgstr[2] "perkelti {domain} į Gandi su pratęsimu {count} metų: {price} su mokesčiais"
+
+# needs-review
+#, python-brace-format
+msgid "{price}, paid by the organization {organization}"
+msgstr "{price}, moka organizacija {organization}"
 

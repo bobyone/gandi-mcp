@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:32+0100\n"
+"POT-Creation-Date: 2026-11-26 22:51+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hr\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A contact field is missing or badly formed: correct the contact."
+msgstr "Polje kontakta nedostaje ili je neispravno: ispravite kontakt."
 
 # needs-review
 msgid "A value is out of its allowed range or format: correct it."
@@ -35,6 +39,10 @@ msgstr "Račun naziva {account} već postoji. Ništa nije spremljeno."
 # needs-review
 msgid "An unexpected error occurred: nothing was changed."
 msgstr "Došlo je do neočekivane pogreške: ništa nije promijenjeno."
+
+# needs-review
+msgid "Authorization code given by the current registrar"
+msgstr "Autorizacijski kod koji je dao trenutačni registrar"
 
 # needs-review
 msgid "Confirm"
@@ -90,8 +98,16 @@ msgid "Gandi cannot be reached right now: try again later."
 msgstr "Gandi trenutačno nije dostupan: pokušajte ponovno kasnije."
 
 # needs-review
+msgid "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+msgstr "Gandi trenutačno ne može dati cijenu: ništa nije kupljeno. Pokušajte ponovno za trenutak."
+
+# needs-review
 msgid "Gandi did not find this resource."
 msgstr "Gandi nije pronašao ovaj resurs."
+
+# needs-review
+msgid "Gandi gives no price for this duration: choose another duration."
+msgstr "Gandi ne daje cijenu za ovo trajanje: odaberite drugo trajanje."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -106,6 +122,10 @@ msgstr "Gandi je odbio token ovog računa, koji je možda nevaljan ili istekao: 
 # needs-review
 msgid "Gandi refused this operation: the token may lack the required permission or have expired."
 msgstr "Gandi je odbio ovu operaciju: tokenu možda nedostaje potrebna dozvola ili je istekao."
+
+# needs-review
+msgid "Gandi refused this order when checking it: nothing was bought."
+msgstr "Gandi je odbio ovu narudžbu pri provjeri: ništa nije kupljeno."
 
 # needs-review
 msgid ""
@@ -216,12 +236,20 @@ msgstr ""
 "zatim pokušajte ponovno."
 
 # needs-review
+msgid "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+msgstr "Cijena se promijenila od potvrde: ništa nije kupljeno. Zatražite ponovno da vidite novu cijenu."
+
+# needs-review
 msgid "The removal of this account was interrupted: remove the account again to finish it."
 msgstr "Uklanjanje ovog računa je prekinuto: ponovno uklonite račun da biste ga dovršili."
 
 # needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Token ovog računa nedostaje u privjesku ključeva: zamijenite token računa."
+
+# needs-review
+msgid "The value asked on the confirmation page is missing: nothing was changed."
+msgstr "Nedostaje vrijednost tražena na stranici potvrde: ništa nije promijenjeno."
 
 # needs-review
 msgid "This account cannot use this organization: list its organizations to choose one."
@@ -256,6 +284,10 @@ msgstr ""
 # needs-review
 msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
 msgstr "Ova je potvrda nepoznata, već iskorištena ili za drugu operaciju: ništa nije promijenjeno."
+
+# needs-review
+msgid "This domain is not available for registration: nothing was bought."
+msgstr "Ova domena nije dostupna za registraciju: ništa nije kupljeno."
 
 # needs-review
 msgid "This is not a valid Personal Access Token."
@@ -304,6 +336,40 @@ msgstr "čitanje identiteta računa"
 
 # needs-review
 #, python-brace-format
+msgid "register {domain} for {count} year: {price} including taxes"
+msgid_plural "register {domain} for {count} years: {price} including taxes"
+msgstr[0] "registrirati {domain} na {count} godinu: {price} s porezima"
+msgstr[1] "registrirati {domain} na {count} godine: {price} s porezima"
+msgstr[2] "registrirati {domain} na {count} godina: {price} s porezima"
+
+# needs-review
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr "ukloniti račun {account} i njegov token s ovog računala"
+
+# needs-review
+#, python-brace-format
+msgid "renew {domain} for {count} year: {price} including taxes"
+msgid_plural "renew {domain} for {count} years: {price} including taxes"
+msgstr[0] "obnoviti {domain} na {count} godinu: {price} s porezima"
+msgstr[1] "obnoviti {domain} na {count} godine: {price} s porezima"
+msgstr[2] "obnoviti {domain} na {count} godina: {price} s porezima"
+
+# needs-review
+#, python-brace-format
+msgid "restore {domain}: {price} including taxes"
+msgstr "vratiti {domain}: {price} s porezima"
+
+# needs-review
+#, python-brace-format
+msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} including taxes"
+msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
+msgstr[0] "prenijeti {domain} u Gandi uz obnovu na {count} godinu: {price} s porezima"
+msgstr[1] "prenijeti {domain} u Gandi uz obnovu na {count} godine: {price} s porezima"
+msgstr[2] "prenijeti {domain} u Gandi uz obnovu na {count} godina: {price} s porezima"
+
+# needs-review
+#, python-brace-format
+msgid "{price}, paid by the organization {organization}"
+msgstr "{price}, plaća organizacija {organization}"
 

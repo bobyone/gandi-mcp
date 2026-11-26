@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:32+0100\n"
+"POT-Creation-Date: 2026-11-26 22:51+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mt\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A contact field is missing or badly formed: correct the contact."
+msgstr "Qasam tal-kuntatt huwa nieqes jew ħażin: ikkoreġi l-kuntatt."
 
 # needs-review
 msgid "A value is out of its allowed range or format: correct it."
@@ -35,6 +39,10 @@ msgstr "Diġà hemm kont imsejjaħ {account}. Xejn ma ġie salvat."
 # needs-review
 msgid "An unexpected error occurred: nothing was changed."
 msgstr "Seħħ żball mhux mistenni: xejn ma nbidel."
+
+# needs-review
+msgid "Authorization code given by the current registrar"
+msgstr "Kodiċi ta' awtorizzazzjoni mogħti mir-reġistratur attwali"
 
 # needs-review
 msgid "Confirm"
@@ -90,8 +98,16 @@ msgid "Gandi cannot be reached right now: try again later."
 msgstr "Gandi mhux disponibbli bħalissa: erġa' pprova aktar tard."
 
 # needs-review
+msgid "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+msgstr "Gandi ma setax jagħti prezz bħalissa: ma nxtara xejn. Erġa' pprova ftit wara."
+
+# needs-review
 msgid "Gandi did not find this resource."
 msgstr "Gandi ma sabx din ir-riżorsa."
+
+# needs-review
+msgid "Gandi gives no price for this duration: choose another duration."
+msgstr "Gandi ma jagħtix prezz għal dan it-tul ta' żmien: agħżel tul ieħor."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -108,6 +124,10 @@ msgstr ""
 # needs-review
 msgid "Gandi refused this operation: the token may lack the required permission or have expired."
 msgstr "Gandi irrifjuta din l-operazzjoni: it-token jista' jkun nieqes mill-permess meħtieġ jew skada."
+
+# needs-review
+msgid "Gandi refused this order when checking it: nothing was bought."
+msgstr "Gandi ċaħad din l-ordni meta ċċekkjaha: ma nxtara xejn."
 
 # needs-review
 msgid ""
@@ -216,12 +236,20 @@ msgstr ""
 "preferenzi, imbagħad erġa' pprova."
 
 # needs-review
+msgid "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+msgstr "Il-prezz inbidel mill-konferma: ma nxtara xejn. Erġa' itlob biex tara l-prezz il-ġdid."
+
+# needs-review
 msgid "The removal of this account was interrupted: remove the account again to finish it."
 msgstr "It-tneħħija ta' dan il-kont ġiet interrotta: erġa' neħħi l-kont biex tlestiha."
 
 # needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "It-token ta' dan il-kont nieqes miċ-ċirku taċ-ċwievet: ibdel it-token tal-kont."
+
+# needs-review
+msgid "The value asked on the confirmation page is missing: nothing was changed."
+msgstr "Il-valur mitlub fil-paġna ta' konferma huwa nieqes: ma nbidel xejn."
 
 # needs-review
 msgid "This account cannot use this organization: list its organizations to choose one."
@@ -256,6 +284,10 @@ msgstr ""
 # needs-review
 msgid "This confirmation is unknown, already used or for another operation: nothing was changed."
 msgstr "Din il-konferma mhix magħrufa, diġà ntużat jew hija għal operazzjoni oħra: xejn ma nbidel."
+
+# needs-review
+msgid "This domain is not available for registration: nothing was bought."
+msgstr "Dan id-dominju mhuwiex disponibbli għar-reġistrazzjoni: ma nxtara xejn."
 
 # needs-review
 msgid "This is not a valid Personal Access Token."
@@ -306,6 +338,46 @@ msgstr "taqra l-identità tal-kont"
 
 # needs-review
 #, python-brace-format
+msgid "register {domain} for {count} year: {price} including taxes"
+msgid_plural "register {domain} for {count} years: {price} including taxes"
+msgstr[0] "irreġistra {domain} għal {count} sena: {price} inklużi t-taxxi"
+msgstr[1] "irreġistra {domain} għal {count} snin: {price} inklużi t-taxxi"
+msgstr[2] "irreġistra {domain} għal {count} snin: {price} inklużi t-taxxi"
+msgstr[3] "irreġistra {domain} għal {count} sena: {price} inklużi t-taxxi"
+msgstr[4] "irreġistra {domain} għal {count} sena: {price} inklużi t-taxxi"
+
+# needs-review
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr "tneħħi l-kont {account} u t-token tiegħu minn dan il-kompjuter"
+
+# needs-review
+#, python-brace-format
+msgid "renew {domain} for {count} year: {price} including taxes"
+msgid_plural "renew {domain} for {count} years: {price} including taxes"
+msgstr[0] "ġedded {domain} għal {count} sena: {price} inklużi t-taxxi"
+msgstr[1] "ġedded {domain} għal {count} snin: {price} inklużi t-taxxi"
+msgstr[2] "ġedded {domain} għal {count} snin: {price} inklużi t-taxxi"
+msgstr[3] "ġedded {domain} għal {count} sena: {price} inklużi t-taxxi"
+msgstr[4] "ġedded {domain} għal {count} sena: {price} inklużi t-taxxi"
+
+# needs-review
+#, python-brace-format
+msgid "restore {domain}: {price} including taxes"
+msgstr "irrestawra {domain}: {price} inklużi t-taxxi"
+
+# needs-review
+#, python-brace-format
+msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} including taxes"
+msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
+msgstr[0] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} sena: {price} inklużi t-taxxi"
+msgstr[1] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} snin: {price} inklużi t-taxxi"
+msgstr[2] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} snin: {price} inklużi t-taxxi"
+msgstr[3] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} sena: {price} inklużi t-taxxi"
+msgstr[4] "ittrasferixxi {domain} lil Gandi, b'tiġdid ta' {count} sena: {price} inklużi t-taxxi"
+
+# needs-review
+#, python-brace-format
+msgid "{price}, paid by the organization {organization}"
+msgstr "{price}, imħallas mill-organizzazzjoni {organization}"
 

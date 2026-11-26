@@ -123,6 +123,29 @@ billable category, or a secret to type), reads the token and calls Gandi with
 the typed secret. It returns an `UntrustedResult` (data and `total_count`), or
 a pending `ConfirmationDecision` to resume with its identifier.
 
+### Billable operation: `gandi_mcp.operations.billable_operation.BillableOperation`
+
+An `Operation` of category `billable` that only runs through the
+`OrderExecutor` (ADR 7); its `execute` raises `TypeError`.
+
+| Member | Contract |
+| --- | --- |
+| `quote_request(paying_organization)` | The `QuoteRequest` to price. |
+| `order_path`, `order_body(quote)` | Path and JSON body of the `POST` order. |
+| `supports_dry_run` | Whether Gandi accepts `Dry-Run: 1` (default `False`). |
+| `follow_up` | Tool following the resulting asynchronous operation, if any. |
+| `with_secret(body, secret)` | Adds the secret typed with the confirmation (default: nothing). |
+| `order(client, environment, token, quote, *, dry_run=False, secret=None)` | Sends the order with `sharing_id` when the quote has a paying organization. |
+| `describe()` | Its message takes a `price` parameter, filled by the executor. |
+
+`OrderExecutor(accounts, secrets, client, confirmation, *, quotes, translator)`
+`.run(operation, account_name, context, confirmation_id=None,
+paying_organization=None)` applies algorithm G (ADR 7) and returns an
+`UntrustedResult` or a pending `ConfirmationDecision`. Errors: `OrderError` >
+`DryRunRejectedError` (also a `GandiValidationError`, with the untrusted
+details of the dry run), `PriceChangedError`; quote, confirmation, account,
+secret store and Gandi errors pass through.
+
 ### Confirmation channel: `gandi_mcp.confirmation.confirmation_channel.ConfirmationChannel`
 
 | Operation | Contract |
@@ -204,7 +227,7 @@ Sends authenticated requests to the Gandi API v5 of an environment.
 
 | Operation | Contract |
 | --- | --- |
-| `request(environment, token, method, path, *, query=None, body=None)` | `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
+| `request(environment, token, method, path, *, query=None, body=None, accept_see_other=False, dry_run=False)` | `dry_run` sends `Dry-Run: 1` (Gandi only checks the request). `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
 | `close()` | Releases network resources. |
 
 Errors: `GandiAuthenticationError` (401), `GandiPermissionError` (403),
@@ -434,6 +457,17 @@ asked with a confirmation. On the local confirmation page, the field is required
 to confirm, not to refuse; an empty or invalid value shows the page again (422)
 without writing the value back (ADR 11).
 
+### Domain contacts: `gandi_mcp.domains.contacts.domain_contact.DomainContact`
+
+A contact given by the user: `type` (`individual`, `company`, `association`,
+`publicbody`), `given`, `family`, `email`, `streetaddr`, `city`, `zip`,
+`country` (two letters), optional `phone` (`+33.123456789`), `orgname`
+(required unless `individual`) and `state`; `data_obfuscated` and
+`mail_obfuscated` default to `True` (hidden in the WHOIS). Text fields are
+trimmed, NFC-normalized, at most 280 characters, without control characters;
+`InvalidContactError` otherwise. `repr` only shows the type and country.
+`DomainContacts(owner, admin=None, tech=None, bill=None)` groups them by role.
+
 ### Quotes: `gandi_mcp.domains.quotes`
 
 `QuoteRequest(name, process, duration, paying_organization=None)` asks the
@@ -519,6 +553,8 @@ conversation and never to invent a confirmation identifier.
 | `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`, `sort_by` by name, expiry or creation date, `-` to reverse), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status` (`completed` once registered), `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
+| `tools.domains.domain_order_runner.DomainOrderRunner` | Shared by the order tools: builds the `BillableOperation` (validation errors explained), runs the `OrderExecutor`, returns the pending confirmation or `status: ordered` with the untrusted, minimized result and the follow-up tool. |
+| `tools.domains.order_tools.OrderTools` | `domain_register` (duration, owner and optional admin, tech, bill contacts), `domain_renew`, `domain_restore`, `domain_transfer_in` (the authorization code is typed on the confirmation page); all take `paying_organization`, `confirmation_id` and `account`. |
 | `tools.domains.transfer_tools.TransferTools` | `domain_owner_change_status`, `domain_transfer_in_status`, `domain_transfer_in_check` (sends no authorization code). |
 | `tools.organization_tools.OrganizationTools` | `list_organizations` (read-only; identifier, name and type, framed as untrusted data) and `set_paying_organization` (local preference, allowed on a read-only account; omitting `organization_id` clears it). |
 | `McpUserInteraction` | `UserInteraction` over MCP elicitation for one call. From protocol revision 2026-07-28 (no request from the server during a call), elicitation is treated as unavailable, so confirmations use the local page (ADR 4). |

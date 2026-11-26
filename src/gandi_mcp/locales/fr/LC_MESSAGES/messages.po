@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 22:32+0100\n"
+"POT-Creation-Date: 2026-11-26 22:51+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A contact field is missing or badly formed: correct the contact."
+msgstr "Un champ du contact manque ou est mal formé : corrigez le contact."
 
 # needs-review
 msgid "A value is out of its allowed range or format: correct it."
@@ -34,6 +38,10 @@ msgstr "Un compte s'appelle déjà {account}. Rien n'a été enregistré."
 # needs-review
 msgid "An unexpected error occurred: nothing was changed."
 msgstr "Une erreur inattendue s'est produite : rien n'a été modifié."
+
+# needs-review
+msgid "Authorization code given by the current registrar"
+msgstr "Code d'autorisation donné par le registraire actuel"
 
 # needs-review
 msgid "Confirm"
@@ -89,8 +97,16 @@ msgid "Gandi cannot be reached right now: try again later."
 msgstr "Gandi est injoignable pour le moment : réessayez plus tard."
 
 # needs-review
+msgid "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+msgstr "Gandi n'a pas pu donner de prix pour le moment : rien n'a été acheté. Réessayez dans un instant."
+
+# needs-review
 msgid "Gandi did not find this resource."
 msgstr "Gandi n'a pas trouvé cette ressource."
+
+# needs-review
+msgid "Gandi gives no price for this duration: choose another duration."
+msgstr "Gandi ne donne pas de prix pour cette durée : choisissez une autre durée."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -105,6 +121,10 @@ msgstr "Gandi a refusé le jeton de ce compte, peut-être invalide ou expiré : 
 # needs-review
 msgid "Gandi refused this operation: the token may lack the required permission or have expired."
 msgstr "Gandi a refusé cette opération : le jeton n'a peut-être pas la permission nécessaire ou a expiré."
+
+# needs-review
+msgid "Gandi refused this order when checking it: nothing was bought."
+msgstr "Gandi a refusé cette commande en la vérifiant : rien n'a été acheté."
 
 # needs-review
 msgid ""
@@ -217,12 +237,22 @@ msgstr ""
 " le fichier de préférences, puis réessayez."
 
 # needs-review
+msgid "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+msgstr ""
+"Le prix a changé depuis la confirmation : rien n'a été acheté. Redemandez pour voir le nouveau "
+"prix."
+
+# needs-review
 msgid "The removal of this account was interrupted: remove the account again to finish it."
 msgstr "La suppression de ce compte a été interrompue : supprimez à nouveau le compte pour la terminer."
 
 # needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Le jeton de ce compte manque dans le trousseau : remplacez le jeton du compte."
+
+# needs-review
+msgid "The value asked on the confirmation page is missing: nothing was changed."
+msgstr "La valeur demandée sur la page de confirmation manque : rien n'a été modifié."
 
 # needs-review
 msgid "This account cannot use this organization: list its organizations to choose one."
@@ -259,6 +289,10 @@ msgid "This confirmation is unknown, already used or for another operation: noth
 msgstr ""
 "Cette confirmation est inconnue, déjà utilisée ou destinée à une autre opération : rien n'a été "
 "modifié."
+
+# needs-review
+msgid "This domain is not available for registration: nothing was bought."
+msgstr "Ce domaine n'est pas disponible à l'enregistrement : rien n'a été acheté."
 
 # needs-review
 msgid "This is not a valid Personal Access Token."
@@ -309,6 +343,40 @@ msgstr "lire l'identité du compte"
 
 # needs-review
 #, python-brace-format
+msgid "register {domain} for {count} year: {price} including taxes"
+msgid_plural "register {domain} for {count} years: {price} including taxes"
+msgstr[0] "enregistrer {domain} pour {count} an : {price} TTC"
+msgstr[1] "enregistrer {domain} pour {count} ans : {price} TTC"
+msgstr[2] "enregistrer {domain} pour {count} ans : {price} TTC"
+
+# needs-review
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr "supprimer le compte {account} et son jeton de cet ordinateur"
+
+# needs-review
+#, python-brace-format
+msgid "renew {domain} for {count} year: {price} including taxes"
+msgid_plural "renew {domain} for {count} years: {price} including taxes"
+msgstr[0] "renouveler {domain} pour {count} an : {price} TTC"
+msgstr[1] "renouveler {domain} pour {count} ans : {price} TTC"
+msgstr[2] "renouveler {domain} pour {count} ans : {price} TTC"
+
+# needs-review
+#, python-brace-format
+msgid "restore {domain}: {price} including taxes"
+msgstr "restaurer {domain} : {price} TTC"
+
+# needs-review
+#, python-brace-format
+msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} including taxes"
+msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
+msgstr[0] "transférer {domain} chez Gandi, avec {count} an de renouvellement : {price} TTC"
+msgstr[1] "transférer {domain} chez Gandi, avec {count} ans de renouvellement : {price} TTC"
+msgstr[2] "transférer {domain} chez Gandi, avec {count} ans de renouvellement : {price} TTC"
+
+# needs-review
+#, python-brace-format
+msgid "{price}, paid by the organization {organization}"
+msgstr "{price}, payé par l'organisation {organization}"
 

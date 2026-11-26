@@ -20,7 +20,7 @@ The software runs on the user's computer. Its authors receive no data.
 | Controller | [Name and contact of the person or organization using the software] |
 | Purpose | Let the user read and manage their Gandi resources (domains, DNS, email, certificates, hosting, billing, organizations) through an MCP client. |
 | Legal basis | [Performance of a contract with Gandi / legitimate interest of the controller in managing its own resources] |
-| Data subjects | The user; domain contacts (owner, administrative, technical, billing); mailbox and forwarding users; organization members. |
+| Data subjects | The user; domain contacts (owner, administrative, technical, billing), whose details the user gives in the conversation to register or transfer a domain, so they also reach the LLM provider; mailbox and forwarding users; organization members. |
 | Data categories | Identification and contact data of domain contacts (name, postal address, email, phone, organization); email addresses of mailboxes and forwards; billing data (invoices, amounts, payment status); technical data (domain names, DNS records, IP addresses of servers). |
 | Recipients | Gandi SAS (France), service provider of the controller; the provider of the LLM used by the MCP client (for example Anthropic or OpenAI), which receives tool results. |
 | Transfers outside the EU | Depending on the LLM provider: [for example United States, under the provider's data processing terms and transfer mechanism]. Gandi processes data in the EU. |

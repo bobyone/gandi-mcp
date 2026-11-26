@@ -25,9 +25,16 @@ from gandi_mcp.confirmation.exceptions import (
     ConfirmationMismatchError,
     ConfirmationRefusedError,
     ConfirmationUnavailableError,
+    SecretInputMissingError,
 )
 from gandi_mcp.content.long_text_filter import LongTextFilter
+from gandi_mcp.domains.contacts.exceptions import InvalidContactError
 from gandi_mcp.domains.exceptions import InvalidDomainInputError, InvalidDomainNameError
+from gandi_mcp.domains.quotes.exceptions import (
+    NoPriceForDurationError,
+    NotAvailableError,
+    QuoteUnavailableError,
+)
 from gandi_mcp.gandi.exceptions import (
     GandiAuthenticationError,
     GandiConflictError,
@@ -40,6 +47,7 @@ from gandi_mcp.gandi.exceptions import (
 )
 from gandi_mcp.i18n.message import N_, Message
 from gandi_mcp.i18n.translator import Translator
+from gandi_mcp.operations.exceptions import DryRunRejectedError, PriceChangedError
 from gandi_mcp.preferences.exceptions import PreferencesError
 from gandi_mcp.secrets.exceptions import (
     InvalidTokenFormatError,
@@ -106,11 +114,29 @@ INVALID_ORGANIZATION = N_(
 UNKNOWN_ORGANIZATION = N_(
     "This account cannot use this organization: list its organizations to choose one."
 )
+NOT_AVAILABLE = N_("This domain is not available for registration: nothing was bought.")
+NO_PRICE = N_("Gandi gives no price for this duration: choose another duration.")
+QUOTE_UNAVAILABLE = N_(
+    "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+)
+DRY_RUN_REJECTED = N_("Gandi refused this order when checking it: nothing was bought.")
+PRICE_CHANGED = N_(
+    "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+)
+INVALID_CONTACT = N_("A contact field is missing or badly formed: correct the contact.")
+SECRET_MISSING = N_("The value asked on the confirmation page is missing: nothing was changed.")
 APP_ONLY = N_("This tool can only be used from the Gandi app.")
 INTERNAL = N_("An unexpected error occurred: nothing was changed.")
 
 # Order matters: subclasses before their base classes.
 MESSAGES: Mapping[type[Exception], Message] = {
+    DryRunRejectedError: DRY_RUN_REJECTED,
+    PriceChangedError: PRICE_CHANGED,
+    NotAvailableError: NOT_AVAILABLE,
+    NoPriceForDurationError: NO_PRICE,
+    QuoteUnavailableError: QUOTE_UNAVAILABLE,
+    InvalidContactError: INVALID_CONTACT,
+    SecretInputMissingError: SECRET_MISSING,
     NoAccountError: NO_ACCOUNT,
     AccountNotFoundError: ACCOUNT_NOT_FOUND,
     DuplicateAccountError: DUPLICATE_ACCOUNT,

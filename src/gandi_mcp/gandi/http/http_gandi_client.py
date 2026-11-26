@@ -93,6 +93,7 @@ class HttpGandiClient(GandiClient):
         query: Mapping[str, QueryValue] | None = None,
         body: JsonValue = None,
         accept_see_other: bool = False,
+        dry_run: bool = False,
     ) -> GandiResponse:
         verb = method.upper()
         if verb not in METHODS:
@@ -109,7 +110,10 @@ class HttpGandiClient(GandiClient):
                 url,
                 params=params,
                 json=body,
-                headers={"Authorization": f"Bearer {token.reveal()}"},
+                headers={
+                    "Authorization": f"Bearer {token.reveal()}",
+                    **({"Dry-Run": "1"} if dry_run else {}),
+                },
             )
         except httpx2.TimeoutException as error:
             raise GandiUnavailableError("Gandi did not answer in time") from error

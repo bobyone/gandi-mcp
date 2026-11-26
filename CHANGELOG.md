@@ -40,3 +40,8 @@ All notable changes are documented here. The format follows
   are withheld from it. (#5)
 - Organizations: list the organizations of an account and choose the one
   paying its orders by default. (#5)
+- Domain orders: register, renew, restore and transfer in a domain. Each order
+  is priced with Gandi, checked with a dry run when possible, confirmed by the
+  user at its price (in their language) and priced again just before buying;
+  the transfer authorization code is typed on the confirmation page, never in
+  the conversation. (#5)

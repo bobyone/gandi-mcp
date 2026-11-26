@@ -22,6 +22,7 @@ class RecordedCall:
     query: Mapping[str, QueryValue] | None
     body: JsonValue
     accept_see_other: bool = False
+    dry_run: bool = False
 
 
 @dataclass
@@ -42,9 +43,12 @@ class FakeGandiClient(GandiClient):
         query: Mapping[str, QueryValue] | None = None,
         body: JsonValue = None,
         accept_see_other: bool = False,
+        dry_run: bool = False,
     ) -> GandiResponse:
         self.calls.append(
-            RecordedCall(environment, token, method, tuple(path), query, body, accept_see_other)
+            RecordedCall(
+                environment, token, method, tuple(path), query, body, accept_see_other, dry_run
+            )
         )
         outcome = self.outcomes.pop(0) if self.outcomes else GandiResponse(200, None)
         if isinstance(outcome, Exception):
