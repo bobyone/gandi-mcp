@@ -58,6 +58,34 @@ serialization and exposes the value through `reveal()` only) under opaque keys.
 Every operation raises `SecretStoreUnavailableError` when the store cannot be
 reached. Exceptions derive from `SecretStoreError` and never contain a secret.
 
+### Account service: `gandi_mcp.accounts.account_service.AccountService`
+
+The facade of the account rules, used by every tool that manages or resolves
+an account. It depends on a `PreferencesStore`, a `SecretStore` and a
+`TokenVerifier` only, and serializes changes.
+
+| Operation | Contract |
+| --- | --- |
+| `list()` | Accounts sorted by name, as `AccountSummary` (name, environment, read-only flag, default flag; no secret). |
+| `resolve(name=None)` | The named account, else the default one. `NoAccountError`, `AccountNotFoundError`. |
+| `add(draft, token)` | Checks the name is free (`DuplicateAccountError`), verifies the token in the chosen environment (`TokenRejectedError`), stores the token, then the account; the first account becomes the default. If saving the preferences fails, the token is removed again. Returns a `VerifiedAccount` (summary and `AccountIdentity`). |
+| `rename(name, new_name)` | Keeps the token and the default flag; a case change is allowed. |
+| `set_default(name)`, `set_read_only(name, flag)` | Changes the flag. |
+| `replace_token(name, token)` | Verifies the token in the account environment, then replaces the old one (kept when rejected). |
+| `change_environment(name, environment, token)` | Verifies the token in the new environment; restores the previous token if saving fails. |
+| `remove(name)` | Removes the account, then its token; a removed default account is replaced by the first remaining one in alphabetical order. Returns an `AccountRemoval` (`new_default`, `token_removed`, false when the secret store was unavailable). |
+
+Exceptions derive from `AccountError`: `InvalidAccountNameError`,
+`DuplicateAccountError`, `AccountNotFoundError`, `NoAccountError`,
+`ReadOnlyAccountError`, `TokenRejectedError`. Secret store, preferences and
+Gandi errors pass through.
+
+### Token verifier: `gandi_mcp.accounts.token_verifier.TokenVerifier`
+
+| Operation | Contract |
+| --- | --- |
+| `verify(environment, token)` | Returns the `AccountIdentity` (user name, optional full name; displayed, never stored) Gandi recognizes behind the token. `TokenRejectedError` when Gandi refuses it; other `GandiError` pass through. |
+
 ### Preferences store: `gandi_mcp.preferences.preferences_store.PreferencesStore`
 
 Loads and saves `gandi_mcp.preferences.preferences.Preferences` as a whole: the
@@ -195,6 +223,16 @@ Behavior and limits:
 - status translation is in `gandi_error_translator.translate_error`. Gandi
   documents an expired token either as 401 or 403, so the user messages for
   both suggest replacing the token.
+
+### Token verifier: `gandi_mcp.accounts.gandi.gandi_token_verifier.GandiTokenVerifier`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `client` | `GandiClient` | none | yes | Client used to call Gandi. |
+
+Calls `GET organization/user-info`. HTTP 401 and 403 mean the token is
+rejected. Only `username` (required) and `name` are kept, trimmed to 200
+characters; the email and the other fields are ignored.
 
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
