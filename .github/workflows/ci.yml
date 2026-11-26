@@ -76,10 +76,17 @@ jobs:
       - run: uv run --locked python scripts/check_licenses.py
 
   codex-profile:
-    name: Codex permission profile
-    runs-on: ubuntu-24.04
+    name: Codex permission profile (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025]
     env:
       CODEX_VERSION: "0.172.0"
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -90,16 +97,24 @@ jobs:
       - run: uv sync --locked
       - run: npm install --prefix "$RUNNER_TEMP/codex" --no-fund --no-audit "@openai/codex@$CODEX_VERSION"
       - name: Allow the unprivileged user namespaces used by the Codex sandbox
+        if: runner.os == 'Linux'
         # Ubuntu 24.04 restricts them through AppArmor, which makes bubblewrap fail.
         run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       - name: Enforce the committed profile with codex sandbox
         env:
           CODEX_PROFILE_REQUIRED: "1"
+          # Deny-read rules need the elevated backend on Windows; the runner is an administrator.
+          CODEX_WINDOWS_SANDBOX: ${{ runner.os == 'Windows' && 'elevated' || '' }}
         run: |
-          export CODEX_CLI="$RUNNER_TEMP/codex/node_modules/.bin/codex"
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            export CODEX_CLI="$RUNNER_TEMP/codex/node_modules/.bin/codex.cmd"
+          else
+            export CODEX_CLI="$RUNNER_TEMP/codex/node_modules/.bin/codex"
+            unset CODEX_WINDOWS_SANDBOX
+          fi
           export CODEX_HOME="$RUNNER_TEMP/codex-home"
           mkdir -p "$CODEX_HOME"
-          uv run --locked pytest --no-cov -q tests/tools/assistant_guard/test_codex_profile.py
+          uv run --locked pytest --no-cov -q -rs tests/tools/assistant_guard/test_codex_profile.py
 
   dco:
     name: DCO sign-off

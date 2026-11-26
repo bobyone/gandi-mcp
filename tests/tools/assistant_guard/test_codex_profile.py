@@ -9,6 +9,11 @@ cannot re-allow them (see ``tools/assistant_guard/codex_profile.py``).
 Skipped when the Codex CLI or its sandbox is not available (set ``CODEX_CLI`` to its path
 if it is not on the ``PATH``). With ``CODEX_PROFILE_REQUIRED=1`` (CI), an unavailable sandbox
 fails the test instead.
+
+On Windows, deny-read rules need the elevated sandbox backend: set
+``CODEX_WINDOWS_SANDBOX=elevated`` (it requires administrator rights the first time, to
+install the backend). It is not enabled by default, so that running the tests never asks
+for elevation.
 """
 
 import os
@@ -31,6 +36,8 @@ ROOT = Path(__file__).resolve().parents[3]
 PROFILE_FILE = ROOT / ".codex" / "config.toml"
 CODEX = os.environ.get("CODEX_CLI") or shutil.which("codex")
 REQUIRED = os.environ.get("CODEX_PROFILE_REQUIRED") == "1"
+WINDOWS_SANDBOX = os.environ.get("CODEX_WINDOWS_SANDBOX")
+WINDOWS_SANDBOX_MODES = frozenset({"elevated", "unelevated"})
 # Sandbox start-up failures: a read failing for these reasons proves nothing.
 SANDBOX_UNAVAILABLE = ("sandbox failed", "bwrap:")
 # Codex rejects an invalid configuration: every read fails, which must never pass a test.
@@ -73,7 +80,13 @@ def inline_toml(value: Any) -> str:
 def profile_overrides() -> list[str]:
     with PROFILE_FILE.open("rb") as stream:
         configuration = tomllib.load(stream)
+    backend = []
+    if WINDOWS_SANDBOX is not None:
+        if WINDOWS_SANDBOX not in WINDOWS_SANDBOX_MODES:
+            pytest.fail(f"CODEX_WINDOWS_SANDBOX must be one of {sorted(WINDOWS_SANDBOX_MODES)}")
+        backend = ["-c", f"windows.sandbox={inline_toml(WINDOWS_SANDBOX)}"]
     return [
+        *backend,
         "-c",
         f"default_permissions={inline_toml(configuration['default_permissions'])}",
         "-c",
