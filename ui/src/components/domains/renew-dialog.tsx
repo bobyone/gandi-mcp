@@ -54,10 +54,10 @@ export function RenewDialog(props: RenewDialogProps) {
           ) : state.kind === "failed" ? (
             <Alert variant="danger">{state.message || t("feedback.failed")}</Alert>
           ) : (
-            <p role="status">
+            <div role="status" className="mb-3">
               <Spinner animation="border" size="sm" className="me-2" aria-hidden="true" />
               {t("price.loading")}
-            </p>
+            </div>
           )}
         </Modal.Body>
         <Modal.Footer>

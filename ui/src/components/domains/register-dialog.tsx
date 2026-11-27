@@ -99,10 +99,10 @@ export function RegisterDialog({ api, account, busy, onSubmit, onCancel }: Regis
           </Form.Group>
           <div aria-live="polite">
             {state.kind === "loading" && (
-              <p role="status">
+              <div role="status" className="mb-3">
                 <Spinner animation="border" size="sm" className="me-2" aria-hidden="true" />
                 {t("price.loading")}
-              </p>
+              </div>
             )}
             {state.kind === "failed" && (
               <Alert variant="danger">{state.message || t("feedback.failed")}</Alert>

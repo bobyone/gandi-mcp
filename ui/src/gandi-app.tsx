@@ -55,9 +55,9 @@ export function GandiApp({ app, error }: GandiAppProps) {
           {i18n.t("app.connectionFailed")}
         </Alert>
       ) : api === null ? (
-        <p role="status" className="m-3">
+        <div role="status" className="m-3">
           {i18n.t("app.connecting")}
-        </p>
+        </div>
       ) : (
         <Tabs defaultActiveKey="accounts" mountOnEnter unmountOnExit className="px-3 pt-2">
           <Tab eventKey="accounts" title={i18n.t("tab.accounts")}>

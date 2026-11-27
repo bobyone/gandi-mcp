@@ -195,10 +195,10 @@ export function DomainsScreen({ domains, accounts }: DomainsScreenProps) {
         }}
       />
       {accountList === null ? (
-        <p role="status">
+        <div role="status" className="mb-3">
           <Spinner animation="border" size="sm" className="me-2" aria-hidden="true" />
           {t("accounts.loading")}
-        </p>
+        </div>
       ) : accountList.length === 0 ? (
         <p>{t("domains.noAccount")}</p>
       ) : (
@@ -253,10 +253,10 @@ export function DomainsScreen({ domains, accounts }: DomainsScreenProps) {
           )}
           {loading || listing === null ? (
             loading && (
-              <p role="status">
+              <div role="status" className="mb-3">
                 <Spinner animation="border" size="sm" className="me-2" aria-hidden="true" />
                 {t("domains.loading")}
-              </p>
+              </div>
             )
           ) : listing.domains.length === 0 ? (
             <p>{t("domains.empty")}</p>

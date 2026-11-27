@@ -178,10 +178,10 @@ export function AccountsScreen({ api }: AccountsScreenProps) {
         }}
       />
       {accounts === null ? (
-        <p role="status">
+        <div role="status" className="mb-3">
           <Spinner animation="border" size="sm" className="me-2" aria-hidden="true" />
           {t("accounts.loading")}
-        </p>
+        </div>
       ) : accounts.length === 0 ? (
         <p>{t("accounts.empty")}</p>
       ) : (

@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2026 bobyone
 // SPDX-License-Identifier: GPL-2.0-or-later
 import type { App } from "@modelcontextprotocol/ext-apps";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { GandiApp } from "../src/gandi-app";
@@ -45,6 +45,8 @@ describe("GandiApp", () => {
     await user.click(screen.getByRole("tab", { name: "Domains" }));
 
     expect(await screen.findByRole("heading", { name: "Gandi domains" })).toBeInTheDocument();
-    expect(screen.queryByRole("heading", { name: "Gandi accounts" })).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole("heading", { name: "Gandi accounts" })).not.toBeInTheDocument();
+    });
   });
 });

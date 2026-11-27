@@ -66,10 +66,10 @@ export function PayingOrganizationForm(props: PayingOrganizationFormProps) {
         <Modal.Body>
           {error && <Alert variant="danger">{error}</Alert>}
           {organizations === null ? (
-            <p role="status">
+            <div role="status" className="mb-3">
               <Spinner animation="border" size="sm" className="me-2" aria-hidden="true" />
               {t("organizations.loading")}
-            </p>
+            </div>
           ) : (
             <Form.Group controlId={`${id}-organization`}>
               <Form.Label>{t("field.payingOrganization")}</Form.Label>
