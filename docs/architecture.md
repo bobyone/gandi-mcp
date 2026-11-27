@@ -293,8 +293,10 @@ cannot be read or written.
 | `TsigSoftware` | `bind`, `knot`, `nsd` or `powerdns` (`InvalidLiveDnsInputError`). |
 
 Exceptions derive from `LiveDnsError`. `livedns.zone_files.zone_file_summary.record_count(text)`
-counts the records of a zone file (blank lines, comments and directives
-excluded, a record between parentheses counted once).
+counts the records of a zone file: distinct name and type pairs, like the
+records of the API (blank lines, comments and directives skipped; a record
+between parentheses read once). A zone export counts its SOA, which the record
+list of the API leaves out.
 `livedns.zone_files.zone_file_service.ZoneFileService(exporter)` exports the
 zone of a domain, or one of its snapshots, as a zone file:
 `export(account, context, domain, relative_path, *, overwrite=False, snapshot=None)`
