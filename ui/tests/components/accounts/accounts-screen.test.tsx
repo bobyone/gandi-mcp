@@ -5,10 +5,10 @@ import userEvent from "@testing-library/user-event";
 import type { i18n as I18n } from "i18next";
 import { I18nextProvider } from "react-i18next";
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import { AccountsError, type Account } from "../../src/api/account";
-import type { AccountsApi } from "../../src/api/accounts-api";
-import { AccountsScreen } from "../../src/components/accounts-screen";
-import { createI18n } from "../../src/i18n/i18n";
+import { AccountsError, type Account } from "../../../src/api/account";
+import type { AccountsApi } from "../../../src/api/accounts-api";
+import { AccountsScreen } from "../../../src/components/accounts/accounts-screen";
+import { createI18n } from "../../../src/i18n/i18n";
 
 const TOKEN = "pat_0123456789abcdef";
 const PERSO: Account = {
@@ -17,6 +17,7 @@ const PERSO: Account = {
   readOnly: false,
   isDefault: true,
   removalPending: false,
+  payingOrganization: null,
 };
 const PRO: Account = {
   name: "Pro",
@@ -24,6 +25,7 @@ const PRO: Account = {
   readOnly: true,
   isDefault: false,
   removalPending: false,
+  payingOrganization: null,
 };
 
 let i18n: I18n;
@@ -44,6 +46,12 @@ function fakeApi(accounts: Account[] = [PERSO, PRO]) {
       .fn<AccountsApi["changeEnvironment"]>()
       .mockResolvedValue({ account: PERSO, username: "ada" }),
     remove: vi.fn<AccountsApi["remove"]>().mockResolvedValue(null),
+    organizations: vi
+      .fn<AccountsApi["organizations"]>()
+      .mockResolvedValue([{ id: "org-1", name: "Ada SARL", type: "company" }]),
+    setPayingOrganization: vi
+      .fn<AccountsApi["setPayingOrganization"]>()
+      .mockResolvedValue({ ...PERSO, payingOrganization: "org-1" }),
   } satisfies AccountsApi;
 }
 
@@ -298,5 +306,54 @@ describe("AccountsScreen", () => {
     const menu = await openActions(user, "Perso");
 
     expect(menu.queryByRole("button", { name: "Set as default" })).not.toBeInTheDocument();
+  });
+
+  it("chooses the paying organization among those of the account", async () => {
+    const api = fakeApi();
+    const user = show(api);
+
+    await (await openActions(user, "Perso")).findByText("Choose the paying organization");
+    await user.click(screen.getByText("Choose the paying organization"));
+    const dialog = await screen.findByRole("dialog");
+    await user.selectOptions(await within(dialog).findByLabelText("Paying organization"), "org-1");
+    await user.click(within(dialog).getByRole("button", { name: "Save" }));
+
+    expect(api.organizations).toHaveBeenCalledWith("Perso");
+    expect(api.setPayingOrganization).toHaveBeenCalledWith("Perso", "org-1");
+    expect(await screen.findByText("The account Perso is updated.")).toBeInTheDocument();
+  });
+
+  it("clears the paying organization", async () => {
+    const api = fakeApi([{ ...PERSO, payingOrganization: "org-1" }]);
+    const user = show(api);
+
+    await openActions(user, "Perso");
+    await user.click(screen.getByText("Choose the paying organization"));
+    const dialog = await screen.findByRole("dialog");
+    const select = await within(dialog).findByLabelText("Paying organization");
+    expect(select).toHaveValue("org-1");
+    await user.selectOptions(select, "");
+    await user.click(within(dialog).getByRole("button", { name: "Save" }));
+
+    expect(api.setPayingOrganization).toHaveBeenCalledWith("Perso", null);
+  });
+
+  it("explains why the organizations cannot be listed", async () => {
+    const api = fakeApi();
+    api.organizations.mockRejectedValueOnce(new AccountsError("Gandi is unavailable."));
+    api.organizations.mockRejectedValueOnce(new Error("odd"));
+    const user = show(api);
+
+    await openActions(user, "Perso");
+    await user.click(screen.getByText("Choose the paying organization"));
+    expect(await within(await screen.findByRole("dialog")).findByRole("alert")).toHaveTextContent(
+      "Gandi is unavailable.",
+    );
+    await user.click(screen.getByRole("button", { name: "Cancel" }));
+    await openActions(user, "Perso");
+    await user.click(screen.getByText("Choose the paying organization"));
+    expect(await within(await screen.findByRole("dialog")).findByRole("alert")).toHaveTextContent(
+      "The operation failed",
+    );
   });
 });

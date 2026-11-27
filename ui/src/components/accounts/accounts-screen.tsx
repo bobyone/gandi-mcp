@@ -1,27 +1,33 @@
 // SPDX-FileCopyrightText: 2026 bobyone
 // SPDX-License-Identifier: GPL-2.0-or-later
 import { useCallback, useEffect, useState } from "react";
-import Alert from "react-bootstrap/Alert";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
 import { useTranslation } from "react-i18next";
-import { AccountsError, isPending, type Account, type AccountChanges } from "../api/account";
-import type { AccountsApi } from "../api/accounts-api";
+import { AccountsError, type Account, type AccountChanges } from "../../api/account";
+import { isPending } from "../../api/pending-confirmation";
+import type { AccountsApi } from "../../api/accounts-api";
 import { AccountForm, type AccountFormValues } from "./account-form";
-import { ConfirmDialog } from "./confirm-dialog";
+import { ConfirmDialog } from "../confirm-dialog";
+import { FeedbackArea, type Feedback } from "../feedback-area";
+import { PayingOrganizationForm } from "./paying-organization-form";
 import { RenameForm } from "./rename-form";
 
 type Dialog =
   | { kind: "add" }
   | {
-      kind: "rename" | "replaceToken" | "changeEnvironment" | "remove" | "allowWrites";
+      kind:
+        | "rename"
+        | "replaceToken"
+        | "changeEnvironment"
+        | "remove"
+        | "allowWrites"
+        | "payingOrganization";
       account: Account;
     };
-
-type Feedback = { variant: "success"; text: string } | { variant: "danger"; text: string };
 
 /** A change the server asked the user to confirm outside the App. */
 type Pending =
@@ -131,6 +137,13 @@ export function AccountsScreen({ api }: AccountsScreenProps) {
     });
   }
 
+  function choosePayingOrganization(account: Account, organizationId: string | null) {
+    void run(async () => {
+      const updated = await api.setPayingOrganization(account.name, organizationId);
+      return t("feedback.updated", { name: updated.name });
+    });
+  }
+
   function resume(waiting: Pending) {
     if (waiting.kind === "remove") remove(waiting.account, waiting.confirmationId);
     else update(waiting.account, waiting.changes, waiting.confirmationId);
@@ -153,34 +166,17 @@ export function AccountsScreen({ api }: AccountsScreenProps) {
           {t("action.add")}
         </Button>
       </div>
-      <div aria-live="polite">
-        {pending && (
-          <Alert variant="info">
-            <p className="mb-2">{t("feedback.confirmPending")}</p>
-            <Button
-              variant="primary"
-              disabled={busy}
-              onClick={() => {
-                resume(pending);
-              }}
-            >
-              {t("action.continue")}
-            </Button>
-          </Alert>
-        )}
-        {feedback && (
-          <Alert
-            variant={feedback.variant}
-            dismissible
-            closeLabel={t("action.close")}
-            onClose={() => {
-              setFeedback(null);
-            }}
-          >
-            {feedback.text}
-          </Alert>
-        )}
-      </div>
+      <FeedbackArea
+        pending={pending !== null}
+        feedback={feedback}
+        busy={busy}
+        onContinue={() => {
+          if (pending) resume(pending);
+        }}
+        onDismiss={() => {
+          setFeedback(null);
+        }}
+      />
       {accounts === null ? (
         <p role="status">
           <Spinner animation="border" size="sm" className="me-2" aria-hidden="true" />
@@ -250,6 +246,13 @@ export function AccountsScreen({ api }: AccountsScreenProps) {
                           }}
                         >
                           {t("action.changeEnvironment")}
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => {
+                            setDialog({ kind: "payingOrganization", account });
+                          }}
+                        >
+                          {t("action.choosePayingOrganization")}
                         </Dropdown.Item>
                         {!account.isDefault && (
                           <Dropdown.Item
@@ -336,6 +339,17 @@ export function AccountsScreen({ api }: AccountsScreenProps) {
           busy={busy}
           onSubmit={(newName) => {
             update(dialog.account, { newName });
+          }}
+          onCancel={cancel}
+        />
+      )}
+      {dialog?.kind === "payingOrganization" && (
+        <PayingOrganizationForm
+          api={api}
+          account={dialog.account}
+          busy={busy}
+          onSubmit={(organizationId) => {
+            choosePayingOrganization(dialog.account, organizationId);
           }}
           onCancel={cancel}
         />

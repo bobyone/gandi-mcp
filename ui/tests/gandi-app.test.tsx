@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import type { App } from "@modelcontextprotocol/ext-apps";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { GandiApp } from "../src/gandi-app";
 
@@ -34,5 +35,16 @@ describe("GandiApp", () => {
     expect(await screen.findByRole("heading", { level: 1 })).toBeInTheDocument();
     expect(document.documentElement.lang).toBe("fr");
     expect(document.documentElement.dataset.bsTheme).toBe("dark");
+  });
+
+  it("switches between the accounts and the domains", async () => {
+    render(<GandiApp app={fakeApp("en", "light")} error={null} />);
+    const user = userEvent.setup();
+
+    expect(await screen.findByRole("heading", { name: "Gandi accounts" })).toBeInTheDocument();
+    await user.click(screen.getByRole("tab", { name: "Domains" }));
+
+    expect(await screen.findByRole("heading", { name: "Gandi domains" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Gandi accounts" })).not.toBeInTheDocument();
   });
 });

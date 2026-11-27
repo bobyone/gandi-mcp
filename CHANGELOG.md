@@ -54,6 +54,12 @@ All notable changes are documented here. The format follows
   operations are confirmed by the user. (#5)
 - A confirmation can ask the user for a secret (such as an authorization
   code) on its local page, outside the model. (#5)
+- MCP App: a "Domains" screen to list the domains of an account (name filter,
+  pages), show their details with the full contacts, turn the automatic
+  renewal and the transfer lock on or off, change the nameservers, and renew
+  or register a domain at an indicative price, confirmed by the server; the
+  "Accounts" screen chooses the paying organization. Contacts shown or typed
+  in the App never reach the model. (#5)
 
 ### Fixed
 

@@ -5,20 +5,13 @@ import type {
   AccountChanges,
   AccountDraft,
   Environment,
-  PendingConfirmation,
   VerifiedAccount,
 } from "../account";
 import { AccountsError } from "../account";
 import type { AccountsApi } from "../accounts-api";
-
-/** The part of the MCP App connection used to call the app-only tools. */
-export interface ToolCaller {
-  callServerTool(params: { name: string; arguments: Record<string, unknown> }): Promise<{
-    isError?: boolean | undefined;
-    structuredContent?: unknown;
-    content?: unknown[] | undefined;
-  }>;
-}
+import type { Organization } from "../organization";
+import type { PendingConfirmation } from "../pending-confirmation";
+import { callTool, pendingOf, type ToolCaller } from "./tool-caller";
 
 interface WireAccount {
   name: string;
@@ -26,6 +19,14 @@ interface WireAccount {
   read_only: boolean;
   is_default: boolean;
   removal_pending?: boolean;
+  paying_organization?: string | null;
+}
+
+/** An organization as Gandi describes it: untrusted, so every field is checked. */
+interface WireOrganization {
+  id: unknown;
+  name: unknown;
+  type: unknown;
 }
 
 function account(wire: WireAccount): Account {
@@ -35,27 +36,14 @@ function account(wire: WireAccount): Account {
     readOnly: wire.read_only,
     isDefault: wire.is_default,
     removalPending: wire.removal_pending === true,
+    payingOrganization: wire.paying_organization ?? null,
   };
 }
 
-function pending(result: Record<string, unknown>): PendingConfirmation | null {
-  return result.status === "confirmation_pending"
-    ? { confirmationId: String(result.confirmation_id) }
-    : null;
-}
-
-function errorText(content: unknown[] | undefined): string {
-  const block = content?.find(
-    (item): item is { type: "text"; text: string } =>
-      typeof item === "object" &&
-      item !== null &&
-      (item as { type?: unknown }).type === "text" &&
-      typeof (item as { text?: unknown }).text === "string",
-  );
-  return block?.text ?? "";
-}
-
-/** Calls the app-only tools of the gandi-mcp server through the host. */
+/**
+ * Calls the app-only account tools of the gandi-mcp server through the host, and the
+ * organization tools shared with the model (ADR 12).
+ */
 export class McpAccountsApi implements AccountsApi {
   constructor(private readonly caller: ToolCaller) {}
 
@@ -87,7 +75,7 @@ export class McpAccountsApi implements AccountsApi {
       ...(changes.readOnly !== undefined && { read_only: changes.readOnly }),
       ...(changes.makeDefault !== undefined && { make_default: changes.makeDefault }),
     });
-    return pending(result) ?? account(result.account as WireAccount);
+    return pendingOf(result) ?? account(result.account as WireAccount);
   }
 
   async replaceToken(name: string, token: string): Promise<VerifiedAccount> {
@@ -105,7 +93,7 @@ export class McpAccountsApi implements AccountsApi {
   }
 
   async remove(name: string, confirmationId?: string): Promise<PendingConfirmation | null> {
-    return pending(
+    return pendingOf(
       await this.call("app_remove_account", {
         name,
         ...(confirmationId !== undefined && { confirmation_id: confirmationId }),
@@ -117,20 +105,27 @@ export class McpAccountsApi implements AccountsApi {
     return { account: account(result.account as WireAccount), username: String(result.username) };
   }
 
-  private async call(
-    name: string,
-    args: Record<string, unknown>,
-  ): Promise<Record<string, unknown>> {
-    let result;
-    try {
-      result = await this.caller.callServerTool({ name, arguments: args });
-    } catch (error) {
-      throw new AccountsError(error instanceof Error ? error.message : String(error));
-    }
-    const data = result.structuredContent;
-    if (result.isError === true || typeof data !== "object" || data === null) {
-      throw new AccountsError(errorText(result.content));
-    }
-    return data as Record<string, unknown>;
+  async organizations(name: string): Promise<Organization[]> {
+    const result = await this.call("list_organizations", { account: name });
+    const items = Array.isArray(result.untrusted_data)
+      ? (result.untrusted_data as WireOrganization[])
+      : [];
+    return items.map((item) => ({
+      id: String(item.id),
+      name: String(item.name),
+      type: String(item.type),
+    }));
+  }
+
+  async setPayingOrganization(name: string, organizationId: string | null): Promise<Account> {
+    const result = await this.call("set_paying_organization", {
+      account: name,
+      ...(organizationId !== null && { organization_id: organizationId }),
+    });
+    return account(result.account as WireAccount);
+  }
+
+  private call(name: string, args: Record<string, unknown>): Promise<Record<string, unknown>> {
+    return callTool(this.caller, name, args, (message) => new AccountsError(message));
   }
 }

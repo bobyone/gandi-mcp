@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
-import { isValidName } from "../api/account";
+import { isValidName } from "../../api/account";
 
 export interface RenameFormProps {
   readonly name: string;

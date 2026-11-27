@@ -5,9 +5,10 @@ import type {
   AccountChanges,
   AccountDraft,
   Environment,
-  PendingConfirmation,
   VerifiedAccount,
 } from "./account";
+import type { Organization } from "./organization";
+import type { PendingConfirmation } from "./pending-confirmation";
 
 /**
  * Account operations offered to the MCP App. Every operation rejects with an
@@ -31,4 +32,8 @@ export interface AccountsApi {
   ): Promise<VerifiedAccount>;
   /** Removing is confirmed by the user: it may come back pending. */
   remove(name: string, confirmationId?: string): Promise<PendingConfirmation | null>;
+  /** The Gandi organizations of an account, which can pay its orders. */
+  organizations(name: string): Promise<Organization[]>;
+  /** Choose the paying organization of an account, or clear it with null. */
+  setPayingOrganization(name: string, organizationId: string | null): Promise<Account>;
 }

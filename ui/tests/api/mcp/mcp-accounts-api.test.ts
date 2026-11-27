@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import { describe, expect, it, vi } from "vitest";
 import { AccountsError } from "../../../src/api/account";
-import { McpAccountsApi, type ToolCaller } from "../../../src/api/mcp/mcp-accounts-api";
+import { McpAccountsApi } from "../../../src/api/mcp/mcp-accounts-api";
+import type { ToolCaller } from "../../../src/api/mcp/tool-caller";
 
 const WIRE = { name: "Perso", environment: "sandbox", read_only: true, is_default: true };
 const ACCOUNT = {
@@ -11,6 +12,7 @@ const ACCOUNT = {
   readOnly: true,
   isDefault: true,
   removalPending: false,
+  payingOrganization: null,
 };
 
 function caller(result: Awaited<ReturnType<ToolCaller["callServerTool"]>>) {
@@ -140,5 +142,54 @@ describe("McpAccountsApi", () => {
       new AccountsError("disconnected"),
     );
     await expect(new McpAccountsApi(odd).list()).rejects.toEqual(new AccountsError("boom"));
+  });
+
+  it("reads the paying organization of an account", async () => {
+    const fake = caller({
+      structuredContent: { accounts: [{ ...WIRE, paying_organization: "org-1" }] },
+    });
+
+    await expect(new McpAccountsApi(fake).list()).resolves.toEqual([
+      { ...ACCOUNT, payingOrganization: "org-1" },
+    ]);
+  });
+
+  it("lists the organizations of an account as text", async () => {
+    const fake = caller({
+      structuredContent: {
+        notice: "untrusted",
+        untrusted_data: [{ id: "org-1", name: "Ada SARL", type: "company" }],
+      },
+    });
+
+    await expect(new McpAccountsApi(fake).organizations("Perso")).resolves.toEqual([
+      { id: "org-1", name: "Ada SARL", type: "company" },
+    ]);
+    expect(fake.callServerTool).toHaveBeenCalledWith({
+      name: "list_organizations",
+      arguments: { account: "Perso" },
+    });
+  });
+
+  it("reads no organization from an unexpected result", async () => {
+    const fake = caller({ structuredContent: { untrusted_data: { withheld: "long_text" } } });
+
+    await expect(new McpAccountsApi(fake).organizations("Perso")).resolves.toEqual([]);
+  });
+
+  it("chooses and clears the paying organization", async () => {
+    const fake = caller({ structuredContent: { account: WIRE } });
+    const api = new McpAccountsApi(fake);
+
+    await api.setPayingOrganization("Perso", "org-1");
+    await api.setPayingOrganization("Perso", null);
+
+    expect(fake.callServerTool.mock.calls.map((call) => call[0] as unknown)).toEqual([
+      {
+        name: "set_paying_organization",
+        arguments: { account: "Perso", organization_id: "org-1" },
+      },
+      { name: "set_paying_organization", arguments: { account: "Perso" } },
+    ]);
   });
 });

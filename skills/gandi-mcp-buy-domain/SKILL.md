@@ -18,6 +18,8 @@ gandi-mcp tools only; never call the Gandi API yourself, never guess a price.
    `gandi-mcp-manage-accounts` skill) unless `paying_organization` is given.
    For an individual, the owner's first and last names must match the user's
    Gandi identity; for an organization, its name.
+   Suggest the "Domains" tab of the MCP App (`open_gandi_app`) when the user
+   prefers to type the owner's details there: they then never reach the model.
 3. **Contacts** (registration and transfer): ask the user for the owner
    (type, first and last name, email, street, city, postal code, country,
    optional phone `+33.123456789`, organization name unless individual). Use

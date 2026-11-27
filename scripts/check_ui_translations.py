@@ -40,6 +40,22 @@ GLOSSARY_KEYS = {
     "Default account": "status.default",
     "Personal Access Token": "field.token",
     "Pending removal": "status.removalPending",
+    "Account": "field.account",
+    "Domain": "column.domain",
+    "Domain contact": "details.contacts",
+    "Owner": "role.owner",
+    "Admin contact": "role.admin",
+    "Tech contact": "role.tech",
+    "Billing contact": "role.bill",
+    "Paying organization": "field.payingOrganization",
+    "Nameserver": "field.nameservers",
+    "Tag": "details.tags",
+    "Transfer lock": "column.transferLock",
+    "Automatic renewal": "column.autorenew",
+    "Renewal": "action.renew",
+    "Registration": "action.register",
+    "Expiry date": "column.expiry",
+    "Availability": "action.checkAvailability",
 }
 SOURCE_LANGUAGE = "en"
 KEY_CALL = re.compile(r"""\bt\(\s*(["'`])((?:(?!\1).)+)\1""")

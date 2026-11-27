@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Politique de confidentialité (projet)
 
 > Projet à faire valider par un professionnel du droit ; ne constitue pas un
-> conseil juridique. Version 0.3 du 26 novembre 2026. **Cette version
+> conseil juridique. Version 0.4 du 27 novembre 2026. **Cette version
 > française fait foi** ; les autres langues en sont des traductions. Elle sera
 > accessible depuis l'interface de la MCP App.
 >
@@ -35,9 +35,11 @@ responsable des données que vous traitez avec lui.
   jamais conservée.
 - **Les coordonnées des contacts que vous donnez** pour enregistrer,
   transférer ou modifier un domaine (nom, adresse, e-mail, téléphone) : vous
-  les donnez dans la conversation, donc au modèle d'IA, et le logiciel les
-  envoie à Gandi. Dans les réponses de Gandi, les coordonnées des contacts ne
-  sont montrées au modèle que si vous les demandez.
+  les donnez dans la conversation, donc au modèle d'IA, ou dans l'écran
+  « Domaines » de l'application, d'où elles ne vont pas au modèle ; le
+  logiciel les envoie à Gandi. Dans les réponses de Gandi, les coordonnées des
+  contacts ne sont montrées au modèle que si vous les demandez ; l'application
+  vous les affiche en entier, à vous seul.
 - **Les codes d'autorisation de transfert** : vous les saisissez sur une page
   temporaire de votre ordinateur, jamais dans la conversation ; ils restent en
   mémoire jusqu'à l'opération et ne sont envoyés qu'à Gandi.
