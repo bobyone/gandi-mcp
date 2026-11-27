@@ -60,6 +60,8 @@ All notable changes are documented here. The format follows
   or register a domain at an indicative price, confirmed by the server; the
   "Accounts" screen chooses the paying organization. Contacts shown or typed
   in the App never reach the model. (#5)
+- Security documentation: the entry points (tools, local pages) and the
+  guarantees of the code, each with the tests trying to violate it. (#14)
 
 ### Changed
 
