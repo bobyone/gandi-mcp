@@ -39,9 +39,9 @@ through the result filters (`protocol/tools/endpoint_tool_runner.py`
 | Entry point | Caller | Control |
 | --- | --- | --- |
 | `domain_*` read tools (22) | model, App | `OperationExecutor.run`; filters in `EndpointToolRunner.read` |
-| `domain_*` write tools, not confirmed (17) | model, App | `OperationExecutor.run` (read-only refusal); `EndpointToolRunner.write` |
+| `domain_*` write tools, not confirmed (16) | model, App | `OperationExecutor.run` (read-only refusal); `EndpointToolRunner.write` |
 | `domain_*` destructive tools (17) | model, App | `OperationExecutor.run` (confirmation bound to operation, parameters, account and environment) |
-| `domain_transfer_in_code_update` | model | `OperationExecutor.run` (secret input on the local page, ADR 11) |
+| `domain_transfer_in_code_update`, `domain_transfer_out_decline` (writes), `domain_transfer_out_accept` (destructive, also counted above) | model, App | `OperationExecutor.run` (always confirmed; the authorization code is typed on the local confirmation page, never passed by the model, ADR 11) |
 | `domain_register`, `domain_renew`, `domain_restore`, `domain_transfer_in` | model, App | `OrderExecutor.run` (`protocol/tools/domains/domain_order_runner.py`) |
 | `list_accounts`, `list_organizations` | model, App | `protocol/tools/accounts_tools.py`, `organization_tools.py`: no secret in results |
 | `add_account`, `replace_account_token`, `change_account_environment` | model | `accounts_tools.py`: the token is typed on a local page (token entry session), never passed by the model |

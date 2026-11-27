@@ -565,7 +565,7 @@ with validated values), `category`, accepted `query` parameters,
 `follow_up`, `completes_with_see_other`, `secret_field` and `secret_label` (a
 body field filled with a secret typed with the confirmation; such an endpoint
 is always `confirmed`). Each API has its catalogue; `operations/domain/domain_endpoints.py` lists the Domain API ones: `READ_ENDPOINTS`
-(22) and `WRITE_ENDPOINTS` (32: writes and destructive operations; orders are
+(22) and `WRITE_ENDPOINTS` (35: 18 writes and 17 destructive operations; orders are
 `BillableOperation` classes).
 
 `EndpointOperation(endpoint, path_values, query=None, body=None,
