@@ -35,7 +35,6 @@ from gandi_mcp.protocol.tools.domains.availability_tools import AvailabilityTool
 from gandi_mcp.protocol.tools.domains.contact_tools import ContactTools
 from gandi_mcp.protocol.tools.domains.domain_order_runner import DomainOrderRunner
 from gandi_mcp.protocol.tools.domains.domain_settings_tools import DomainSettingsTools
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import DomainToolRunner
 from gandi_mcp.protocol.tools.domains.domains_tools import DomainsTools
 from gandi_mcp.protocol.tools.domains.nameserver_tools import NameserverTools
 from gandi_mcp.protocol.tools.domains.nameserver_write_tools import NameserverWriteTools
@@ -45,6 +44,7 @@ from gandi_mcp.protocol.tools.domains.redirection_write_tools import Redirection
 from gandi_mcp.protocol.tools.domains.tag_tools import TagTools
 from gandi_mcp.protocol.tools.domains.transfer_tools import TransferTools
 from gandi_mcp.protocol.tools.domains.transfer_write_tools import TransferWriteTools
+from gandi_mcp.protocol.tools.endpoint_tool_runner import EndpointToolRunner
 from gandi_mcp.protocol.tools.organization_tools import OrganizationTools
 from gandi_mcp.secrets.keyring.keyring_secret_store import KeyringSecretStore
 from gandi_mcp.token_entry.token_entry_service import TokenEntryService
@@ -127,17 +127,18 @@ class ApplicationContainer(containers.DeclarativeContainer):
     )
     long_text_filter = providers.Singleton(LongTextFilter, config.content.max_free_input)
     contact_redactor = providers.Singleton(ContactRedactor)
+    # Contacts first: the long text filter then sees the summarized data (ADR 10).
+    result_filters = providers.List(contact_redactor, long_text_filter)
     error_presenter = providers.Singleton(ErrorPresenter, translator, long_text_filter)
 
     accounts_tools = providers.Singleton(
         AccountsTools, account_service, confirmation, token_entry, error_presenter, translator
     )
-    domain_tool_runner = providers.Singleton(
-        DomainToolRunner,
+    endpoint_tool_runner = providers.Singleton(
+        EndpointToolRunner,
         operation_executor,
         accounts_tools,
-        contact_redactor,
-        long_text_filter,
+        result_filters,
     )
     order_executor = providers.Singleton(
         OrderExecutor,
@@ -149,7 +150,7 @@ class ApplicationContainer(containers.DeclarativeContainer):
         translator=translator,
     )
     domain_order_runner = providers.Singleton(
-        DomainOrderRunner, order_executor, accounts_tools, contact_redactor, long_text_filter
+        DomainOrderRunner, order_executor, accounts_tools, result_filters
     )
     organization_service = providers.Singleton(
         OrganizationService,
@@ -160,18 +161,18 @@ class ApplicationContainer(containers.DeclarativeContainer):
     tool_modules = providers.List(
         accounts_tools,
         providers.Singleton(OrganizationTools, organization_service, accounts_tools),
-        providers.Singleton(AvailabilityTools, domain_tool_runner),
-        providers.Singleton(DomainsTools, domain_tool_runner),
-        providers.Singleton(NameserverTools, domain_tool_runner),
-        providers.Singleton(RedirectionTools, domain_tool_runner),
-        providers.Singleton(TransferTools, domain_tool_runner),
+        providers.Singleton(AvailabilityTools, endpoint_tool_runner),
+        providers.Singleton(DomainsTools, endpoint_tool_runner),
+        providers.Singleton(NameserverTools, endpoint_tool_runner),
+        providers.Singleton(RedirectionTools, endpoint_tool_runner),
+        providers.Singleton(TransferTools, endpoint_tool_runner),
         providers.Singleton(OrderTools, domain_order_runner),
-        providers.Singleton(ContactTools, domain_tool_runner),
-        providers.Singleton(DomainSettingsTools, domain_tool_runner),
-        providers.Singleton(NameserverWriteTools, domain_tool_runner),
-        providers.Singleton(RedirectionWriteTools, domain_tool_runner),
-        providers.Singleton(TagTools, domain_tool_runner),
-        providers.Singleton(TransferWriteTools, domain_tool_runner),
+        providers.Singleton(ContactTools, endpoint_tool_runner),
+        providers.Singleton(DomainSettingsTools, endpoint_tool_runner),
+        providers.Singleton(NameserverWriteTools, endpoint_tool_runner),
+        providers.Singleton(RedirectionWriteTools, endpoint_tool_runner),
+        providers.Singleton(TagTools, endpoint_tool_runner),
+        providers.Singleton(TransferWriteTools, endpoint_tool_runner),
     )
 
     accounts_app_tools = providers.Singleton(

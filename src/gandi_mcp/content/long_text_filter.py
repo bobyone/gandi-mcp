@@ -4,6 +4,8 @@
 
 import re
 
+from gandi_mcp.content.disclosure import Disclosure
+from gandi_mcp.content.result_filter import ResultFilter
 from gandi_mcp.gandi.gandi_response import JsonValue
 
 WITHHELD = "long_text"
@@ -13,7 +15,7 @@ TECHNICAL_FIELDS = frozenset({"public_key", "digest"})
 TECHNICAL_VALUE = re.compile(r"^[A-Za-z0-9+/=]+$")
 
 
-class LongTextFilter:
+class LongTextFilter(ResultFilter):
     """Replace every text longer than ``max_length`` characters by a placeholder.
 
     External free text is never passed to the model when it exceeds the limit
@@ -31,6 +33,10 @@ class LongTextFilter:
     def allows(self, text: str) -> bool:
         """Tell whether an external text may be passed to the model as is."""
         return len(text) <= self._max_length
+
+    def filter(self, data: JsonValue, disclosure: Disclosure) -> JsonValue:
+        """Withhold the long texts; nothing can be disclosed on request."""
+        return self.apply(data)
 
     def apply(self, data: JsonValue, key: str | None = None) -> JsonValue:
         """Return a copy of ``data`` with its long texts withheld, at any depth."""

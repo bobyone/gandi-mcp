@@ -39,11 +39,11 @@ from gandi_mcp.protocol.tools.domains.availability_tools import (
     STATUS_NOT_CHECKED,
     AvailabilityTools,
 )
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import DomainToolRunner
 from gandi_mcp.protocol.tools.domains.domains_tools import REGISTRATION_COMPLETED, DomainsTools
 from gandi_mcp.protocol.tools.domains.nameserver_tools import NameserverTools
 from gandi_mcp.protocol.tools.domains.redirection_tools import RedirectionTools
 from gandi_mcp.protocol.tools.domains.transfer_tools import TransferTools
+from gandi_mcp.protocol.tools.endpoint_tool_runner import EndpointToolRunner
 from gandi_mcp.protocol.untrusted_result_presenter import UNTRUSTED_NOTICE
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 from gandi_mcp.token_entry.token_entry_service import TokenEntryService
@@ -171,11 +171,10 @@ def build(gandi: GandiClient, max_free_input: int) -> Setup:
         ErrorPresenter(translator, LongTextFilter(max_free_input)),
         translator,
     )
-    runner = DomainToolRunner(
+    runner = EndpointToolRunner(
         OperationExecutor(accounts, secrets, gandi, confirmation),
         tools,
-        ContactRedactor(),
-        LongTextFilter(max_free_input),
+        [ContactRedactor(), LongTextFilter(max_free_input)],
     )
     modules = [
         module(runner)

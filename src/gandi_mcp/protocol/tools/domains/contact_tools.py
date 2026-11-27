@@ -16,11 +16,11 @@ from gandi_mcp.operations.domain import domain_endpoints
 from gandi_mcp.operations.domain.billable.domain_contacts import DomainContacts
 from gandi_mcp.protocol.tool_module import ToolModule
 from gandi_mcp.protocol.tools.domains.contact_parameter import ContactParameter
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
+from gandi_mcp.protocol.tools.domains.domain_parameters import DomainParameter
+from gandi_mcp.protocol.tools.endpoint_tool_runner import (
     AccountParameter,
     ConfirmationIdParameter,
-    DomainParameter,
-    DomainToolRunner,
+    EndpointToolRunner,
     add_write_tool,
 )
 
@@ -34,7 +34,7 @@ EmailParameter = Annotated[
 class ContactTools(ToolModule):
     """Admin, tech and billing contacts, owner details and owner change."""
 
-    def __init__(self, runner: DomainToolRunner) -> None:
+    def __init__(self, runner: EndpointToolRunner) -> None:
         self._runner = runner
 
     def register(self, server: MCPServer) -> None:

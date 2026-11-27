@@ -1,8 +1,8 @@
 # SPDX-FileCopyrightText: 2026 bobyone
 # SPDX-License-Identifier: GPL-2.0-or-later
-"""Shared runner of the domain tools: account, rules, filtering and framing."""
+"""Shared runner of the endpoint tools: account, rules, filtering and framing."""
 
-from collections.abc import Awaitable, Callable, Mapping
+from collections.abc import Awaitable, Callable, Mapping, Sequence
 from typing import Annotated, Any
 
 from mcp.server import MCPServer
@@ -12,14 +12,14 @@ from pydantic import Field
 
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
-from gandi_mcp.content.long_text_filter import LongTextFilter
-from gandi_mcp.domains.contacts.contact_redactor import ContactRedactor
+from gandi_mcp.content.disclosure import Disclosure
+from gandi_mcp.content.result_filter import ResultFilter
 from gandi_mcp.domains.page_request import MAX_PAGE, MAX_PER_PAGE, PageRequest
 from gandi_mcp.gandi.exceptions import GandiUnexpectedResponseError
 from gandi_mcp.gandi.gandi_client import QueryValue
 from gandi_mcp.gandi.gandi_response import JsonValue
-from gandi_mcp.operations.domain.domain_endpoint import DomainEndpoint
-from gandi_mcp.operations.domain.endpoint_operation import EndpointOperation
+from gandi_mcp.operations.endpoint.endpoint import Endpoint
+from gandi_mcp.operations.endpoint.endpoint_operation import EndpointOperation
 from gandi_mcp.operations.operation_executor import OperationExecutor
 from gandi_mcp.operations.untrusted_result import UntrustedResult
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools, pending
@@ -51,33 +51,16 @@ AccountParameter = Annotated[
         default=None, description="Account name; the default account when omitted.", max_length=40
     ),
 ]
-DomainParameter = Annotated[
-    str, Field(description="Domain name, e.g. example.com (Unicode accepted).", max_length=253)
-]
 PageParameter = Annotated[int, Field(description="Page number, from 1.", ge=1, le=MAX_PAGE)]
 PerPageParameter = Annotated[
     int, Field(description="Items per page, 1 to 100.", ge=1, le=MAX_PER_PAGE)
-]
-ContactDetailsParameter = Annotated[
-    bool,
-    Field(
-        description="Return the full contact details (names, addresses, emails). Only when "
-        "the user asks for them: by default only the type and country of each contact."
-    ),
-]
-AuthorizationCodeParameter = Annotated[
-    bool,
-    Field(
-        description="Return the authorization code needed to transfer the domain to "
-        "another registrar. Only when the user asks for it."
-    ),
 ]
 
 
 def add_write_tool(
     server: MCPServer,
     function: Callable[..., Awaitable[dict[str, Any]]],
-    endpoint: DomainEndpoint,
+    endpoint: Endpoint,
     title: str,
     description: str,
 ) -> None:
@@ -95,7 +78,7 @@ def add_write_tool(
 def add_read_tool(
     server: MCPServer,
     function: Callable[..., Awaitable[dict[str, Any]]],
-    endpoint: DomainEndpoint,
+    endpoint: Endpoint,
     title: str,
     description: str,
 ) -> None:
@@ -105,25 +88,31 @@ def add_read_tool(
     )
 
 
-class DomainToolRunner:
-    """Run a domain endpoint for a tool call and describe its result for the model."""
+def filtered(filters: Sequence[ResultFilter], data: JsonValue, disclosure: Disclosure) -> JsonValue:
+    """Apply the result filters in order."""
+    for result_filter in filters:
+        data = result_filter.filter(data, disclosure)
+    return data
+
+
+class EndpointToolRunner:
+    """Run an endpoint for a tool call and describe its result for the model."""
 
     def __init__(
         self,
         executor: OperationExecutor,
         accounts: AccountsTools,
-        redactor: ContactRedactor,
-        long_texts: LongTextFilter,
+        filters: Sequence[ResultFilter],
     ) -> None:
+        """``filters`` rewrite every result shown to the model, in order (ADR 10)."""
         self._executor = executor
         self._accounts = accounts
-        self._redactor = redactor
-        self._long_texts = long_texts
+        self._filters = tuple(filters)
 
     async def read(
         self,
         ctx: Context[Any, Any],
-        endpoint: DomainEndpoint,
+        endpoint: Endpoint,
         account: str | None,
         path_values: Callable[[], Mapping[str, str]] | None = None,
         *,
@@ -165,19 +154,15 @@ class DomainToolRunner:
                     raise GandiUnexpectedResponseError(f"{endpoint.name}: unexpected redirect")
                 return {"status": "completed", "next_step": when_completed}
             data = adapt(result.data) if adapt else result.data
-            data = self._redactor.apply(
-                data,
-                include_contact_details=include_contact_details,
-                include_authorization_code=include_authorization_code,
-            )
-            return present(result, self._long_texts.apply(data), request)
+            disclosure = Disclosure(include_contact_details, include_authorization_code)
+            return present(result, filtered(self._filters, data, disclosure), request)
 
         return await self._accounts.guard(run)
 
     async def write(
         self,
         ctx: Context[Any, Any],
-        endpoint: DomainEndpoint,
+        endpoint: Endpoint,
         account: str | None,
         path_values: Callable[[], Mapping[str, str]],
         *,
@@ -210,7 +195,7 @@ class DomainToolRunner:
             )
             if isinstance(outcome, ConfirmationDecision):
                 return pending(outcome)
-            data = self._long_texts.apply(self._redactor.apply(outcome.data))
+            data = filtered(self._filters, outcome.data, Disclosure())
             framed = present(outcome, data)
             framed["status"] = "done"
             if endpoint.follow_up is not None:

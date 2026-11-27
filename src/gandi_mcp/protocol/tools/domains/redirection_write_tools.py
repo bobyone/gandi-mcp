@@ -13,11 +13,11 @@ from gandi_mcp.domains.write_values import MAX_URL_LENGTH, RedirectionUrl
 from gandi_mcp.gandi.gandi_response import JsonValue
 from gandi_mcp.operations.domain import domain_endpoints
 from gandi_mcp.protocol.tool_module import ToolModule
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
+from gandi_mcp.protocol.tools.domains.domain_parameters import DomainParameter
+from gandi_mcp.protocol.tools.endpoint_tool_runner import (
     AccountParameter,
     ConfirmationIdParameter,
-    DomainParameter,
-    DomainToolRunner,
+    EndpointToolRunner,
     add_write_tool,
 )
 
@@ -37,7 +37,7 @@ OverrideParameter = Annotated[
 class RedirectionWriteTools(ToolModule):
     """Create, update and delete web redirections."""
 
-    def __init__(self, runner: DomainToolRunner) -> None:
+    def __init__(self, runner: EndpointToolRunner) -> None:
         self._runner = runner
 
     def register(self, server: MCPServer) -> None:

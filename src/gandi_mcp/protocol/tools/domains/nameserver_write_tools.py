@@ -19,13 +19,13 @@ from gandi_mcp.domains.write_values import (
 )
 from gandi_mcp.gandi.gandi_response import JsonValue
 from gandi_mcp.operations.domain import domain_endpoints
-from gandi_mcp.operations.domain.domain_endpoint import DomainEndpoint
+from gandi_mcp.operations.endpoint.endpoint import Endpoint
 from gandi_mcp.protocol.tool_module import ToolModule
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
+from gandi_mcp.protocol.tools.domains.domain_parameters import DomainParameter
+from gandi_mcp.protocol.tools.endpoint_tool_runner import (
     AccountParameter,
     ConfirmationIdParameter,
-    DomainParameter,
-    DomainToolRunner,
+    EndpointToolRunner,
     add_write_tool,
 )
 
@@ -67,7 +67,7 @@ def _ips(values: list[str]) -> list[JsonValue]:
 class NameserverWriteTools(ToolModule):
     """Nameservers, LiveDNS, DNSSEC and its keys, glue records."""
 
-    def __init__(self, runner: DomainToolRunner) -> None:
+    def __init__(self, runner: EndpointToolRunner) -> None:
         self._runner = runner
 
     def register(self, server: MCPServer) -> None:
@@ -288,7 +288,7 @@ class NameserverWriteTools(ToolModule):
     async def _write(
         self,
         ctx: Context[Any, Any],
-        endpoint: DomainEndpoint,
+        endpoint: Endpoint,
         domain: str,
         account: str | None,
         body: Callable[[], JsonValue] | None = None,

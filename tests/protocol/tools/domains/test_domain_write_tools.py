@@ -26,7 +26,7 @@ from gandi_mcp.operations.domain import domain_endpoints
 from gandi_mcp.operations.operation_executor import OperationExecutor
 from gandi_mcp.protocol.error_presenter import (
     DRY_RUN_REJECTED,
-    INVALID_DOMAIN_INPUT,
+    INVALID_INPUT,
     READ_ONLY,
     ErrorPresenter,
 )
@@ -34,11 +34,11 @@ from gandi_mcp.protocol.server_factory import create_server
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools
 from gandi_mcp.protocol.tools.domains.contact_tools import ContactTools
 from gandi_mcp.protocol.tools.domains.domain_settings_tools import DomainSettingsTools
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import DomainToolRunner
 from gandi_mcp.protocol.tools.domains.nameserver_write_tools import NameserverWriteTools
 from gandi_mcp.protocol.tools.domains.redirection_write_tools import RedirectionWriteTools
 from gandi_mcp.protocol.tools.domains.tag_tools import TagTools
 from gandi_mcp.protocol.tools.domains.transfer_write_tools import TransferWriteTools
+from gandi_mcp.protocol.tools.endpoint_tool_runner import EndpointToolRunner
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 from gandi_mcp.secrets.secret_value import SecretValue
 from gandi_mcp.token_entry.token_entry_service import TokenEntryService
@@ -295,11 +295,10 @@ async def setup() -> Setup:
         translator,
     )
     gandi = FakeGandiClient()
-    runner = DomainToolRunner(
+    runner = EndpointToolRunner(
         OperationExecutor(accounts, secrets, gandi, confirmation),
         tools,
-        ContactRedactor(),
-        LongTextFilter(280),
+        [ContactRedactor(), LongTextFilter(280)],
     )
     modules = [
         module(runner)
@@ -405,7 +404,7 @@ async def test_invalid_inputs_are_refused_before_any_call(setup: Setup) -> None:
             ),
         ]
 
-    assert all(text.endswith(INVALID_DOMAIN_INPUT.singular) for text in texts)
+    assert all(text.endswith(INVALID_INPUT.singular) for text in texts)
     assert setup.gandi.calls == []
 
 

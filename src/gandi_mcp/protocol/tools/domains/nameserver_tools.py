@@ -10,12 +10,12 @@ from pydantic import Field
 
 from gandi_mcp.domains.domain_name import DomainName, HostLabel
 from gandi_mcp.operations.domain import domain_endpoints
-from gandi_mcp.operations.domain.domain_endpoint import DomainEndpoint
+from gandi_mcp.operations.endpoint.endpoint import Endpoint
 from gandi_mcp.protocol.tool_module import ToolModule
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
+from gandi_mcp.protocol.tools.domains.domain_parameters import DomainParameter
+from gandi_mcp.protocol.tools.endpoint_tool_runner import (
     AccountParameter,
-    DomainParameter,
-    DomainToolRunner,
+    EndpointToolRunner,
     PageParameter,
     PerPageParameter,
     add_read_tool,
@@ -25,7 +25,7 @@ from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
 class NameserverTools(ToolModule):
     """Nameservers, LiveDNS, DNSSEC keys and glue records."""
 
-    def __init__(self, runner: DomainToolRunner) -> None:
+    def __init__(self, runner: EndpointToolRunner) -> None:
         self._runner = runner
 
     def register(self, server: MCPServer) -> None:
@@ -135,7 +135,7 @@ class NameserverTools(ToolModule):
     async def _read(
         self,
         ctx: Context[Any, Any],
-        endpoint: DomainEndpoint,
+        endpoint: Endpoint,
         domain: str,
         account: str | None,
         *,

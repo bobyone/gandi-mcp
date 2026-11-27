@@ -112,7 +112,7 @@ async def setup() -> Setup:
         quotes=GandiQuoteProvider(gandi),
         translator=translator,
     )
-    runner = DomainOrderRunner(orders, tools, ContactRedactor(), LongTextFilter(280))
+    runner = DomainOrderRunner(orders, tools, [ContactRedactor(), LongTextFilter(280)])
     return Setup(create_server("1.0.0", [OrderTools(runner)]), gandi, pending, accounts)
 
 
