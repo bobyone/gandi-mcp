@@ -79,13 +79,14 @@ in the UI says "not displayed".
 | Record value | One of the values of a record. | `record_value` | not displayed |
 | TTL | How long, in seconds, a resolver may cache a record (300 to 2592000). | `ttl` | not displayed |
 | Zone file | A zone written in the standard text format of RFC 1035. | `zone_file` | not displayed |
-| Work directory | The only local directory where the personal mode reads and writes zone files. | `work_directory` | not displayed |
+| Work directory | The only local directory where the personal mode reads and writes zone files and configuration samples. | `work_directory` | not displayed |
 | Snapshot | A dated copy of the records of a zone, made on request or automatically. | `snapshot` | not displayed |
 | Automatic snapshots | The setting of a LiveDNS domain that makes Gandi take a snapshot before each change. | `automatic_snapshots` | not displayed |
 | Signing key | A DNSSEC key with which LiveDNS signs a zone: KSK (flag 257) or ZSK (flag 256); distinct from the DNSSEC key published at the registry. | `signing_key` | not displayed |
 | Secondary server | A DNS server, identified by its IP address, allowed to copy a zone. | `secondary_server` | not displayed |
 | Zone transfer | The copy of a zone to a secondary server (AXFR). | `zone_transfer` | not displayed |
 | TSIG key | A shared secret authenticating a zone transfer; its secret never reaches the model. | `tsig_key` | not displayed |
+| Configuration sample | The configuration of a secondary server software (bind, knot, nsd, powerdns) for a TSIG key, given by Gandi; it holds the secret of the key. | `configuration` (`livedns_tsig_config`) | not displayed |
 | Domain verification | A TXT or CNAME validation value published by Gandi, for example for an ACME DNS-01 challenge. | `domain_verification` | not displayed |
 
 ## UI labels by language

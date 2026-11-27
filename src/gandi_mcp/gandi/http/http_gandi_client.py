@@ -15,6 +15,7 @@ from gandi_mcp.gandi.exceptions import GandiUnavailableError, GandiUnexpectedRes
 from gandi_mcp.gandi.gandi_client import GandiClient, QueryValue
 from gandi_mcp.gandi.gandi_response import SEE_OTHER, GandiResponse, JsonValue
 from gandi_mcp.gandi.http.gandi_error_translator import translate_error
+from gandi_mcp.gandi.media_type import MediaType
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 
 METHODS = frozenset({"GET", "POST", "PUT", "PATCH", "DELETE"})
@@ -34,9 +35,14 @@ def encode_path(path: Sequence[str]) -> str:
     return "/".join(quote(segment, safe="") for segment in path)
 
 
-def _decode(response: httpx2.Response) -> JsonValue:
+def _decode(response: httpx2.Response, accept: MediaType = MediaType.JSON) -> JsonValue:
     if not response.content:
         return None
+    if accept is MediaType.TEXT and response.is_success:
+        try:
+            return response.content.decode("utf-8")
+        except UnicodeDecodeError:
+            raise GandiUnexpectedResponseError("Gandi returned an unreadable text") from None
     try:
         decoded: JsonValue = json.loads(response.content)
     except (json.JSONDecodeError, UnicodeDecodeError):
@@ -51,7 +57,7 @@ def _count(value: str | None) -> int | None:
 
 
 class HttpGandiClient(GandiClient):
-    """Call the Gandi API v5 with a Bearer token.
+    """Call the Gandi API v5 with a Bearer token (none for the public endpoints).
 
     One connection pool is reused for every request. Redirects are not followed, so
     that the token is only ever sent to the configured base URLs.
@@ -86,7 +92,7 @@ class HttpGandiClient(GandiClient):
     async def request(
         self,
         environment: Environment,
-        token: PersonalAccessToken,
+        token: PersonalAccessToken | None,
         method: str,
         path: Sequence[str],
         *,
@@ -94,6 +100,7 @@ class HttpGandiClient(GandiClient):
         body: JsonValue = None,
         accept_see_other: bool = False,
         dry_run: bool = False,
+        accept: MediaType = MediaType.JSON,
     ) -> GandiResponse:
         verb = method.upper()
         if verb not in METHODS:
@@ -103,6 +110,11 @@ class HttpGandiClient(GandiClient):
             key: (str(value).lower() if isinstance(value, bool) else value)
             for key, value in (query or {}).items()
         }
+        headers = {"Accept": accept.value}
+        if token is not None:
+            headers["Authorization"] = f"Bearer {token.reveal()}"
+        if dry_run:
+            headers["Dry-Run"] = "1"
         started = time.monotonic()
         try:
             response = await self._client.request(
@@ -110,10 +122,7 @@ class HttpGandiClient(GandiClient):
                 url,
                 params=params,
                 json=body,
-                headers={
-                    "Authorization": f"Bearer {token.reveal()}",
-                    **({"Dry-Run": "1"} if dry_run else {}),
-                },
+                headers=headers,
             )
         except httpx2.TimeoutException as error:
             raise GandiUnavailableError("Gandi did not answer in time") from error
@@ -126,7 +135,7 @@ class HttpGandiClient(GandiClient):
             response.status_code,
             (time.monotonic() - started) * 1000,
         )
-        data = _decode(response)
+        data = _decode(response, accept)
         # 303 marks a completed operation, only where the caller expects it; it is
         # never followed.
         see_other = accept_see_other and response.status_code == SEE_OTHER

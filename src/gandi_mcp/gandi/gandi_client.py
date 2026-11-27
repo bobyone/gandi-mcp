@@ -7,19 +7,20 @@ from collections.abc import Mapping, Sequence
 
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
+from gandi_mcp.gandi.media_type import MediaType
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 
 type QueryValue = str | int | bool | Sequence[str]
 
 
 class GandiClient(ABC):
-    """Send authenticated requests to the Gandi API of an environment."""
+    """Send requests to the Gandi API of an environment, authenticated by a token."""
 
     @abstractmethod
     async def request(
         self,
         environment: Environment,
-        token: PersonalAccessToken,
+        token: PersonalAccessToken | None,
         method: str,
         path: Sequence[str],
         *,
@@ -27,12 +28,14 @@ class GandiClient(ABC):
         body: JsonValue = None,
         accept_see_other: bool = False,
         dry_run: bool = False,
+        accept: MediaType = MediaType.JSON,
     ) -> GandiResponse:
         """Send a request and return the successful response.
 
         Args:
             environment: Gandi environment whose base URL is used.
-            token: Personal Access Token authenticating the request.
+            token: Personal Access Token authenticating the request; ``None`` only for
+                the few public endpoints (no ``Authorization`` header is sent).
             method: HTTP method (``GET``, ``POST``, ``PUT``, ``PATCH``, ``DELETE``).
             path: Path segments below the base URL, for example
                 ``("domain", "domains", "example.com")``; each segment is encoded, so
@@ -43,6 +46,8 @@ class GandiClient(ABC):
                 response instead of an error; only for endpoints documenting it.
             dry_run: Send ``Dry-Run: 1``: Gandi only checks the request and answers
                 ``{"status": "success" | "error", "errors": [...]}``.
+            accept: Media type asked for the answer; with ``TEXT``, the data of a
+                successful response is the text of its body.
 
         Raises:
             GandiError: a subclass describing why the request failed.

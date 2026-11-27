@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -215,6 +215,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Η επιβεβαίωση δεν δόθηκε εγκαίρως: δεν άλλαξε τίποτα."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Δεν ήταν δυνατή η ανάγνωση ή η εγγραφή του αρχείου στον κατάλογο εργασίας: ελέγξτε τα δικαιώματά "
+"του και ότι είναι κείμενο UTF-8."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Η κλειδοθήκη του συστήματος δεν είναι διαθέσιμη. Δεν αποθηκεύτηκε τίποτα: ξεκλειδώστε ή "
@@ -311,6 +319,28 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Αυτός ο τομέας δεν είναι διαθέσιμος για καταχώριση: δεν αγοράστηκε τίποτα."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr ""
+"Αυτό το αρχείο υπάρχει ήδη στον κατάλογο εργασίας: επιλέξτε άλλο όνομα ή ζητήστε να "
+"αντικατασταθεί."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Αυτό το αρχείο δεν υπάρχει στον κατάλογο εργασίας: ελέγξτε το όνομά του."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Αυτό το αρχείο είναι πολύ μεγάλο για να διαβαστεί: δεν άλλαξε τίποτα."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Αυτή η διαδρομή αρχείου δεν επιτρέπεται: δώστε μια διαδρομή μέσα στον κατάλογο εργασίας, χωρίς .."
+" και χωρίς γράμμα μονάδας δίσκου."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Αυτό δεν είναι έγκυρο Personal Access Token."
 
@@ -331,6 +361,14 @@ msgstr "Αυτό το όνομα δεν είναι έγκυρο όνομα το�
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Αυτή η σελίδα έχει λήξει ή έχει ήδη χρησιμοποιηθεί. Δεν άλλαξε τίποτα."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Αυτό το όνομα ή ο τύπος εγγραφής δεν είναι έγκυρος: χρησιμοποιήστε όνομα σχετικό με τη ζώνη (@, "
+"www, _dmarc) και τύπο όπως A, MX ή TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

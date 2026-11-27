@@ -22,6 +22,7 @@ LOG_LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
 DEFAULT_LOG_LEVEL = "WARNING"
 APPLICATION_DIRECTORY = "gandi-mcp"
 PREFERENCES_FILE = "preferences.json"
+WORK_DIRECTORY = "files"
 PRODUCTION_URL = "https://api.gandi.net/v5/"
 SANDBOX_URL = "https://api.sandbox.gandi.net/v5/"
 LOCALHOST_NAMES = frozenset({"localhost", "127.0.0.1", "::1"})
@@ -37,6 +38,12 @@ def default_preferences_path() -> Path:
     """Return the preferences file in the user configuration directory of the OS."""
     directory = platformdirs.user_config_path(APPLICATION_DIRECTORY, appauthor=False, roaming=True)
     return directory / PREFERENCES_FILE
+
+
+def default_work_directory() -> Path:
+    """Return the work directory in the user data directory of the OS."""
+    directory = platformdirs.user_data_path(APPLICATION_DIRECTORY, appauthor=False, roaming=False)
+    return directory / WORK_DIRECTORY
 
 
 def _log_level(name: str, value: object) -> str:
@@ -105,6 +112,7 @@ SETTINGS = (
     Setting("confirmation", "timeout_seconds", lambda: 300, _bounded_integer(30, 3600)),
     Setting("token_entry", "timeout_seconds", lambda: 600, _bounded_integer(60, 3600)),
     Setting("content", "max_free_input", lambda: 280, _bounded_integer(1, 10000)),
+    Setting("files", "work_directory", default_work_directory, _path),
 )
 
 

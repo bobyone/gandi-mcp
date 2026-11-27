@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hy\n"
@@ -215,6 +215,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Հաստատումը ժամանակին չտրվեց․ ոչինչ չի փոխվել։"
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Չհաջողվեց կարդալ կամ գրել ֆայլը աշխատանքային գրացուցակում. ստուգեք դրա թույլտվությունները և որ "
+"այն UTF-8 տեքստ է։"
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Համակարգի բանալիների պահոցը հասանելի չէ։ Ոչինչ չի պահպանվել․ ապակողպեք կամ տեղադրեք այն, ապա "
@@ -303,6 +311,26 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Այս դոմենը հասանելի չէ գրանցման համար. ոչինչ չի գնվել։"
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Այս ֆայլն արդեն կա աշխատանքային գրացուցակում. ընտրեք այլ անուն կամ խնդրեք այն փոխարինել։"
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Այս ֆայլը չկա աշխատանքային գրացուցակում. ստուգեք դրա անունը։"
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Այս ֆայլը չափազանց մեծ է կարդալու համար. ոչինչ չի փոխվել։"
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Ֆայլի այս ուղին թույլատրված չէ. նշեք ուղի աշխատանքային գրացուցակի ներսում՝ առանց ..-ի և սկավառակի"
+" տառի։"
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Սա վավեր Personal Access Token չէ։"
 
@@ -321,6 +349,14 @@ msgstr "Այս անունը վավեր դոմենային անուն չէ. ստ�
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Այս էջի ժամկետն անցել է կամ այն արդեն օգտագործվել է։ Ոչինչ չի փոխվել։"
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Գրառման այս անունը կամ տեսակը վավեր չէ. օգտագործեք գոտու նկատմամբ հարաբերական անուն (@, www, "
+"_dmarc) և տեսակ, օրինակ՝ A, MX կամ TXT։"
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

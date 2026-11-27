@@ -16,6 +16,7 @@ from gandi_mcp.gandi.exceptions import (
     GandiValidationError,
 )
 from gandi_mcp.gandi.http.http_gandi_client import HttpGandiClient, encode_path
+from gandi_mcp.gandi.media_type import MediaType
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 
 pytestmark = pytest.mark.anyio
@@ -210,3 +211,61 @@ async def test_dry_run_header() -> None:
 
     assert seen[0].headers["Dry-Run"] == "1"
     assert "Dry-Run" not in seen[1].headers
+
+
+async def test_a_public_request_sends_no_authorization() -> None:
+    seen: list[httpx2.Request] = []
+
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        seen.append(request)
+        return httpx2.Response(200, json=["ns-1.gandi.net"])
+
+    response = await client_with(handler).request(
+        Environment.PRODUCTION, None, "GET", ("livedns", "nameservers", "example.com")
+    )
+
+    assert "Authorization" not in seen[0].headers
+    assert seen[0].headers["Accept"] == "application/json"
+    assert response.data == ["ns-1.gandi.net"]
+
+
+async def test_a_text_answer_is_kept_as_text() -> None:
+    zone = "@ 10800 IN A 192.0.2.1\nwww 10800 IN CNAME @\n"
+    seen: list[httpx2.Request] = []
+
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        seen.append(request)
+        return httpx2.Response(200, text=zone)
+
+    response = await client_with(handler).request(
+        Environment.SANDBOX,
+        TOKEN,
+        "GET",
+        ("livedns", "domains", "example.com", "records"),
+        accept=MediaType.TEXT,
+    )
+
+    assert seen[0].headers["Accept"] == "text/plain"
+    assert response.data == zone
+
+
+async def test_a_text_error_is_still_explained() -> None:
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(400, json={"errors": [{"description": "bad zone"}]})
+
+    with pytest.raises(GandiValidationError) as caught:
+        await client_with(handler).request(
+            Environment.SANDBOX, TOKEN, "GET", ("livedns", "x"), accept=MediaType.TEXT
+        )
+
+    assert caught.value.details == ("bad zone",)
+
+
+async def test_an_unreadable_text_is_refused() -> None:
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(200, content=b"\xff\xfe")
+
+    with pytest.raises(GandiUnexpectedResponseError):
+        await client_with(handler).request(
+            Environment.SANDBOX, TOKEN, "GET", ("livedns", "x"), accept=MediaType.TEXT
+        )

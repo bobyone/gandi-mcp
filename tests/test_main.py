@@ -16,6 +16,7 @@ from gandi_mcp.main import (
     ConfigurationError,
     build_container,
     default_preferences_path,
+    default_work_directory,
     load_configuration,
 )
 
@@ -41,7 +42,15 @@ def test_defaults_without_configuration_file() -> None:
         "confirmation": {"timeout_seconds": 300},
         "token_entry": {"timeout_seconds": 600},
         "content": {"max_free_input": 280},
+        "files": {"work_directory": default_work_directory()},
     }
+
+
+def test_default_work_directory_is_in_the_user_data_directory() -> None:
+    path = default_work_directory()
+
+    assert path.name == "files"
+    assert path.parent.name == "gandi-mcp"
 
 
 def test_default_preferences_path_is_in_the_user_configuration_directory() -> None:

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ca\n"
@@ -215,6 +215,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "La confirmació no s'ha donat a temps: no s'ha canviat res."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"No s'ha pogut llegir ni escriure el fitxer al directori de treball: comproveu-ne els permisos i "
+"que sigui text UTF-8."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "El clauer del sistema no està disponible. No s'ha desat res: desbloquegeu-lo o instal·leu-lo i "
@@ -307,6 +315,26 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Aquest domini no està disponible per registrar: no s'ha comprat res."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Aquest fitxer ja existeix al directori de treball: trieu un altre nom o demaneu de substituir-lo."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Aquest fitxer no existeix al directori de treball: comproveu-ne el nom."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Aquest fitxer és massa gran per llegir-lo: no s'ha canviat res."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Aquest camí de fitxer no està permès: indiqueu un camí dins del directori de treball, sense .. ni"
+" lletra d'unitat."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Aquest no és un Personal Access Token vàlid."
 
@@ -327,6 +355,14 @@ msgstr "Aquest nom no és un nom de domini vàlid: comproveu-ne l'ortografia, p.
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Aquesta pàgina ha caducat o ja s'ha fet servir. No s'ha canviat res."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Aquest nom o tipus de registre no és vàlid: utilitzeu un nom relatiu a la zona (@, www, _dmarc) i"
+" un tipus com A, MX o TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

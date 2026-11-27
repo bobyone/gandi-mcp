@@ -27,9 +27,12 @@ flowchart LR
 - **Business core**: `accounts` (account rules), `operations` (Gandi calls and
   their common rules), `confirmation` (chain of confirmation channels),
   `token_entry` (token entry sessions), `interaction` (elicitation, browser),
-  `i18n` (translation).
+  `i18n` (translation), `domains` and `livedns` (values and rules of each
+  Gandi API), `content` (filters of the results shown to the model), `files`
+  (work directory).
 - **Technical implementations**: `secrets/keyring`, `preferences/json`,
-  `gandi/http`, `local_pages/starlette`, `interaction/system`, `i18n/babel`.
+  `gandi/http`, `local_pages/starlette`, `interaction/system`, `i18n/babel`,
+  `files/local`.
 
 Source tree and tests mirror each other (`src/gandi_mcp/<notion>/`,
 `tests/<notion>/`).
@@ -114,8 +117,9 @@ A command: one Gandi call on behalf of an account (ADR 4).
 | `parameters()` | Parameters defining what the operation does; with `name`, they form its `subject()`. The executor binds a confirmation to this subject, the account identity and its environment. |
 | `describe()` | `LocalizedText` shown when asking for a confirmation. |
 | `secret_input()` | `SecretInput` the user types with the confirmation, or `None` (default); an operation needing one is always confirmed (ADR 11). |
+| `authenticated` | `True` (default); `False` only for a public read sent without a token (LiveDNS public nameservers). |
 | `check(client, environment, token)` | Gandi dry run of the operation, or `None` (default) when Gandi offers none. |
-| `execute(client, environment, token, secret=None)` | Calls Gandi, with the `SecretValue` typed by the user when one was asked; raises `GandiError`. |
+| `execute(client, environment, token, secret=None)` | Calls Gandi, with the `SecretValue` typed by the user when one was asked; `token` is `None` only for a public operation; raises `GandiError`. |
 
 `OperationExecutor.run(operation, account_name, context, confirmation_id=None)`
 resolves the account, refuses a write on a read-only account
@@ -133,7 +137,20 @@ identity or environment changed. The check runs again after reading the token,
 so that it is the last step before the request. After the price re-check, the
 `OrderExecutor` also refuses an order whose token was replaced since the quote
 (`AccountChangedError`): a new quote and confirmation are needed. It returns an `UntrustedResult` (data and `total_count`), or
-a pending `ConfirmationDecision` to resume with its identifier.
+a pending `ConfirmationDecision` to resume with its identifier. A public
+operation (`authenticated` is `False`) must be a read without secret
+(`TypeError` otherwise): it runs without a token, in the environment of the
+named account, else of the default one, else in production, so that it works
+without any account.
+
+`TextFileExporter(executor, work_directory)` (`operations/text_file_exporter.py`)
+writes the text read by an operation to the work directory:
+`export(operation, account, context, relative_path, *, overwrite=False, extract=whole_text, private=False)`
+checks the target first (`WorkDirectory.check_target`, before any Gandi
+request), runs the read through the executor, picks the text with `extract`
+(`GandiUnexpectedResponseError` when there is none) and writes it in a worker
+thread. It returns the `WrittenFile` and the text; a write operation is
+refused (`TypeError`). The model only gets the file description (ADR 15).
 
 ### Billable operation: `gandi_mcp.operations.billable_operation.BillableOperation`
 
@@ -240,11 +257,11 @@ exists) and raises `CorruptPreferencesError` otherwise.
 
 ### Gandi client: `gandi_mcp.gandi.gandi_client.GandiClient`
 
-Sends authenticated requests to the Gandi API v5 of an environment.
+Sends requests to the Gandi API v5 of an environment, authenticated by a token.
 
 | Operation | Contract |
 | --- | --- |
-| `request(environment, token, method, path, *, query=None, body=None, accept_see_other=False, dry_run=False)` | `dry_run` sends `Dry-Run: 1` (Gandi only checks the request). `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
+| `request(environment, token, method, path, *, query=None, body=None, accept_see_other=False, dry_run=False, accept=MediaType.JSON)` | `token` is `None` only for a public endpoint (no `Authorization` header). `accept` (`gandi.media_type.MediaType`: `JSON` or `TEXT`) is the media type asked for: with `TEXT`, the data of a successful answer is its body text (zone files). `dry_run` sends `Dry-Run: 1` (Gandi only checks the request). `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
 | `close()` | Releases network resources. |
 
 Errors: `GandiAuthenticationError` (401), `GandiPermissionError` (403),
@@ -255,6 +272,38 @@ Errors: `GandiAuthenticationError` (401), `GandiPermissionError` (403),
 carries `details`: Gandi's explanations, at most 10 entries, untrusted. They
 are never truncated: `ErrorPresenter` withholds an entry longer than
 `content.max_free_input` (ADR 10), which an excerpt would get around.
+
+### Work directory: `gandi_mcp.files.work_directory.WorkDirectory`
+
+The only place where gandi-mcp reads and writes the user's files (ADR 15).
+Paths are relative to it; a path leading out of it is always refused.
+Implementations are blocking: async callers run them in a worker thread.
+
+| Operation | Contract |
+| --- | --- |
+| `check_target(relative_path, *, overwrite=False)` | Checks that a file may be written there, before fetching its content; returns the normalized relative path (`/` separators). `OutsideWorkDirectoryError`, `FileExistsInWorkDirectoryError`. |
+| `write(relative_path, content, *, overwrite=False, private=False)` | Writes UTF-8 text as is, creating the parent directories; `private` restricts the file to its owner. Returns a `WrittenFile` (`relative_path`, `absolute_path`, `size`). |
+| `read(relative_path, max_bytes)` | Reads UTF-8 text of at most `max_bytes` bytes (zone import, sub-batch 1c-2). `WorkFileNotFoundError`, `FileTooLargeError`, `UnreadableWorkFileError`. |
+
+Exceptions derive from `WorkDirectoryError`, which also means that a file
+cannot be read or written.
+
+### LiveDNS values: `gandi_mcp.livedns`
+
+| Value | Rule |
+| --- | --- |
+| `RecordName` | Relative to the zone, without trailing dot: `@`, `*` as first label only, host and service labels (`_dmarc`), internationalized labels in IDNA form, lower case, at most 253 characters (`InvalidRecordError`). |
+| `RecordType` | One of the 25 types of the LiveDNS API, read whatever its case (`RecordType.parse`, `InvalidRecordError`). |
+| `SnapshotId`, `SigningKeyId`, `TsigKeyId` | Gandi identifiers: 1 to 64 letters, digits, `-` or `_` (`InvalidLiveDnsInputError`). |
+| `TsigSoftware` | `bind`, `knot`, `nsd` or `powerdns` (`InvalidLiveDnsInputError`). |
+
+Exceptions derive from `LiveDnsError`. `livedns.zone_files.zone_file_summary.record_count(text)`
+counts the records of a zone file (blank lines, comments and directives
+excluded, a record between parentheses counted once).
+`livedns.zone_files.zone_file_service.ZoneFileService(exporter)` exports the
+zone of a domain, or one of its snapshots, as a zone file:
+`export(account, context, domain, relative_path, *, overwrite=False, snapshot=None)`
+returns a `ZoneFileExport` (`file`, `record_count`).
 
 ## Implementations
 
@@ -272,6 +321,7 @@ Command line: `gandi-mcp [--config PATH] [--version]`.
 | `confirmation.timeout_seconds` | integer, 30 to 3600 | `300` | no | Validity of a confirmation request. |
 | `token_entry.timeout_seconds` | integer, 60 to 3600 | `600` | no | Validity of a token entry session. |
 | `content.max_free_input` | integer, 1 to 10000 | `280` | no | Longest free input or Gandi text passed to the model as is; longer Gandi texts are withheld. |
+| `files.work_directory` | path (`~` expanded) | `<user data directory>/gandi-mcp/files` | no | Work directory: the only directory where zone files and TSIG configuration samples are written (ADR 15). |
 
 Behavior and limits:
 
@@ -360,7 +410,11 @@ Behavior and limits:
 
 Behavior and limits:
 
-- sends `Authorization: Bearer <token>`; the token is never logged;
+- sends `Authorization: Bearer <token>`, or no `Authorization` header without a
+  token (public endpoints); the token is never logged;
+- sends `Accept: application/json`, or `Accept: text/plain` for a text answer;
+  an error answer is still decoded as JSON to explain it; a text answer that is
+  not UTF-8 raises `GandiUnexpectedResponseError`;
 - redirects are not followed, so the token only reaches the configured base
   URLs; a `303 See Other` is returned as a response with its `location`
   only when the caller passes `accept_see_other=True` (endpoints declaring
@@ -375,6 +429,30 @@ Behavior and limits:
 - status translation is in `gandi_error_translator.translate_error`. Gandi
   documents an expired token either as 401 or 403, so the user messages for
   both suggest replacing the token.
+
+### Work directory: `gandi_mcp.files.local.local_work_directory.LocalWorkDirectory`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `root` | path | none | yes | `files.work_directory`. |
+
+Behavior and limits:
+
+- the directory is created on the first write, with mode 0700 on POSIX;
+- a relative path takes `/` or backslash separators; an empty, absolute or
+  drive-letter path, a `..` segment, a segment with surrounding spaces, a
+  control character or one of `:*?"<>|`, or more than 255 characters raises
+  `OutsideWorkDirectoryError`;
+- every path is resolved, symbolic links followed, and must stay strictly
+  inside the directory; it is resolved again after creating the parent
+  directories;
+- a file is created exclusively unless `overwrite` is set; a directory is
+  never replaced; a private file gets the mode 0600 on POSIX (on Windows, the
+  permissions inherited from the user profile apply);
+- content is written as is (UTF-8, line endings unchanged);
+- the software never deletes a file of the work directory;
+- an operating system error is logged as a warning (its message only, no
+  content) and raised as `WorkDirectoryError`.
 
 ### Token verifier: `gandi_mcp.accounts.gandi.gandi_token_verifier.GandiTokenVerifier`
 
@@ -521,8 +599,17 @@ Abstraction of a filter rewriting Gandi data before it reaches the model
 `disclosure` (`gandi_mcp.content.disclosure.Disclosure`) carries what the user
 explicitly asked to see: `include_contact_details` and
 `include_authorization_code` (both `False` by default). The container chains
-`ContactRedactor`, then `LongTextFilter` (`result_filters`), and injects the
-list into the tool runners.
+`ContactRedactor`, `SecretFieldFilter`, then `LongTextFilter`
+(`result_filters`), and injects the list into the tool runners.
+
+### Secrets returned by Gandi: `gandi_mcp.content.secret_field_filter.SecretFieldFilter`
+
+A `ResultFilter`; no disclosure lifts it. At any depth, the value of a
+`secret` field (TSIG keys) becomes `"hidden"`, and every text of the same
+result containing one of these secrets (a configuration sample) has it
+replaced by `<hidden>`, the longest secrets first. A secret is only ever shown
+outside the conversation: in a private file of the work directory, later in
+the MCP App.
 
 ### Contact minimization: `gandi_mcp.domains.contacts.contact_redactor.ContactRedactor`
 
@@ -564,9 +651,17 @@ with validated values), `category`, accepted `query` parameters,
 `description` (required for confirmed categories), `supports_dry_run`,
 `follow_up`, `completes_with_see_other`, `secret_field` and `secret_label` (a
 body field filled with a secret typed with the confirmation; such an endpoint
-is always `confirmed`). Each API has its catalogue; `operations/domain/domain_endpoints.py` lists the Domain API ones: `READ_ENDPOINTS`
+is always `confirmed`), `accept` (media type of the answer: `JSON`, or `TEXT`
+for zone files) and `authenticated` (`False` only for a public endpoint, which
+must be a read). Each API has its catalogue; `operations/domain/domain_endpoints.py` lists the Domain API ones: `READ_ENDPOINTS`
 (22) and `WRITE_ENDPOINTS` (35: 18 writes and 17 destructive operations; orders are
-`BillableOperation` classes).
+`BillableOperation` classes). `operations/livedns/livedns_endpoints.py` lists
+the LiveDNS ones: `READ_ENDPOINTS` (19, of which `livedns_public_nameservers`
+is public and `livedns_zone_export`, `livedns_snapshot_export` ask for text).
+`livedns_tsig_config` is run by `operations/livedns/tsig_configuration.TsigConfiguration`,
+an operation reading the key (`livedns_tsig_key`) then its sample, and returning
+`{"key_id", "software", "configuration", "secret"}`: the secret field filter
+then hides the secret wherever the sample repeats it.
 
 `EndpointOperation(endpoint, path_values, query=None, body=None,
 description_params=None)` (`operations/endpoint/endpoint_operation.py`) runs a
@@ -598,6 +693,13 @@ conversation and never to invent a confirmation identifier.
 | `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`, `sort_by` by name, expiry or creation date, `-` to reverse), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status` (`completed` once registered), `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
+| `tools.endpoint_tool_runner.EndpointToolRunner.read_operation` | `read_operation(ctx, operation, account)`: the same read for an operation built by a function and made of several calls (`TsigConfiguration`). |
+| `tools.livedns.domain_tools.LiveDnsDomainTools` | `livedns_record_types`, `livedns_domains` (page, `organization_id` sent as `sharing_id`), `livedns_domain`, `livedns_nameservers`, `livedns_public_nameservers` (no account needed, no token sent). |
+| `tools.livedns.record_read_tools.RecordReadTools` | `livedns_records` (`record_type` filter, `sort_by` by name or type, `-` to reverse, page), `livedns_name_records`, `livedns_record`. Names are `RecordName` values, types `RecordType` values (`InvalidRecordError`). |
+| `tools.livedns.zone_tools.ZoneTools` | `livedns_zone_export(domain, file, overwrite=False)`: writes the zone file through `ZoneFileService`; returns `{"status": "done", "notice", "file", "size_bytes", "record_count"}`, never the content nor the full path. |
+| `tools.livedns.snapshot_tools.SnapshotTools` | `livedns_snapshots` (`automatic` filter, `sort_by` by date, newest first by default, page), `livedns_snapshot`, `livedns_snapshot_export` (same result as the zone export). |
+| `tools.livedns.signing_key_tools.SigningKeyTools` | `livedns_signing_keys`, `livedns_signing_key`. |
+| `tools.livedns.zone_transfer_tools.ZoneTransferTools` | `livedns_secondary_servers`, `livedns_tsig_keys`, `livedns_tsig_key`, `livedns_domain_tsig_keys`, `livedns_tsig_config(key_id, software, file=None, overwrite=False)`: without `file`, the sample with its secret hidden; with `file`, the full sample written to a private file of the work directory (`TextFileExporter`), only the file being described. |
 | `tools.endpoint_tool_runner.EndpointToolRunner.write` | Shared by the write tools: builds the `EndpointOperation` (path values and body as functions, validation errors explained), runs it through the `OperationExecutor` with an optional `confirmation_id`, and returns the pending confirmation or `status: done` with the minimized result and the follow-up tool. `add_write_tool` annotates a tool `destructiveHint` for confirmed categories. |
 | `tools.domains.domain_settings_tools.DomainSettingsTools` | `domain_autorenew_update`, `domain_transfer_lock`, `domain_reachability_resend`, `domain_claims_accept`; `domain_transfer_unlock`, `domain_authorization_code_reset`, `domain_delete` (confirmed). |
 | `tools.domains.contact_tools.ContactTools` | `domain_contacts_update`, `domain_owner_update` (confirmed, dry run, email unchanged), `domain_owner_email_update` (its confirmation states the ICANN designated-agent authorization before any request is sent to Gandi with `icann_contract_accept`), `domain_owner_change` (confirmed without an amount, dry run), `domain_owner_change_resend`. |
@@ -657,7 +759,10 @@ The host style variables theme Bootstrap through its CSS variables
 Every component is a container singleton. The entry point adds `app.version`
 and `app.locale` (the system language, from `gandi_mcp.i18n.system_locale`) to
 the validated configuration. `tool_modules` lists the account tools, then the
-domain tool modules, which share one `EndpointToolRunner`. The confirmation channels are wired in the order
+domain tool modules, then the LiveDNS tool modules, which share one
+`EndpointToolRunner`; `LocalWorkDirectory` (`files.work_directory`),
+`TextFileExporter` and `ZoneFileService` are singletons used by the export
+tools. The confirmation channels are wired in the order
 `ElicitationChannel`, `LocalLinkChannel`; the local page server
 implements both page ports and uses the longest of the two page timeouts.
 

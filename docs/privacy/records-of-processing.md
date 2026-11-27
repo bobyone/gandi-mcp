@@ -21,11 +21,11 @@ The software runs on the user's computer. Its authors receive no data.
 | Purpose | Let the user read and manage their Gandi resources (domains, DNS, email, certificates, hosting, billing, organizations) through an MCP client. |
 | Legal basis | [Performance of a contract with Gandi / legitimate interest of the controller in managing its own resources] |
 | Data subjects | The user; domain contacts (owner, administrative, technical, billing), whose details the user gives in the conversation to register or transfer a domain, so they also reach the LLM provider, or in the MCP App, from where they do not; mailbox and forwarding users; organization members. |
-| Data categories | Identification and contact data of domain contacts (name, postal address, email, phone, organization); email addresses of mailboxes and forwards; billing data (invoices, amounts, payment status); technical data (domain names, DNS records, IP addresses of servers). |
+| Data categories | Identification and contact data of domain contacts (name, postal address, email, phone, organization); email addresses of mailboxes and forwards; billing data (invoices, amounts, payment status); technical data (domain names, DNS records, IP addresses of servers). DNS record values may hold personal data (an email address in a TXT, RP or SOA record). The secrets of TSIG keys are never sent to the LLM provider. |
 | Recipients | Gandi SAS (France), service provider of the controller; the provider of the LLM used by the MCP client (for example Anthropic or OpenAI), which receives tool results. |
 | Transfers outside the EU | Depending on the LLM provider: [for example United States, under the provider's data processing terms and transfer mechanism]. Gandi processes data in the EU. |
-| Retention | The software stores no Gandi data: it fetches it on demand and keeps it in memory for the duration of a tool call. Retention by the LLM provider follows its own policy and the client's settings: [to complete]. |
-| Security measures | HTTPS to the Gandi API; logs contain no personal data nor secret; tool results are marked as untrusted data; domain contacts and trademark claim contacts and holders are reduced to their type and country, and email addresses, owner names and authorization codes hidden, unless the user asks for them; Gandi texts and error details longer than `content.max_free_input` are withheld from the model (ADR 10); destructive and billable operations require the user's confirmation, given outside the model and checked by the server (elicitation or local page); secrets the user types for an operation (secret input, such as an authorization code) are entered on a local page only, kept in memory until the operation runs, sent only to Gandi, never logged nor shown to the model (ADR 11); the MCP App shows full contact details and sends the owner typed there to the server only, through the same tools as the model, whose results it receives without passing them to the model (ADR 12); read-only accounts refuse every write operation. |
+| Retention | The software stores no Gandi data: it fetches it on demand and keeps it in memory for the duration of a tool call, except the files the user asks it to export (P3). Retention by the LLM provider follows its own policy and the client's settings: [to complete]. |
+| Security measures | HTTPS to the Gandi API; logs contain no personal data nor secret; tool results are marked as untrusted data; domain contacts and trademark claim contacts and holders are reduced to their type and country, and email addresses, owner names and authorization codes hidden, unless the user asks for them; Gandi texts and error details longer than `content.max_free_input` are withheld from the model (ADR 10); destructive and billable operations require the user's confirmation, given outside the model and checked by the server (elicitation or local page); secrets the user types for an operation (secret input, such as an authorization code) are entered on a local page only, kept in memory until the operation runs, sent only to Gandi, never logged nor shown to the model (ADR 11); the MCP App shows full contact details and sends the owner typed there to the server only, through the same tools as the model, whose results it receives without passing them to the model (ADR 12); read-only accounts refuse every write operation; the secrets of TSIG keys are hidden from every result shown to the model, configuration samples included; exported zone files and samples are written to the work directory and only their name, size and record count reach the model (ADR 15). |
 
 ## P2. Management of the accounts and their Personal Access Tokens
 
@@ -44,3 +44,17 @@ The software runs on the user's computer. Its authors receive no data.
 For a pending order confirmation, the server holds a keyed fingerprint of the
 token used for the quote in memory with the confirmation. The key is randomly
 generated and held in server memory. Neither is sent to a recipient or logged.
+
+## P3. Local files of the work directory
+
+| Field | Description |
+| --- | --- |
+| Controller | [Same as P1] |
+| Purpose | Export a zone or a snapshot as a zone file, and write the configuration sample of a TSIG key for a secondary server, at the user's request; later, import a zone file (ADR 15). |
+| Legal basis | [Same as P1] |
+| Data subjects | The user; people named in DNS records (an email address in a TXT, RP or SOA record). |
+| Data categories | DNS zones (names, types, values, TTL); secrets of TSIG keys, in configuration samples. |
+| Recipients | None: the files stay on the user's computer. The LLM provider receives the file name, its size and its number of records, never its content nor its full path. |
+| Transfers outside the EU | None. |
+| Retention | Until the user deletes the files: the software never deletes them. The uninstall skill offers to remove the work directory, after confirmation. |
+| Security measures | One work directory (`files.work_directory`), created with owner-only access on POSIX; relative paths only, resolved and confined to the directory (symbolic links included); no file replaced unless explicitly asked; files holding a TSIG secret readable by their owner only (0600 on POSIX, permissions of the user profile on Windows); contents never logged. |

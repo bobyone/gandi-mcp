@@ -5,6 +5,7 @@
 import re
 from dataclasses import dataclass, field
 
+from gandi_mcp.gandi.media_type import MediaType
 from gandi_mcp.i18n.message import Message
 from gandi_mcp.operations.operation_category import OperationCategory
 
@@ -31,6 +32,9 @@ class Endpoint:
         secret_label: Label of that secret field.
         completes_with_see_other: Gandi documents a ``303 See Other`` once the
             followed operation is complete (registration status).
+        accept: Media type of the answer: JSON, or text (zone files).
+        authenticated: ``False`` for the few public endpoints, called without a
+            token; such an endpoint is always a read.
     """
 
     name: str
@@ -44,6 +48,8 @@ class Endpoint:
     completes_with_see_other: bool = False
     secret_field: str | None = None
     secret_label: Message | None = None
+    accept: MediaType = MediaType.JSON
+    authenticated: bool = True
 
     def __post_init__(self) -> None:
         if self.method not in METHODS:
@@ -54,6 +60,8 @@ class Endpoint:
             raise ValueError(f"{self.name}: a confirmed endpoint needs a description")
         if (self.secret_field is None) != (self.secret_label is None):
             raise ValueError(f"{self.name}: a secret field needs its label, and the reverse")
+        if not self.authenticated and self.category is not OperationCategory.READ:
+            raise ValueError(f"{self.name}: a public endpoint can only read")
 
     @property
     def confirmed(self) -> bool:

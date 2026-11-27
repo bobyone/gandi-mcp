@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nl\n"
@@ -217,6 +217,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "De bevestiging is niet op tijd gegeven: er is niets gewijzigd."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Het bestand kon niet worden gelezen of geschreven in de werkmap: controleer de rechten en of het "
+"UTF-8-tekst is."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "De sleutelbos van het systeem is niet beschikbaar. Er is niets opgeslagen: ontgrendel of "
@@ -309,6 +317,26 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Dit domein is niet beschikbaar voor registratie: er is niets gekocht."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Dit bestand bestaat al in de werkmap: kies een andere naam of vraag om het te vervangen."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Dit bestand bestaat niet in de werkmap: controleer de naam."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Dit bestand is te groot om te lezen: er is niets gewijzigd."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Dit bestandspad is niet toegestaan: geef een pad binnen de werkmap, zonder .. en zonder "
+"stationsletter."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Dit is geen geldige Personal Access Token."
 
@@ -327,6 +355,14 @@ msgstr "Deze naam is geen geldige domeinnaam: controleer de spelling, bijv. exam
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Deze pagina is verlopen of al gebruikt. Er is niets gewijzigd."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Deze recordnaam of dit recordtype is niet geldig: gebruik een naam relatief aan de zone (@, www, "
+"_dmarc) en een type zoals A, MX of TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

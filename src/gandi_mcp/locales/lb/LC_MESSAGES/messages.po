@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lb\n"
@@ -217,6 +217,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "D'Confirmatioun gouf net zäitgerecht ginn: näischt gouf geännert."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"De Fichier konnt am Aarbechtsverzeechnes net gelies oder geschriwwe ginn: kontrolléiert seng "
+"Rechter an ob et UTF-8-Text ass."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "De Schlësselbund vum System ass net disponibel. Näischt gouf gespäichert: entspäert oder "
@@ -315,6 +323,28 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Dës Domain ass net fir d'Registréierung disponibel: näischt gouf kaaft."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr ""
+"Dëse Fichier gëtt et schonn am Aarbechtsverzeechnes: wielt en aneren Numm oder frot, fir en ze "
+"ersetzen."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Dëse Fichier gëtt et net am Aarbechtsverzeechnes: kontrolléiert säin Numm."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Dëse Fichier ass ze grouss fir gelies ze ginn: näischt gouf geännert."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Dëse Fichierswee ass net erlaabt: gitt e Wee am Aarbechtsverzeechnes un, ouni .. an ouni "
+"Lafwierksbuschtaf."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Dëst ass kee gültege Personal Access Token."
 
@@ -335,6 +365,14 @@ msgstr "Dësen Numm ass kee gëltegen Domainnumm: kontrolléiert d'Schreifweis, 
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Dës Säit ass ofgelaf oder gouf schonn benotzt. Näischt gouf geännert."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Dësen Numm oder Typ vum Agrag ass net valabel: benotzt en Numm relativ zur Zon (@, www, _dmarc) "
+"an en Typ wéi A, MX oder TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

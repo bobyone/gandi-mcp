@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: et\n"
@@ -211,6 +211,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Kinnitust ei antud õigel ajal: midagi ei muudetud."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Faili ei saanud töökataloogis lugeda ega kirjutada: kontrollige selle õigusi ja seda, et see on "
+"UTF-8 tekst."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Süsteemi võtmehoidja pole saadaval. Midagi ei salvestatud: avage või paigaldage see ja proovige "
@@ -297,6 +305,24 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "See domeen ei ole registreerimiseks saadaval: midagi ei ostetud."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "See fail on töökataloogis juba olemas: valige teine nimi või paluge see asendada."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Seda faili ei ole töökataloogis: kontrollige selle nime."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "See fail on lugemiseks liiga suur: midagi ei muudetud."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr "See failitee ei ole lubatud: andke tee töökataloogi sees, ilma .. ja kettatäheta."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "See ei ole kehtiv Personal Access Token."
 
@@ -317,6 +343,14 @@ msgstr "See nimi ei ole kehtiv domeeninimi: kontrollige õigekirja, nt example.c
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "See leht on aegunud või juba kasutatud. Midagi ei muudetud."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"See kirje nimi või tüüp ei ole kehtiv: kasutage tsooni suhtes suhtelist nime (@, www, _dmarc) ja "
+"tüüpi nagu A, MX või TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

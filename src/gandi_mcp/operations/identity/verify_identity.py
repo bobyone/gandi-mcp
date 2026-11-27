@@ -38,7 +38,7 @@ class VerifyIdentity(Operation):
         self,
         client: GandiClient,
         environment: Environment,
-        token: PersonalAccessToken,
+        token: PersonalAccessToken | None,
         secret: SecretValue | None = None,
     ) -> GandiResponse:
         return await client.request(environment, token, "GET", ("organization", "user-info"))

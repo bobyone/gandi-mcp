@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sv\n"
@@ -211,6 +211,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Bekräftelsen gavs inte i tid: inget ändrades."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Filen kunde inte läsas eller skrivas i arbetskatalogen: kontrollera dess behörigheter och att den"
+" är UTF-8-text."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Systemets nyckelring är inte tillgänglig. Inget sparades: lås upp eller installera den och försök"
@@ -299,6 +307,26 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Den här domänen kan inte registreras: inget köptes."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Den här filen finns redan i arbetskatalogen: välj ett annat namn eller be om att ersätta den."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Den här filen finns inte i arbetskatalogen: kontrollera dess namn."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Den här filen är för stor för att läsas: ingenting ändrades."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Den här filsökvägen är inte tillåten: ange en sökväg inuti arbetskatalogen, utan .. och utan "
+"enhetsbokstav."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Detta är inte en giltig Personal Access Token."
 
@@ -317,6 +345,14 @@ msgstr "Det här namnet är inte ett giltigt domännamn: kontrollera stavningen,
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Den här sidan har gått ut eller redan använts. Inget ändrades."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Det här postnamnet eller den här posttypen är inte giltig: använd ett namn relativt till zonen "
+"(@, www, _dmarc) och en typ som A, MX eller TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

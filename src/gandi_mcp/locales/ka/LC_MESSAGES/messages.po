@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ka\n"
@@ -213,6 +213,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "დადასტურება დროულად არ მოხდა: არაფერი შეცვლილა."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"ფაილის წაკითხვა ან ჩაწერა სამუშაო საქაღალდეში ვერ მოხერხდა: შეამოწმეთ მისი უფლებები და ის, რომ ის"
+" UTF-8 ტექსტია."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "სისტემის გასაღებების საცავი მიუწვდომელია. არაფერი შენახულა: განბლოკეთ ან დააინსტალირეთ და სცადეთ "
@@ -299,6 +307,24 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "ეს დომენი რეგისტრაციისთვის ხელმისაწვდომი არ არის: არაფერი შეძენილა."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "ეს ფაილი უკვე არსებობს სამუშაო საქაღალდეში: აირჩიეთ სხვა სახელი ან მოითხოვეთ მისი ჩანაცვლება."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "ეს ფაილი არ არსებობს სამუშაო საქაღალდეში: შეამოწმეთ მისი სახელი."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "ეს ფაილი ზედმეტად დიდია წასაკითხად: არაფერი შეცვლილა."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr "ფაილის ეს გზა დაუშვებელია: მიუთითეთ გზა სამუშაო საქაღალდის შიგნით, .. და დისკის ასოს გარეშე."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "ეს არ არის სწორი Personal Access Token."
 
@@ -317,6 +343,14 @@ msgstr "ეს სახელი არ არის სწორი დომ�
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "ამ გვერდს ვადა გაუვიდა ან უკვე გამოყენებულია. არაფერი შეცვლილა."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"ჩანაწერის ეს სახელი ან ტიპი არასწორია: გამოიყენეთ ზონასთან მიმართებით ფარდობითი სახელი (@, www, "
+"_dmarc) და ტიპი, მაგალითად A, MX ან TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

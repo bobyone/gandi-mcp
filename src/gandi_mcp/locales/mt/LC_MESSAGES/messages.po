@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mt\n"
@@ -214,6 +214,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Il-konferma ma ngħatatx fil-ħin: xejn ma nbidel."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Il-fajl ma setax jinqara jew jinkiteb fid-direttorju tax-xogħol: iċċekkja l-permessi tiegħu u li "
+"huwa test UTF-8."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Iċ-ċirku taċ-ċwievet tas-sistema mhux disponibbli. Xejn ma ġie salvat: iftħu jew installah, "
@@ -302,6 +310,28 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Dan id-dominju mhuwiex disponibbli għar-reġistrazzjoni: ma nxtara xejn."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr ""
+"Dan il-fajl diġà jeżisti fid-direttorju tax-xogħol: agħżel isem ieħor, jew itlob li jiġi "
+"sostitwit."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Dan il-fajl ma jeżistix fid-direttorju tax-xogħol: iċċekkja ismu."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Dan il-fajl huwa kbir wisq biex jinqara: ma nbidel xejn."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Dan il-percorso tal-fajl mhuwiex permess: agħti percorso ġewwa d-direttorju tax-xogħol, mingħajr "
+".. u mingħajr ittra tad-drajv."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Dan mhuwiex Personal Access Token validu."
 
@@ -322,6 +352,14 @@ msgstr "Dan l-isem mhuwiex isem ta' dominju validu: iċċekkja l-ortografija, e�
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Din il-paġna skadiet jew diġà ntużat. Xejn ma nbidel."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Dan l-isem jew it-tip tar-rekord mhuwiex validu: uża isem relattiv għaż-żona (@, www, _dmarc) u "
+"tip bħal A, MX jew TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

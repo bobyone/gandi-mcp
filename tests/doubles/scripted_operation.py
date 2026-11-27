@@ -27,6 +27,7 @@ class ScriptedOperation(Operation):
     executed: list[Environment] = field(default_factory=list)
     secret_label: Message | None = None
     secrets: list[SecretValue | None] = field(default_factory=list)
+    public: bool = False
 
     @property
     def name(self) -> str:
@@ -39,6 +40,10 @@ class ScriptedOperation(Operation):
     def parameters(self) -> Mapping[str, JsonValue]:
         return {"target": self.target}
 
+    @property
+    def authenticated(self) -> bool:
+        return not self.public
+
     def secret_input(self) -> SecretInput | None:
         return SecretInput(self.secret_label, 64) if self.secret_label is not None else None
 
@@ -49,7 +54,7 @@ class ScriptedOperation(Operation):
         self,
         client: GandiClient,
         environment: Environment,
-        token: PersonalAccessToken,
+        token: PersonalAccessToken | None,
         secret: SecretValue | None = None,
     ) -> GandiResponse:
         self.executed.append(environment)

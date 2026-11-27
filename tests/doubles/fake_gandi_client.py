@@ -8,6 +8,7 @@ from dataclasses import dataclass, field
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.gandi.gandi_client import GandiClient, QueryValue
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
+from gandi_mcp.gandi.media_type import MediaType
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 
 
@@ -16,13 +17,14 @@ class RecordedCall:
     """One request received by the fake client."""
 
     environment: Environment
-    token: PersonalAccessToken
+    token: PersonalAccessToken | None
     method: str
     path: tuple[str, ...]
     query: Mapping[str, QueryValue] | None
     body: JsonValue
     accept_see_other: bool = False
     dry_run: bool = False
+    accept: MediaType = MediaType.JSON
 
 
 @dataclass
@@ -36,7 +38,7 @@ class FakeGandiClient(GandiClient):
     async def request(
         self,
         environment: Environment,
-        token: PersonalAccessToken,
+        token: PersonalAccessToken | None,
         method: str,
         path: Sequence[str],
         *,
@@ -44,10 +46,19 @@ class FakeGandiClient(GandiClient):
         body: JsonValue = None,
         accept_see_other: bool = False,
         dry_run: bool = False,
+        accept: MediaType = MediaType.JSON,
     ) -> GandiResponse:
         self.calls.append(
             RecordedCall(
-                environment, token, method, tuple(path), query, body, accept_see_other, dry_run
+                environment,
+                token,
+                method,
+                tuple(path),
+                query,
+                body,
+                accept_see_other,
+                dry_run,
+                accept,
             )
         )
         outcome = self.outcomes.pop(0) if self.outcomes else GandiResponse(200, None)

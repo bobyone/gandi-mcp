@@ -14,17 +14,21 @@ from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
 from gandi_mcp.content.long_text_filter import LongTextFilter
+from gandi_mcp.content.secret_field_filter import SecretFieldFilter
 from gandi_mcp.domains.contacts.contact_redactor import ContactRedactor
 from gandi_mcp.domains.quotes.gandi.gandi_quote_provider import GandiQuoteProvider
+from gandi_mcp.files.local.local_work_directory import LocalWorkDirectory
 from gandi_mcp.gandi.http.http_gandi_client import HttpGandiClient
 from gandi_mcp.i18n.babel.babel_translator import BabelTranslator, default_locales_directory
 from gandi_mcp.interaction.link_presenter import LinkPresenter
 from gandi_mcp.interaction.system.system_browser import SystemBrowser
+from gandi_mcp.livedns.zone_files.zone_file_service import ZoneFileService
 from gandi_mcp.local_pages.starlette.starlette_local_page_server import (
     StarletteLocalPageServer,
 )
 from gandi_mcp.operations.operation_executor import OperationExecutor
 from gandi_mcp.operations.order_executor import OrderExecutor
+from gandi_mcp.operations.text_file_exporter import TextFileExporter
 from gandi_mcp.preferences.json.json_preferences_store import JsonPreferencesStore
 from gandi_mcp.protocol.app.accounts_app_tools import AccountsAppTools
 from gandi_mcp.protocol.app.app_resource import load_app_html
@@ -45,6 +49,12 @@ from gandi_mcp.protocol.tools.domains.tag_tools import TagTools
 from gandi_mcp.protocol.tools.domains.transfer_tools import TransferTools
 from gandi_mcp.protocol.tools.domains.transfer_write_tools import TransferWriteTools
 from gandi_mcp.protocol.tools.endpoint_tool_runner import EndpointToolRunner
+from gandi_mcp.protocol.tools.livedns.domain_tools import LiveDnsDomainTools
+from gandi_mcp.protocol.tools.livedns.record_read_tools import RecordReadTools
+from gandi_mcp.protocol.tools.livedns.signing_key_tools import SigningKeyTools
+from gandi_mcp.protocol.tools.livedns.snapshot_tools import SnapshotTools
+from gandi_mcp.protocol.tools.livedns.zone_tools import ZoneTools
+from gandi_mcp.protocol.tools.livedns.zone_transfer_tools import ZoneTransferTools
 from gandi_mcp.protocol.tools.organization_tools import OrganizationTools
 from gandi_mcp.secrets.keyring.keyring_secret_store import KeyringSecretStore
 from gandi_mcp.token_entry.token_entry_service import TokenEntryService
@@ -65,8 +75,8 @@ class ApplicationContainer(containers.DeclarativeContainer):
         ``app.locale`` (str or None, required): system language, set by the entry point.
         ``preferences.path``, ``gandi.production_url``, ``gandi.sandbox_url``,
         ``gandi.timeout_seconds``, ``confirmation.timeout_seconds``,
-        ``token_entry.timeout_seconds``, ``content.max_free_input``: validated by the
-        entry point.
+        ``token_entry.timeout_seconds``, ``content.max_free_input``,
+        ``files.work_directory``: validated by the entry point.
     """
 
     config = providers.Configuration(strict=True)
@@ -127,8 +137,10 @@ class ApplicationContainer(containers.DeclarativeContainer):
     )
     long_text_filter = providers.Singleton(LongTextFilter, config.content.max_free_input)
     contact_redactor = providers.Singleton(ContactRedactor)
-    # Contacts first: the long text filter then sees the summarized data (ADR 10).
-    result_filters = providers.List(contact_redactor, long_text_filter)
+    secret_field_filter = providers.Singleton(SecretFieldFilter)
+    # Contacts and secrets first: the long text filter then sees the summarized data
+    # (ADR 10), and a hidden secret never counts in the length of a text.
+    result_filters = providers.List(contact_redactor, secret_field_filter, long_text_filter)
     error_presenter = providers.Singleton(ErrorPresenter, translator, long_text_filter)
 
     accounts_tools = providers.Singleton(
@@ -152,6 +164,9 @@ class ApplicationContainer(containers.DeclarativeContainer):
     domain_order_runner = providers.Singleton(
         DomainOrderRunner, order_executor, accounts_tools, result_filters
     )
+    work_directory = providers.Singleton(LocalWorkDirectory, config.files.work_directory)
+    text_file_exporter = providers.Singleton(TextFileExporter, operation_executor, work_directory)
+    zone_file_service = providers.Singleton(ZoneFileService, text_file_exporter)
     organization_service = providers.Singleton(
         OrganizationService,
         account_service,
@@ -173,6 +188,14 @@ class ApplicationContainer(containers.DeclarativeContainer):
         providers.Singleton(RedirectionWriteTools, endpoint_tool_runner),
         providers.Singleton(TagTools, endpoint_tool_runner),
         providers.Singleton(TransferWriteTools, endpoint_tool_runner),
+        providers.Singleton(LiveDnsDomainTools, endpoint_tool_runner),
+        providers.Singleton(RecordReadTools, endpoint_tool_runner),
+        providers.Singleton(ZoneTools, zone_file_service, accounts_tools),
+        providers.Singleton(SnapshotTools, endpoint_tool_runner, zone_file_service, accounts_tools),
+        providers.Singleton(SigningKeyTools, endpoint_tool_runner),
+        providers.Singleton(
+            ZoneTransferTools, endpoint_tool_runner, text_file_exporter, accounts_tools
+        ),
     )
 
     accounts_app_tools = providers.Singleton(

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sq\n"
@@ -213,6 +213,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Konfirmimi nuk u dha në kohë: asgjë nuk u ndryshua."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Skedari nuk mund të lexohej ose shkruhej në drejtorinë e punës: kontrolloni lejet e tij dhe që "
+"është tekst UTF-8."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Mbajtësja e çelësave e sistemit nuk është e disponueshme. Asgjë nuk u ruajt: zhbllokojeni ose "
@@ -303,6 +311,28 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Ky domen nuk është i disponueshëm për regjistrim: nuk u ble asgjë."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr ""
+"Ky skedar ekziston tashmë në drejtorinë e punës: zgjidhni një emër tjetër ose kërkoni ta "
+"zëvendësoni."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Ky skedar nuk ekziston në drejtorinë e punës: kontrolloni emrin e tij."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Ky skedar është shumë i madh për t'u lexuar: nuk u ndryshua asgjë."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Kjo shteg skedari nuk lejohet: jepni një shteg brenda drejtorisë së punës, pa .. dhe pa shkronjë "
+"disku."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Ky nuk është një Personal Access Token i vlefshëm."
 
@@ -321,6 +351,14 @@ msgstr "Ky emër nuk është emër i vlefshëm domeni: kontrolloni drejtshkrimin
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Kjo faqe ka skaduar ose është përdorur tashmë. Asgjë nuk u ndryshua."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Ky emër ose lloj regjistrimi nuk është i vlefshëm: përdorni një emër në lidhje me zonën (@, www, "
+"_dmarc) dhe një lloj si A, MX ose TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

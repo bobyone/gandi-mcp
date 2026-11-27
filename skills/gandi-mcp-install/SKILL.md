@@ -23,7 +23,9 @@ Follow the [quick-start](../../docs/quick-start.md); do not reimplement it.
    into a client (folder or archive) are never updated.
 4. Optional configuration: copy `gandi-mcp.example.toml` to a `gandi-mcp.toml` and
    add `--config <path>` to the server command. Never read an existing
-   `gandi-mcp.toml` or `.env` file yourself.
+   `gandi-mcp.toml` or `.env` file yourself. The `[files]` section sets the
+   work directory where exported zone files and TSIG samples are written (by
+   default `gandi-mcp/files` in the user data directory of the OS).
 5. Verify: `uvx --from git+https://github.com/bobyone/gandi-mcp gandi-mcp --version`,
    then restart the client and check that the `gandi` server is connected.
 6. Add a first account, preferably in the sandbox, with the

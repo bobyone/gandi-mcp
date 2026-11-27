@@ -7,7 +7,7 @@ import logging
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
-from gandi_mcp.accounts.exceptions import ReadOnlyAccountError
+from gandi_mcp.accounts.exceptions import NoAccountError, ReadOnlyAccountError
 from gandi_mcp.confirmation.confirmation_context import ConfirmationContext
 from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
 from gandi_mcp.confirmation.confirmation_request import ConfirmationRequest
@@ -38,6 +38,10 @@ class OperationExecutor:
        checked with a Gandi dry run when it offers one.
     4. Read the token and call Gandi in the account environment.
     5. Return the data, marked as untrusted.
+
+    A public operation (not authenticated) is a read sent without a token, in the
+    environment of the given account, otherwise of the default one, otherwise in
+    production: it works without any account.
     """
 
     def __init__(
@@ -65,6 +69,8 @@ class OperationExecutor:
             NoAccountError, AccountNotFoundError, ReadOnlyAccountError,
             ConfirmationError, SecretStoreError, GandiError.
         """
+        if not operation.authenticated:
+            return await self._run_public(operation, account_name)
         account = await self._accounts.resolve(account_name)
         if operation.category.is_write and account.read_only:
             raise ReadOnlyAccountError(f"the account {account.name} is read-only")
@@ -107,6 +113,22 @@ class OperationExecutor:
             response.filtered_count,
             completed=response.status == SEE_OTHER,
         )
+
+    async def _run_public(
+        self, operation: Operation, account_name: AccountName | None
+    ) -> UntrustedResult:
+        if operation.category.is_write or operation.secret_input() is not None:
+            raise TypeError(f"{operation.name}: a public operation can only read")
+        environment = await self._public_environment(account_name)
+        response = await operation.execute(self._client, environment, None)
+        logger.info("public operation %s done (%s)", operation.name, environment.value)
+        return UntrustedResult(response.data, response.total_count, response.filtered_count)
+
+    async def _public_environment(self, account_name: AccountName | None) -> Environment:
+        try:
+            return (await self._accounts.resolve(account_name)).environment
+        except NoAccountError:
+            return Environment.PRODUCTION
 
     async def _check(self, operation: Operation, environment: Environment, key: str) -> None:
         token = await self._secrets.get(key)

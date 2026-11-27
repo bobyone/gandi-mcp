@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -215,6 +215,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "La confirmación no se ha dado a tiempo: no se ha cambiado nada."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"No se ha podido leer ni escribir el archivo en el directorio de trabajo: compruebe sus permisos y"
+" que sea texto UTF-8."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "El llavero del sistema no está disponible. No se ha guardado nada: desbloquéelo o instálelo y "
@@ -303,6 +311,26 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Este dominio no está disponible para registrar: no se ha comprado nada."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Este archivo ya existe en el directorio de trabajo: elija otro nombre o pida reemplazarlo."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Este archivo no existe en el directorio de trabajo: compruebe su nombre."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Este archivo es demasiado grande para leerlo: no se ha cambiado nada."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Esta ruta de archivo no está permitida: indique una ruta dentro del directorio de trabajo, sin .."
+" ni letra de unidad."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "No es un Personal Access Token válido."
 
@@ -323,6 +351,14 @@ msgstr "Este nombre no es un nombre de dominio válido: compruebe su ortografía
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Esta página ha caducado o ya se ha usado. No se ha cambiado nada."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Este nombre o tipo de registro no es válido: use un nombre relativo a la zona (@, www, _dmarc) y "
+"un tipo como A, MX o TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

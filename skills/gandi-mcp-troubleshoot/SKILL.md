@@ -44,6 +44,20 @@ description: Diagnose gandi-mcp problems (server not starting or not connected, 
      (confirmation) by default and accept one answer; ask for a new one;
    - "request was refused": the page was opened from another address than
      `127.0.0.1`, or from another site.
-6. Logs contain no token nor personal data by design. Still check a log line
+6. DNS zones (LiveDNS) and files:
+   - "did not find this resource" on a `livedns_*` tool: the domain is not
+     served by LiveDNS for this account (check `livedns_domains` and
+     `domain_livedns_status`), or the record does not exist;
+   - "record name or type is not valid": the name must be relative to the
+     zone (`@`, `www`, `_dmarc`), without the domain nor a trailing dot;
+   - "conflicts with the current state": for example a CNAME next to other
+     records of the same name;
+   - a value shown as `{"withheld": "long_text"}` (DKIM keys, long TXT) is
+     withheld from the model on purpose: export the zone to read it;
+   - "file path is not allowed": the path must be relative to the work
+     directory, without `..` nor a drive letter; "already exists": choose
+     another name or ask to replace it; "could not be read or written": check
+     that the user can write the work directory (`files.work_directory`).
+7. Logs contain no token nor personal data by design. Still check a log line
    before quoting it in an issue.
-7. If the problem persists, use the `gandi-mcp-report-issue` skill.
+8. If the problem persists, use the `gandi-mcp-report-issue` skill.

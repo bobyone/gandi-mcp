@@ -36,6 +36,21 @@ Domain API; another API has its own catalogue module and tool directory.
    `tests/protocol/tools/domains/test_domain_tools.py` (reads) or
    `test_domain_write_tools.py` (writes).
 
+For the LiveDNS API, the catalogue is
+`src/gandi_mcp/operations/livedns/livedns_endpoints.py`, the values are in
+`gandi_mcp.livedns` (`RecordName`, `RecordType`, identifiers), the tool
+modules in `src/gandi_mcp/protocol/tools/livedns/` and the protocol tests in
+`tests/protocol/tools/livedns/`. Two more options of `Endpoint` matter there:
+
+- `accept=MediaType.TEXT` asks Gandi for a zone file instead of JSON; such an
+  endpoint is exported to the work directory with `ZoneFileService` or
+  `TextFileExporter` (ADR 15), never returned to the model;
+- `authenticated=False` declares a public read, sent without a token
+  (`livedns_public_nameservers`).
+
+A read made of several calls (`livedns_tsig_config` reads the key, then its
+sample) is an `Operation` class, run with `EndpointToolRunner.read_operation`.
+
 The rest of this guide applies to operations that need their own class.
 
 ## 1. Write the operation
