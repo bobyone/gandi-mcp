@@ -291,14 +291,49 @@ describe("DomainsScreen", () => {
 
     const dialog = await openDetails(user);
     await user.click(await dialog.findByRole("button", { name: "Unlock the transfer" }));
-    expect(await screen.findByText(/Confirm or refuse this operation/)).toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Continue" }));
+    // The details dialog is modal: Continue must be inside it to be reachable.
+    expect(await dialog.findByText(/Confirm or refuse this operation/)).toBeInTheDocument();
+    await user.click(dialog.getByRole("button", { name: "Continue" }));
 
     expect(domains.setTransferLock.mock.calls).toEqual([
       ["Pro", "xn--caf-dma.fr", false, undefined],
       ["Pro", "xn--caf-dma.fr", false, "c-1"],
     ]);
-    expect(await screen.findByText("The domain café.fr is updated.")).toBeInTheDocument();
+    expect(await dialog.findByText("The domain café.fr is updated.")).toBeInTheDocument();
+    expect(screen.getAllByText("The domain café.fr is updated.")).toHaveLength(1);
+  });
+
+  it("keeps the details of the domain opened last when answers arrive out of order", async () => {
+    const domains = fakeDomains();
+    let answerCafe: (details: DomainDetails) => void = () => undefined;
+    let answerShop: (details: DomainDetails) => void = () => undefined;
+    domains.details
+      .mockReturnValueOnce(
+        new Promise((resolve) => {
+          answerCafe = resolve;
+        }),
+      )
+      .mockReturnValueOnce(
+        new Promise((resolve) => {
+          answerShop = resolve;
+        }),
+      );
+    const user = show(domains);
+
+    await openDetails(user);
+    await user.click(screen.getAllByRole("button", { name: "Close" })[0]!);
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
+    const dialog = await openDetails(user, "shop.com");
+    answerShop({ ...DETAILS, ...SHOP });
+    expect(await dialog.findByText("Domain shop.com")).toBeInTheDocument();
+    answerCafe(DETAILS);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(dialog.getByText("Domain shop.com")).toBeInTheDocument();
+    await user.click(dialog.getByRole("button", { name: "Turn on automatic renewal" }));
+    expect(domains.setAutorenew).toHaveBeenCalledWith("Pro", "shop.com", true);
   });
 
   it("locks the transfer and explains a refusal", async () => {

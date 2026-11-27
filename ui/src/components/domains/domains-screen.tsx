@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2026 bobyone
 // SPDX-License-Identifier: GPL-2.0-or-later
-import { useCallback, useEffect, useId, useState, type SubmitEvent } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type SubmitEvent } from "react";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -113,17 +113,27 @@ export function DomainsScreen({ domains, accounts }: DomainsScreenProps) {
   const loading = account !== "" && result?.key !== key;
   const listing = result?.listing ?? null;
 
+  /** Identifies the latest details request: an older answer is ignored. */
+  const detailsRequest = useRef(0);
   const loadDetails = useCallback(
     async (fqdn: string) => {
+      const request = ++detailsRequest.current;
       setDetails({ kind: "loading" });
+      let next: DetailsState;
       try {
-        setDetails({ kind: "ready", details: await domains.details(account, fqdn) });
+        next = { kind: "ready", details: await domains.details(account, fqdn) };
       } catch (error) {
-        setDetails({ kind: "failed", message: message(error) });
+        next = { kind: "failed", message: message(error) };
       }
+      if (request === detailsRequest.current) setDetails(next);
     },
     [domains, account],
   );
+
+  function close() {
+    detailsRequest.current += 1;
+    setSelected(null);
+  }
 
   function open(domain: DomainSummary) {
     setSelected(domain);
@@ -167,6 +177,21 @@ export function DomainsScreen({ domains, accounts }: DomainsScreenProps) {
     listing !== null &&
     (pages !== null ? page < pages : listing.domains.length === listing.perPage);
   const updated = (name: string) => t("feedback.domainUpdated", { name });
+  /** The details dialog is modal: the feedback goes inside it while it is open. */
+  const detailsShown = selected !== null && dialog === null;
+  const feedbackArea = (
+    <FeedbackArea
+      pending={pending !== null}
+      feedback={feedback}
+      busy={busy}
+      onContinue={() => {
+        if (pending) void run(pending.change, pending.success, pending.confirmationId);
+      }}
+      onDismiss={() => {
+        setFeedback(null);
+      }}
+    />
+  );
 
   return (
     <main className="container-fluid py-3">
@@ -183,17 +208,7 @@ export function DomainsScreen({ domains, accounts }: DomainsScreenProps) {
           </Button>
         )}
       </div>
-      <FeedbackArea
-        pending={pending !== null}
-        feedback={feedback}
-        busy={busy}
-        onContinue={() => {
-          if (pending) void run(pending.change, pending.success, pending.confirmationId);
-        }}
-        onDismiss={() => {
-          setFeedback(null);
-        }}
-      />
+      {!detailsShown && feedbackArea}
       {accountList === null ? (
         <div role="status" className="mb-3">
           <Spinner animation="border" size="sm" className="me-2" aria-hidden="true" />
@@ -213,7 +228,7 @@ export function DomainsScreen({ domains, accounts }: DomainsScreenProps) {
                     onChange={(event) => {
                       setAccount(event.target.value);
                       setPage(1);
-                      setSelected(null);
+                      close();
                     }}
                   >
                     {accountList.map((item) => (
@@ -342,6 +357,7 @@ export function DomainsScreen({ domains, accounts }: DomainsScreenProps) {
           state={details}
           readOnly={readOnly}
           busy={busy}
+          notice={feedbackArea}
           onAutorenew={(enabled) => {
             void run(
               () => domains.setAutorenew(account, selected.fqdn, enabled),
@@ -361,9 +377,7 @@ export function DomainsScreen({ domains, accounts }: DomainsScreenProps) {
           onRenew={() => {
             setDialog("renew");
           }}
-          onClose={() => {
-            setSelected(null);
-          }}
+          onClose={close}
         />
       )}
       {selected && dialog === "nameservers" && (

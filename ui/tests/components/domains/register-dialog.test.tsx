@@ -61,6 +61,27 @@ function show(api: DomainsApi) {
 }
 
 describe("RegisterDialog", () => {
+  it("ignores the answer for a name changed while it was checked", async () => {
+    const api = fakeApi();
+    let answer: (quote: Quote) => void = () => undefined;
+    api.quote.mockReturnValueOnce(
+      new Promise((resolve) => {
+        answer = resolve;
+      }),
+    );
+    const { user, dialog } = show(api);
+
+    const field = dialog.getByLabelText("Domain");
+    await user.type(field, "a.fr{enter}");
+    await user.clear(field);
+    await user.type(field, "ab.fr");
+    answer(QUOTE);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(dialog.queryByText("a.fr is available.")).not.toBeInTheDocument();
+    expect(dialog.getByRole("button", { name: "Register a domain" })).toBeDisabled();
+  });
+
   it("checks the name before asking Gandi", async () => {
     const api = fakeApi();
     const { user, dialog } = show(api);

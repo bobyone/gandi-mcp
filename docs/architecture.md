@@ -629,7 +629,10 @@ The UI (`ui/src/`, TypeScript, React-Bootstrap) has the same layering:
   (`duration-price.tsx`, `use-quote.ts`) and the owner form; dates and prices
   are formatted by `Intl` (`format.ts`). `feedback-area.tsx` shows the outcome
   of an action and, while a server confirmation is pending, a Continue button
-  that resumes the call with its `confirmation_id`;
+  that resumes the call with its `confirmation_id`; while the modal details
+  dialog is open, the feedback area is shown inside it so that it stays
+  reachable. A details or quote answer that is no longer the latest request
+  (another domain opened, name edited) is ignored;
 - `i18n/`: language of the host, then of the browser, then English; ICU
   catalogs.
 

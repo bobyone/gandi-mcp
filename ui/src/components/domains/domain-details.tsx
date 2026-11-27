@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2026 bobyone
 // SPDX-License-Identifier: GPL-2.0-or-later
-import { useId } from "react";
+import { useId, type ReactNode } from "react";
 import Alert from "react-bootstrap/Alert";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
@@ -23,6 +23,8 @@ export interface DomainDetailsDialogProps {
   /** Writes are refused on a read-only account: no action is offered. */
   readonly readOnly: boolean;
   readonly busy: boolean;
+  /** The screen's feedback, shown inside the dialog so that it stays reachable. */
+  readonly notice?: ReactNode;
   readonly onAutorenew: (enabled: boolean) => void;
   readonly onTransferLock: (locked: boolean) => void;
   readonly onEditNameservers: () => void;
@@ -32,7 +34,7 @@ export interface DomainDetailsDialogProps {
 
 /** Details of a domain, with its contacts in full, and its common actions. */
 export function DomainDetailsDialog(props: DomainDetailsDialogProps) {
-  const { state, readOnly, busy, onClose } = props;
+  const { state, readOnly, busy, notice, onClose } = props;
   const { t } = useTranslation();
   const id = useId();
   const title =
@@ -45,6 +47,7 @@ export function DomainDetailsDialog(props: DomainDetailsDialogProps) {
         <Modal.Title id={`${id}-title`}>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {notice}
         {state.kind === "loading" && (
           <div role="status" className="mb-3">
             <Spinner animation="border" size="sm" className="me-2" aria-hidden="true" />
