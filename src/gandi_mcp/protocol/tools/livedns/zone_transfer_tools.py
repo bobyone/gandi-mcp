@@ -162,8 +162,12 @@ class ZoneTransferTools(ToolModule):
         """Show the configuration sample of a TSIG key."""
 
         def operation() -> TsigConfiguration:
+            # Shown to the model without a file: fail closed if the secret cannot be hidden.
             return TsigConfiguration(
-                TsigKeyId(key_id), TsigSoftware.parse(software), sharing_id(organization_id)
+                TsigKeyId(key_id),
+                TsigSoftware.parse(software),
+                sharing_id(organization_id),
+                secret_required=file is None,
             )
 
         if file is None:

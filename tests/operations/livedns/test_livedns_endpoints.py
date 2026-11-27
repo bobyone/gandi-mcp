@@ -6,7 +6,7 @@ import pytest
 
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.gandi.exceptions import GandiUnexpectedResponseError
-from gandi_mcp.gandi.gandi_response import GandiResponse
+from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
 from gandi_mcp.gandi.media_type import MediaType
 from gandi_mcp.livedns.identifiers import TsigKeyId
 from gandi_mcp.livedns.tsig_software import TsigSoftware
@@ -72,3 +72,42 @@ async def test_a_missing_configuration_is_unexpected() -> None:
         await TsigConfiguration(TsigKeyId("k1"), TsigSoftware.KNOT).execute(
             client, Environment.SANDBOX, TOKEN
         )
+
+
+@pytest.mark.parametrize(
+    "details",
+    [
+        {"id": "k1"},
+        {"id": "k1", "secret": ""},
+        {"id": "k1", "secret": None},
+        {"id": "k1", "secret": ["s3cr3t"]},
+        {"id": "k1", "secret": "another-secret"},
+        ["not", "a", "mapping"],
+    ],
+)
+async def test_a_sample_whose_secret_cannot_be_hidden_is_refused(details: JsonValue) -> None:
+    client = FakeGandiClient(
+        [GandiResponse(200, details), GandiResponse(200, 'key "t" { secret "s3cr3t"; };')]
+    )
+
+    with pytest.raises(GandiUnexpectedResponseError) as raised:
+        await TsigConfiguration(TsigKeyId("k1"), TsigSoftware.BIND).execute(
+            client, Environment.SANDBOX, TOKEN
+        )
+
+    assert "s3cr3t" not in str(raised.value)
+    assert raised.value.details == ()
+
+
+async def test_a_sample_for_a_file_is_returned_without_a_known_secret() -> None:
+    client = FakeGandiClient(
+        [GandiResponse(200, {"id": "k1"}), GandiResponse(200, 'key "t" { secret "s3cr3t"; };')]
+    )
+
+    response = await TsigConfiguration(
+        TsigKeyId("k1"), TsigSoftware.BIND, secret_required=False
+    ).execute(client, Environment.SANDBOX, TOKEN)
+
+    assert isinstance(response.data, dict)
+    assert response.data["secret"] is None
+    assert response.data["configuration"] == 'key "t" { secret "s3cr3t"; };'

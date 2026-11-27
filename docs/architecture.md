@@ -658,7 +658,11 @@ authentication, but it answers 401 without a token: it is an ordinary read.
 `livedns_tsig_config` is run by `operations/livedns/tsig_configuration.TsigConfiguration`,
 an operation reading the key (`livedns_tsig_key`) then its sample, and returning
 `{"key_id", "software", "configuration", "secret"}`: the secret field filter
-then hides the secret wherever the sample repeats it.
+then hides the secret wherever the sample repeats it. With `secret_required`
+(default, the sample is shown to the model), it fails closed: when the key
+details carry no non-empty secret, or the sample does not contain it, it raises
+`GandiUnexpectedResponseError` (no detail) instead of returning the sample. The
+`file` path sets it to `False` and writes the full sample.
 
 `EndpointOperation(endpoint, path_values, query=None, body=None,
 description_params=None)` (`operations/endpoint/endpoint_operation.py`) runs a

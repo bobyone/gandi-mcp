@@ -290,6 +290,49 @@ async def test_tsig_secrets_never_reach_the_model(setup: Setup) -> None:
     assert setup.gandi.calls[3].path == ("livedns", "axfr", "tsig", "t-1", "config", "bind")
 
 
+@pytest.mark.parametrize(
+    "details",
+    [
+        {"id": "t-1", "key_name": "transfer"},
+        {"id": "t-1", "key_name": "transfer", "secret": ""},
+        {"id": "t-1", "key_name": "transfer", "secret": "not-the-one-in-the-sample"},
+    ],
+)
+async def test_a_tsig_sample_whose_secret_is_unknown_never_reaches_the_model(
+    setup: Setup, details: JsonValue
+) -> None:
+    await add(setup)
+    setup.gandi.outcomes += [
+        GandiResponse(200, details),
+        GandiResponse(200, f'key "transfer" {{ secret "{SECRET}"; }};'),
+    ]
+
+    result = await call(setup, "livedns_tsig_config", {"key_id": "t-1", "software": "bind"})
+
+    assert result.is_error
+    assert SECRET not in json.dumps(result.model_dump(mode="json"))
+
+
+async def test_the_full_tsig_sample_goes_to_a_file_even_without_a_known_secret(
+    setup: Setup,
+) -> None:
+    await add(setup)
+    sample = f'key "transfer" {{ secret "{SECRET}"; }};'
+    setup.gandi.outcomes += [GandiResponse(200, {"id": "t-1"}), GandiResponse(200, sample)]
+
+    result = data(
+        await call(
+            setup,
+            "livedns_tsig_config",
+            {"key_id": "t-1", "software": "bind", "file": "tsig/bind.conf"},
+        )
+    )
+
+    assert SECRET not in json.dumps(result)
+    assert setup.files.files == {"tsig/bind.conf": sample}
+    assert setup.files.private == {"tsig/bind.conf"}
+
+
 async def test_the_full_tsig_sample_goes_to_a_private_file_only(setup: Setup) -> None:
     await add(setup)
     sample = f'key "transfer" {{ secret "{SECRET}"; }};'
