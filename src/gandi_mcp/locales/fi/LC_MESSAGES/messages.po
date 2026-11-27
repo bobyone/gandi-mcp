@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 00:54+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fi\n"
@@ -418,6 +418,20 @@ msgstr "poista verkkotunnuksen {domain} glue-tietue {host}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"poista vyöhykkeen {domain} allekirjoitusavain {key}: jos sen DS-tietue on yhä julkaistu "
+"rekisterissä, verkkotunnuksen nimenselvitys voi lakata toimimasta"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "poista vyöhykkeen {domain} tilannevedos {snapshot}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "poista isännän {host} verkko-ohjaus"
 
@@ -425,6 +439,11 @@ msgstr "poista isännän {host} verkko-ohjaus"
 #, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "poista DNSSEC käytöstä verkkotunnukselta {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "irrota TSIG-avain {key} vyöhykkeestä {domain}"
 
 # needs-review
 #, python-brace-format
@@ -494,6 +513,11 @@ msgstr "nollaa verkkotunnuksen {domain} valtuutuskoodi: nykyinen koodi lakkaa to
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "palauta {domain}: {price} sis. verot"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "lakkaa sallimasta osoitteen {ip} siirtää vyöhykettä {domain}"
 
 # needs-review
 #, python-brace-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 00:54+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs\n"
@@ -414,6 +414,20 @@ msgstr "smazat glue záznam {host} domény {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"smazat podpisový klíč {key} zóny {domain}: pokud je jeho záznam DS stále zveřejněn u registru, "
+"doména se může přestat překládat"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "smazat snímek {snapshot} zóny {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "smazat webové přesměrování {host}"
 
@@ -421,6 +435,11 @@ msgstr "smazat webové přesměrování {host}"
 #, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "vypnout DNSSEC pro {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "odpojit klíč TSIG {key} od zóny {domain}"
 
 # needs-review
 #, python-brace-format
@@ -490,6 +509,11 @@ msgstr "obnovit autorizační kód {domain}: současný kód přestane platit"
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "obnovit {domain}: {price} včetně daní"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "přestat povolovat {ip} přenos zóny {domain}"
 
 # needs-review
 #, python-brace-format

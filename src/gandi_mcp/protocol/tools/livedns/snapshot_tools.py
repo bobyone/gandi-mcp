@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 bobyone
 # SPDX-License-Identifier: GPL-2.0-or-later
-"""Model tools reading the snapshots of a zone."""
+"""Model tools on the snapshots of a zone."""
 
 from typing import Annotated, Any, Literal
 
@@ -11,16 +11,19 @@ from pydantic import Field
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.domains.domain_name import DomainName
 from gandi_mcp.livedns.identifiers import SnapshotId
+from gandi_mcp.livedns.snapshot_name import SnapshotName
 from gandi_mcp.livedns.zone_files.zone_file_service import ZoneFileService
 from gandi_mcp.operations.livedns import livedns_endpoints
 from gandi_mcp.protocol.tool_module import ToolModule
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools
 from gandi_mcp.protocol.tools.endpoint_tool_runner import (
     AccountParameter,
+    ConfirmationIdParameter,
     EndpointToolRunner,
     PageParameter,
     PerPageParameter,
     add_read_tool,
+    add_write_tool,
 )
 from gandi_mcp.protocol.tools.livedns.livedns_parameters import (
     FileParameter,
@@ -33,6 +36,10 @@ SnapshotIdParameter = Annotated[
     str, Field(description="Snapshot identifier, from livedns_snapshots.", max_length=64)
 ]
 SnapshotSort = Literal["date_created", "-date_created"]
+SnapshotNameParameter = Annotated[
+    str | None,
+    Field(default=None, description="Name of the snapshot; the date by default.", max_length=255),
+]
 
 
 class SnapshotTools(ToolModule):
@@ -70,6 +77,29 @@ class SnapshotTools(ToolModule):
         )
         for function, endpoint, title, description in tools:
             add_read_tool(server, function, endpoint, title, description)
+        writes = (
+            (
+                self.livedns_snapshot_create,
+                livedns_endpoints.SNAPSHOT_CREATE,
+                "Take a snapshot of a zone",
+                "Save a copy of the current records of a zone, with an optional name (by "
+                "default the date and a number).",
+            ),
+            (
+                self.livedns_snapshot_rename,
+                livedns_endpoints.SNAPSHOT_RENAME,
+                "Rename a snapshot",
+                "Change the name of a snapshot; Gandi applies it shortly after.",
+            ),
+            (
+                self.livedns_snapshot_delete,
+                livedns_endpoints.SNAPSHOT_DELETE,
+                "Delete a snapshot",
+                "Delete a snapshot of a zone for good.",
+            ),
+        )
+        for write, write_endpoint, write_title, write_description in writes:
+            add_write_tool(server, write, write_endpoint, write_title, write_description)
 
     async def livedns_snapshots(
         self,
@@ -139,3 +169,55 @@ class SnapshotTools(ToolModule):
             return exported(export.file, record_count=export.record_count)
 
         return await self._accounts.guard(run)
+
+    async def livedns_snapshot_create(
+        self,
+        domain: LiveDnsDomainParameter,
+        ctx: Context[Any, Any],
+        *,
+        name: SnapshotNameParameter = None,
+        account: AccountParameter = None,
+    ) -> dict[str, Any]:
+        """Take a snapshot of a zone."""
+        return await self._runner.write(
+            ctx,
+            livedns_endpoints.SNAPSHOT_CREATE,
+            account,
+            lambda: {"domain": DomainName(domain).value},
+            body=lambda: {"name": SnapshotName(name).value} if name else {},
+        )
+
+    async def livedns_snapshot_rename(
+        self,
+        domain: LiveDnsDomainParameter,
+        snapshot_id: SnapshotIdParameter,
+        name: Annotated[str, Field(description="New name of the snapshot.", max_length=255)],
+        ctx: Context[Any, Any],
+        account: AccountParameter = None,
+    ) -> dict[str, Any]:
+        """Rename a snapshot."""
+        return await self._runner.write(
+            ctx,
+            livedns_endpoints.SNAPSHOT_RENAME,
+            account,
+            lambda: {"domain": DomainName(domain).value, "snapshot": SnapshotId(snapshot_id).value},
+            body=lambda: {"name": SnapshotName(name).value},
+        )
+
+    async def livedns_snapshot_delete(
+        self,
+        domain: LiveDnsDomainParameter,
+        snapshot_id: SnapshotIdParameter,
+        ctx: Context[Any, Any],
+        *,
+        confirmation_id: ConfirmationIdParameter = None,
+        account: AccountParameter = None,
+    ) -> dict[str, Any]:
+        """Delete a snapshot."""
+        return await self._runner.write(
+            ctx,
+            livedns_endpoints.SNAPSHOT_DELETE,
+            account,
+            lambda: {"domain": DomainName(domain).value, "snapshot": SnapshotId(snapshot_id).value},
+            confirmation_id=confirmation_id,
+        )

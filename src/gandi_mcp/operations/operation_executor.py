@@ -111,6 +111,7 @@ class OperationExecutor:
             response.total_count,
             response.filtered_count,
             completed=response.status == SEE_OTHER,
+            status=response.status,
         )
 
     async def _prepare(self, operation: Operation, environment: Environment, key: str) -> None:

@@ -40,8 +40,10 @@ from gandi_mcp.protocol.tools.endpoint_tool_runner import EndpointToolRunner
 from gandi_mcp.protocol.tools.livedns.domain_tools import LiveDnsDomainTools
 from gandi_mcp.protocol.tools.livedns.livedns_parameters import EXPORT_NOTICE
 from gandi_mcp.protocol.tools.livedns.record_read_tools import RecordReadTools
+from gandi_mcp.protocol.tools.livedns.record_write_tools import RecordWriteTools
 from gandi_mcp.protocol.tools.livedns.signing_key_tools import SigningKeyTools
 from gandi_mcp.protocol.tools.livedns.snapshot_tools import SnapshotTools
+from gandi_mcp.protocol.tools.livedns.verification_tools import VerificationTools
 from gandi_mcp.protocol.tools.livedns.zone_tools import ZoneTools
 from gandi_mcp.protocol.tools.livedns.zone_transfer_tools import ZoneTransferTools
 from gandi_mcp.protocol.untrusted_result_presenter import UNTRUSTED_NOTICE
@@ -105,6 +107,7 @@ class Setup:
     accounts: AccountService
     gandi: FakeGandiClient
     files: InMemoryWorkDirectory
+    pending: PendingConfirmations
 
 
 @pytest.fixture
@@ -134,12 +137,14 @@ def setup() -> Setup:
     modules = [
         LiveDnsDomainTools(runner),
         RecordReadTools(runner),
+        RecordWriteTools(runner),
+        VerificationTools(runner),
         ZoneTools(zone_files, tools),
         SnapshotTools(runner, zone_files, tools),
         SigningKeyTools(runner),
         ZoneTransferTools(runner, exporter, tools),
     ]
-    return Setup(create_server("1.0.0", modules), accounts, gandi, files)
+    return Setup(create_server("1.0.0", modules), accounts, gandi, files, pending)
 
 
 async def add(setup: Setup) -> None:
@@ -166,9 +171,11 @@ async def call(setup: Setup, name: str, arguments: dict[str, Any]) -> types.Call
 
 async def test_one_read_only_tool_per_read_endpoint(setup: Setup) -> None:
     async with Client(setup.server) as session:
-        tools = {tool.name: tool for tool in (await session.list_tools()).tools}
+        listed = (await session.list_tools()).tools
+    read_names = {endpoint.name for endpoint in livedns_endpoints.READ_ENDPOINTS}
+    tools = {tool.name: tool for tool in listed if tool.name in read_names}
 
-    assert set(tools) == {endpoint.name for endpoint in livedns_endpoints.READ_ENDPOINTS}
+    assert set(tools) == read_names
     assert set(tools) == set(CALLS) | FILE_TOOLS
     for tool in tools.values():
         assert tool.annotations is not None

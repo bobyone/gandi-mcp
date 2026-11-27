@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 00:54+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sv\n"
@@ -416,6 +416,20 @@ msgstr "radera glue-posten {host} för {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"ta bort signeringsnyckeln {key} för zonen för {domain}: om dess DS-post fortfarande är publicerad"
+" hos registret kan domänen sluta att slås upp"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "ta bort ögonblicksbilden {snapshot} av zonen för {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "radera webbomdirigeringen för {host}"
 
@@ -423,6 +437,11 @@ msgstr "radera webbomdirigeringen för {host}"
 #, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "inaktivera DNSSEC för {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "koppla bort TSIG-nyckeln {key} från zonen för {domain}"
 
 # needs-review
 #, python-brace-format
@@ -490,6 +509,11 @@ msgstr "återställ auktoriseringskoden för {domain}: den nuvarande koden sluta
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "återställ {domain}: {price} inkl. skatter"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "sluta tillåta {ip} att överföra zonen för {domain}"
 
 # needs-review
 #, python-brace-format

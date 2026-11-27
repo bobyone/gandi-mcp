@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 00:54+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ka\n"
@@ -414,6 +414,20 @@ msgstr "{domain}-ის glue ჩანაწერის {host} წაშლა"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"{domain}-ის ზონის ხელმოწერის გასაღების {key} წაშლა: თუ მისი DS ჩანაწერი ჯერ კიდევ გამოქვეყნებულია"
+" რეესტრში, დომენმა შეიძლება შეწყვიტოს გადაწყვეტა"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "{domain}-ის ზონის სნეპშოტის {snapshot} წაშლა"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "{host}-ის ვებ გადამისამართების წაშლა"
 
@@ -421,6 +435,11 @@ msgstr "{host}-ის ვებ გადამისამართების
 #, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "DNSSEC-ის გამორთვა {domain}-ისთვის"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "TSIG გასაღების {key} გამოყოფა {domain}-ის ზონისგან"
 
 # needs-review
 #, python-brace-format
@@ -488,6 +507,11 @@ msgstr "{domain}-ის ავტორიზაციის კოდის გ
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "{domain}-ის აღდგენა: {price} გადასახადების ჩათვლით"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "{ip}-ისთვის {domain}-ის ზონის გადაცემის ნებართვის გაუქმება"
 
 # needs-review
 #, python-brace-format

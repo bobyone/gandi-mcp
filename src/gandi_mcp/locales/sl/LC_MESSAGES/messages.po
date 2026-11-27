@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 00:54+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sl\n"
@@ -415,6 +415,20 @@ msgstr "izbris zapisa glue {host} domene {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"izbrisati podpisni ključ {key} cone {domain}: če je njegov zapis DS še objavljen pri registru, se"
+" domena morda ne bo več razreševala"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "izbrisati posnetek {snapshot} cone {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "izbris spletne preusmeritve {host}"
 
@@ -422,6 +436,11 @@ msgstr "izbris spletne preusmeritve {host}"
 #, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "izklop DNSSEC za {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "odklopiti ključ TSIG {key} od cone {domain}"
 
 # needs-review
 #, python-brace-format
@@ -493,6 +512,11 @@ msgstr "ponastavitev avtorizacijske kode {domain}: trenutna koda ne bo več delo
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "obnovitev {domain}: {price} z davki"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "ne več dovoliti {ip} prenosa cone {domain}"
 
 # needs-review
 #, python-brace-format

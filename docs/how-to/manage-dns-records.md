@@ -9,9 +9,8 @@ Look up the zones that Gandi LiveDNS serves for your domains, from the
 conversation. Try it first with a [sandbox](use-the-sandbox.md) account, if
 LiveDNS is available there for your domains.
 
-> In this version, the zone tools only read. Record changes, snapshot
-> creation and restore, and the "DNS zone" screen of the MCP App come in the
-> next sub-batches of issue #6.
+> Replacing or deleting records, importing a zone, restoring a snapshot and
+> the "DNS zone" screen of the MCP App come in the next steps of issue #6.
 
 ## From the conversation
 
@@ -34,6 +33,30 @@ example.com have". It uses the `livedns_*` tools (see the
 - **signing keys**: `livedns_signing_keys` and `livedns_signing_key` show the
   keys LiveDNS signs the zone with. The DNSSEC keys published at the registry
   are given by `domain_dnssec_keys` (see [manage your domains](manage-domains.md)).
+
+## Add records
+
+- "create an A record www pointing to 192.0.2.1": `livedns_record_create`.
+  If the record exists with the same values, nothing changes; with other
+  values, Gandi refuses it.
+- "add a TXT value to @": `livedns_record_values_add` keeps the other values.
+- Values are written as LiveDNS writes them: `10 mail.example.com.` for an MX,
+  TXT values between double quotes. gandi-mcp refuses a value with a control
+  character or a newline, a TTL outside 300 to 2592000 seconds, and an A, AAAA,
+  CNAME, NS, MX or SRV value of the wrong shape, before asking Gandi.
+- "publish the ACME challenge value ... for _acme-challenge":
+  `livedns_domain_verification` (TXT or CNAME only; the token needs the domain
+  verification permission).
+- Snapshots: `livedns_snapshot_create` (optional name), `livedns_snapshot_rename`
+  and `livedns_snapshot_delete`, which you confirm outside the conversation.
+- Signing keys: `livedns_signing_key_create`, `livedns_signing_key_restore` and
+  `livedns_signing_key_delete` (confirmed). Publish the DS record of a new key
+  at the registry with `domain_dnssec_keys_replace`, and remove it there before
+  deleting the key, or the domain may stop resolving.
+- `livedns_domain_add` creates the LiveDNS zone of a domain of your account,
+  `livedns_automatic_snapshots_update` turns its automatic snapshots on or off.
+
+A read-only account refuses every change.
 
 Record values come from Gandi and may hold anything: they are shown to the
 model as untrusted data. A value longer than the free input limit (DKIM keys,

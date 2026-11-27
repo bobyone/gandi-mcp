@@ -299,6 +299,11 @@ cannot be read or written.
 | --- | --- |
 | `RecordName` | Relative to the zone, without trailing dot: `@`, `*` as first label only, host and service labels (`_dmarc`), internationalized labels in IDNA form, lower case, at most 253 characters (`InvalidRecordError`). |
 | `RecordType` | One of the 25 types of the LiveDNS API, read whatever its case (`RecordType.parse`, `InvalidRecordError`). |
+| `Ttl` | 300 to 2592000 seconds (`InvalidRecordError`). |
+| `RecordValue` | Printable ASCII, 1 to 16384 characters, trimmed (`InvalidRecordError`). |
+| `Record` | `Record.of(name, type, values, ttl=None)`: 1 to 100 distinct values, shape checked for A, AAAA, CNAME, NS, MX and SRV (`livedns.values.value_shape.check_shape`, a strategy per type; Gandi judges the other types); `values_json()` and `to_json()` give the Gandi body. |
+| `SnapshotName` | 1 to 255 characters, no control character (`InvalidLiveDnsInputError`). |
+| `SigningKeyFlag` | 256 (ZSK) or 257 (KSK) (`InvalidLiveDnsInputError`). |
 | `SnapshotId`, `SigningKeyId`, `TsigKeyId` | Gandi identifiers: 1 to 64 letters, digits, `-` or `_` (`InvalidLiveDnsInputError`). |
 | `TsigSoftware` | `bind`, `knot`, `nsd` or `powerdns` (`InvalidLiveDnsInputError`). |
 
@@ -658,11 +663,16 @@ with validated values), `category`, accepted `query` parameters,
 `follow_up`, `completes_with_see_other`, `secret_field` and `secret_label` (a
 body field filled with a secret typed with the confirmation; such an endpoint
 is always `confirmed`), and `accept` (media type of the answer: `JSON`, or
-`TEXT` for zone files). Each API has its catalogue; `operations/domain/domain_endpoints.py` lists the Domain API ones: `READ_ENDPOINTS`
+`TEXT` for zone files), and `unchanged_status`, the status by which Gandi says
+that nothing changed (`200` for a creation that already exists with the same
+values): the tool then answers `{"status": "unchanged"}`. Each API has its catalogue; `operations/domain/domain_endpoints.py` lists the Domain API ones: `READ_ENDPOINTS`
 (22) and `WRITE_ENDPOINTS` (35: 18 writes and 17 destructive operations; orders are
 `BillableOperation` classes). `operations/livedns/livedns_endpoints.py` lists
 the LiveDNS ones: `READ_ENDPOINTS` (19, of which `livedns_zone_export` and
-`livedns_snapshot_export` ask for text). Gandi documents
+`livedns_snapshot_export` ask for text) and `WRITE_ENDPOINTS` (16: 12 writes
+and 4 destructive operations that change no record; the record creation
+through the zone and the name paths is covered by `livedns_record_create`, on
+the name and type path, ADR 13). Gandi documents
 `livedns_public_nameservers` (`/livedns/nameservers/{fqdn}`) as a route without
 authentication, but it answers 401 without a token: it is an ordinary read.
 `livedns_tsig_config` is run by `operations/livedns/tsig_configuration.TsigConfiguration`,
@@ -707,10 +717,13 @@ conversation and never to invent a confirmation identifier.
 | `tools.endpoint_tool_runner.EndpointToolRunner.read_operation` | `read_operation(ctx, operation, account)`: the same read for an operation built by a function and made of several calls (`TsigConfiguration`). |
 | `tools.livedns.domain_tools.LiveDnsDomainTools` | `livedns_record_types`, `livedns_domains` (page, `organization_id` sent as `sharing_id`), `livedns_domain`, `livedns_nameservers`, `livedns_public_nameservers` (nameservers LiveDNS would give any name). |
 | `tools.livedns.record_read_tools.RecordReadTools` | `livedns_records` (`record_type` filter, `sort_by` by name or type, `-` to reverse, page), `livedns_name_records`, `livedns_record`. Names are `RecordName` values, types `RecordType` values (`InvalidRecordError`). |
+| `tools.livedns.domain_tools.LiveDnsDomainTools` (writes) | `livedns_domain_add` (optional first records, `organization_id`), `livedns_automatic_snapshots_update`. |
+| `tools.livedns.record_write_tools.RecordWriteTools` | `livedns_record_create` (`unchanged` when it exists with the same values; Gandi refuses other values), `livedns_record_values_add` (adds values, keeps the others). |
+| `tools.livedns.verification_tools.VerificationTools` | `livedns_domain_verification` (TXT or CNAME validation value). |
 | `tools.livedns.zone_tools.ZoneTools` | `livedns_zone_export(domain, file, overwrite=False)`: writes the zone file through `ZoneFileService`; returns `{"status": "done", "notice", "file", "size_bytes", "record_count"}`, never the content nor the full path. |
-| `tools.livedns.snapshot_tools.SnapshotTools` | `livedns_snapshots` (`automatic` filter, `sort_by` by date, newest first by default, page), `livedns_snapshot`, `livedns_snapshot_export` (same result as the zone export). |
-| `tools.livedns.signing_key_tools.SigningKeyTools` | `livedns_signing_keys`, `livedns_signing_key`. |
-| `tools.livedns.zone_transfer_tools.ZoneTransferTools` | `livedns_secondary_servers`, `livedns_tsig_keys`, `livedns_tsig_key`, `livedns_domain_tsig_keys`, `livedns_tsig_config(key_id, software, file=None, overwrite=False)`: without `file`, the sample with its secret hidden; with `file`, the full sample written to a private file of the work directory (`TextFileExporter`), only the file being described. |
+| `tools.livedns.snapshot_tools.SnapshotTools` | `livedns_snapshots` (`automatic` filter, `sort_by` by date, newest first by default, page), `livedns_snapshot`, `livedns_snapshot_export` (same result as the zone export), `livedns_snapshot_create` (optional name), `livedns_snapshot_rename`, `livedns_snapshot_delete` (confirmed). |
+| `tools.livedns.signing_key_tools.SigningKeyTools` | `livedns_signing_keys`, `livedns_signing_key`, `livedns_signing_key_create` (flags 256 or 257), `livedns_signing_key_restore`, `livedns_signing_key_delete` (confirmed; warns about a DS still published at the registry). |
+| `tools.livedns.zone_transfer_tools.ZoneTransferTools` | `livedns_secondary_servers`, `livedns_tsig_keys`, `livedns_tsig_key`, `livedns_domain_tsig_keys`, `livedns_tsig_config(key_id, software, file=None, overwrite=False)`: without `file`, the sample with its secret hidden; with `file`, the full sample written to a private file of the work directory (`TextFileExporter`), only the file being described. Writes: `livedns_secondary_server_add`, `livedns_secondary_server_remove` (confirmed), `livedns_tsig_key_create` (its secret is never returned), `livedns_domain_tsig_key_add`, `livedns_domain_tsig_key_remove` (confirmed). |
 | `tools.endpoint_tool_runner.EndpointToolRunner.write` | Shared by the write tools: builds the `EndpointOperation` (path values and body as functions, validation errors explained), runs it through the `OperationExecutor` with an optional `confirmation_id`, and returns the pending confirmation or `status: done` with the minimized result and the follow-up tool. `add_write_tool` annotates a tool `destructiveHint` for confirmed categories. |
 | `tools.domains.domain_settings_tools.DomainSettingsTools` | `domain_autorenew_update`, `domain_transfer_lock`, `domain_reachability_resend`, `domain_claims_accept`; `domain_transfer_unlock`, `domain_authorization_code_reset`, `domain_delete` (confirmed). |
 | `tools.domains.contact_tools.ContactTools` | `domain_contacts_update`, `domain_owner_update` (confirmed, dry run, email unchanged), `domain_owner_email_update` (its confirmation states the ICANN designated-agent authorization before any request is sent to Gandi with `icann_contract_accept`), `domain_owner_change` (confirmed without an amount, dry run), `domain_owner_change_resend`. |

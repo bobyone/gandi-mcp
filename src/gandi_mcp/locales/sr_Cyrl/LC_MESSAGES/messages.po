@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 00:54+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sr_Cyrl\n"
@@ -419,6 +419,20 @@ msgstr "избрисати glue запис {host} домена {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"избрисати кључ за потписивање {key} зоне {domain}: ако је његов DS запис још објављен код "
+"регистра, домен можда више неће бити разрешен"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "избрисати снимак {snapshot} зоне {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "избрисати веб преусмеравање за {host}"
 
@@ -426,6 +440,11 @@ msgstr "избрисати веб преусмеравање за {host}"
 #, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "искључити DNSSEC за {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "одвојити TSIG кључ {key} од зоне {domain}"
 
 # needs-review
 #, python-brace-format
@@ -495,6 +514,11 @@ msgstr "поништити ауторизациони код домена {domai
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "вратити {domain}: {price} са порезима"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "више не дозволити {ip} пренос зоне {domain}"
 
 # needs-review
 #, python-brace-format

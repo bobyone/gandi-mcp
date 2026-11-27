@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 00:54+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: et\n"
@@ -414,6 +414,20 @@ msgstr "kustuta domeeni {domain} glue-kirje {host}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"kustutada tsooni {domain} allkirjavõti {key}: kui selle DS-kirje on registris endiselt avaldatud,"
+" võib domeeni lahendamine lakata"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "kustutada tsooni {domain} hetktõmmis {snapshot}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "kustuta hosti {host} veebisuunamine"
 
@@ -421,6 +435,11 @@ msgstr "kustuta hosti {host} veebisuunamine"
 #, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "lülita domeeni {domain} DNSSEC välja"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "eemaldada TSIG-võti {key} tsooni {domain} küljest"
 
 # needs-review
 #, python-brace-format
@@ -488,6 +507,11 @@ msgstr "lähtesta domeeni {domain} autoriseerimiskood: praegune kood lakkab tö�
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "taasta {domain}: {price} koos maksudega"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "mitte enam lubada aadressil {ip} tsooni {domain} edastada"
 
 # needs-review
 #, python-brace-format

@@ -33,6 +33,8 @@ class Endpoint:
         completes_with_see_other: Gandi documents a ``303 See Other`` once the
             followed operation is complete (registration status).
         accept: Media type of the answer: JSON, or text (zone files).
+        unchanged_status: Status by which Gandi says that nothing changed (``200``
+            for a creation that already exists with the same values), if any.
     """
 
     name: str
@@ -47,6 +49,7 @@ class Endpoint:
     secret_field: str | None = None
     secret_label: Message | None = None
     accept: MediaType = MediaType.JSON
+    unchanged_status: int | None = None
 
     def __post_init__(self) -> None:
         if self.method not in METHODS:

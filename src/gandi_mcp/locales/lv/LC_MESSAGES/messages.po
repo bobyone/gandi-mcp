@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 00:54+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lv\n"
@@ -417,6 +417,20 @@ msgstr "dzēst {domain} glue ierakstu {host}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"dzēst zonas {domain} parakstīšanas atslēgu {key}: ja tās DS ieraksts joprojām ir publicēts "
+"reģistrā, domēns var pārstāt tikt atrisināts"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "dzēst zonas {domain} momentuzņēmumu {snapshot}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "dzēst {host} tīmekļa novirzīšanu"
 
@@ -424,6 +438,11 @@ msgstr "dzēst {host} tīmekļa novirzīšanu"
 #, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "atspējot DNSSEC domēnam {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "atsaistīt TSIG atslēgu {key} no zonas {domain}"
 
 # needs-review
 #, python-brace-format
@@ -493,6 +512,11 @@ msgstr "atiestatīt {domain} autorizācijas kodu: pašreizējais kods vairs neda
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "atjaunot {domain}: {price} ar nodokļiem"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "vairs neļaut {ip} pārsūtīt zonu {domain}"
 
 # needs-review
 #, python-brace-format

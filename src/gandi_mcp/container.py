@@ -51,8 +51,10 @@ from gandi_mcp.protocol.tools.domains.transfer_write_tools import TransferWriteT
 from gandi_mcp.protocol.tools.endpoint_tool_runner import EndpointToolRunner
 from gandi_mcp.protocol.tools.livedns.domain_tools import LiveDnsDomainTools
 from gandi_mcp.protocol.tools.livedns.record_read_tools import RecordReadTools
+from gandi_mcp.protocol.tools.livedns.record_write_tools import RecordWriteTools
 from gandi_mcp.protocol.tools.livedns.signing_key_tools import SigningKeyTools
 from gandi_mcp.protocol.tools.livedns.snapshot_tools import SnapshotTools
+from gandi_mcp.protocol.tools.livedns.verification_tools import VerificationTools
 from gandi_mcp.protocol.tools.livedns.zone_tools import ZoneTools
 from gandi_mcp.protocol.tools.livedns.zone_transfer_tools import ZoneTransferTools
 from gandi_mcp.protocol.tools.organization_tools import OrganizationTools
@@ -190,6 +192,8 @@ class ApplicationContainer(containers.DeclarativeContainer):
         providers.Singleton(TransferWriteTools, endpoint_tool_runner),
         providers.Singleton(LiveDnsDomainTools, endpoint_tool_runner),
         providers.Singleton(RecordReadTools, endpoint_tool_runner),
+        providers.Singleton(RecordWriteTools, endpoint_tool_runner),
+        providers.Singleton(VerificationTools, endpoint_tool_runner),
         providers.Singleton(ZoneTools, zone_file_service, accounts_tools),
         providers.Singleton(SnapshotTools, endpoint_tool_runner, zone_file_service, accounts_tools),
         providers.Singleton(SigningKeyTools, endpoint_tool_runner),

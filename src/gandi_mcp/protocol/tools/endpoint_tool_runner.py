@@ -36,6 +36,7 @@ CONFIRMED_RULES = (
     "confirmation_pending, call again with the same arguments and the returned "
     "confirmation_id once the user answered."
 )
+UNCHANGED_NEXT_STEP = "It already existed with these values: nothing was changed."
 ConfirmationIdParameter = Annotated[
     str | None,
     Field(
@@ -232,6 +233,10 @@ class EndpointToolRunner:
                 return pending(outcome)
             data = filtered(self._filters, outcome.data, Disclosure())
             framed = present(outcome, data)
+            if outcome.status == endpoint.unchanged_status:
+                framed["status"] = "unchanged"
+                framed["next_step"] = UNCHANGED_NEXT_STEP
+                return framed
             framed["status"] = "done"
             if endpoint.follow_up is not None:
                 framed["next_step"] = f"Follow the operation with {endpoint.follow_up}."
