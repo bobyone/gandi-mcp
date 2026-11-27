@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Tests of the Babel translator, on temporary catalogs and on the shipped ones."""
 
+from decimal import Decimal
 from pathlib import Path
 
 import pytest
@@ -85,6 +86,17 @@ def test_formats_numbers_for_the_locale(locales: Path) -> None:
     expected = "1\N{NARROW NO-BREAK SPACE}234 comptes"
     assert translator.translate(ACCOUNTS, "fr", count=1234) == expected
     assert translator.translate(GREETING, "en", name=1234.5) == "Hello 1,234.5"
+
+
+def test_formats_money_for_the_locale(locales: Path) -> None:
+    translator = BabelTranslator(locales, "fr")
+
+    assert (
+        translator.format_money(Decimal("24.96"), "eur") == "24,96\N{NO-BREAK SPACE}\N{EURO SIGN}"
+    )
+    assert translator.format_money(Decimal("1234.5"), "USD", "en") == "$1,234.50"
+    with pytest.raises(TranslationError):
+        translator.format_money(Decimal(1), "XYZ")
 
 
 def test_untranslated_message_falls_back_to_english(locales: Path) -> None:

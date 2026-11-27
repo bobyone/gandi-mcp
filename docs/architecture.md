@@ -46,6 +46,7 @@ the `N_` and `ngettext` markers so that Babel extracts them) in a locale.
 | `default_locale` | Locale used when none is given (system language, else English). |
 | `negotiate(preferred)` | Best supported locale for tags in preference order (`fr-CA`, `sr_Latn`); English when nothing matches. |
 | `translate(message, locale=None, **params)` | Renders the message with its named parameters; numbers are formatted for the locale; a plural message needs an integer `count`. Raises `TranslationError` for a missing parameter or an invalid `count`. |
+| `format_money(amount, currency, locale=None)` | Renders a `Decimal` amount in an ISO 4217 currency for the locale (Babel `format_currency`); `TranslationError` for an unknown currency. |
 
 ### Secret store: `gandi_mcp.secrets.secret_store.SecretStore`
 
@@ -70,13 +71,13 @@ an account. It depends on a `PreferencesStore`, a `SecretStore` and a
 
 | Operation | Contract |
 | --- | --- |
-| `list()` | Accounts sorted by name, as `AccountSummary` (name, environment, read-only flag, default flag; no secret). |
+| `list()` | Accounts sorted by name, as `AccountSummary` (name, environment, read-only flag, default flag, paying organization; no secret). |
 | `resolve(name=None, *, allow_pending=False)` | The named account, else the default one. `NoAccountError`, `AccountNotFoundError`, `AccountRemovalPendingError` (only the removal flow sets `allow_pending`, to finish an interrupted removal). |
 | `add(draft, token)` | Checks the name is free (`DuplicateAccountError`), verifies the token in the chosen environment (`TokenRejectedError`), stores the token, then the account; the first account becomes the default. If saving the preferences fails, the token is removed again. Returns a `VerifiedAccount` (summary and `AccountIdentity`). |
-| `update(name, *, new_name, read_only, make_default, expected, writes_confirmed)` | Checks everything under the preferences transaction (expected account, free name, and `writes_confirmed` when allowing writes on an account read-only at that moment: `WritesNotConfirmedError` otherwise), then applies the rename, the read-only flag and the default flag in one save; a refusal changes nothing. Keeps the token; a case-only rename is saved. |
+| `update(name, *, new_name, read_only, make_default, paying_organization, expected, writes_confirmed)` | Checks everything under the preferences transaction (expected account, free name, and `writes_confirmed` when allowing writes on an account read-only at that moment: `WritesNotConfirmedError` otherwise), then applies the rename, the read-only flag, the paying organization (`Unchanged.KEEP` by default, `None` clears it) and the default flag in one save; a refusal changes nothing. Keeps the token; a case-only rename is saved. |
 | `rename`, `set_default`, `set_read_only` | Shortcuts of `update`. |
 | `replace_token(name, token)` | Verifies the token in the account environment, then replaces the old one (kept when rejected). |
-| `change_environment(name, environment, token)` | Verifies the token in the new environment; restores the previous token if saving fails. |
+| `change_environment(name, environment, token)` | Verifies the token in the new environment; restores the previous token if saving fails. The paying organization, which belongs to the old environment, is dropped. |
 | `remove(name)` | Marks the account as removal pending (durably), removes the token, then removes the account. A failure before the mark changes nothing; a secret store failure withdraws the mark, so the account stays usable; any later interruption (failure, cancellation, crash) leaves a pending removal: the account can only be removed again, which completes it (`AccountRemovalPendingError` for any other use). A removed default account is replaced by the first remaining one in alphabetical order. Returns an `AccountRemoval` (`removed`, `new_default`). |
 
 `set_read_only`, `replace_token`, `change_environment` and `remove` accept an
@@ -87,8 +88,20 @@ user saw): when the account no longer matches it, they raise
 Exceptions derive from `AccountError`: `InvalidAccountNameError`,
 `DuplicateAccountError`, `AccountNotFoundError`, `AccountChangedError`,
 `NoAccountError`,
-`ReadOnlyAccountError`, `TokenRejectedError`. Secret store, preferences and
-Gandi errors pass through.
+`ReadOnlyAccountError`, `TokenRejectedError`, `InvalidOrganizationIdError`,
+`UnknownOrganizationError`. Secret store, preferences and Gandi errors pass
+through.
+
+### Organizations: `gandi_mcp.accounts.organization_service.OrganizationService`
+
+`OrganizationService(accounts, secrets, directory)` lists the organizations an
+account can use (`organizations(name)`) and chooses its paying organization
+(`set_paying_organization(name, organization)`, `None` clears it;
+`UnknownOrganizationError` if the account cannot use it). The paying
+organization is a local preference: orders use it unless they name another
+one. `OrganizationDirectory` is the strategy listing the organizations behind a
+token (`organizations(environment, token)`); `OrganizationId` is a UUID in its
+canonical form; `Organization` holds its identifier, name and type.
 
 ### Operation: `gandi_mcp.operations.operation.Operation`
 
@@ -100,28 +113,74 @@ A command: one Gandi call on behalf of an account (ADR 4).
 | `category` | `OperationCategory`: `read`, `write`, `destructive` or `billable`; the last two are writes and need a confirmation. |
 | `parameters()` | Parameters defining what the operation does; with `name`, they form its `subject()`. The executor binds a confirmation to this subject, the account identity and its environment. |
 | `describe()` | `LocalizedText` shown when asking for a confirmation. |
-| `execute(client, environment, token)` | Calls Gandi; raises `GandiError`. |
+| `secret_input()` | `SecretInput` the user types with the confirmation, or `None` (default); an operation needing one is always confirmed (ADR 11). |
+| `check(client, environment, token)` | Gandi dry run of the operation, or `None` (default) when Gandi offers none. |
+| `execute(client, environment, token, secret=None)` | Calls Gandi, with the `SecretValue` typed by the user when one was asked; raises `GandiError`. |
 
 `OperationExecutor.run(operation, account_name, context, confirmation_id=None)`
 resolves the account, refuses a write on a read-only account
-(`ReadOnlyAccountError`), asks for a confirmation when needed, reads the token
-and calls Gandi. It returns an `UntrustedResult` (data and `total_count`), or
+(`ReadOnlyAccountError`), asks for a confirmation when needed (destructive or
+billable category, or a secret to type), reads the token and calls Gandi with
+the typed secret. Before asking a confirmation on a first call, it runs the
+operation's dry run, if any: a refusal raises `DryRunRejectedError`, and an
+answer other than `200` with `status: success` raises
+`GandiUnexpectedResponseError` (`operations.dry_run.dry_run_details`). When the
+user typed a secret, Gandi error details are dropped and every text of the
+result containing the secret is hidden (`operations.secret_echo`). Just
+before a write, the account is resolved again (`operations.write_access`):
+`ReadOnlyAccountError` if it became read-only, `AccountChangedError` if its
+identity or environment changed. The check runs again after reading the token,
+so that it is the last step before the request. After the price re-check, the
+`OrderExecutor` also refuses an order whose token was replaced since the quote
+(`AccountChangedError`): a new quote and confirmation are needed. It returns an `UntrustedResult` (data and `total_count`), or
 a pending `ConfirmationDecision` to resume with its identifier.
+
+### Billable operation: `gandi_mcp.operations.billable_operation.BillableOperation`
+
+An `Operation` of category `billable` that only runs through the
+`OrderExecutor` (ADR 7); its `execute` raises `TypeError`.
+
+| Member | Contract |
+| --- | --- |
+| `quote_request(paying_organization)` | The `QuoteRequest` to price. |
+| `order_path`, `order_body(quote)` | Path and JSON body of the `POST` order. |
+| `supports_dry_run` | Whether Gandi accepts `Dry-Run: 1` (default `False`). |
+| `follow_up` | Tool following the resulting asynchronous operation, if any. |
+| `with_secret(body, secret)` | Adds the secret typed with the confirmation (default: nothing). |
+| `order(client, environment, token, quote, *, dry_run=False, secret=None)` | Sends the order with `sharing_id` when the quote has a paying organization. |
+| `describe()` | Its message takes a `price` parameter, filled by the executor. |
+
+`OrderExecutor(accounts, secrets, client, confirmation, *, quotes, translator)`
+`.run(operation, account_name, context, confirmation_id=None,
+paying_organization=None)` applies algorithm G (ADR 7) and returns an
+`UntrustedResult` or a pending `ConfirmationDecision`. It binds the confirmation
+to the token used for the quote with HMAC-SHA-256 and a random key kept in memory
+for the executor's lifetime. The confirmation subject contains only the
+fingerprint of the token. If a resumed call uses a different token, it raises
+`ConfirmationMismatchError` even if the price is the same. The user must start
+the order again for a new quote and confirmation. Errors: `OrderError` >
+`DryRunRejectedError` (also a `GandiValidationError`, with the untrusted
+details of the dry run), `PriceChangedError`; quote, confirmation, account,
+secret store and Gandi errors pass through.
 
 ### Confirmation channel: `gandi_mcp.confirmation.confirmation_channel.ConfirmationChannel`
 
 | Operation | Contract |
 | --- | --- |
+| `collects_secrets` | Whether the user can type a secret on this channel, outside the model; `False` by default. |
 | `available(context)` | Whether the channel can reach the user during this call (`ConfirmationContext`: user interaction, locale). |
 | `confirm(request, context)` | Returns an accepted or pending `ConfirmationDecision`; raises `ConfirmationRefusedError` or `ConfirmationUnavailableError`. |
 
-`ConfirmationService` tries its channels in order. Given a confirmation
-identifier, it resumes the pending confirmation instead (`PendingConfirmations`:
-accepted once, for the same subject, before its deadline, which also applies
-once it is accepted).
+`ConfirmationService` tries its channels in order, skipping those that do not
+collect secrets when the request has a `secret_input` (ADR 11). Given a
+confirmation identifier, it resumes the pending confirmation instead
+(`PendingConfirmations`: accepted once, for the same subject, before its
+deadline, which also applies once it is accepted); the accepted decision
+carries the typed `SecretValue`, if any.
 Exceptions derive from `ConfirmationError`: `ConfirmationRefusedError`,
 `ConfirmationExpiredError`, `ConfirmationUnavailableError`,
-`ConfirmationMismatchError`.
+`ConfirmationMismatchError`, `SecretInputMissingError` (an acceptance without
+the secret asked for).
 
 `ConfirmationPage` is the port of the local page where a pending confirmation is
 answered: `open_confirmation(pending, locale)` returns its URL, which is never
@@ -185,7 +244,7 @@ Sends authenticated requests to the Gandi API v5 of an environment.
 
 | Operation | Contract |
 | --- | --- |
-| `request(environment, token, method, path, *, query=None, body=None)` | `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
+| `request(environment, token, method, path, *, query=None, body=None, accept_see_other=False, dry_run=False)` | `dry_run` sends `Dry-Run: 1` (Gandi only checks the request). `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
 | `close()` | Releases network resources. |
 
 Errors: `GandiAuthenticationError` (401), `GandiPermissionError` (403),
@@ -327,16 +386,27 @@ Calls `GET organization/user-info`. HTTP 401 and 403 mean the token is
 rejected. Only `username` (required) and `name` are kept, trimmed to 200
 characters; the email and the other fields are ignored.
 
+### Organization directory: `gandi_mcp.accounts.gandi.gandi_organization_directory.GandiOrganizationDirectory`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `client` | `GandiClient` | none | yes | Client used to call Gandi. |
+
+Calls `GET organization/organizations?per_page=500`. Only `id` (a UUID, else
+the entry is skipped), `name` and `type` (whitespace collapsed, at most 100
+characters) are kept; contact fields are never read.
+
 ### Confirmation channels: `gandi_mcp.confirmation.channels`
 
 | Channel | Available when | Behavior |
 | --- | --- | --- |
 | `ElicitationChannel(translator)` | the client supports form elicitation | Asks "Confirm on the production/sandbox account {account}: {action}" in the user's language; anything but an acceptance raises `ConfirmationRefusedError`. |
-| `LocalLinkChannel(pending, page, presenter, translator)` | always (last resort) | Registers a pending confirmation, shows its page through `LinkPresenter`; returns it as pending, or raises `ConfirmationUnavailableError` (and forgets it) when the page cannot be shown. |
+| `LocalLinkChannel(pending, page, presenter, translator)` | always (last resort); collects secrets | Registers a pending confirmation, shows its page through `LinkPresenter`; returns it as pending, or raises `ConfirmationUnavailableError` (and forgets it) when the page cannot be shown. |
 
-`PendingConfirmations(timeout_seconds, clock)` keeps at most 100 pending
+`PendingConfirmations(timeout_seconds, clock, scheduler)` keeps at most 100 pending
 confirmations in memory (`confirmation.timeout_seconds`), with random
-identifiers (128 bits).
+identifiers (128 bits). A confirmation holding a typed secret is dropped at its deadline by the
+`scheduler` (the running event loop by default), even if nobody uses it.
 
 ### Browser: `gandi_mcp.interaction.system.system_browser.SystemBrowser`
 
@@ -387,9 +457,62 @@ Behavior and limits:
 | `TldName` | One label, leading dot removed. |
 | `HostLabel` | A host relative to a domain (`ns1`, `ns1.sub`) or `@` for the domain itself. |
 | `PageRequest` | `page` from 1 to 1000, `per_page` from 1 to 100. |
+| `RegistrationDuration` | 1 to 10 years; each extension may allow fewer. |
+| `Money` | A finite non-negative `Decimal` amount and a three-letter currency code (upper case). |
+| `IpAddress` | IPv4 or IPv6, compressed form. |
+| `DnssecKeySpec` | Algorithm 0 to 255, type `none`, `zsk` or `ksk`, strict base64 public key of at most 4096 characters; `DnssecKeyId` is 1 to 64 letters, digits, `-` or `_`. |
+| `TagName` | 1 to 100 characters, whitespace collapsed, no control character. |
+| `RedirectionUrl` | `http` or `https` URL of at most 2048 characters whose host is a domain name. |
+| `EmailAddress` | An address of at most 254 characters. |
 
 Invalid values raise `InvalidDomainNameError` or `InvalidDomainInputError`
 (both `DomainError`).
+
+### Secrets typed by the user: `gandi_mcp.secrets.secret_value.SecretValue`
+
+| Parameter | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `value` | string | none | yes | The secret, 1 to `max_length` characters, no control character. |
+| `max_length` | integer | `1024` | no | Longest accepted value. |
+
+Raises `InvalidSecretValueError`. `reveal()` returns the value; `repr` and `str`
+are masked and the object cannot be serialized. `SecretInput(label,
+max_length=1024)` (`gandi_mcp.confirmation.secret_input`) describes the field
+asked with a confirmation. On the local confirmation page, the field is required
+to confirm, not to refuse; an empty or invalid value shows the page again (422)
+without writing the value back (ADR 11).
+
+### Domain contacts: `gandi_mcp.domains.contacts.domain_contact.DomainContact`
+
+A contact given by the user: `type` (`individual`, `company`, `association`,
+`publicbody`), `given`, `family`, `email`, `streetaddr`, `city`, `zip`,
+`country` (two letters), optional `phone` (`+33.123456789`), `orgname`
+(required unless `individual`) and `state`; `data_obfuscated` and
+`mail_obfuscated` default to `True` (hidden in the WHOIS). Text fields are
+trimmed, NFC-normalized, at most 280 characters, without control characters;
+`InvalidContactError` otherwise. `repr` only shows the type and country.
+`DomainContacts(owner, admin=None, tech=None, bill=None)` groups them by role.
+
+### Quotes: `gandi_mcp.domains.quotes`
+
+`QuoteRequest(name, process, duration, paying_organization=None)` asks the
+price of a `DomainProcess` (`create`, `renew`, `transfer`, `restore`);
+`Quote(request, price, price_before_taxes, premium, discount)` gives the total
+for the whole duration. `QuoteProvider.quote(environment, token, request)` is
+the strategy; it raises `NotAvailableError` (a domain to register is taken,
+reserved or forbidden; carries the Gandi `status`), `NoPriceForDurationError`,
+`QuoteUnavailableError` (no price yet, pending status: try again later), all
+`QuoteError` (a `DomainError`).
+
+`GandiQuoteProvider(client)` calls `GET domain/check?name=…&processes=…`
+(with `sharing_id`, the paying organization, when given). It takes the product
+of the requested `process` (or the only product without one), checks the
+availability status for `create` only (Gandi says to ignore it for the other
+processes), finds the price band (`min_duration`..`max_duration`, in years)
+containing the duration, and multiplies its yearly prices by the duration.
+Several matching bands with different prices (registration phases) raise
+`AmbiguousPriceError` instead of guessing.
+Prices are read as `Decimal` from their textual form.
 
 ### Contact minimization: `gandi_mcp.domains.contacts.contact_redactor.ContactRedactor`
 
@@ -426,13 +549,18 @@ Frames Gandi data for the model as `{"notice", "untrusted_data"}`, plus
 the tool name), `method`, `path` (segments, `{placeholder}` segments filled
 with validated values), `category`, accepted `query` parameters,
 `description` (required for confirmed categories), `supports_dry_run`,
-`follow_up` and `completes_with_see_other`. `domain_endpoints.py` lists them.
+`follow_up`, `completes_with_see_other`, `secret_field` and `secret_label` (a
+body field filled with a secret typed with the confirmation; such an endpoint
+is always `confirmed`). `domain_endpoints.py` lists them: `READ_ENDPOINTS`
+(22) and `WRITE_ENDPOINTS` (32: writes and destructive operations; orders are
+`BillableOperation` classes).
 
 `EndpointOperation(endpoint, path_values, query=None, body=None,
 description_params=None)` runs a specification: it raises
 `InvalidDomainInputError` when a placeholder has no value, a value is empty or
 contains `/`, or a query parameter is not accepted; `None` query values are
-dropped.
+dropped. Its `check()` sends the request with `Dry-Run: 1` when the endpoint
+supports it, and `execute()` adds the typed secret to the body.
 
 ### Server factory: `gandi_mcp.protocol.server_factory.create_server`
 
@@ -457,7 +585,17 @@ conversation and never to invent a confirmation identifier.
 | `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`, `sort_by` by name, expiry or creation date, `-` to reverse), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status` (`completed` once registered), `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
+| `tools.domains.domain_tool_runner.DomainToolRunner.write` | Shared by the write tools: builds the `EndpointOperation` (path values and body as functions, validation errors explained), runs it through the `OperationExecutor` with an optional `confirmation_id`, and returns the pending confirmation or `status: done` with the minimized result and the follow-up tool. `add_write_tool` annotates a tool `destructiveHint` for confirmed categories. |
+| `tools.domains.domain_settings_tools.DomainSettingsTools` | `domain_autorenew_update`, `domain_transfer_lock`, `domain_reachability_resend`, `domain_claims_accept`; `domain_transfer_unlock`, `domain_authorization_code_reset`, `domain_delete` (confirmed). |
+| `tools.domains.contact_tools.ContactTools` | `domain_contacts_update`, `domain_owner_update` (confirmed, dry run, email unchanged), `domain_owner_email_update` (its confirmation states the ICANN designated-agent authorization before any request is sent to Gandi with `icann_contract_accept`), `domain_owner_change` (confirmed without an amount, dry run), `domain_owner_change_resend`. |
+| `tools.domains.nameserver_write_tools.NameserverWriteTools` | `domain_nameservers_update`, `domain_livedns_enable`, `domain_dnssec_disable`, `domain_dnssec_keys_replace`, `domain_dnssec_key_delete`, `domain_glue_record_delete` (confirmed); `domain_dnssec_enable`, `domain_dnssec_key_add`, `domain_glue_record_create`, `domain_glue_record_update`. |
+| `tools.domains.redirection_write_tools.RedirectionWriteTools` | `domain_web_redirection_create` (fails if the host has a DNS record), `domain_web_redirection_replace` (confirmed: replaces that record; the confirmation shows the host and the target), `domain_web_redirection_update`, `domain_web_redirection_delete` (confirmed). |
+| `tools.domains.tag_tools.TagTools` | `domain_tag_add`, `domain_tags_update`; `domain_tags_replace`, `domain_tags_delete` (confirmed). |
+| `tools.domains.transfer_write_tools.TransferWriteTools` | `domain_transfer_out_accept` (confirmed), `domain_transfer_out_decline` (both with the domain's authorization code typed on the confirmation page), `domain_transfer_in_relaunch`, `domain_transfer_in_code_update` (code typed on the confirmation page; optional `organization_id` sent as `sharing_id`), `domain_transfer_in_resend`. |
+| `tools.domains.domain_order_runner.DomainOrderRunner` | Shared by the order tools: builds the `BillableOperation` (validation errors explained), runs the `OrderExecutor`, returns the pending confirmation or `status: ordered` with the untrusted, minimized result and the follow-up tool. |
+| `tools.domains.order_tools.OrderTools` | `domain_register` (duration, owner and optional admin, tech, bill contacts), `domain_renew`, `domain_restore`, `domain_transfer_in` (the authorization code is typed on the confirmation page); all take `paying_organization`, `confirmation_id` and `account`. |
 | `tools.domains.transfer_tools.TransferTools` | `domain_owner_change_status`, `domain_transfer_in_status`, `domain_transfer_in_check` (sends no authorization code). |
+| `tools.organization_tools.OrganizationTools` | `list_organizations` (read-only; identifier, name and type, framed as untrusted data) and `set_paying_organization` (local preference, allowed on a read-only account; omitting `organization_id` clears it). |
 | `McpUserInteraction` | `UserInteraction` over MCP elicitation for one call. From protocol revision 2026-07-28 (no request from the server during a call), elicitation is treated as unavailable, so confirmations use the local page (ADR 4). |
 | `ErrorPresenter` | Maps each business exception (including `InvalidDomainNameError` and `InvalidDomainInputError`) to a translated explanation with its remedy (system language); Gandi details are appended and marked as untrusted, a detail longer than `content.max_free_input` being replaced by a notice of its length; unknown exceptions are logged and shown as a generic error. |
 

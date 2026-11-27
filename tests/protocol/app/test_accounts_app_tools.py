@@ -189,6 +189,7 @@ async def test_add_list_and_manage_accounts_from_the_app(setup: Setup) -> None:
             "read_only": False,
             "is_default": True,
             "removal_pending": False,
+            "paying_organization": None,
         },
         "username": "ada",
     }

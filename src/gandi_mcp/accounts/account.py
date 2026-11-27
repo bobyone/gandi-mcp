@@ -7,6 +7,7 @@ from dataclasses import dataclass, replace
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_reference import AccountReference
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.accounts.organization_id import OrganizationId
 
 
 @dataclass(frozen=True)
@@ -21,6 +22,8 @@ class Account:
             when the account is renamed.
         removal_pending: Whether a removal started and did not finish; the account
             can then only be removed again, which completes the removal.
+        paying_organization: Organization paying the orders by default, if chosen;
+            it belongs to the environment of the account.
     """
 
     name: AccountName
@@ -28,6 +31,7 @@ class Account:
     read_only: bool
     secret_key: str
     removal_pending: bool = False
+    paying_organization: OrganizationId | None = None
 
     @property
     def reference(self) -> AccountReference:

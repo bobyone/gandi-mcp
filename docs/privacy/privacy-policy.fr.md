@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Politique de confidentialité (projet)
 
 > Projet à faire valider par un professionnel du droit ; ne constitue pas un
-> conseil juridique. Version 0.2 du 26 novembre 2026. **Cette version
+> conseil juridique. Version 0.3 du 26 novembre 2026. **Cette version
 > française fait foi** ; les autres langues en sont des traductions. Elle sera
 > accessible depuis l'interface de la MCP App.
 >
@@ -33,6 +33,17 @@ responsable des données que vous traitez avec lui.
 - **L'identité Gandi associée à un jeton** (nom d'utilisateur et nom complet) :
   lue auprès de Gandi lorsque vous enregistrez un jeton, affichée pour vous,
   jamais conservée.
+- **Les coordonnées des contacts que vous donnez** pour enregistrer,
+  transférer ou modifier un domaine (nom, adresse, e-mail, téléphone) : vous
+  les donnez dans la conversation, donc au modèle d'IA, et le logiciel les
+  envoie à Gandi. Dans les réponses de Gandi, les coordonnées des contacts ne
+  sont montrées au modèle que si vous les demandez.
+- **Les codes d'autorisation de transfert** : vous les saisissez sur une page
+  temporaire de votre ordinateur, jamais dans la conversation ; ils restent en
+  mémoire jusqu'à l'opération et ne sont envoyés qu'à Gandi.
+- **Vos commandes** (enregistrement, renouvellement, restauration, transfert
+  de domaines) : leur prix vous est montré et vous les confirmez hors du
+  modèle ; elles sont payées par l'organisation Gandi que vous choisissez.
 - **Vos données Gandi** (domaines et leurs contacts, enregistrements DNS,
   boîtes mail, certificats, hébergements, factures) : lues auprès de Gandi
   lorsqu'un outil en a besoin, conservées en mémoire uniquement, jamais

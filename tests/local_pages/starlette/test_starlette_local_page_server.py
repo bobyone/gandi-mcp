@@ -16,6 +16,7 @@ from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.confirmation.confirmation_request import ConfirmationRequest
 from gandi_mcp.confirmation.pending_confirmation import PendingConfirmation
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
+from gandi_mcp.confirmation.secret_input import SecretInput
 from gandi_mcp.gandi.exceptions import GandiUnavailableError
 from gandi_mcp.i18n.babel.babel_translator import BabelTranslator, default_locales_directory
 from gandi_mcp.i18n.localized_text import LocalizedText
@@ -25,6 +26,7 @@ from gandi_mcp.local_pages.starlette.starlette_local_page_server import (
 )
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
+from gandi_mcp.secrets.secret_value import SecretValue
 from gandi_mcp.token_entry.token_entry_session import TokenEntrySession
 from gandi_mcp.token_entry.token_entry_sessions import TokenEntrySessions
 from gandi_mcp.token_entry.token_entry_target import TokenEntryTarget, TokenPurpose
@@ -64,13 +66,16 @@ class Pages:
         session = self.sessions.open(target)
         return await self.server.open_token_entry(session, locale)
 
-    async def confirmation_page(self) -> tuple[PendingConfirmation, str]:
+    async def confirmation_page(
+        self, secret_input: SecretInput | None = None
+    ) -> tuple[PendingConfirmation, str]:
         request = ConfirmationRequest(
             "domain.delete:example.com",
             OperationCategory.DESTRUCTIVE,
             LocalizedText(Message("delete {domain}"), {"domain": "<b>example.com</b>"}),
             AccountName("Pro"),
             Environment.PRODUCTION,
+            secret_input,
         )
         pending = self.pending.create(request)
         return pending, await self.server.open_confirmation(pending, "en")
@@ -379,3 +384,49 @@ async def test_account_moved_while_the_replacement_page_is_open(pages: Pages) ->
     assert "moved to another environment" in response.text
     assert len(pages.verifier.calls) == calls
     assert pages.secrets.tokens[account.secret_key] == production
+
+
+SECRET = SecretInput(Message("Authorization code"), 64)
+
+
+async def test_confirmation_page_asks_for_the_secret(pages: Pages) -> None:
+    _pending, url = await pages.confirmation_page(SECRET)
+
+    response = await pages.http.get(url)
+
+    assert response.status_code == 200
+    assert '<label for="secret">' in response.text
+    assert 'type="password" id="secret" name="secret" required maxlength="64"' in response.text
+    assert 'value="refuse" formnovalidate' in response.text
+
+
+async def test_confirming_without_the_secret_shows_the_page_again(pages: Pages) -> None:
+    pending, url = await pages.confirmation_page(SECRET)
+    code = code_of(url)
+
+    empty = await pages.http.post(url, data={"code": code, "decision": "confirm", "secret": ""})
+    too_long = await pages.http.post(
+        url, data={"code": code, "decision": "confirm", "secret": "x" * 65}
+    )
+    accepted = await pages.http.post(
+        url, data={"code": code, "decision": "confirm", "secret": "Auth-123"}
+    )
+
+    assert empty.status_code == too_long.status_code == 422
+    assert 'role="alert"' in empty.text
+    assert "x" * 65 not in too_long.text
+    assert accepted.status_code == 200
+    assert "Auth-123" not in accepted.text
+    used = pages.pending.consume(pending.confirmation_id, pending.request.subject)
+    assert used is not None
+    assert used.secret == SecretValue("Auth-123")
+
+
+async def test_refusing_needs_no_secret(pages: Pages) -> None:
+    pending, url = await pages.confirmation_page(SECRET)
+
+    response = await pages.http.post(url, data={"code": code_of(url), "decision": "refuse"})
+
+    assert response.status_code == 200
+    with pytest.raises(Exception, match="refused"):
+        pages.pending.consume(pending.confirmation_id, pending.request.subject)

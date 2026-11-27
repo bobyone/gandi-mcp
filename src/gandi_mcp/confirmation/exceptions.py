@@ -21,3 +21,7 @@ class ConfirmationUnavailableError(ConfirmationError):
 
 class ConfirmationMismatchError(ConfirmationError):
     """The confirmation identifier is unknown, used, or for another operation."""
+
+
+class SecretInputMissingError(ConfirmationError):
+    """A confirmation asking for a secret was accepted without a valid secret."""

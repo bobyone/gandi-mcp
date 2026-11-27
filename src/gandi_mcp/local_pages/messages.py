@@ -40,5 +40,9 @@ CONFIRMED = N_(
     "Operation confirmed. Go back to the conversation and ask the assistant to continue."
 )
 REFUSED = N_("Operation refused. Nothing was changed.")
+SECRET_REQUIRED = N_(
+    "Enter the value asked for (at most {max_length} characters, no control character) "
+    "to confirm, or refuse the operation."
+)
 PAGE_EXPIRED = N_("This page has expired or was already used. Nothing was changed.")
 REQUEST_REFUSED = N_("This request was refused. Nothing was changed.")

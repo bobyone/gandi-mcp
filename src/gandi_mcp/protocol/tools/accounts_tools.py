@@ -69,6 +69,9 @@ def summary(account: AccountSummary) -> dict[str, Any]:
         "read_only": account.read_only,
         "is_default": account.is_default,
         "removal_pending": account.removal_pending,
+        "paying_organization": (
+            str(account.paying_organization) if account.paying_organization else None
+        ),
     }
 
 

@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Privacy policy (draft)
 
 > Draft to be validated by a legal professional; not legal advice. Version
-> 0.2, 2026-11-26. **The [French version](privacy-policy.fr.md) is
+> 0.3, 2026-11-26. **The [French version](privacy-policy.fr.md) is
 > authoritative**; this English text and the other languages are
 > translations. It will be made accessible from the MCP App UI.
 >
@@ -31,6 +31,16 @@ organization) remain responsible for the data you process with it.
   your accounts.
 - **The Gandi identity behind a token** (user name and full name): read from
   Gandi when you save a token, displayed to you, never stored.
+- **The contact details you give** to register, transfer or change a domain
+  (name, address, email, phone): you give them in the conversation, so to the
+  AI model, and the software sends them to Gandi. In Gandi's answers, contact
+  details are only shown to the model if you ask for them.
+- **Transfer authorization codes**: you type them on a temporary page of your
+  own computer, never in the conversation; they stay in memory until the
+  operation and are only sent to Gandi.
+- **Your orders** (domain registration, renewal, restore, transfer): their
+  price is shown to you and you confirm them outside the model; they are paid
+  by the Gandi organization you choose.
 - **Your Gandi data** (domains and their contacts, DNS records, mailboxes,
   certificates, hosting, invoices): fetched from Gandi when a tool needs it,
   kept in memory only, never written to disk by the software.

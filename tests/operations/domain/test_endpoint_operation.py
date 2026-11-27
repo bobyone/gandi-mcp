@@ -12,6 +12,7 @@ from gandi_mcp.operations.domain.domain_endpoint import DomainEndpoint
 from gandi_mcp.operations.domain.endpoint_operation import EndpointOperation
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
+from gandi_mcp.secrets.secret_value import SecretValue
 from tests.doubles.fake_gandi_client import FakeGandiClient
 
 pytestmark = pytest.mark.anyio
@@ -108,3 +109,46 @@ async def test_every_read_endpoint_calls_its_path(endpoint: DomainEndpoint) -> N
     assert all(not segment.startswith("{") for segment in call.path)
     for name, value in values.items():
         assert value in call.path, name
+
+
+def test_secret_fields_need_their_label() -> None:
+    with pytest.raises(ValueError, match="secret"):
+        DomainEndpoint(
+            "x", "PUT", ("a",), OperationCategory.WRITE, description=Message("m"), secret_field="s"
+        )
+    with pytest.raises(ValueError, match="description"):
+        DomainEndpoint(
+            "x", "PUT", ("a",), OperationCategory.WRITE, secret_field="s", secret_label=Message("l")
+        )
+
+
+def test_all_endpoint_names_are_unique() -> None:
+    endpoints = (*domain_endpoints.READ_ENDPOINTS, *domain_endpoints.WRITE_ENDPOINTS)
+    names = [endpoint.name for endpoint in endpoints]
+
+    assert len(names) == len(set(names)) == 57
+    assert all(e.category is not OperationCategory.READ for e in domain_endpoints.WRITE_ENDPOINTS)
+
+
+async def test_dry_run_and_secret_of_an_endpoint() -> None:
+    client = FakeGandiClient()
+    plain = EndpointOperation(
+        domain_endpoints.TAG_ADD, {"domain": "example.com"}, body={"tag": "a"}
+    )
+    checked = EndpointOperation(
+        domain_endpoints.OWNER_CHANGE, {"domain": "example.com"}, body={"owner": {}}
+    )
+    code = EndpointOperation(domain_endpoints.TRANSFER_IN_CODE_UPDATE, {"domain": "example.com"})
+
+    assert await plain.check(client, Environment.SANDBOX, TOKEN) is None
+    await checked.check(client, Environment.SANDBOX, TOKEN)
+    await code.execute(client, Environment.SANDBOX, TOKEN, SecretValue("Auth-123"))
+    await code.execute(client, Environment.SANDBOX, TOKEN)
+
+    assert client.calls[0].dry_run
+    assert client.calls[0].body == {"owner": {}}
+    assert client.calls[1].body == {"authinfo": "Auth-123"}
+    assert client.calls[2].body is None
+    assert plain.secret_input() is None
+    assert code.secret_input() is not None
+    assert "Auth-123" not in code.subject()

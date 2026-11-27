@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 20:20+0100\n"
+"POT-Creation-Date: 2026-11-27 00:10+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hr\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A contact field is missing or badly formed: correct the contact."
+msgstr "Polje kontakta nedostaje ili je neispravno: ispravite kontakt."
 
 # needs-review
 msgid "A value is out of its allowed range or format: correct it."
@@ -35,6 +39,14 @@ msgstr "Račun naziva {account} već postoji. Ništa nije spremljeno."
 # needs-review
 msgid "An unexpected error occurred: nothing was changed."
 msgstr "Došlo je do neočekivane pogreške: ništa nije promijenjeno."
+
+# needs-review
+msgid "Authorization code given by the current registrar"
+msgstr "Autorizacijski kod koji je dao trenutačni registrar"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "Autorizacijski kod domene (prikazan u administraciji Gandi)"
 
 # needs-review
 msgid "Confirm"
@@ -69,6 +81,15 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Unesite Personal Access Token testnog računa (sandbox) {account}."
 
 # needs-review
+#, python-brace-format
+msgid ""
+"Enter the value asked for (at most {max_length} characters, no control character) to confirm, or "
+"refuse the operation."
+msgstr ""
+"Unesite traženu vrijednost (najviše {max_length} znakova, bez kontrolnih znakova) za potvrdu ili "
+"odbijte operaciju."
+
+# needs-review
 msgid "Gandi answered in an unexpected way: try again later, or report it."
 msgstr "Gandi je odgovorio na neočekivan način: pokušajte kasnije ili to prijavite."
 
@@ -81,8 +102,24 @@ msgid "Gandi cannot be reached right now: try again later."
 msgstr "Gandi trenutačno nije dostupan: pokušajte ponovno kasnije."
 
 # needs-review
+msgid "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+msgstr "Gandi trenutačno ne može dati cijenu: ništa nije kupljeno. Pokušajte ponovno za trenutak."
+
+# needs-review
 msgid "Gandi did not find this resource."
 msgstr "Gandi nije pronašao ovaj resurs."
+
+# needs-review
+msgid "Gandi gives no price for this duration: choose another duration."
+msgstr "Gandi ne daje cijenu za ovo trajanje: odaberite drugo trajanje."
+
+# needs-review
+msgid ""
+"Gandi gives several prices for this domain right now (launch period): nothing was bought. Try "
+"again later, or order it in the Gandi administration."
+msgstr ""
+"Gandi trenutačno daje više cijena za ovu domenu (razdoblje pokretanja): ništa nije kupljeno. "
+"Pokušajte kasnije ili je naručite u administraciji Gandi."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -97,6 +134,10 @@ msgstr "Gandi je odbio token ovog računa, koji je možda nevaljan ili istekao: 
 # needs-review
 msgid "Gandi refused this operation: the token may lack the required permission or have expired."
 msgstr "Gandi je odbio ovu operaciju: tokenu možda nedostaje potrebna dozvola ili je istekao."
+
+# needs-review
+msgid "Gandi refused this order when checking it: nothing was bought."
+msgstr "Gandi je odbio ovu narudžbu pri provjeri: ništa nije kupljeno."
 
 # needs-review
 msgid ""
@@ -207,12 +248,24 @@ msgstr ""
 "zatim pokušajte ponovno."
 
 # needs-review
+msgid "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+msgstr "Cijena se promijenila od potvrde: ništa nije kupljeno. Zatražite ponovno da vidite novu cijenu."
+
+# needs-review
 msgid "The removal of this account was interrupted: remove the account again to finish it."
 msgstr "Uklanjanje ovog računa je prekinuto: ponovno uklonite račun da biste ga dovršili."
 
 # needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Token ovog računa nedostaje u privjesku ključeva: zamijenite token računa."
+
+# needs-review
+msgid "The value asked on the confirmation page is missing: nothing was changed."
+msgstr "Nedostaje vrijednost tražena na stranici potvrde: ništa nije promijenjeno."
+
+# needs-review
+msgid "This account cannot use this organization: list its organizations to choose one."
+msgstr "Ovaj račun ne može koristiti ovu organizaciju: prikažite njegove organizacije da odaberete jednu."
 
 # needs-review
 msgid "This account is read-only: write operations are refused."
@@ -245,12 +298,20 @@ msgid "This confirmation is unknown, already used or for another operation: noth
 msgstr "Ova je potvrda nepoznata, već iskorištena ili za drugu operaciju: ništa nije promijenjeno."
 
 # needs-review
+msgid "This domain is not available for registration: nothing was bought."
+msgstr "Ova domena nije dostupna za registraciju: ništa nije kupljeno."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Ovo nije valjan Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
 msgstr "Ovo nije valjan Personal Access Token: ponovno ga kopirajte iz Gandi administracije."
+
+# needs-review
+msgid "This is not an organization identifier: use one returned by the list of organizations."
+msgstr "Ovo nije identifikator organizacije: upotrijebite jedan od onih koje vraća popis organizacija."
 
 # needs-review
 msgid "This name is not a valid domain name: check its spelling, e.g. example.com."
@@ -278,8 +339,66 @@ msgstr "Vaša potvrda nije se mogla zatražiti (nema dijaloga, nema preglednika)
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "prihvatiti prijenos domene {domain} drugom registraru: napustit će Gandi"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "dopustiti operacije pisanja na računu {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "promijeniti podatke vlasnika domene {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"promijeniti podatke vlasnika domene {domain}, uključujući e-adresu: ovlašćujete Gandi da za ovu "
+"promjenu djeluje kao vaš imenovani zastupnik prema pravilima ICANN-a"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "odbiti prijenos domene {domain} drugom registraru"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "izbrisati DNSSEC ključ {id} domene {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "izbrisati domenu {domain}: bit će trajno izgubljena"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "izbrisati glue zapis {host} domene {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "izbrisati web preusmjeravanje za {host}"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "isključiti DNSSEC za {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"prenijeti domenu {domain} na novog vlasnika; Gandi to može naplatiti ovisno o nastavku, a iznos "
+"nije unaprijed poznat"
 
 # needs-review
 msgid "read the identity of the account"
@@ -287,6 +406,85 @@ msgstr "čitanje identiteta računa"
 
 # needs-review
 #, python-brace-format
+msgid "redirect {host} to {url}, replacing its current DNS record"
+msgstr "preusmjeriti {host} na {url}, zamjenjujući njegov trenutačni DNS zapis"
+
+# needs-review
+#, python-brace-format
+msgid "register {domain} for {count} year: {price} including taxes"
+msgid_plural "register {domain} for {count} years: {price} including taxes"
+msgstr[0] "registrirati {domain} na {count} godinu: {price} s porezima"
+msgstr[1] "registrirati {domain} na {count} godine: {price} s porezima"
+msgstr[2] "registrirati {domain} na {count} godina: {price} s porezima"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "ukloniti sve oznake domene {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr "ukloniti račun {account} i njegov token s ovog računala"
+
+# needs-review
+#, python-brace-format
+msgid "renew {domain} for {count} year: {price} including taxes"
+msgid_plural "renew {domain} for {count} years: {price} including taxes"
+msgstr[0] "obnoviti {domain} na {count} godinu: {price} s porezima"
+msgstr[1] "obnoviti {domain} na {count} godine: {price} s porezima"
+msgstr[2] "obnoviti {domain} na {count} godina: {price} s porezima"
+
+# needs-review
+#, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "zamijeniti sve DNSSEC ključeve domene {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "zamijeniti sve oznake domene {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "zamijeniti poslužitelje imena domene {domain}; pogrešan popis čini domenu nedostupnom"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "poništiti autorizacijski kod domene {domain}: trenutačni kod prestaje vrijediti"
+
+# needs-review
+#, python-brace-format
+msgid "restore {domain}: {price} including taxes"
+msgstr "vratiti {domain}: {price} s porezima"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "prebaciti {domain} na Gandi LiveDNS poslužitelje imena umjesto trenutačnih"
+
+# needs-review
+#, python-brace-format
+msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} including taxes"
+msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
+msgstr[0] "prenijeti {domain} u Gandi uz obnovu na {count} godinu: {price} s porezima"
+msgstr[1] "prenijeti {domain} u Gandi uz obnovu na {count} godine: {price} s porezima"
+msgstr[2] "prenijeti {domain} u Gandi uz obnovu na {count} godina: {price} s porezima"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "otključati {domain}: tada se može prenijeti drugom registraru"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "ažurirati autorizacijski kod prijenosa domene {domain} u tijeku"
+
+# needs-review
+#, python-brace-format
+msgid "{price}, paid by the organization {organization}"
+msgstr "{price}, plaća organizacija {organization}"
 

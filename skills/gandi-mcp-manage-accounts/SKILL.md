@@ -32,6 +32,11 @@ or their browser) where they type it.
    same name and the returned `confirmation_id`. Never invent an identifier.
    An account listed with `removal_pending: true` had its removal interrupted:
    remove it again to finish.
-6. If a tool fails, relay its message: it says what happened and how to fix
+6. Choose the organization paying the orders of an account: call
+   `list_organizations`, then `set_paying_organization` with the chosen
+   `organization_id` (omit it to clear the choice). It only changes a
+   preference on this computer; moving the account to another environment
+   clears it.
+7. If a tool fails, relay its message: it says what happened and how to fix
    it. For keyring or browser problems, use the `gandi-mcp-troubleshoot`
    skill.

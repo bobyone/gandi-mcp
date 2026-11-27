@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 20:20+0100\n"
+"POT-Creation-Date: 2026-11-27 00:10+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A contact field is missing or badly formed: correct the contact."
+msgstr "Ένα πεδίο της επαφής λείπει ή είναι λανθασμένο: διορθώστε την επαφή."
 
 # needs-review
 msgid "A value is out of its allowed range or format: correct it."
@@ -34,6 +38,14 @@ msgstr "Υπάρχει ήδη λογαριασμός με το όνομα {accou
 # needs-review
 msgid "An unexpected error occurred: nothing was changed."
 msgstr "Παρουσιάστηκε απρόσμενο σφάλμα: δεν άλλαξε τίποτα."
+
+# needs-review
+msgid "Authorization code given by the current registrar"
+msgstr "Κωδικός εξουσιοδότησης από τον τρέχοντα καταχωρητή"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "Κωδικός εξουσιοδότησης του τομέα (εμφανίζεται στη διαχείριση της Gandi)"
 
 # needs-review
 msgid "Confirm"
@@ -68,6 +80,15 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Εισαγάγετε το Personal Access Token του δοκιμαστικού λογαριασμού (sandbox) {account}."
 
 # needs-review
+#, python-brace-format
+msgid ""
+"Enter the value asked for (at most {max_length} characters, no control character) to confirm, or "
+"refuse the operation."
+msgstr ""
+"Εισαγάγετε την τιμή που ζητείται (το πολύ {max_length} χαρακτήρες, χωρίς χαρακτήρες ελέγχου) για "
+"επιβεβαίωση ή απορρίψτε τη λειτουργία."
+
+# needs-review
 msgid "Gandi answered in an unexpected way: try again later, or report it."
 msgstr "Η Gandi απάντησε με απρόσμενο τρόπο: δοκιμάστε ξανά αργότερα ή αναφέρετέ το."
 
@@ -80,8 +101,24 @@ msgid "Gandi cannot be reached right now: try again later."
 msgstr "Η Gandi δεν είναι προσβάσιμη αυτή τη στιγμή: δοκιμάστε ξανά αργότερα."
 
 # needs-review
+msgid "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+msgstr "Η Gandi δεν μπόρεσε να δώσει τιμή αυτή τη στιγμή: δεν αγοράστηκε τίποτα. Δοκιμάστε ξανά σε λίγο."
+
+# needs-review
 msgid "Gandi did not find this resource."
 msgstr "Η Gandi δεν βρήκε αυτόν τον πόρο."
+
+# needs-review
+msgid "Gandi gives no price for this duration: choose another duration."
+msgstr "Η Gandi δεν δίνει τιμή για αυτή τη διάρκεια: επιλέξτε άλλη διάρκεια."
+
+# needs-review
+msgid ""
+"Gandi gives several prices for this domain right now (launch period): nothing was bought. Try "
+"again later, or order it in the Gandi administration."
+msgstr ""
+"Η Gandi δίνει αυτή τη στιγμή πολλές τιμές για αυτόν τον τομέα (περίοδος έναρξης): δεν αγοράστηκε "
+"τίποτα. Δοκιμάστε αργότερα ή παραγγείλτε τον από τη διαχείριση της Gandi."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -98,6 +135,10 @@ msgstr ""
 # needs-review
 msgid "Gandi refused this operation: the token may lack the required permission or have expired."
 msgstr "Η Gandi απέρριψε αυτή τη λειτουργία: το token ίσως δεν έχει την απαιτούμενη άδεια ή έχει λήξει."
+
+# needs-review
+msgid "Gandi refused this order when checking it: nothing was bought."
+msgstr "Η Gandi απέρριψε αυτή την παραγγελία κατά τον έλεγχο: δεν αγοράστηκε τίποτα."
 
 # needs-review
 msgid ""
@@ -212,12 +253,26 @@ msgstr ""
 "αρχείο προτιμήσεων και δοκιμάστε ξανά."
 
 # needs-review
+msgid "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+msgstr "Η τιμή άλλαξε μετά την επιβεβαίωση: δεν αγοράστηκε τίποτα. Ζητήστε ξανά για να δείτε τη νέα τιμή."
+
+# needs-review
 msgid "The removal of this account was interrupted: remove the account again to finish it."
 msgstr "Η αφαίρεση αυτού του λογαριασμού διακόπηκε: αφαιρέστε ξανά τον λογαριασμό για να ολοκληρωθεί."
 
 # needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Το token αυτού του λογαριασμού λείπει από την κλειδοθήκη: αντικαταστήστε το token του λογαριασμού."
+
+# needs-review
+msgid "The value asked on the confirmation page is missing: nothing was changed."
+msgstr "Λείπει η τιμή που ζητήθηκε στη σελίδα επιβεβαίωσης: δεν άλλαξε τίποτα."
+
+# needs-review
+msgid "This account cannot use this organization: list its organizations to choose one."
+msgstr ""
+"Αυτός ο λογαριασμός δεν μπορεί να χρησιμοποιήσει αυτόν τον οργανισμό: εμφανίστε τους οργανισμούς "
+"του για να επιλέξετε έναν."
 
 # needs-review
 msgid "This account is read-only: write operations are refused."
@@ -252,12 +307,22 @@ msgstr ""
 "τίποτα."
 
 # needs-review
+msgid "This domain is not available for registration: nothing was bought."
+msgstr "Αυτός ο τομέας δεν είναι διαθέσιμος για καταχώριση: δεν αγοράστηκε τίποτα."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Αυτό δεν είναι έγκυρο Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
 msgstr "Αυτό δεν είναι έγκυρο Personal Access Token: αντιγράψτε το ξανά από τη διαχείριση της Gandi."
+
+# needs-review
+msgid "This is not an organization identifier: use one returned by the list of organizations."
+msgstr ""
+"Αυτό δεν είναι αναγνωριστικό οργανισμού: χρησιμοποιήστε ένα από αυτά που επιστρέφει η λίστα "
+"οργανισμών."
 
 # needs-review
 msgid "This name is not a valid domain name: check its spelling, e.g. example.com."
@@ -287,8 +352,67 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "αποδοχή της μεταφοράς του {domain} σε άλλο καταχωρητή: θα φύγει από την Gandi"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "να επιτραπούν λειτουργίες εγγραφής στον λογαριασμό {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "αλλαγή των στοιχείων του κατόχου του {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"αλλαγή των στοιχείων του κατόχου του {domain}, μαζί με τη διεύθυνση email: εξουσιοδοτείτε την "
+"Gandi να ενεργήσει ως ο ορισμένος αντιπρόσωπός σας κατά τους κανόνες της ICANN για αυτή την "
+"αλλαγή"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "απόρριψη της μεταφοράς του {domain} σε άλλο καταχωρητή"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "διαγραφή του κλειδιού DNSSEC {id} του {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "διαγραφή του τομέα {domain}: θα χαθεί οριστικά"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "διαγραφή της εγγραφής glue {host} του {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "διαγραφή της ανακατεύθυνσης ιστού του {host}"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "απενεργοποίηση DNSSEC για το {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"παράδοση του τομέα {domain} σε νέο κάτοχο· η Gandi μπορεί να τη χρεώσει ανάλογα με την κατάληξη "
+"και το ποσό δεν είναι γνωστό εκ των προτέρων"
 
 # needs-review
 msgid "read the identity of the account"
@@ -296,6 +420,82 @@ msgstr "ανάγνωση της ταυτότητας του λογαριασμο
 
 # needs-review
 #, python-brace-format
+msgid "redirect {host} to {url}, replacing its current DNS record"
+msgstr "ανακατεύθυνση του {host} στο {url}, αντικαθιστώντας την τρέχουσα εγγραφή DNS του"
+
+# needs-review
+#, python-brace-format
+msgid "register {domain} for {count} year: {price} including taxes"
+msgid_plural "register {domain} for {count} years: {price} including taxes"
+msgstr[0] "καταχώριση του {domain} για {count} έτος: {price} με φόρους"
+msgstr[1] "καταχώριση του {domain} για {count} έτη: {price} με φόρους"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "αφαίρεση όλων των ετικετών του {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr "αφαίρεση του λογαριασμού {account} και του token του από αυτόν τον υπολογιστή"
+
+# needs-review
+#, python-brace-format
+msgid "renew {domain} for {count} year: {price} including taxes"
+msgid_plural "renew {domain} for {count} years: {price} including taxes"
+msgstr[0] "ανανέωση του {domain} για {count} έτος: {price} με φόρους"
+msgstr[1] "ανανέωση του {domain} για {count} έτη: {price} με φόρους"
+
+# needs-review
+#, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "αντικατάσταση όλων των κλειδιών DNSSEC του {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "αντικατάσταση όλων των ετικετών του {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "αντικατάσταση των διακομιστών ονομάτων του {domain}· μια λάθος λίστα κάνει τον τομέα μη προσβάσιμο"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "επαναφορά του κωδικού εξουσιοδότησης του {domain}: ο τρέχων κωδικός παύει να ισχύει"
+
+# needs-review
+#, python-brace-format
+msgid "restore {domain}: {price} including taxes"
+msgstr "επαναφορά του {domain}: {price} με φόρους"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "μετάβαση του {domain} στους διακομιστές ονομάτων Gandi LiveDNS, αντικαθιστώντας τους τρέχοντες"
+
+# needs-review
+#, python-brace-format
+msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} including taxes"
+msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
+msgstr[0] "μεταφορά του {domain} στην Gandi, με ανανέωση {count} έτους: {price} με φόρους"
+msgstr[1] "μεταφορά του {domain} στην Gandi, με ανανέωση {count} ετών: {price} με φόρους"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "ξεκλείδωμα του {domain}: στη συνέχεια μπορεί να μεταφερθεί σε άλλο καταχωρητή"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "ενημέρωση του κωδικού εξουσιοδότησης της εκκρεμούς μεταφοράς του {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "{price}, paid by the organization {organization}"
+msgstr "{price}, πληρώνει ο οργανισμός {organization}"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 20:20+0100\n"
+"POT-Creation-Date: 2026-11-27 00:10+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ka\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A contact field is missing or badly formed: correct the contact."
+msgstr "კონტაქტის ველი აკლია ან არასწორია: შეასწორეთ კონტაქტი."
 
 # needs-review
 msgid "A value is out of its allowed range or format: correct it."
@@ -34,6 +38,14 @@ msgstr "ანგარიში სახელით {account} უკვე �
 # needs-review
 msgid "An unexpected error occurred: nothing was changed."
 msgstr "მოულოდნელი შეცდომა მოხდა: არაფერი შეცვლილა."
+
+# needs-review
+msgid "Authorization code given by the current registrar"
+msgstr "ამჟამინდელი რეგისტრატორის მიერ მოცემული ავტორიზაციის კოდი"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "დომენის ავტორიზაციის კოდი (ნაჩვენებია Gandi-ის ადმინისტრირებაში)"
 
 # needs-review
 msgid "Confirm"
@@ -68,6 +80,15 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "შეიყვანეთ სატესტო ანგარიშის (sandbox) {account} Personal Access Token."
 
 # needs-review
+#, python-brace-format
+msgid ""
+"Enter the value asked for (at most {max_length} characters, no control character) to confirm, or "
+"refuse the operation."
+msgstr ""
+"დასადასტურებლად შეიყვანეთ მოთხოვნილი მნიშვნელობა (მაქსიმუმ {max_length} სიმბოლო, მართვის "
+"სიმბოლოების გარეშე) ან უარყავით ოპერაცია."
+
+# needs-review
 msgid "Gandi answered in an unexpected way: try again later, or report it."
 msgstr "Gandi-მ მოულოდნელად უპასუხა: სცადეთ მოგვიანებით ან შეგვატყობინეთ."
 
@@ -80,8 +101,24 @@ msgid "Gandi cannot be reached right now: try again later."
 msgstr "Gandi ამჟამად მიუწვდომელია: სცადეთ მოგვიანებით."
 
 # needs-review
+msgid "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+msgstr "Gandi-მ ახლა ფასის მოცემა ვერ შეძლო: არაფერი შეძენილა. ცადეთ ცოტა ხანში."
+
+# needs-review
 msgid "Gandi did not find this resource."
 msgstr "Gandi-მ ეს რესურსი ვერ იპოვა."
+
+# needs-review
+msgid "Gandi gives no price for this duration: choose another duration."
+msgstr "Gandi ამ ვადისთვის ფასს არ იძლევა: აირჩიეთ სხვა ვადა."
+
+# needs-review
+msgid ""
+"Gandi gives several prices for this domain right now (launch period): nothing was bought. Try "
+"again later, or order it in the Gandi administration."
+msgstr ""
+"Gandi ამჟამად ამ დომენისთვის რამდენიმე ფასს იძლევა (გაშვების პერიოდი): არაფერი შეძენილა. ცადეთ "
+"მოგვიანებით ან შეუკვეთეთ Gandi-ის ადმინისტრირებაში."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -98,6 +135,10 @@ msgstr ""
 # needs-review
 msgid "Gandi refused this operation: the token may lack the required permission or have expired."
 msgstr "Gandi-მ ეს ოპერაცია უარყო: ტოკენს შეიძლება აკლდეს საჭირო ნებართვა ან ვადა გაუვიდა."
+
+# needs-review
+msgid "Gandi refused this order when checking it: nothing was bought."
+msgstr "Gandi-მ შემოწმებისას ეს შეკვეთა უარყო: არაფერი შეძენილა."
 
 # needs-review
 msgid ""
@@ -206,12 +247,24 @@ msgstr ""
 "სცადეთ ხელახლა."
 
 # needs-review
+msgid "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+msgstr "ფასი დადასტურების შემდეგ შეიცვალა: არაფერი შეძენილა. ახალი ფასის სანახავად ისევ მოითხოვეთ."
+
+# needs-review
 msgid "The removal of this account was interrupted: remove the account again to finish it."
 msgstr "ამ ანგარიშის წაშლა შეწყდა: დასასრულებლად კვლავ წაშალეთ ანგარიში."
 
 # needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "ამ ანგარიშის ტოკენი გასაღებების საცავში არ არის: შეცვალეთ ანგარიშის ტოკენი."
+
+# needs-review
+msgid "The value asked on the confirmation page is missing: nothing was changed."
+msgstr "დადასტურების გვერდზე მოთხოვნილი მნიშვნელობა აკლია: არაფერი შეცვლილა."
+
+# needs-review
+msgid "This account cannot use this organization: list its organizations to choose one."
+msgstr "ამ ანგარიშს არ შეუძლია ამ ორგანიზაციის გამოყენება: ჩამოთვალეთ მისი ორგანიზაციები ერთის ასარჩევად."
 
 # needs-review
 msgid "This account is read-only: write operations are refused."
@@ -242,12 +295,20 @@ msgid "This confirmation is unknown, already used or for another operation: noth
 msgstr "ეს დადასტურება უცნობია, უკვე გამოყენებულია ან სხვა ოპერაციისთვისაა: არაფერი შეცვლილა."
 
 # needs-review
+msgid "This domain is not available for registration: nothing was bought."
+msgstr "ეს დომენი რეგისტრაციისთვის ხელმისაწვდომი არ არის: არაფერი შეძენილა."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "ეს არ არის სწორი Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
 msgstr "ეს არ არის სწორი Personal Access Token: ხელახლა დააკოპირეთ Gandi-ის ადმინისტრირებიდან."
+
+# needs-review
+msgid "This is not an organization identifier: use one returned by the list of organizations."
+msgstr "ეს არ არის ორგანიზაციის იდენტიფიკატორი: გამოიყენეთ ორგანიზაციების სიის მიერ დაბრუნებული ერთ-ერთი."
 
 # needs-review
 msgid "This name is not a valid domain name: check its spelling, e.g. example.com."
@@ -275,8 +336,66 @@ msgstr "თქვენი დადასტურების მოთხო�
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "{domain}-ის სხვა რეგისტრატორთან გადატანის მიღება: ის დატოვებს Gandi-ს"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "ჩაწერის ოპერაციების დაშვება ანგარიშზე {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "{domain}-ის მფლობელის მონაცემების შეცვლა"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"{domain}-ის მფლობელის მონაცემების შეცვლა, ელფოსტის მისამართის ჩათვლით: ამ ცვლილებისთვის Gandi-ს "
+"აძლევთ უფლებას, იმოქმედოს როგორც თქვენმა დანიშნულმა აგენტმა ICANN-ის წესების მიხედვით"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "{domain}-ის სხვა რეგისტრატორთან გადატანის უარყოფა"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "{domain}-ის DNSSEC გასაღების {id} წაშლა"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "დომენის {domain} წაშლა: ის სამუდამოდ დაიკარგება"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "{domain}-ის glue ჩანაწერის {host} წაშლა"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "{host}-ის ვებ გადამისამართების წაშლა"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "DNSSEC-ის გამორთვა {domain}-ისთვის"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"დომენის {domain} ახალი მფლობელისთვის გადაცემა; Gandi-მ შეიძლება ამისთვის გადასახადი დააწესოს "
+"გაფართოების მიხედვით და თანხა წინასწარ უცნობია"
 
 # needs-review
 msgid "read the identity of the account"
@@ -284,6 +403,82 @@ msgstr "ანგარიშის იდენტობის წაკით�
 
 # needs-review
 #, python-brace-format
+msgid "redirect {host} to {url}, replacing its current DNS record"
+msgstr "{host}-ის გადამისამართება {url}-ზე, მისი მიმდინარე DNS ჩანაწერის ჩანაცვლებით"
+
+# needs-review
+#, python-brace-format
+msgid "register {domain} for {count} year: {price} including taxes"
+msgid_plural "register {domain} for {count} years: {price} including taxes"
+msgstr[0] "{domain}-ის რეგისტრაცია {count} წლით: {price} გადასახადების ჩათვლით"
+msgstr[1] "{domain}-ის რეგისტრაცია {count} წლით: {price} გადასახადების ჩათვლით"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "{domain}-ის ყველა ტეგის მოხსნა"
+
+# needs-review
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr "ანგარიშის {account} და მისი ტოკენის წაშლა ამ კომპიუტერიდან"
+
+# needs-review
+#, python-brace-format
+msgid "renew {domain} for {count} year: {price} including taxes"
+msgid_plural "renew {domain} for {count} years: {price} including taxes"
+msgstr[0] "{domain}-ის განახლება {count} წლით: {price} გადასახადების ჩათვლით"
+msgstr[1] "{domain}-ის განახლება {count} წლით: {price} გადასახადების ჩათვლით"
+
+# needs-review
+#, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "{domain}-ის ყველა DNSSEC გასაღების ჩანაცვლება"
+
+# needs-review
+#, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "{domain}-ის ყველა ტეგის ჩანაცვლება"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "{domain}-ის სახელების სერვერების ჩანაცვლება; არასწორი სია დომენს მიუწვდომელს ხდის"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "{domain}-ის ავტორიზაციის კოდის გადაყენება: მიმდინარე კოდი აღარ იმუშავებს"
+
+# needs-review
+#, python-brace-format
+msgid "restore {domain}: {price} including taxes"
+msgstr "{domain}-ის აღდგენა: {price} გადასახადების ჩათვლით"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "{domain}-ის გადაყვანა Gandi LiveDNS სახელების სერვერებზე მიმდინარეების ნაცვლად"
+
+# needs-review
+#, python-brace-format
+msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} including taxes"
+msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
+msgstr[0] "{domain}-ის გადატანა Gandi-ში {count} წლიანი განახლებით: {price} გადასახადების ჩათვლით"
+msgstr[1] "{domain}-ის გადატანა Gandi-ში {count} წლიანი განახლებით: {price} გადასახადების ჩათვლით"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "{domain}-ის განბლოკვა: შემდეგ მისი სხვა რეგისტრატორთან გადატანა შესაძლებელი იქნება"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "{domain}-ის მიმდინარე გადატანის ავტორიზაციის კოდის განახლება"
+
+# needs-review
+#, python-brace-format
+msgid "{price}, paid by the organization {organization}"
+msgstr "{price}, იხდის ორგანიზაცია {organization}"
 

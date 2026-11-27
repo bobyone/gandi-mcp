@@ -2,8 +2,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Registry of the confirmations answered on local pages, kept in memory."""
 
+import asyncio
 import secrets
 import time
+import weakref
 from collections.abc import Callable
 from dataclasses import replace
 
@@ -12,10 +14,23 @@ from gandi_mcp.confirmation.exceptions import (
     ConfirmationExpiredError,
     ConfirmationMismatchError,
     ConfirmationRefusedError,
+    SecretInputMissingError,
 )
 from gandi_mcp.confirmation.pending_confirmation import PendingConfirmation, PendingState
+from gandi_mcp.secrets.secret_value import SecretValue
 
 MAX_PENDING = 100
+
+type Scheduler = Callable[[float, Callable[[], None]], None]
+
+
+def loop_scheduler(delay: float, callback: Callable[[], None]) -> None:
+    """Call ``callback`` after ``delay`` seconds on the running event loop, if any."""
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        return
+    loop.call_later(delay, callback)
 
 
 class PendingConfirmations:
@@ -24,13 +39,21 @@ class PendingConfirmations:
     The user answers on the local page (:meth:`answer`); the operation then gives the
     identifier back (:meth:`consume`), which succeeds once, for the same subject, before
     the deadline: an accepted confirmation not used in time expires too. Nothing
-    survives a restart of the server.
+    survives a restart of the server. A confirmation holding a typed secret is
+    dropped at its deadline even if nobody asks for it again (ADR 11).
     """
 
-    def __init__(self, timeout_seconds: float, clock: Callable[[], float] = time.monotonic) -> None:
-        """Keep confirmations for ``timeout_seconds``, measured with ``clock``."""
+    def __init__(
+        self,
+        timeout_seconds: float,
+        clock: Callable[[], float] = time.monotonic,
+        scheduler: Scheduler = loop_scheduler,
+    ) -> None:
+        """Keep confirmations for ``timeout_seconds``, measured with ``clock``;
+        ``scheduler`` runs the removal of secrets at their deadline."""
         self._timeout = timeout_seconds
         self._clock = clock
+        self._scheduler = scheduler
         self._items: dict[str, PendingConfirmation] = {}
 
     def create(self, request: ConfirmationRequest) -> PendingConfirmation:
@@ -57,20 +80,39 @@ class PendingConfirmations:
             raise ConfirmationMismatchError("this confirmation was already answered")
         return pending
 
-    def answer(self, confirmation_id: str, accepted: bool) -> PendingConfirmation:
+    def answer(
+        self, confirmation_id: str, accepted: bool, secret: SecretValue | None = None
+    ) -> PendingConfirmation:
         """Record the user's answer, given on the local page.
+
+        The secret is kept only with an acceptance of a request asking for one, until
+        the confirmation is used or expires.
 
         Raises:
             ConfirmationMismatchError, ConfirmationExpiredError: as :meth:`get`.
+            SecretInputMissingError: if an acceptance lacks the secret asked for.
         """
         pending = self.get(confirmation_id)
+        asks_secret = pending.request.secret_input is not None
+        if accepted and asks_secret and secret is None:
+            raise SecretInputMissingError("this confirmation needs a secret")
         state = PendingState.ACCEPTED if accepted else PendingState.REFUSED
-        answered = replace(pending, state=state)
+        kept = secret if accepted and asks_secret else None
+        answered = replace(pending, state=state, secret=kept)
         self._items[confirmation_id] = answered
+        if kept is not None:
+            entry = weakref.ref(answered)
+            self._scheduler(
+                max(0.0, answered.deadline - self._clock()),
+                lambda: self._expire(confirmation_id, entry),
+            )
         return answered
 
-    def consume(self, confirmation_id: str, subject: str) -> bool:
-        """Use the answer for an operation: ``True`` once accepted, ``False`` if pending.
+    def consume(self, confirmation_id: str, subject: str) -> PendingConfirmation | None:
+        """Use the answer for an operation: the accepted confirmation, ``None`` if pending.
+
+        The returned confirmation carries the typed secret, if any; it is forgotten
+        here.
 
         Raises:
             ConfirmationMismatchError: if unknown, used, or for another subject.
@@ -81,15 +123,23 @@ class PendingConfirmations:
         if pending.request.subject != subject:
             raise ConfirmationMismatchError("this confirmation is for another operation")
         if pending.state is PendingState.PENDING:
-            return False
+            return None
         del self._items[confirmation_id]
         if pending.state is PendingState.REFUSED:
             raise ConfirmationRefusedError("the user refused the operation")
-        return True
+        return pending
 
     def cancel(self, confirmation_id: str) -> None:
         """Forget a confirmation, for example when its page could not be shown."""
         self._items.pop(confirmation_id, None)
+
+    def _expire(
+        self, confirmation_id: str, entry: weakref.ReferenceType[PendingConfirmation]
+    ) -> None:
+        """Forget a confirmation holding a secret at its deadline, if still there."""
+        answered = entry()
+        if answered is not None and self._items.get(confirmation_id) is answered:
+            del self._items[confirmation_id]
 
     def _live(self, confirmation_id: str) -> PendingConfirmation:
         pending = self._items.get(confirmation_id)

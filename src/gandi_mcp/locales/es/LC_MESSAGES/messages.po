@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 20:20+0100\n"
+"POT-Creation-Date: 2026-11-27 00:10+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A contact field is missing or badly formed: correct the contact."
+msgstr "Falta un campo del contacto o es incorrecto: corrija el contacto."
 
 # needs-review
 msgid "A value is out of its allowed range or format: correct it."
@@ -34,6 +38,14 @@ msgstr "Ya existe una cuenta llamada {account}. No se ha guardado nada."
 # needs-review
 msgid "An unexpected error occurred: nothing was changed."
 msgstr "Se ha producido un error inesperado: no se ha cambiado nada."
+
+# needs-review
+msgid "Authorization code given by the current registrar"
+msgstr "Código de autorización del registrador actual"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "Código de autorización del dominio (se muestra en la administración de Gandi)"
 
 # needs-review
 msgid "Confirm"
@@ -68,6 +80,15 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Introduzca el Personal Access Token de la cuenta de pruebas (sandbox) {account}."
 
 # needs-review
+#, python-brace-format
+msgid ""
+"Enter the value asked for (at most {max_length} characters, no control character) to confirm, or "
+"refuse the operation."
+msgstr ""
+"Introduzca el valor solicitado (como máximo {max_length} caracteres, sin caracteres de control) "
+"para confirmar, o rechace la operación."
+
+# needs-review
 msgid "Gandi answered in an unexpected way: try again later, or report it."
 msgstr "Gandi ha respondido de forma inesperada: inténtelo más tarde o notifíquelo."
 
@@ -80,8 +101,24 @@ msgid "Gandi cannot be reached right now: try again later."
 msgstr "No se puede contactar con Gandi en este momento: inténtelo más tarde."
 
 # needs-review
+msgid "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+msgstr "Gandi no ha podido dar un precio ahora: no se ha comprado nada. Inténtelo de nuevo en un momento."
+
+# needs-review
 msgid "Gandi did not find this resource."
 msgstr "Gandi no ha encontrado este recurso."
+
+# needs-review
+msgid "Gandi gives no price for this duration: choose another duration."
+msgstr "Gandi no da precio para esta duración: elija otra duración."
+
+# needs-review
+msgid ""
+"Gandi gives several prices for this domain right now (launch period): nothing was bought. Try "
+"again later, or order it in the Gandi administration."
+msgstr ""
+"Gandi da ahora varios precios para este dominio (periodo de lanzamiento): no se ha comprado nada."
+" Inténtelo más tarde o pídalo en la administración de Gandi."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -100,6 +137,10 @@ msgid "Gandi refused this operation: the token may lack the required permission 
 msgstr ""
 "Gandi ha rechazado esta operación: puede que el token no tenga el permiso necesario o haya "
 "caducado."
+
+# needs-review
+msgid "Gandi refused this order when checking it: nothing was bought."
+msgstr "Gandi ha rechazado este pedido al comprobarlo: no se ha comprado nada."
 
 # needs-review
 msgid ""
@@ -208,12 +249,26 @@ msgstr ""
 "de preferencias y vuelva a intentarlo."
 
 # needs-review
+msgid "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+msgstr ""
+"El precio ha cambiado desde la confirmación: no se ha comprado nada. Vuelva a pedirlo para ver el"
+" nuevo precio."
+
+# needs-review
 msgid "The removal of this account was interrupted: remove the account again to finish it."
 msgstr "Se ha interrumpido la eliminación de esta cuenta: vuelva a eliminar la cuenta para terminarla."
 
 # needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "El token de esta cuenta no está en el llavero: sustituya el token de la cuenta."
+
+# needs-review
+msgid "The value asked on the confirmation page is missing: nothing was changed."
+msgstr "Falta el valor solicitado en la página de confirmación: no se ha cambiado nada."
+
+# needs-review
+msgid "This account cannot use this organization: list its organizations to choose one."
+msgstr "Esta cuenta no puede usar esta organización: liste sus organizaciones para elegir una."
 
 # needs-review
 msgid "This account is read-only: write operations are refused."
@@ -244,12 +299,22 @@ msgid "This confirmation is unknown, already used or for another operation: noth
 msgstr "Esta confirmación es desconocida, ya se ha usado o es para otra operación: no se ha cambiado nada."
 
 # needs-review
+msgid "This domain is not available for registration: nothing was bought."
+msgstr "Este dominio no está disponible para registrar: no se ha comprado nada."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "No es un Personal Access Token válido."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
 msgstr "No es un Personal Access Token válido: cópielo de nuevo desde la administración de Gandi."
+
+# needs-review
+msgid "This is not an organization identifier: use one returned by the list of organizations."
+msgstr ""
+"Esto no es un identificador de organización: use uno de los que devuelve la lista de "
+"organizaciones."
 
 # needs-review
 msgid "This name is not a valid domain name: check its spelling, e.g. example.com."
@@ -279,8 +344,66 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "aceptar la transferencia de {domain} a otro registrador: saldrá de Gandi"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "permitir operaciones de escritura en la cuenta {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "cambiar los datos del titular de {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"cambiar los datos del titular de {domain}, incluida la dirección de correo: autoriza a Gandi a "
+"actuar como su agente designado según las normas de la ICANN para este cambio"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "rechazar la transferencia de {domain} a otro registrador"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "eliminar la clave DNSSEC {id} de {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "eliminar el dominio {domain}: se perderá para siempre"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "eliminar el registro glue {host} de {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "eliminar la redirección web de {host}"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "desactivar DNSSEC para {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"ceder el dominio {domain} a un nuevo titular; Gandi puede cobrarlo según la extensión y el "
+"importe no se conoce de antemano"
 
 # needs-review
 msgid "read the identity of the account"
@@ -288,6 +411,85 @@ msgstr "leer la identidad de la cuenta"
 
 # needs-review
 #, python-brace-format
+msgid "redirect {host} to {url}, replacing its current DNS record"
+msgstr "redirigir {host} a {url}, sustituyendo su registro DNS actual"
+
+# needs-review
+#, python-brace-format
+msgid "register {domain} for {count} year: {price} including taxes"
+msgid_plural "register {domain} for {count} years: {price} including taxes"
+msgstr[0] "registrar {domain} por {count} año: {price} con impuestos"
+msgstr[1] "registrar {domain} por {count} años: {price} con impuestos"
+msgstr[2] "registrar {domain} por {count} años: {price} con impuestos"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "quitar todas las etiquetas de {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr "eliminar la cuenta {account} y su token de este ordenador"
+
+# needs-review
+#, python-brace-format
+msgid "renew {domain} for {count} year: {price} including taxes"
+msgid_plural "renew {domain} for {count} years: {price} including taxes"
+msgstr[0] "renovar {domain} por {count} año: {price} con impuestos"
+msgstr[1] "renovar {domain} por {count} años: {price} con impuestos"
+msgstr[2] "renovar {domain} por {count} años: {price} con impuestos"
+
+# needs-review
+#, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "sustituir todas las claves DNSSEC de {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "sustituir todas las etiquetas de {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "sustituir los servidores de nombres de {domain}; una lista errónea deja el dominio inaccesible"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "restablecer el código de autorización de {domain}: el código actual deja de funcionar"
+
+# needs-review
+#, python-brace-format
+msgid "restore {domain}: {price} including taxes"
+msgstr "restaurar {domain}: {price} con impuestos"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "pasar {domain} a los servidores de nombres de Gandi LiveDNS, en lugar de los actuales"
+
+# needs-review
+#, python-brace-format
+msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} including taxes"
+msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
+msgstr[0] "transferir {domain} a Gandi, con {count} año de renovación: {price} con impuestos"
+msgstr[1] "transferir {domain} a Gandi, con {count} años de renovación: {price} con impuestos"
+msgstr[2] "transferir {domain} a Gandi, con {count} años de renovación: {price} con impuestos"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "desbloquear {domain}: después podrá transferirse a otro registrador"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "actualizar el código de autorización de la transferencia pendiente de {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "{price}, paid by the organization {organization}"
+msgstr "{price}, pagado por la organización {organization}"
 

@@ -195,3 +195,18 @@ async def test_network_failures(failure: Exception, message: str) -> None:
 
     with pytest.raises(GandiUnavailableError, match=message):
         await client_with(handler).request(Environment.SANDBOX, TOKEN, "GET", ("x",))
+
+
+async def test_dry_run_header() -> None:
+    seen: list[httpx2.Request] = []
+
+    def handler(request: httpx2.Request) -> httpx2.Response:
+        seen.append(request)
+        return httpx2.Response(200, json={"status": "success"})
+
+    client = client_with(handler)
+    await client.request(Environment.SANDBOX, TOKEN, "POST", ("x",), body={}, dry_run=True)
+    await client.request(Environment.SANDBOX, TOKEN, "POST", ("x",), body={})
+
+    assert seen[0].headers["Dry-Run"] == "1"
+    assert "Dry-Run" not in seen[1].headers

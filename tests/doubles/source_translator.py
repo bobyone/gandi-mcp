@@ -3,6 +3,7 @@
 """Translator rendering every message in English, its source language."""
 
 from collections.abc import Iterable
+from decimal import Decimal
 
 from gandi_mcp.i18n.message import Message
 from gandi_mcp.i18n.translator import SOURCE_LOCALE, Translator
@@ -20,6 +21,10 @@ class SourceTranslator(Translator):
 
     def negotiate(self, preferred: Iterable[str]) -> str:
         return SOURCE_LOCALE
+
+    def format_money(self, amount: Decimal, currency: str, locale: str | None = None) -> str:
+        self.locales.append(locale)
+        return f"{amount} {currency}"
 
     def translate(self, message: Message, locale: str | None = None, **params: object) -> str:
         self.locales.append(locale)

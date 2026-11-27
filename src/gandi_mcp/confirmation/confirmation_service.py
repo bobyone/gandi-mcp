@@ -19,7 +19,8 @@ class ConfirmationService:
     """Ask for a confirmation through the first available channel.
 
     A call carrying a confirmation identifier resumes a confirmation answered on a
-    local page instead: it is accepted once, and only for the same subject.
+    local page instead: it is accepted once, and only for the same subject. A request
+    asking for a secret only goes to channels collecting secrets (ADR 11).
     """
 
     def __init__(
@@ -42,10 +43,14 @@ class ConfirmationService:
             ConfirmationMismatchError, ConfirmationUnavailableError.
         """
         if confirmation_id is not None:
-            if self._pending.consume(confirmation_id, request.subject):
-                return ConfirmationDecision.accept()
+            answered = self._pending.consume(confirmation_id, request.subject)
+            if answered is not None:
+                return ConfirmationDecision.accept(answered.secret)
             return ConfirmationDecision.pending(confirmation_id)
+        needs_secret = request.secret_input is not None
         for channel in self._channels:
+            if needs_secret and not channel.collects_secrets:
+                continue
             if channel.available(context):
                 decision = await channel.confirm(request, context)
                 logger.info(

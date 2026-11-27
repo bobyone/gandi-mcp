@@ -19,10 +19,12 @@ from gandi_mcp.confirmation.exceptions import (
     ConfirmationUnavailableError,
 )
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
+from gandi_mcp.confirmation.secret_input import SecretInput
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.i18n.message import Message
 from gandi_mcp.interaction.link_presenter import LinkPresenter
 from gandi_mcp.operations.operation_category import OperationCategory
+from gandi_mcp.secrets.secret_value import SecretValue
 from tests.doubles.fake_browser import FakeBrowser
 from tests.doubles.fake_confirmation_page import FakeConfirmationPage
 from tests.doubles.scripted_interaction import ScriptedInteraction
@@ -31,13 +33,16 @@ from tests.doubles.source_translator import SourceTranslator
 pytestmark = pytest.mark.anyio
 
 
-def request(environment: Environment = Environment.PRODUCTION) -> ConfirmationRequest:
+def request(
+    environment: Environment = Environment.PRODUCTION, secret_input: SecretInput | None = None
+) -> ConfirmationRequest:
     return ConfirmationRequest(
         "domain.delete:example.com",
         OperationCategory.DESTRUCTIVE,
         LocalizedText(Message("delete {domain}"), {"domain": "example.com"}),
         AccountName("Pro"),
         environment,
+        secret_input,
     )
 
 
@@ -164,3 +169,31 @@ async def test_elicitation_channel_without_interaction() -> None:
     assert not channel.available(ConfirmationContext())
     with pytest.raises(ConfirmationRefusedError):
         await channel.confirm(request(), ConfirmationContext())
+
+
+async def test_secret_requests_skip_channels_that_cannot_collect_secrets(chain: Chain) -> None:
+    interaction = ScriptedInteraction()
+    asks_secret = request(secret_input=SecretInput(Message("Authorization code")))
+
+    decision = await chain.service.confirm(asks_secret, ConfirmationContext(interaction))
+
+    assert interaction.questions == ["Open this page to confirm or refuse the operation."]
+    assert decision.confirmation_id is not None
+    assert interaction.opened == [f"http://127.0.0.1:1/confirm/{decision.confirmation_id}"]
+
+
+async def test_the_secret_typed_on_the_page_comes_back_once(chain: Chain) -> None:
+    asks_secret = request(secret_input=SecretInput(Message("Authorization code")))
+    decision = await chain.service.confirm(asks_secret, ConfirmationContext())
+    assert decision.confirmation_id is not None
+
+    chain.pending.answer(decision.confirmation_id, True, SecretValue("Auth-123"))
+    resumed = await chain.service.confirm(
+        asks_secret, ConfirmationContext(), decision.confirmation_id
+    )
+
+    assert resumed.accepted
+    assert resumed.secret == SecretValue("Auth-123")
+    assert "Auth-123" not in repr(resumed)
+    with pytest.raises(ConfirmationMismatchError):
+        await chain.service.confirm(asks_secret, ConfirmationContext(), decision.confirmation_id)

@@ -18,14 +18,20 @@ For an endpoint of the Domain API, do not write an `Operation` class
 1. Add a `DomainEndpoint` to `src/gandi_mcp/operations/domain/domain_endpoints.py`
    (name, method, path with `{placeholder}` segments, category, accepted query
    parameters; a description for confirmed categories) and to the matching
-   tuple (`READ_ENDPOINTS`).
+   tuple (`READ_ENDPOINTS` or `WRITE_ENDPOINTS`). Set `supports_dry_run` when
+   Gandi accepts `Dry-Run: 1`, and `secret_field` with `secret_label` when the
+   user must type a secret (ADR 11). Declare confirmation descriptions with `N_`
+   in `operations/domain/domain_messages.py` and translate them.
 2. Add the tool function to the domain tool module of its notion
    (`src/gandi_mcp/protocol/tools/domains/`), register it with
-   `add_read_tool`, and call `DomainToolRunner.read`. Pass path values and
+   `add_read_tool` or `add_write_tool`, and call `DomainToolRunner.read` or
+   `DomainToolRunner.write` (give confirmed tools a `confirmation_id`
+   parameter). Pass path values and
    query as functions that build the validated values (`DomainName`,
    `HostLabel`, `TldName`).
-3. Add its arguments and expected path to `CALLS` in
-   `tests/protocol/tools/domains/test_domain_tools.py`.
+3. Add its arguments and expected request to `CALLS` in
+   `tests/protocol/tools/domains/test_domain_tools.py` (reads) or
+   `test_domain_write_tools.py` (writes).
 
 The rest of this guide applies to operations that need their own class.
 

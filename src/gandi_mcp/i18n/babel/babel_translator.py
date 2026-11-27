@@ -7,13 +7,19 @@ import io
 import logging
 import tomllib
 from collections.abc import Iterable, Mapping
+from decimal import Decimal
 from pathlib import Path
 from string import Formatter
 
 from babel import Locale, UnknownLocaleError
 from babel.messages.mofile import write_mo
 from babel.messages.pofile import read_po
-from babel.numbers import format_decimal
+from babel.numbers import (
+    UnknownCurrencyError,
+    format_currency,
+    format_decimal,
+    validate_currency,
+)
 
 from gandi_mcp.i18n.exceptions import TranslationError
 from gandi_mcp.i18n.message import Message
@@ -79,6 +85,14 @@ class BabelTranslator(Translator):
                 raise TranslationError("a plural message needs an integer count parameter")
             text = translations.ngettext(message.singular, message.plural, count)
         return self._format(text, chosen, params)
+
+    def format_money(self, amount: Decimal, currency: str, locale: str | None = None) -> str:
+        chosen = self.negotiate([locale]) if locale else self._default
+        try:
+            validate_currency(currency.upper())
+            return format_currency(amount, currency.upper(), locale=chosen)
+        except UnknownCurrencyError as error:
+            raise TranslationError(f"unknown currency {currency!r}") from error
 
     def _match(self, tag: str) -> str | None:
         if not tag:

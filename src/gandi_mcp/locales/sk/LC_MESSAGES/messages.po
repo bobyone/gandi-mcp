@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-26 20:20+0100\n"
+"POT-Creation-Date: 2026-11-27 00:10+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sk\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.19.0\n"
+
+# needs-review
+msgid "A contact field is missing or badly formed: correct the contact."
+msgstr "Pole kontaktu chýba alebo je chybné: opravte kontakt."
 
 # needs-review
 msgid "A value is out of its allowed range or format: correct it."
@@ -34,6 +38,14 @@ msgstr "Účet s názvom {account} už existuje. Nič sa neuložilo."
 # needs-review
 msgid "An unexpected error occurred: nothing was changed."
 msgstr "Vyskytla sa neočakávaná chyba: nič sa nezmenilo."
+
+# needs-review
+msgid "Authorization code given by the current registrar"
+msgstr "Autorizačný kód od súčasného registrátora"
+
+# needs-review
+msgid "Authorization code of the domain (shown in the Gandi administration)"
+msgstr "Autorizačný kód domény (zobrazený v administrácii Gandi)"
 
 # needs-review
 msgid "Confirm"
@@ -68,6 +80,15 @@ msgid "Enter the Personal Access Token of the sandbox account {account}."
 msgstr "Zadajte Personal Access Token testovacieho účtu (sandbox) {account}."
 
 # needs-review
+#, python-brace-format
+msgid ""
+"Enter the value asked for (at most {max_length} characters, no control character) to confirm, or "
+"refuse the operation."
+msgstr ""
+"Zadajte požadovanú hodnotu (najviac {max_length} znakov, bez riadiacich znakov) na potvrdenie, "
+"alebo operáciu odmietnite."
+
+# needs-review
 msgid "Gandi answered in an unexpected way: try again later, or report it."
 msgstr "Gandi odpovedalo neočakávaným spôsobom: skúste to neskôr alebo to nahláste."
 
@@ -80,8 +101,24 @@ msgid "Gandi cannot be reached right now: try again later."
 msgstr "Gandi je momentálne nedostupné: skúste to neskôr."
 
 # needs-review
+msgid "Gandi could not give a price right now: nothing was bought. Try again in a moment."
+msgstr "Gandi teraz nedokázal uviesť cenu: nič nebolo zakúpené. Skúste to o chvíľu znova."
+
+# needs-review
 msgid "Gandi did not find this resource."
 msgstr "Gandi tento prostriedok nenašlo."
+
+# needs-review
+msgid "Gandi gives no price for this duration: choose another duration."
+msgstr "Gandi pre túto dobu neuvádza cenu: zvoľte inú dobu."
+
+# needs-review
+msgid ""
+"Gandi gives several prices for this domain right now (launch period): nothing was bought. Try "
+"again later, or order it in the Gandi administration."
+msgstr ""
+"Gandi teraz pre túto doménu uvádza niekoľko cien (obdobie spustenia): nič nebolo zakúpené. Skúste"
+" to neskôr alebo si ju objednajte v administrácii Gandi."
 
 # needs-review
 msgid "Gandi refused the submitted data."
@@ -96,6 +133,10 @@ msgstr "Gandi odmietlo token tohto účtu, ktorý môže byť neplatný alebo ex
 # needs-review
 msgid "Gandi refused this operation: the token may lack the required permission or have expired."
 msgstr "Gandi túto operáciu odmietlo: token možno nemá potrebné oprávnenie alebo exspiroval."
+
+# needs-review
+msgid "Gandi refused this order when checking it: nothing was bought."
+msgstr "Gandi pri kontrole túto objednávku odmietol: nič nebolo zakúpené."
 
 # needs-review
 msgid ""
@@ -204,12 +245,24 @@ msgstr ""
 " to znova."
 
 # needs-review
+msgid "The price changed since the confirmation: nothing was bought. Ask again to see the new price."
+msgstr "Cena sa od potvrdenia zmenila: nič nebolo zakúpené. Požiadajte znova a uvidíte novú cenu."
+
+# needs-review
 msgid "The removal of this account was interrupted: remove the account again to finish it."
 msgstr "Odstránenie tohto účtu bolo prerušené: odstráňte účet znova, aby sa dokončilo."
 
 # needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Token tohto účtu v kľúčenke chýba: nahraďte token účtu."
+
+# needs-review
+msgid "The value asked on the confirmation page is missing: nothing was changed."
+msgstr "Chýba hodnota požadovaná na stránke potvrdenia: nič nebolo zmenené."
+
+# needs-review
+msgid "This account cannot use this organization: list its organizations to choose one."
+msgstr "Tento účet nemôže túto organizáciu používať: vypíšte jeho organizácie a jednu vyberte."
 
 # needs-review
 msgid "This account is read-only: write operations are refused."
@@ -242,12 +295,20 @@ msgid "This confirmation is unknown, already used or for another operation: noth
 msgstr "Toto potvrdenie je neznáme, už použité alebo pre inú operáciu: nič sa nezmenilo."
 
 # needs-review
+msgid "This domain is not available for registration: nothing was bought."
+msgstr "Túto doménu nemožno zaregistrovať: nič nebolo zakúpené."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Toto nie je platný Personal Access Token."
 
 # needs-review
 msgid "This is not a valid Personal Access Token: copy it again from the Gandi administration."
 msgstr "Toto nie je platný Personal Access Token: skopírujte ho znova z administrácie Gandi."
+
+# needs-review
+msgid "This is not an organization identifier: use one returned by the list of organizations."
+msgstr "Toto nie je identifikátor organizácie: použite niektorý z identifikátorov zo zoznamu organizácií."
 
 # needs-review
 msgid "This name is not a valid domain name: check its spelling, e.g. example.com."
@@ -275,8 +336,66 @@ msgstr "O vaše potvrdenie nebolo možné požiadať (žiadny dialóg, žiadny p
 
 # needs-review
 #, python-brace-format
+msgid "accept the transfer of {domain} to another registrar: it will leave Gandi"
+msgstr "prijať prevod {domain} k inému registrátorovi: opustí Gandi"
+
+# needs-review
+#, python-brace-format
 msgid "allow write operations on the account {account}"
 msgstr "povoliť operácie zápisu v účte {account}"
+
+# needs-review
+#, python-brace-format
+msgid "change the owner details of {domain}"
+msgstr "zmeniť údaje vlastníka {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"change the owner details of {domain}, including its email address: you authorize Gandi to act as "
+"your Designated Agent under the ICANN rules for this change"
+msgstr ""
+"zmeniť údaje vlastníka {domain} vrátane e-mailovej adresy: na túto zmenu splnomocňujete Gandi "
+"konať ako váš určený zástupca podľa pravidiel ICANN"
+
+# needs-review
+#, python-brace-format
+msgid "decline the transfer of {domain} to another registrar"
+msgstr "odmietnuť prevod {domain} k inému registrátorovi"
+
+# needs-review
+#, python-brace-format
+msgid "delete the DNSSEC key {id} of {domain}"
+msgstr "odstrániť kľúč DNSSEC {id} domény {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the domain {domain}: it will be lost for good"
+msgstr "odstrániť doménu {domain}: bude nenávratne stratená"
+
+# needs-review
+#, python-brace-format
+msgid "delete the glue record {host} of {domain}"
+msgstr "odstrániť glue záznam {host} domény {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the web redirection of {host}"
+msgstr "odstrániť webové presmerovanie {host}"
+
+# needs-review
+#, python-brace-format
+msgid "disable DNSSEC for {domain}"
+msgstr "vypnúť DNSSEC pre {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"give the domain {domain} to a new owner; Gandi may charge for it depending on the extension, and "
+"the amount is not known in advance"
+msgstr ""
+"odovzdať doménu {domain} novému vlastníkovi; Gandi to môže podľa koncovky spoplatniť a suma nie "
+"je vopred známa"
 
 # needs-review
 msgid "read the identity of the account"
@@ -284,6 +403,85 @@ msgstr "načítanie identity účtu"
 
 # needs-review
 #, python-brace-format
+msgid "redirect {host} to {url}, replacing its current DNS record"
+msgstr "presmerovať {host} na {url} a nahradiť jeho súčasný záznam DNS"
+
+# needs-review
+#, python-brace-format
+msgid "register {domain} for {count} year: {price} including taxes"
+msgid_plural "register {domain} for {count} years: {price} including taxes"
+msgstr[0] "zaregistrovať {domain} na {count} rok: {price} vrátane daní"
+msgstr[1] "zaregistrovať {domain} na {count} roky: {price} vrátane daní"
+msgstr[2] "zaregistrovať {domain} na {count} rokov: {price} vrátane daní"
+
+# needs-review
+#, python-brace-format
+msgid "remove all the tags of {domain}"
+msgstr "odobrať všetky štítky domény {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "remove the account {account} and its token from this computer"
 msgstr "odstrániť účet {account} a jeho token z tohto počítača"
+
+# needs-review
+#, python-brace-format
+msgid "renew {domain} for {count} year: {price} including taxes"
+msgid_plural "renew {domain} for {count} years: {price} including taxes"
+msgstr[0] "predĺžiť {domain} o {count} rok: {price} vrátane daní"
+msgstr[1] "predĺžiť {domain} o {count} roky: {price} vrátane daní"
+msgstr[2] "predĺžiť {domain} o {count} rokov: {price} vrátane daní"
+
+# needs-review
+#, python-brace-format
+msgid "replace all the DNSSEC keys of {domain}"
+msgstr "nahradiť všetky kľúče DNSSEC domény {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace all the tags of {domain}"
+msgstr "nahradiť všetky štítky domény {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
+msgstr "nahradiť menné servery {domain}; chybný zoznam znemožní prístup k doméne"
+
+# needs-review
+#, python-brace-format
+msgid "reset the authorization code of {domain}: the current code stops working"
+msgstr "obnoviť autorizačný kód {domain}: súčasný kód prestane platiť"
+
+# needs-review
+#, python-brace-format
+msgid "restore {domain}: {price} including taxes"
+msgstr "obnoviť {domain}: {price} vrátane daní"
+
+# needs-review
+#, python-brace-format
+msgid "switch {domain} to the Gandi LiveDNS nameservers, replacing its current ones"
+msgstr "prepnúť {domain} na menné servery Gandi LiveDNS namiesto súčasných"
+
+# needs-review
+#, python-brace-format
+msgid "transfer {domain} to Gandi, with {count} year of renewal: {price} including taxes"
+msgid_plural "transfer {domain} to Gandi, with {count} years of renewal: {price} including taxes"
+msgstr[0] "previesť {domain} ku Gandi s predĺžením o {count} rok: {price} vrátane daní"
+msgstr[1] "previesť {domain} ku Gandi s predĺžením o {count} roky: {price} vrátane daní"
+msgstr[2] "previesť {domain} ku Gandi s predĺžením o {count} rokov: {price} vrátane daní"
+
+# needs-review
+#, python-brace-format
+msgid "unlock {domain}: it can then be transferred to another registrar"
+msgstr "odomknúť {domain}: potom ju bude možné previesť k inému registrátorovi"
+
+# needs-review
+#, python-brace-format
+msgid "update the authorization code of the pending transfer of {domain}"
+msgstr "aktualizovať autorizačný kód prebiehajúceho prevodu {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "{price}, paid by the organization {organization}"
+msgstr "{price}, platí organizácia {organization}"
 

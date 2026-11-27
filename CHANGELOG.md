@@ -38,6 +38,22 @@ All notable changes are documented here. The format follows
   details, email addresses, owner names and authorization codes are only sent
   to the model on request; Gandi texts longer than `content.max_free_input`
   are withheld from it. (#5)
+- Organizations: list the organizations of an account and choose the one
+  paying its orders by default. (#5)
+- Domain orders: register, renew, restore and transfer in a domain. Each order
+  is priced with Gandi, checked with a dry run when possible, confirmed by the
+  user at its price (in their language) and priced again just before buying.
+  Changing the token used for the quote requires a new confirmation.
+  The transfer authorization code is typed on the confirmation page, never in
+  the conversation. (#5)
+- Domain settings: automatic renewal, transfer lock, authorization code,
+  contacts and owner (details or change, checked with a dry run where possible),
+  nameservers,
+  LiveDNS, DNSSEC and its keys, glue records, web redirections, tags, transfer
+  out answer and transfer in follow-up, and domain deletion. Destructive
+  operations are confirmed by the user. (#5)
+- A confirmation can ask the user for a secret (such as an authorization
+  code) on its local page, outside the model. (#5)
 
 ### Fixed
 

@@ -11,6 +11,7 @@ from mcp_types import ToolAnnotations
 from pydantic import Field
 
 from gandi_mcp.accounts.account_name import AccountName
+from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
 from gandi_mcp.content.long_text_filter import LongTextFilter
 from gandi_mcp.domains.contacts.contact_redactor import ContactRedactor
 from gandi_mcp.domains.page_request import MAX_PAGE, MAX_PER_PAGE, PageRequest
@@ -21,10 +22,28 @@ from gandi_mcp.operations.domain.domain_endpoint import DomainEndpoint
 from gandi_mcp.operations.domain.endpoint_operation import EndpointOperation
 from gandi_mcp.operations.operation_executor import OperationExecutor
 from gandi_mcp.operations.untrusted_result import UntrustedResult
-from gandi_mcp.protocol.tools.accounts_tools import AccountsTools
+from gandi_mcp.protocol.tools.accounts_tools import AccountsTools, pending
 from gandi_mcp.protocol.untrusted_result_presenter import present
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, open_world_hint=True)
+WRITE = ToolAnnotations(read_only_hint=False, destructive_hint=False, open_world_hint=True)
+DESTRUCTIVE = ToolAnnotations(
+    read_only_hint=False, destructive_hint=True, idempotent_hint=False, open_world_hint=True
+)
+CONFIRMED_RULES = (
+    " The user confirms outside the conversation; if the result is "
+    "confirmation_pending, call again with the same arguments and the returned "
+    "confirmation_id once the user answered."
+)
+ConfirmationIdParameter = Annotated[
+    str | None,
+    Field(
+        default=None,
+        description="Identifier returned by a pending confirmation, once the user has "
+        "answered on the page opened in their browser. Never invent one.",
+        max_length=64,
+    ),
+]
 
 AccountParameter = Annotated[
     str | None,
@@ -53,6 +72,24 @@ AuthorizationCodeParameter = Annotated[
         "another registrar. Only when the user asks for it."
     ),
 ]
+
+
+def add_write_tool(
+    server: MCPServer,
+    function: Callable[..., Awaitable[dict[str, Any]]],
+    endpoint: DomainEndpoint,
+    title: str,
+    description: str,
+) -> None:
+    """Register a write tool named after its endpoint, annotated from its category."""
+    destructive = endpoint.category.needs_confirmation
+    server.add_tool(
+        function,
+        name=endpoint.name,
+        title=title,
+        description=description + (CONFIRMED_RULES if endpoint.confirmed else ""),
+        annotations=DESTRUCTIVE if destructive else WRITE,
+    )
 
 
 def add_read_tool(
@@ -134,5 +171,50 @@ class DomainToolRunner:
                 include_authorization_code=include_authorization_code,
             )
             return present(result, self._long_texts.apply(data), request)
+
+        return await self._accounts.guard(run)
+
+    async def write(
+        self,
+        ctx: Context[Any, Any],
+        endpoint: DomainEndpoint,
+        account: str | None,
+        path_values: Callable[[], Mapping[str, str]],
+        *,
+        body: Callable[[], JsonValue] | None = None,
+        query: Callable[[], Mapping[str, QueryValue | None]] | None = None,
+        description_params: Callable[[], Mapping[str, object]] | None = None,
+        confirmation_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Change something through ``endpoint``; confirmed when its category says so.
+
+        Path values, query, body and the parameters of the confirmation description
+        (the path values by default) are given as functions, so that their validation
+        errors are explained like the others.
+        """
+
+        async def run() -> dict[str, Any]:
+            values = path_values()
+            operation = EndpointOperation(
+                endpoint,
+                values,
+                query() if query else None,
+                body() if body else None,
+                description_params() if description_params else values,
+            )
+            outcome = await self._executor.run(
+                operation,
+                AccountName(account) if account is not None else None,
+                self._accounts.context(ctx),
+                confirmation_id,
+            )
+            if isinstance(outcome, ConfirmationDecision):
+                return pending(outcome)
+            data = self._long_texts.apply(self._redactor.apply(outcome.data))
+            framed = present(outcome, data)
+            framed["status"] = "done"
+            if endpoint.follow_up is not None:
+                framed["next_step"] = f"Follow the operation with {endpoint.follow_up}."
+            return framed
 
         return await self._accounts.guard(run)

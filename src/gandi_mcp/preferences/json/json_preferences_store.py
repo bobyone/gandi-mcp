@@ -14,7 +14,8 @@ from typing import Any
 from gandi_mcp.accounts.account import Account
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.environment import Environment
-from gandi_mcp.accounts.exceptions import InvalidAccountNameError
+from gandi_mcp.accounts.exceptions import InvalidAccountNameError, InvalidOrganizationIdError
+from gandi_mcp.accounts.organization_id import OrganizationId
 from gandi_mcp.preferences.exceptions import CorruptPreferencesError, PreferencesUnavailableError
 from gandi_mcp.preferences.json.blocking_call import run_to_completion
 from gandi_mcp.preferences.json.file_lock import FileLock
@@ -42,12 +43,22 @@ def _account_from(entry: object) -> Account:
     removal_pending = entry.get("removal_pending", False)
     if not isinstance(removal_pending, bool):
         raise CorruptPreferencesError("removal_pending must be a boolean")
+    paying = entry.get("paying_organization")
+    if paying is not None and not isinstance(paying, str):
+        raise CorruptPreferencesError("paying_organization must be a string")
     try:
         return Account(
-            AccountName(name), Environment(environment), read_only, secret_key, removal_pending
+            AccountName(name),
+            Environment(environment),
+            read_only,
+            secret_key,
+            removal_pending,
+            OrganizationId(paying) if paying is not None else None,
         )
-    except (InvalidAccountNameError, ValueError) as error:
-        raise CorruptPreferencesError("an account has an invalid name or environment") from error
+    except (InvalidAccountNameError, InvalidOrganizationIdError, ValueError) as error:
+        raise CorruptPreferencesError(
+            "an account has an invalid name, environment or organization"
+        ) from error
 
 
 def _from_document(document: object) -> Preferences:
@@ -80,6 +91,11 @@ def _to_document(preferences: Preferences) -> dict[str, Any]:
                 "read_only": account.read_only,
                 "secret_key": account.secret_key,
                 **({"removal_pending": True} if account.removal_pending else {}),
+                **(
+                    {"paying_organization": str(account.paying_organization)}
+                    if account.paying_organization is not None
+                    else {}
+                ),
             }
             for account in preferences.accounts
         ],

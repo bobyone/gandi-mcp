@@ -7,6 +7,7 @@ import contextlib
 import logging
 import uuid
 from dataclasses import replace
+from enum import Enum
 
 from gandi_mcp.accounts.account import Account
 from gandi_mcp.accounts.account_draft import AccountDraft
@@ -23,6 +24,7 @@ from gandi_mcp.accounts.exceptions import (
     NoAccountError,
     WritesNotConfirmedError,
 )
+from gandi_mcp.accounts.organization_id import OrganizationId
 from gandi_mcp.accounts.token_verifier import TokenVerifier
 from gandi_mcp.accounts.verified_account import VerifiedAccount
 from gandi_mcp.preferences.exceptions import PreferencesError
@@ -41,6 +43,12 @@ def _spelling(name: AccountName | None) -> str | None:
 
 def _sorted(accounts: tuple[Account, ...]) -> tuple[Account, ...]:
     return tuple(sorted(accounts, key=lambda account: account.name.key))
+
+
+class Unchanged(Enum):
+    """Marks an update argument left as it is, when ``None`` is a meaningful value."""
+
+    KEEP = "keep"
 
 
 class AccountService:
@@ -124,10 +132,12 @@ class AccountService:
         new_name: AccountName | None = None,
         read_only: bool | None = None,
         make_default: bool = False,
+        paying_organization: OrganizationId | Unchanged | None = Unchanged.KEEP,
         expected: AccountReference | None = None,
         writes_confirmed: bool = False,
     ) -> AccountSummary:
-        """Rename an account, change its read-only flag and make it the default one.
+        """Rename an account, change its read-only flag and paying organization, and
+        make it the default one.
 
         Everything is checked first, under the preferences transaction, then applied
         in one save: a failure changes nothing. Changing only the case of the name
@@ -151,6 +161,8 @@ class AccountService:
                 changed = changed.renamed(new_name)
             if read_only is not None:
                 changed = replace(changed, read_only=read_only)
+            if not isinstance(paying_organization, Unchanged):
+                changed = replace(changed, paying_organization=paying_organization)
             default = preferences.default_account
             if make_default or default == account.name:
                 default = changed.name
@@ -235,7 +247,8 @@ class AccountService:
             account = self._find(preferences, name, expected)
             identity = await self._verifier.verify(environment, token)
             previous = await self._secrets.get(account.secret_key)
-            changed = replace(account, environment=environment)
+            # Organizations belong to one environment: the choice is dropped.
+            changed = replace(account, environment=environment, paying_organization=None)
             await self._secrets.put(account.secret_key, token)
             try:
                 await self._save_replacing(
