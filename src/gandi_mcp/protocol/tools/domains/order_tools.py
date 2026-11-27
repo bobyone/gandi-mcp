@@ -22,10 +22,10 @@ from gandi_mcp.protocol.tools.domains.domain_order_runner import (
     DurationParameter,
     PayingOrganizationParameter,
 )
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
+from gandi_mcp.protocol.tools.domains.domain_parameters import DomainParameter
+from gandi_mcp.protocol.tools.endpoint_tool_runner import (
     AccountParameter,
     ConfirmationIdParameter,
-    DomainParameter,
 )
 
 ORDER_RULES = (

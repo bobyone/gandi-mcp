@@ -10,12 +10,15 @@ Each call to Gandi is an `Operation` (a command, see
 applies the common rules, so an operation only describes itself and calls
 Gandi.
 
-## Domain API endpoints: declare them in the catalogue
+## API endpoints: declare them in the catalogue
 
-For an endpoint of the Domain API, do not write an `Operation` class
-([ADR 8](../decisions/0008-endpoint-catalogue.md)):
+For an endpoint of a Gandi API, do not write an `Operation` class
+([ADR 8](../decisions/0008-endpoint-catalogue.md),
+[ADR 13](../decisions/0013-shared-endpoint-catalogue.md)). The steps below use the
+Domain API; another API has its own catalogue module and tool directory.
 
-1. Add a `DomainEndpoint` to `src/gandi_mcp/operations/domain/domain_endpoints.py`
+1. Add an `Endpoint` (`gandi_mcp.operations.endpoint.endpoint`) to
+   `src/gandi_mcp/operations/domain/domain_endpoints.py`
    (name, method, path with `{placeholder}` segments, category, accepted query
    parameters; a description for confirmed categories) and to the matching
    tuple (`READ_ENDPOINTS` or `WRITE_ENDPOINTS`). Set `supports_dry_run` when
@@ -24,8 +27,8 @@ For an endpoint of the Domain API, do not write an `Operation` class
    in `operations/domain/domain_messages.py` and translate them.
 2. Add the tool function to the domain tool module of its notion
    (`src/gandi_mcp/protocol/tools/domains/`), register it with
-   `add_read_tool` or `add_write_tool`, and call `DomainToolRunner.read` or
-   `DomainToolRunner.write` (give confirmed tools a `confirmation_id`
+   `add_read_tool` or `add_write_tool`, and call `EndpointToolRunner.read` or
+   `EndpointToolRunner.write` (give confirmed tools a `confirmation_id`
    parameter). Pass path values and
    query as functions that build the validated values (`DomainName`,
    `HostLabel`, `TldName`).

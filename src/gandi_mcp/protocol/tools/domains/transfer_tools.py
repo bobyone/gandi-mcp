@@ -9,12 +9,12 @@ from mcp.server.mcpserver import Context
 
 from gandi_mcp.domains.domain_name import DomainName
 from gandi_mcp.operations.domain import domain_endpoints
-from gandi_mcp.operations.domain.domain_endpoint import DomainEndpoint
+from gandi_mcp.operations.endpoint.endpoint import Endpoint
 from gandi_mcp.protocol.tool_module import ToolModule
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
+from gandi_mcp.protocol.tools.domains.domain_parameters import DomainParameter
+from gandi_mcp.protocol.tools.endpoint_tool_runner import (
     AccountParameter,
-    DomainParameter,
-    DomainToolRunner,
+    EndpointToolRunner,
     add_read_tool,
 )
 
@@ -22,7 +22,7 @@ from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
 class TransferTools(ToolModule):
     """Owner change and transfer in follow-up, transfer in check."""
 
-    def __init__(self, runner: DomainToolRunner) -> None:
+    def __init__(self, runner: EndpointToolRunner) -> None:
         self._runner = runner
 
     def register(self, server: MCPServer) -> None:
@@ -76,7 +76,7 @@ class TransferTools(ToolModule):
         )
 
     async def _read(
-        self, ctx: Context[Any, Any], endpoint: DomainEndpoint, domain: str, account: str | None
+        self, ctx: Context[Any, Any], endpoint: Endpoint, domain: str, account: str | None
     ) -> dict[str, Any]:
         return await self._runner.read(
             ctx, endpoint, account, lambda: {"domain": DomainName(domain).value}

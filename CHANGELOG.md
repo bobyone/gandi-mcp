@@ -61,6 +61,12 @@ All notable changes are documented here. The format follows
   "Accounts" screen chooses the paying organization. Contacts shown or typed
   in the App never reach the model. (#5)
 
+### Changed
+
+- The declarative endpoint catalogue is shared by the Gandi APIs (`Endpoint`,
+  `EndpointToolRunner` with injected result filters, ADR 13); no change of
+  tools nor results. (#14)
+
 ### Fixed
 
 - Token and confirmation pages: form submissions from browsers were refused

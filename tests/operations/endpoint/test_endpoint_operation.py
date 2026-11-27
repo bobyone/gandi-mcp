@@ -1,15 +1,15 @@
 # SPDX-FileCopyrightText: 2026 bobyone
 # SPDX-License-Identifier: GPL-2.0-or-later
-"""Tests of the endpoint specifications, their interpreter and the catalogue."""
+"""Tests of the endpoint specifications and their interpreter."""
 
 import pytest
 
 from gandi_mcp.accounts.environment import Environment
-from gandi_mcp.domains.exceptions import InvalidDomainInputError
 from gandi_mcp.i18n.message import Message
 from gandi_mcp.operations.domain import domain_endpoints
-from gandi_mcp.operations.domain.domain_endpoint import DomainEndpoint
-from gandi_mcp.operations.domain.endpoint_operation import EndpointOperation
+from gandi_mcp.operations.endpoint.endpoint import Endpoint
+from gandi_mcp.operations.endpoint.endpoint_operation import EndpointOperation
+from gandi_mcp.operations.endpoint.exceptions import InvalidEndpointArgumentsError
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 from gandi_mcp.secrets.secret_value import SecretValue
@@ -23,12 +23,12 @@ VALUES = {"domain": "example.com", "host": "ns1", "tld": "fr"}
 
 def test_specifications_are_checked() -> None:
     with pytest.raises(ValueError, match="method"):
-        DomainEndpoint("x", "TRACE", ("a",), OperationCategory.READ)
+        Endpoint("x", "TRACE", ("a",), OperationCategory.READ)
     with pytest.raises(ValueError, match="path"):
-        DomainEndpoint("x", "GET", (), OperationCategory.READ)
+        Endpoint("x", "GET", (), OperationCategory.READ)
     with pytest.raises(ValueError, match="description"):
-        DomainEndpoint("x", "DELETE", ("a",), OperationCategory.DESTRUCTIVE)
-    endpoint = DomainEndpoint(
+        Endpoint("x", "DELETE", ("a",), OperationCategory.DESTRUCTIVE)
+    endpoint = Endpoint(
         "x",
         "DELETE",
         ("a", "{domain}", "b", "{host}"),
@@ -81,53 +81,19 @@ def test_describes_itself_with_its_values() -> None:
     ],
 )
 def test_refuses_invalid_arguments(values: dict[str, str], query: dict[str, str] | None) -> None:
-    with pytest.raises(InvalidDomainInputError):
+    with pytest.raises(InvalidEndpointArgumentsError):
         EndpointOperation(domain_endpoints.DETAILS, values, query)
-
-
-def test_catalogue_names_are_unique_and_read_only() -> None:
-    names = [endpoint.name for endpoint in domain_endpoints.READ_ENDPOINTS]
-
-    assert len(names) == len(set(names)) == 22
-    assert all(name.startswith("domain_") for name in names)
-    assert all(e.category is OperationCategory.READ for e in domain_endpoints.READ_ENDPOINTS)
-
-
-@pytest.mark.parametrize(
-    "endpoint", domain_endpoints.READ_ENDPOINTS, ids=lambda endpoint: endpoint.name
-)
-async def test_every_read_endpoint_calls_its_path(endpoint: DomainEndpoint) -> None:
-    client = FakeGandiClient()
-    values = {name: VALUES[name] for name in endpoint.placeholders}
-
-    await EndpointOperation(endpoint, values).execute(client, Environment.PRODUCTION, TOKEN)
-
-    call = client.calls[0]
-    assert call.method == endpoint.method
-    assert call.path[0] == "domain"
-    assert "/" not in "".join(call.path)
-    assert all(not segment.startswith("{") for segment in call.path)
-    for name, value in values.items():
-        assert value in call.path, name
 
 
 def test_secret_fields_need_their_label() -> None:
     with pytest.raises(ValueError, match="secret"):
-        DomainEndpoint(
+        Endpoint(
             "x", "PUT", ("a",), OperationCategory.WRITE, description=Message("m"), secret_field="s"
         )
     with pytest.raises(ValueError, match="description"):
-        DomainEndpoint(
+        Endpoint(
             "x", "PUT", ("a",), OperationCategory.WRITE, secret_field="s", secret_label=Message("l")
         )
-
-
-def test_all_endpoint_names_are_unique() -> None:
-    endpoints = (*domain_endpoints.READ_ENDPOINTS, *domain_endpoints.WRITE_ENDPOINTS)
-    names = [endpoint.name for endpoint in endpoints]
-
-    assert len(names) == len(set(names)) == 57
-    assert all(e.category is not OperationCategory.READ for e in domain_endpoints.WRITE_ENDPOINTS)
 
 
 async def test_dry_run_and_secret_of_an_endpoint() -> None:

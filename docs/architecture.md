@@ -514,9 +514,19 @@ Several matching bands with different prices (registration phases) raise
 `AmbiguousPriceError` instead of guessing.
 Prices are read as `Decimal` from their textual form.
 
+### Result filters: `gandi_mcp.content.result_filter.ResultFilter`
+
+Abstraction of a filter rewriting Gandi data before it reaches the model
+(ADR 10). `filter(data, disclosure)` returns a filtered copy at any depth;
+`disclosure` (`gandi_mcp.content.disclosure.Disclosure`) carries what the user
+explicitly asked to see: `include_contact_details` and
+`include_authorization_code` (both `False` by default). The container chains
+`ContactRedactor`, then `LongTextFilter` (`result_filters`), and injects the
+list into the tool runners.
+
 ### Contact minimization: `gandi_mcp.domains.contacts.contact_redactor.ContactRedactor`
 
-`apply(data, *, include_contact_details=False, include_authorization_code=False)`
+A `ResultFilter`. `apply(data, *, include_contact_details=False, include_authorization_code=False)`
 returns a filtered copy of Gandi data (ADR 10). At any depth and whatever its
 key, a contact (a mapping under `owner`, `admin`, `bill` or `tech`, an item
 of a `contacts` or `holders` list, a mapping with an address, name or phone
@@ -527,6 +537,8 @@ contact details are requested; `authinfo` becomes `"hidden"` unless the
 authorization code is requested.
 
 ### Long texts: `gandi_mcp.content.long_text_filter.LongTextFilter`
+
+A `ResultFilter`; no disclosure lifts it.
 
 | Parameter | Type | Default | Required | Description |
 | --- | --- | --- | --- | --- |
@@ -543,21 +555,22 @@ Frames Gandi data for the model as `{"notice", "untrusted_data"}`, plus
 `page`, `per_page`, `total_count` and, for a filtered list, `matching_count`
 (`Filtered-Count`).
 
-### Endpoint catalogue: `gandi_mcp.operations.domain`
+### Endpoint catalogue: `gandi_mcp.operations.endpoint`, `gandi_mcp.operations.domain`
 
-`DomainEndpoint` describes one endpoint of the Domain API (ADR 8): `name` (also
+`Endpoint` (`operations/endpoint/endpoint.py`) describes one endpoint of a
+Gandi API (ADR 8, ADR 13): `name` (also
 the tool name), `method`, `path` (segments, `{placeholder}` segments filled
 with validated values), `category`, accepted `query` parameters,
 `description` (required for confirmed categories), `supports_dry_run`,
 `follow_up`, `completes_with_see_other`, `secret_field` and `secret_label` (a
 body field filled with a secret typed with the confirmation; such an endpoint
-is always `confirmed`). `domain_endpoints.py` lists them: `READ_ENDPOINTS`
+is always `confirmed`). Each API has its catalogue; `operations/domain/domain_endpoints.py` lists the Domain API ones: `READ_ENDPOINTS`
 (22) and `WRITE_ENDPOINTS` (32: writes and destructive operations; orders are
 `BillableOperation` classes).
 
 `EndpointOperation(endpoint, path_values, query=None, body=None,
-description_params=None)` runs a specification: it raises
-`InvalidDomainInputError` when a placeholder has no value, a value is empty or
+description_params=None)` (`operations/endpoint/endpoint_operation.py`) runs a
+specification: it raises `InvalidEndpointArgumentsError` when a placeholder has no value, a value is empty or
 contains `/`, or a query parameter is not accepted; `None` query values are
 dropped. Its `check()` sends the request with `Dry-Run: 1` when the endpoint
 supports it, and `execute()` adds the typed secret to the body.
@@ -580,12 +593,12 @@ conversation and never to invent a confirmation identifier.
 | --- | --- |
 | `ToolModule` | Abstraction: `register(server)` adds the tools of a notion. |
 | `tools.accounts_tools.AccountsTools` | `list_accounts`, `add_account`, `update_account`, `replace_account_token`, `change_account_environment`, `remove_account`. No tool receives or returns a token; token changes open a token entry session; removing an account and turning read-only off need a confirmation (pending results carry `confirmation_id`). |
-| `tools.domains.domain_tool_runner.DomainToolRunner` | Shared by the domain tool modules: `read(ctx, endpoint, account, path_values=None, *, query=None, body=None, page=None, include_contact_details=False, include_authorization_code=False)` builds the `EndpointOperation` (path values and query are given as functions, so that their validation errors are explained like the others), runs it through the `OperationExecutor`, applies the optional `adapt` function of the tool, minimizes personal data with the `ContactRedactor`, withholds long texts with the `LongTextFilter` and frames the result with `present`. A completed operation (`303`) returns `{"status": "completed", "next_step"}` when the tool gives `when_completed`, and is an unexpected answer otherwise. `add_read_tool` registers a tool named after its endpoint with the read annotations (`readOnlyHint`, `idempotentHint`, `openWorldHint`). |
+| `tools.endpoint_tool_runner.EndpointToolRunner` | `EndpointToolRunner(executor, accounts, filters)`, shared by the endpoint tool modules: `read(ctx, endpoint, account, path_values=None, *, query=None, body=None, page=None, include_contact_details=False, include_authorization_code=False)` builds the `EndpointOperation` (path values and query are given as functions, so that their validation errors are explained like the others), runs it through the `OperationExecutor`, applies the optional `adapt` function of the tool, applies the result filters in order (`filtered`) with the requested `Disclosure` and frames the result with `present`. A completed operation (`303`) returns `{"status": "completed", "next_step"}` when the tool gives `when_completed`, and is an unexpected answer otherwise. `add_read_tool` registers a tool named after its endpoint with the read annotations (`readOnlyHint`, `idempotentHint`, `openWorldHint`). |
 | `tools.domains.availability_tools.AvailabilityTools` | `domain_check_availability` (name, `processes` among `create`, `renew`, `transfer`, `restore`, optional `currency`; the status of each product whose `process` is not `create`, which Gandi says to ignore, is dropped and replaced by an `availability` note), `domain_list_tlds`, `domain_tld_details`. |
 | `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`, `sort_by` by name, expiry or creation date, `-` to reverse), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status` (`completed` once registered), `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
-| `tools.domains.domain_tool_runner.DomainToolRunner.write` | Shared by the write tools: builds the `EndpointOperation` (path values and body as functions, validation errors explained), runs it through the `OperationExecutor` with an optional `confirmation_id`, and returns the pending confirmation or `status: done` with the minimized result and the follow-up tool. `add_write_tool` annotates a tool `destructiveHint` for confirmed categories. |
+| `tools.endpoint_tool_runner.EndpointToolRunner.write` | Shared by the write tools: builds the `EndpointOperation` (path values and body as functions, validation errors explained), runs it through the `OperationExecutor` with an optional `confirmation_id`, and returns the pending confirmation or `status: done` with the minimized result and the follow-up tool. `add_write_tool` annotates a tool `destructiveHint` for confirmed categories. |
 | `tools.domains.domain_settings_tools.DomainSettingsTools` | `domain_autorenew_update`, `domain_transfer_lock`, `domain_reachability_resend`, `domain_claims_accept`; `domain_transfer_unlock`, `domain_authorization_code_reset`, `domain_delete` (confirmed). |
 | `tools.domains.contact_tools.ContactTools` | `domain_contacts_update`, `domain_owner_update` (confirmed, dry run, email unchanged), `domain_owner_email_update` (its confirmation states the ICANN designated-agent authorization before any request is sent to Gandi with `icann_contract_accept`), `domain_owner_change` (confirmed without an amount, dry run), `domain_owner_change_resend`. |
 | `tools.domains.nameserver_write_tools.NameserverWriteTools` | `domain_nameservers_update`, `domain_livedns_enable`, `domain_dnssec_disable`, `domain_dnssec_keys_replace`, `domain_dnssec_key_delete`, `domain_glue_record_delete` (confirmed); `domain_dnssec_enable`, `domain_dnssec_key_add`, `domain_glue_record_create`, `domain_glue_record_update`. |
@@ -644,7 +657,7 @@ The host style variables theme Bootstrap through its CSS variables
 Every component is a container singleton. The entry point adds `app.version`
 and `app.locale` (the system language, from `gandi_mcp.i18n.system_locale`) to
 the validated configuration. `tool_modules` lists the account tools, then the
-domain tool modules, which share one `DomainToolRunner`. The confirmation channels are wired in the order
+domain tool modules, which share one `EndpointToolRunner`. The confirmation channels are wired in the order
 `ElicitationChannel`, `LocalLinkChannel`; the local page server
 implements both page ports and uses the longest of the two page timeouts.
 

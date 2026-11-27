@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Minimize the personal data and secrets of Gandi domain data sent to the model."""
 
+from gandi_mcp.content.disclosure import Disclosure
+from gandi_mcp.content.result_filter import ResultFilter
 from gandi_mcp.gandi.gandi_response import JsonValue
 
 # Fields that only a person's contact information has: a mapping carrying one of them
@@ -49,7 +51,7 @@ def _is_personal_text(key: str) -> bool:
     return lowered.endswith(EMAIL_SUFFIX) or lowered in PERSONAL_TEXT_FIELDS
 
 
-class ContactRedactor:
+class ContactRedactor(ResultFilter):
     """Keep only the type and country of each contact, unless details are wanted.
 
     At any depth of the data, a mapping under a contact role (``owner``, ``admin``,
@@ -60,6 +62,14 @@ class ContactRedactor:
     The authorization code of a domain, which allows a transfer, is hidden unless
     explicitly requested.
     """
+
+    def filter(self, data: JsonValue, disclosure: Disclosure) -> JsonValue:
+        """Summarize contacts and hide secrets, unless ``disclosure`` asks for them."""
+        return self.apply(
+            data,
+            include_contact_details=disclosure.include_contact_details,
+            include_authorization_code=disclosure.include_authorization_code,
+        )
 
     def apply(
         self,
