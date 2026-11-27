@@ -117,9 +117,8 @@ A command: one Gandi call on behalf of an account (ADR 4).
 | `parameters()` | Parameters defining what the operation does; with `name`, they form its `subject()`. The executor binds a confirmation to this subject, the account identity and its environment. |
 | `describe()` | `LocalizedText` shown when asking for a confirmation. |
 | `secret_input()` | `SecretInput` the user types with the confirmation, or `None` (default); an operation needing one is always confirmed (ADR 11). |
-| `authenticated` | `True` (default); `False` only for a public read sent without a token (LiveDNS public nameservers). |
 | `check(client, environment, token)` | Gandi dry run of the operation, or `None` (default) when Gandi offers none. |
-| `execute(client, environment, token, secret=None)` | Calls Gandi, with the `SecretValue` typed by the user when one was asked; `token` is `None` only for a public operation; raises `GandiError`. |
+| `execute(client, environment, token, secret=None)` | Calls Gandi, with the `SecretValue` typed by the user when one was asked; raises `GandiError`. |
 
 `OperationExecutor.run(operation, account_name, context, confirmation_id=None)`
 resolves the account, refuses a write on a read-only account
@@ -137,11 +136,7 @@ identity or environment changed. The check runs again after reading the token,
 so that it is the last step before the request. After the price re-check, the
 `OrderExecutor` also refuses an order whose token was replaced since the quote
 (`AccountChangedError`): a new quote and confirmation are needed. It returns an `UntrustedResult` (data and `total_count`), or
-a pending `ConfirmationDecision` to resume with its identifier. A public
-operation (`authenticated` is `False`) must be a read without secret
-(`TypeError` otherwise): it runs without a token, in the environment of the
-named account, else of the default one, else in production, so that it works
-without any account.
+a pending `ConfirmationDecision` to resume with its identifier.
 
 `TextFileExporter(executor, work_directory)` (`operations/text_file_exporter.py`)
 writes the text read by an operation to the work directory:
@@ -257,11 +252,11 @@ exists) and raises `CorruptPreferencesError` otherwise.
 
 ### Gandi client: `gandi_mcp.gandi.gandi_client.GandiClient`
 
-Sends requests to the Gandi API v5 of an environment, authenticated by a token.
+Sends authenticated requests to the Gandi API v5 of an environment.
 
 | Operation | Contract |
 | --- | --- |
-| `request(environment, token, method, path, *, query=None, body=None, accept_see_other=False, dry_run=False, accept=MediaType.JSON)` | `token` is `None` only for a public endpoint (no `Authorization` header). `accept` (`gandi.media_type.MediaType`: `JSON` or `TEXT`) is the media type asked for: with `TEXT`, the data of a successful answer is its body text (zone files). `dry_run` sends `Dry-Run: 1` (Gandi only checks the request). `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
+| `request(environment, token, method, path, *, query=None, body=None, accept_see_other=False, dry_run=False, accept=MediaType.JSON)` | `accept` (`gandi.media_type.MediaType`: `JSON` or `TEXT`) is the media type asked for: with `TEXT`, the data of a successful answer is its body text (zone files). `dry_run` sends `Dry-Run: 1` (Gandi only checks the request). `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
 | `close()` | Releases network resources. |
 
 Errors: `GandiAuthenticationError` (401), `GandiPermissionError` (403),
@@ -410,8 +405,7 @@ Behavior and limits:
 
 Behavior and limits:
 
-- sends `Authorization: Bearer <token>`, or no `Authorization` header without a
-  token (public endpoints); the token is never logged;
+- sends `Authorization: Bearer <token>`; the token is never logged;
 - sends `Accept: application/json`, or `Accept: text/plain` for a text answer;
   an error answer is still decoded as JSON to explain it; a text answer that is
   not UTF-8 raises `GandiUnexpectedResponseError`;
@@ -651,13 +645,14 @@ with validated values), `category`, accepted `query` parameters,
 `description` (required for confirmed categories), `supports_dry_run`,
 `follow_up`, `completes_with_see_other`, `secret_field` and `secret_label` (a
 body field filled with a secret typed with the confirmation; such an endpoint
-is always `confirmed`), `accept` (media type of the answer: `JSON`, or `TEXT`
-for zone files) and `authenticated` (`False` only for a public endpoint, which
-must be a read). Each API has its catalogue; `operations/domain/domain_endpoints.py` lists the Domain API ones: `READ_ENDPOINTS`
+is always `confirmed`), and `accept` (media type of the answer: `JSON`, or
+`TEXT` for zone files). Each API has its catalogue; `operations/domain/domain_endpoints.py` lists the Domain API ones: `READ_ENDPOINTS`
 (22) and `WRITE_ENDPOINTS` (35: 18 writes and 17 destructive operations; orders are
 `BillableOperation` classes). `operations/livedns/livedns_endpoints.py` lists
-the LiveDNS ones: `READ_ENDPOINTS` (19, of which `livedns_public_nameservers`
-is public and `livedns_zone_export`, `livedns_snapshot_export` ask for text).
+the LiveDNS ones: `READ_ENDPOINTS` (19, of which `livedns_zone_export` and
+`livedns_snapshot_export` ask for text). Gandi documents
+`livedns_public_nameservers` (`/livedns/nameservers/{fqdn}`) as a route without
+authentication, but it answers 401 without a token: it is an ordinary read.
 `livedns_tsig_config` is run by `operations/livedns/tsig_configuration.TsigConfiguration`,
 an operation reading the key (`livedns_tsig_key`) then its sample, and returning
 `{"key_id", "software", "configuration", "secret"}`: the secret field filter
@@ -694,7 +689,7 @@ conversation and never to invent a confirmation identifier.
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
 | `tools.endpoint_tool_runner.EndpointToolRunner.read_operation` | `read_operation(ctx, operation, account)`: the same read for an operation built by a function and made of several calls (`TsigConfiguration`). |
-| `tools.livedns.domain_tools.LiveDnsDomainTools` | `livedns_record_types`, `livedns_domains` (page, `organization_id` sent as `sharing_id`), `livedns_domain`, `livedns_nameservers`, `livedns_public_nameservers` (no account needed, no token sent). |
+| `tools.livedns.domain_tools.LiveDnsDomainTools` | `livedns_record_types`, `livedns_domains` (page, `organization_id` sent as `sharing_id`), `livedns_domain`, `livedns_nameservers`, `livedns_public_nameservers` (nameservers LiveDNS would give any name). |
 | `tools.livedns.record_read_tools.RecordReadTools` | `livedns_records` (`record_type` filter, `sort_by` by name or type, `-` to reverse, page), `livedns_name_records`, `livedns_record`. Names are `RecordName` values, types `RecordType` values (`InvalidRecordError`). |
 | `tools.livedns.zone_tools.ZoneTools` | `livedns_zone_export(domain, file, overwrite=False)`: writes the zone file through `ZoneFileService`; returns `{"status": "done", "notice", "file", "size_bytes", "record_count"}`, never the content nor the full path. |
 | `tools.livedns.snapshot_tools.SnapshotTools` | `livedns_snapshots` (`automatic` filter, `sort_by` by date, newest first by default, page), `livedns_snapshot`, `livedns_snapshot_export` (same result as the zone export). |

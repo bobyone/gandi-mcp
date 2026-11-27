@@ -22,7 +22,7 @@ and restore come later. Never claim to have changed a record.
    whether it uses the LiveDNS nameservers.
 2. **One zone**: `livedns_domain` (whether automatic snapshots are on),
    `livedns_nameservers`. `livedns_public_nameservers` computes the LiveDNS
-   nameservers of any name, without an account.
+   nameservers of any name, even one not in the account.
 3. **Records**: `livedns_records` (optional `record_type`, `sort_by` by
    `rrset_name` or `rrset_type`, `-` to reverse; paginated: page through
    `matching_count` when given, else `total_count`), `livedns_name_records`

@@ -78,10 +78,6 @@ class EndpointOperation(Operation):
         message = self._endpoint.description or Message(self._endpoint.name)
         return LocalizedText(message, self._description_params)
 
-    @property
-    def authenticated(self) -> bool:
-        return self._endpoint.authenticated
-
     def secret_input(self) -> SecretInput | None:
         label = self._endpoint.secret_label
         return SecretInput(label, MAX_SECRET_LENGTH) if label is not None else None
@@ -97,7 +93,7 @@ class EndpointOperation(Operation):
         self,
         client: GandiClient,
         environment: Environment,
-        token: PersonalAccessToken | None,
+        token: PersonalAccessToken,
         secret: SecretValue | None = None,
     ) -> GandiResponse:
         return await client.request(

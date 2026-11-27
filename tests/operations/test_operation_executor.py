@@ -10,11 +10,7 @@ from gandi_mcp.accounts.account_draft import AccountDraft
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
-from gandi_mcp.accounts.exceptions import (
-    AccountNotFoundError,
-    NoAccountError,
-    ReadOnlyAccountError,
-)
+from gandi_mcp.accounts.exceptions import NoAccountError, ReadOnlyAccountError
 from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChannel
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_context import ConfirmationContext
@@ -257,49 +253,3 @@ async def test_a_read_only_toggle_during_the_token_read_stops_the_write() -> Non
         await executor.run(ScriptedOperation(OperationCategory.WRITE), None, ConfirmationContext())
 
     assert client.calls == []
-
-
-async def test_a_public_read_needs_no_account() -> None:
-    secrets, client = InMemorySecretStore(), FakeGandiClient()
-    accounts = AccountService(InMemoryPreferencesStore(), secrets, StubTokenVerifier())
-    executor = OperationExecutor(
-        accounts, secrets, client, ConfirmationService([], PendingConfirmations(300))
-    )
-    operation = ScriptedOperation(OperationCategory.READ, method="GET", public=True)
-
-    result = await executor.run(operation, None, ConfirmationContext())
-
-    assert isinstance(result, UntrustedResult)
-    assert (client.calls[0].environment, client.calls[0].token) == (Environment.PRODUCTION, None)
-
-
-async def test_a_public_read_uses_the_environment_of_the_account_without_its_token(
-    setup: Setup,
-) -> None:
-    operation = ScriptedOperation(OperationCategory.READ, method="GET", public=True)
-
-    await setup.executor.run(operation, AccountName("Watch"), ConfirmationContext())
-
-    assert (setup.client.calls[0].environment, setup.client.calls[0].token) == (
-        Environment.SANDBOX,
-        None,
-    )
-
-
-async def test_a_public_read_with_an_unknown_account_is_refused(setup: Setup) -> None:
-    operation = ScriptedOperation(OperationCategory.READ, method="GET", public=True)
-
-    with pytest.raises(AccountNotFoundError):
-        await setup.executor.run(operation, AccountName("Nobody"), ConfirmationContext())
-
-    assert not setup.client.calls
-
-
-@pytest.mark.parametrize("category", [OperationCategory.WRITE, OperationCategory.DESTRUCTIVE])
-async def test_a_public_operation_never_writes(setup: Setup, category: OperationCategory) -> None:
-    operation = ScriptedOperation(category, public=True)
-
-    with pytest.raises(TypeError):
-        await setup.executor.run(operation, None, ConfirmationContext())
-
-    assert not setup.client.calls

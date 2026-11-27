@@ -14,13 +14,13 @@ type QueryValue = str | int | bool | Sequence[str]
 
 
 class GandiClient(ABC):
-    """Send requests to the Gandi API of an environment, authenticated by a token."""
+    """Send authenticated requests to the Gandi API of an environment."""
 
     @abstractmethod
     async def request(
         self,
         environment: Environment,
-        token: PersonalAccessToken | None,
+        token: PersonalAccessToken,
         method: str,
         path: Sequence[str],
         *,
@@ -34,8 +34,7 @@ class GandiClient(ABC):
 
         Args:
             environment: Gandi environment whose base URL is used.
-            token: Personal Access Token authenticating the request; ``None`` only for
-                the few public endpoints (no ``Authorization`` header is sent).
+            token: Personal Access Token authenticating the request.
             method: HTTP method (``GET``, ``POST``, ``PUT``, ``PATCH``, ``DELETE``).
             path: Path segments below the base URL, for example
                 ``("domain", "domains", "example.com")``; each segment is encoded, so

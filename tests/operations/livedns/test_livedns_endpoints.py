@@ -31,12 +31,6 @@ def test_the_catalogue_only_reads_and_names_are_unique() -> None:
     assert all(endpoint.method == "GET" for endpoint in endpoints)
 
 
-def test_only_the_public_nameservers_need_no_token() -> None:
-    public = [e.name for e in livedns_endpoints.READ_ENDPOINTS if not e.authenticated]
-
-    assert public == ["livedns_public_nameservers"]
-
-
 def test_only_the_exports_ask_for_a_zone_file() -> None:
     text = {e.name for e in livedns_endpoints.READ_ENDPOINTS if e.accept is MediaType.TEXT}
 

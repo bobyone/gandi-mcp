@@ -47,14 +47,6 @@ class Operation(ABC):
         """
         return None
 
-    @property
-    def authenticated(self) -> bool:
-        """Whether Gandi needs the account token; ``False`` only for public endpoints.
-
-        A public operation is always a read: it needs no account, and gets no token.
-        """
-        return True
-
     async def check(
         self, client: GandiClient, environment: Environment, token: PersonalAccessToken
     ) -> GandiResponse | None:
@@ -69,12 +61,10 @@ class Operation(ABC):
         self,
         client: GandiClient,
         environment: Environment,
-        token: PersonalAccessToken | None,
+        token: PersonalAccessToken,
         secret: SecretValue | None = None,
     ) -> GandiResponse:
         """Call Gandi, with the secret typed by the user when one was asked.
-
-        ``token`` is ``None`` only for an operation that is not :attr:`authenticated`.
 
         Raises:
             GandiError: if Gandi refuses or cannot be reached.

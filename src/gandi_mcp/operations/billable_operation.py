@@ -88,7 +88,7 @@ class BillableOperation(Operation):
         self,
         client: GandiClient,
         environment: Environment,
-        token: PersonalAccessToken | None,
+        token: PersonalAccessToken,
         secret: SecretValue | None = None,
     ) -> GandiResponse:
         raise TypeError("a billable operation only runs through the OrderExecutor")

@@ -121,22 +121,14 @@ async def test_dry_run_and_secret_of_an_endpoint() -> None:
     assert "Auth-123" not in code.subject()
 
 
-def test_a_public_endpoint_can_only_read() -> None:
-    with pytest.raises(ValueError, match="public"):
-        Endpoint("x", "POST", ("x",), OperationCategory.WRITE, authenticated=False)
-
-
-async def test_a_text_endpoint_asks_for_text_and_a_public_one_says_so() -> None:
+async def test_a_text_endpoint_asks_for_text() -> None:
     client = FakeGandiClient()
     text = Endpoint(
         "zone", "GET", ("zone", "{domain}"), OperationCategory.READ, accept=MediaType.TEXT
     )
-    public = Endpoint("ns", "GET", ("ns", "{domain}"), OperationCategory.READ, authenticated=False)
 
     await EndpointOperation(text, {"domain": "example.com"}).execute(
         client, Environment.SANDBOX, TOKEN
     )
 
     assert client.calls[0].accept is MediaType.TEXT
-    assert EndpointOperation(text, {"domain": "example.com"}).authenticated
-    assert not EndpointOperation(public, {"domain": "example.com"}).authenticated

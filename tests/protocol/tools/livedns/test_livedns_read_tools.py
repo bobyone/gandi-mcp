@@ -30,6 +30,7 @@ from gandi_mcp.operations.text_file_exporter import TextFileExporter
 from gandi_mcp.protocol.error_presenter import (
     FILE_EXISTS,
     INVALID_RECORD,
+    NO_ACCOUNT,
     OUTSIDE_WORK_DIRECTORY,
     ErrorPresenter,
 )
@@ -250,13 +251,11 @@ async def test_invalid_record_names_and_types_never_reach_gandi(
     assert not setup.gandi.calls
 
 
-async def test_public_nameservers_need_no_account_nor_token(setup: Setup) -> None:
-    setup.gandi.outcomes.append(GandiResponse(200, ["ns-1-a.gandi.net"]))
+async def test_nameservers_of_any_name_need_an_account(setup: Setup) -> None:
+    text = error_text(await call(setup, "livedns_public_nameservers", {"domain": "example.com"}))
 
-    data(await call(setup, "livedns_public_nameservers", {"domain": "example.com"}))
-
-    assert setup.gandi.calls[0].environment is Environment.PRODUCTION
-    assert setup.gandi.calls[0].token is None
+    assert text.endswith(NO_ACCOUNT.singular)
+    assert not setup.gandi.calls
 
 
 async def test_long_record_values_are_withheld(setup: Setup) -> None:

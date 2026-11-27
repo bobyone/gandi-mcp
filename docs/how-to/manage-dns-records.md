@@ -28,7 +28,7 @@ example.com have". It uses the `livedns_*` tools (see the
   the zone: `@` for the domain itself, `www`, `*.dev`, `_dmarc`;
 - **nameservers**: `livedns_nameservers` gives the nameservers of the zone;
   `livedns_public_nameservers` computes those LiveDNS would give any domain,
-  even without an account;
+  even one that is not in your account;
 - **snapshots**: `livedns_snapshots` lists the saved copies of a zone, newest
   first, and `livedns_snapshot` shows one with its records;
 - **signing keys**: `livedns_signing_keys` and `livedns_signing_key` show the

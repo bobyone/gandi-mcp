@@ -18,13 +18,10 @@ RECORD_TYPES = Endpoint("livedns_record_types", "GET", ("livedns", "dns", "rrtyp
 DOMAINS = Endpoint("livedns_domains", "GET", ("livedns", "domains"), READ, PAGE | SHARING)
 DOMAIN_DETAILS = Endpoint("livedns_domain", "GET", DOMAIN, READ)
 NAMESERVERS = Endpoint("livedns_nameservers", "GET", (*DOMAIN, "nameservers"), READ)
-# Generic route hashing any name: Gandi documents it without authentication.
+# Generic route hashing any name. Gandi documents it without authentication, but
+# answers 401 without a token (production and sandbox, 2026-11-28).
 PUBLIC_NAMESERVERS = Endpoint(
-    "livedns_public_nameservers",
-    "GET",
-    ("livedns", "nameservers", "{domain}"),
-    READ,
-    authenticated=False,
+    "livedns_public_nameservers", "GET", ("livedns", "nameservers", "{domain}"), READ
 )
 RECORD_LIST = Endpoint("livedns_records", "GET", RECORDS, READ, PAGE | {"rrset_type", "sort_by"})
 NAME_RECORDS = Endpoint("livedns_name_records", "GET", (*RECORDS, "{name}"), READ)

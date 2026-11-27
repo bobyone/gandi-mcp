@@ -57,7 +57,7 @@ def _count(value: str | None) -> int | None:
 
 
 class HttpGandiClient(GandiClient):
-    """Call the Gandi API v5 with a Bearer token (none for the public endpoints).
+    """Call the Gandi API v5 with a Bearer token.
 
     One connection pool is reused for every request. Redirects are not followed, so
     that the token is only ever sent to the configured base URLs.
@@ -92,7 +92,7 @@ class HttpGandiClient(GandiClient):
     async def request(
         self,
         environment: Environment,
-        token: PersonalAccessToken | None,
+        token: PersonalAccessToken,
         method: str,
         path: Sequence[str],
         *,
@@ -110,9 +110,7 @@ class HttpGandiClient(GandiClient):
             key: (str(value).lower() if isinstance(value, bool) else value)
             for key, value in (query or {}).items()
         }
-        headers = {"Accept": accept.value}
-        if token is not None:
-            headers["Authorization"] = f"Bearer {token.reveal()}"
+        headers = {"Accept": accept.value, "Authorization": f"Bearer {token.reveal()}"}
         if dry_run:
             headers["Dry-Run"] = "1"
         started = time.monotonic()

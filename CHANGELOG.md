@@ -64,7 +64,7 @@ All notable changes are documented here. The format follows
   guarantees of the code, each with the tests trying to violate it. (#14)
 - LiveDNS (read): tools to list the record types and the LiveDNS domains, and
   to read the records of a zone (by type, name, or name and type), the
-  nameservers of a zone or of any name (without an account), the snapshots,
+  nameservers of a zone or of any name, the snapshots,
   the signing keys, the secondary servers and the TSIG keys of the account
   and of a zone. The secret of a TSIG key never reaches the model, even inside
   a configuration sample. (#6)

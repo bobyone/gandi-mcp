@@ -65,7 +65,7 @@ class TsigConfiguration(Operation):
         self,
         client: GandiClient,
         environment: Environment,
-        token: PersonalAccessToken | None,
+        token: PersonalAccessToken,
         secret: SecretValue | None = None,
     ) -> GandiResponse:
         details = await self._details.execute(client, environment, token)

@@ -60,8 +60,8 @@ class LiveDnsDomainTools(ToolModule):
                 self.livedns_public_nameservers,
                 livedns_endpoints.PUBLIC_NAMESERVERS,
                 "Compute the LiveDNS nameservers of any name",
-                "Give the LiveDNS nameservers a domain would get, without any account; use "
-                "livedns_nameservers for a zone with its own NS records.",
+                "Give the LiveDNS nameservers any domain would get, even one not in the "
+                "account; use livedns_nameservers for a zone with its own NS records.",
             ),
         )
         for function, endpoint, title, description in tools:

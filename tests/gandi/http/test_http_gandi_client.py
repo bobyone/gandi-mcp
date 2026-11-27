@@ -213,22 +213,6 @@ async def test_dry_run_header() -> None:
     assert "Dry-Run" not in seen[1].headers
 
 
-async def test_a_public_request_sends_no_authorization() -> None:
-    seen: list[httpx2.Request] = []
-
-    def handler(request: httpx2.Request) -> httpx2.Response:
-        seen.append(request)
-        return httpx2.Response(200, json=["ns-1.gandi.net"])
-
-    response = await client_with(handler).request(
-        Environment.PRODUCTION, None, "GET", ("livedns", "nameservers", "example.com")
-    )
-
-    assert "Authorization" not in seen[0].headers
-    assert seen[0].headers["Accept"] == "application/json"
-    assert response.data == ["ns-1.gandi.net"]
-
-
 async def test_a_text_answer_is_kept_as_text() -> None:
     zone = "@ 10800 IN A 192.0.2.1\nwww 10800 IN CNAME @\n"
     seen: list[httpx2.Request] = []

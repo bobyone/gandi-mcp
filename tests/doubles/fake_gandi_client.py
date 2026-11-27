@@ -17,7 +17,7 @@ class RecordedCall:
     """One request received by the fake client."""
 
     environment: Environment
-    token: PersonalAccessToken | None
+    token: PersonalAccessToken
     method: str
     path: tuple[str, ...]
     query: Mapping[str, QueryValue] | None
@@ -38,7 +38,7 @@ class FakeGandiClient(GandiClient):
     async def request(
         self,
         environment: Environment,
-        token: PersonalAccessToken | None,
+        token: PersonalAccessToken,
         method: str,
         path: Sequence[str],
         *,
