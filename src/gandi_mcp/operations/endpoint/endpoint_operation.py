@@ -10,6 +10,7 @@ from gandi_mcp.gandi.gandi_client import GandiClient, QueryValue
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.i18n.message import Message
+from gandi_mcp.operations.confirmation_answer import ConfirmationAnswer
 from gandi_mcp.operations.endpoint.endpoint import PLACEHOLDER, Endpoint
 from gandi_mcp.operations.endpoint.exceptions import InvalidEndpointArgumentsError
 from gandi_mcp.operations.operation import Operation
@@ -94,7 +95,7 @@ class EndpointOperation(Operation):
         client: GandiClient,
         environment: Environment,
         token: PersonalAccessToken,
-        secret: SecretValue | None = None,
+        answer: ConfirmationAnswer | None = None,
     ) -> GandiResponse:
         return await client.request(
             environment,
@@ -102,7 +103,7 @@ class EndpointOperation(Operation):
             self._endpoint.method,
             self.segments(),
             query=self._query or None,
-            body=self._with_secret(secret),
+            body=self._with_secret(answer.secret if answer is not None else None),
             accept_see_other=self._endpoint.completes_with_see_other,
             accept=self._endpoint.accept,
         )

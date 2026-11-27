@@ -23,6 +23,7 @@ in the UI says "not displayed".
 | Default account | The account used when a tool call names no account. | `default_account` | Default account (`status.default`) |
 | Personal Access Token (PAT) | A Gandi secret granting API rights to an account; stored in the OS keyring only. | `personal_access_token` | Personal Access Token (`field.token`; never translated) |
 | Confirmation | The user's explicit agreement, requested by the server, before a destructive or billable operation, or one needing a secret input. | `confirmation` | not displayed |
+| Confirmation option | A yes or no choice the user makes together with a confirmation, outside the model, such as creating a snapshot first. | `confirmation_option` | not displayed |
 | Secret input | A secret the user types with a confirmation, outside the model, such as an authorization code (ADR 11). | `secret_input` | not displayed |
 | Destructive operation | An operation that deletes or irreversibly changes a Gandi resource. | `destructive` | not displayed |
 | Billable operation | An operation that charges the Gandi account (purchase, renewal, transfer). | `billable` | not displayed |

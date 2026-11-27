@@ -19,10 +19,11 @@ class PendingState(StrEnum):
 
 @dataclass(frozen=True)
 class PendingConfirmation:
-    """A confirmation request, its identifier, deadline, state and typed secret."""
+    """A confirmation request, its identifier, deadline, state, secret and option."""
 
     confirmation_id: str
     request: ConfirmationRequest
     deadline: float
     state: PendingState = PendingState.PENDING
     secret: SecretValue | None = field(default=None, repr=False)
+    option_chosen: bool = False

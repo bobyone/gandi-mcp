@@ -14,6 +14,8 @@ class ScriptedInteraction(UserInteraction):
     confirmations: bool = True
     links: bool = True
     answer: bool = True
+    option_answer: bool = True
+    options: list[tuple[str, bool]] = field(default_factory=list)
     questions: list[str] = field(default_factory=list)
     opened: list[str] = field(default_factory=list)
 
@@ -28,6 +30,13 @@ class ScriptedInteraction(UserInteraction):
     async def confirm(self, message: str) -> bool:
         self.questions.append(message)
         return self.answer
+
+    async def confirm_with_option(
+        self, message: str, option_label: str, option_default: bool
+    ) -> bool | None:
+        self.questions.append(message)
+        self.options.append((option_label, option_default))
+        return self.option_answer if self.answer else None
 
     async def open_link(self, message: str, url: str) -> bool:
         self.questions.append(message)

@@ -446,9 +446,12 @@ class StarletteLocalPageServer(LocalPageServer):
                 secret = SecretValue(form.get("secret", ""), secret_input.max_length)
             except InvalidSecretValueError:
                 return self._confirmation_form(pending, code, locale, invalid_secret=True)
+        option_chosen = pending.request.option is not None and form.get("option") == "yes"
         self._pages.pop(code, None)
         try:
-            self._pending.answer(pending.confirmation_id, accepted, secret)
+            self._pending.answer(
+                pending.confirmation_id, accepted, secret, option_chosen=option_chosen
+            )
         except ConfirmationError:
             return self._outcome(locale, PageKind.CONFIRMATION, messages.PAGE_EXPIRED, False, 410)
         return self._outcome(
@@ -469,6 +472,7 @@ class StarletteLocalPageServer(LocalPageServer):
         """Show the confirmation, with the secret field when one is asked (ADR 11)."""
         secret_input = pending.request.secret_input
         max_length = secret_input.max_length if secret_input is not None else 0
+        option = pending.request.option
         form = ConfirmationForm(
             title=self._text(locale, messages.TITLE_CONFIRMATION),
             question=confirmation_prompt(self._translator, pending.request, locale),
@@ -484,6 +488,8 @@ class StarletteLocalPageServer(LocalPageServer):
                 if invalid_secret
                 else None
             ),
+            option_label=self._text(locale, option.label) if option is not None else None,
+            option_default=option.default if option is not None else False,
         )
         status = 422 if invalid_secret else 200
         return self._respond(confirmation_page(html_language(locale), form), status)

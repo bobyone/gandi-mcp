@@ -11,6 +11,7 @@ from gandi_mcp.domains.quotes.quote import Quote
 from gandi_mcp.domains.quotes.quote_request import QuoteRequest
 from gandi_mcp.gandi.gandi_client import GandiClient
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
+from gandi_mcp.operations.confirmation_answer import ConfirmationAnswer
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
@@ -89,6 +90,6 @@ class BillableOperation(Operation):
         client: GandiClient,
         environment: Environment,
         token: PersonalAccessToken,
-        secret: SecretValue | None = None,
+        answer: ConfirmationAnswer | None = None,
     ) -> GandiResponse:
         raise TypeError("a billable operation only runs through the OrderExecutor")

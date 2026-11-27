@@ -12,12 +12,12 @@ from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.i18n.message import Message
 from gandi_mcp.livedns.identifiers import TsigKeyId
 from gandi_mcp.livedns.tsig_software import TsigSoftware
+from gandi_mcp.operations.confirmation_answer import ConfirmationAnswer
 from gandi_mcp.operations.endpoint.endpoint_operation import EndpointOperation
 from gandi_mcp.operations.livedns import livedns_endpoints
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
-from gandi_mcp.secrets.secret_value import SecretValue
 
 CONFIGURATION = "configuration"
 SECRET = "secret"  # noqa: S105 - field name, not a secret
@@ -76,7 +76,7 @@ class TsigConfiguration(Operation):
         client: GandiClient,
         environment: Environment,
         token: PersonalAccessToken,
-        secret: SecretValue | None = None,
+        answer: ConfirmationAnswer | None = None,
     ) -> GandiResponse:
         details = await self._details.execute(client, environment, token)
         sample = await self._sample.execute(client, environment, token)

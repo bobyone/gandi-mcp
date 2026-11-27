@@ -7,13 +7,14 @@ from abc import ABC, abstractmethod
 from collections.abc import Mapping
 
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.confirmation.confirmation_option import ConfirmationOption
 from gandi_mcp.confirmation.secret_input import SecretInput
 from gandi_mcp.gandi.gandi_client import GandiClient
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
 from gandi_mcp.i18n.localized_text import LocalizedText
+from gandi_mcp.operations.confirmation_answer import ConfirmationAnswer
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
-from gandi_mcp.secrets.secret_value import SecretValue
 
 
 class Operation(ABC):
@@ -47,6 +48,26 @@ class Operation(ABC):
         """
         return None
 
+    def confirmation_option(self) -> ConfirmationOption | None:
+        """A yes or no choice offered with the confirmation, or ``None`` (default).
+
+        Only meaningful for a confirmed operation (ADR 14).
+        """
+        return None
+
+    async def prepare(
+        self, client: GandiClient, environment: Environment, token: PersonalAccessToken
+    ) -> None:
+        """Read what the confirmation must describe, before :meth:`describe`.
+
+        Called by the executor before asking a confirmation, never on resume; it must
+        not change anything. Does nothing by default (ADR 14).
+
+        Raises:
+            GandiError: if Gandi refuses or cannot be reached (no confirmation is asked).
+        """
+        return None
+
     async def check(
         self, client: GandiClient, environment: Environment, token: PersonalAccessToken
     ) -> GandiResponse | None:
@@ -62,9 +83,11 @@ class Operation(ABC):
         client: GandiClient,
         environment: Environment,
         token: PersonalAccessToken,
-        secret: SecretValue | None = None,
+        answer: ConfirmationAnswer | None = None,
     ) -> GandiResponse:
-        """Call Gandi, with the secret typed by the user when one was asked.
+        """Call Gandi, with what the user gave with the confirmation, if any.
+
+        ``answer`` carries the typed secret and the option choice (ADR 11, ADR 14).
 
         Raises:
             GandiError: if Gandi refuses or cannot be reached.

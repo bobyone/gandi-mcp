@@ -75,7 +75,7 @@ class RenewDomain(Operation):
     def describe(self) -> LocalizedText:
         return LocalizedText(RENEW_DOMAIN, {"domain": str(self._fqdn), "count": self._years})
 
-    async def execute(self, client, environment, token) -> GandiResponse:
+    async def execute(self, client, environment, token, answer=None) -> GandiResponse:
         return await client.request(
             environment,
             token,
@@ -92,6 +92,10 @@ class RenewDomain(Operation):
 - `parameters()` must include everything that changes what the operation
   does: a confirmation is only valid for the same name and parameters.
 - Pass user input as path **segments**: the client encodes each one.
+- A confirmed operation can describe its effect from a read (`prepare`, called
+  before the confirmation, never a change) and offer a yes or no choice
+  (`confirmation_option()`); `execute` then gets the choice in
+  `answer.option_chosen` (ADR 14).
 - Declare the description with `N_` or `ngettext` in the module, add it to the
   catalogs (see [Add a language](add-a-language.md)).
 

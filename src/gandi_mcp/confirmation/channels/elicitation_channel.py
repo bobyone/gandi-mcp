@@ -26,6 +26,14 @@ class ElicitationChannel(ConfirmationChannel):
         if context.interaction is None:
             raise ConfirmationRefusedError("no elicitation for this call")
         prompt = confirmation_prompt(self._translator, request, context.locale)
+        if request.option is not None:
+            label = self._translator.translate(request.option.label, context.locale)
+            chosen = await context.interaction.confirm_with_option(
+                prompt, label, request.option.default
+            )
+            if chosen is None:
+                raise ConfirmationRefusedError("the user refused the operation")
+            return ConfirmationDecision.accept(option_chosen=chosen)
         if not await context.interaction.confirm(prompt):
             raise ConfirmationRefusedError("the user refused the operation")
         return ConfirmationDecision.accept()

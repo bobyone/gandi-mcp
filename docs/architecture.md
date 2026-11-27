@@ -117,15 +117,18 @@ A command: one Gandi call on behalf of an account (ADR 4).
 | `parameters()` | Parameters defining what the operation does; with `name`, they form its `subject()`. The executor binds a confirmation to this subject, the account identity and its environment. |
 | `describe()` | `LocalizedText` shown when asking for a confirmation. |
 | `secret_input()` | `SecretInput` the user types with the confirmation, or `None` (default); an operation needing one is always confirmed (ADR 11). |
+| `confirmation_option()` | `ConfirmationOption` offered with the confirmation, or `None` (default) (ADR 14). |
+| `prepare(client, environment, token)` | Reads what `describe()` needs (the effect of a change), before a confirmation is asked; never on resume, never a change. Does nothing by default; a Gandi error stops before any confirmation (ADR 14). |
 | `check(client, environment, token)` | Gandi dry run of the operation, or `None` (default) when Gandi offers none. |
-| `execute(client, environment, token, secret=None)` | Calls Gandi, with the `SecretValue` typed by the user when one was asked; raises `GandiError`. |
+| `execute(client, environment, token, answer=None)` | Calls Gandi; `answer` (`ConfirmationAnswer`: `secret`, `option_chosen`) carries what the user gave with an accepted confirmation; raises `GandiError`. |
 
 `OperationExecutor.run(operation, account_name, context, confirmation_id=None)`
 resolves the account, refuses a write on a read-only account
 (`ReadOnlyAccountError`), asks for a confirmation when needed (destructive or
 billable category, or a secret to type), reads the token and calls Gandi with
-the typed secret. Before asking a confirmation on a first call, it runs the
-operation's dry run, if any: a refusal raises `DryRunRejectedError`, and an
+the user's answer. Before asking a confirmation on a first call, it runs the
+operation's `prepare`, then its dry run, if any; the request offers the
+operation's option: a refusal raises `DryRunRejectedError`, and an
 answer other than `200` with `status: success` raises
 `GandiUnexpectedResponseError` (`operations.dry_run.dry_run_details`). When the
 user typed a secret, Gandi error details are dropped and every text of the
@@ -188,7 +191,13 @@ collect secrets when the request has a `secret_input` (ADR 11). Given a
 confirmation identifier, it resumes the pending confirmation instead
 (`PendingConfirmations`: accepted once, for the same subject, before its
 deadline, which also applies once it is accepted); the accepted decision
-carries the typed `SecretValue`, if any.
+carries the typed `SecretValue`, if any, and `option_chosen`.
+A request may offer an `option` (`ConfirmationOption`: translatable `label`,
+`default`), a yes or no choice made with the confirmation, outside the model
+(ADR 14): `ElicitationChannel` asks it with the confirmation in one form
+(`UserInteraction.confirm_with_option`), and the local page shows a checkbox,
+checked by default when `default` is set. The choice is only kept with an
+acceptance of a request offering an option.
 Exceptions derive from `ConfirmationError`: `ConfirmationRefusedError`,
 `ConfirmationExpiredError`, `ConfirmationUnavailableError`,
 `ConfirmationMismatchError`, `SecretInputMissingError` (an acceptance without
@@ -206,6 +215,7 @@ Questions asked to the user through the MCP client, outside the model context.
 | --- | --- |
 | `supports_confirmation`, `supports_links` | Whether form or URL elicitation is available. |
 | `confirm(message)` | `True` only when the user accepted. |
+| `confirm_with_option(message, option_label, option_default)` | `None` when refused, cancelled or unanswered; otherwise whether the option was checked. Over MCP, one form with the `confirm` and `option` booleans. |
 | `open_link(message, url)` | Offers a link the client shows to the user; `True` when the user agreed. |
 
 `Browser.open(url)` opens a page in the user's browser and returns `False`

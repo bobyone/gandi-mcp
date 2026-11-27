@@ -12,6 +12,7 @@ import pytest
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.confirmation import pending_confirmations as module
+from gandi_mcp.confirmation.confirmation_option import ConfirmationOption
 from gandi_mcp.confirmation.confirmation_request import ConfirmationRequest
 from gandi_mcp.confirmation.exceptions import (
     ConfirmationExpiredError,
@@ -246,3 +247,25 @@ async def test_the_default_scheduler_uses_the_running_loop() -> None:
 
 def test_the_default_scheduler_needs_a_loop() -> None:
     loop_scheduler(0, lambda: None)  # no running loop: nothing is scheduled
+
+
+def test_an_option_choice_is_kept_only_when_offered_and_accepted(
+    registry: PendingConfirmations,
+) -> None:
+    offered = replace(request("zone"), option=ConfirmationOption(Message("Snapshot first")))
+    chosen = registry.create(offered)
+    refused = registry.create(offered)
+    not_offered = registry.create(request("other"))
+
+    registry.answer(chosen.confirmation_id, True, option_chosen=True)
+    registry.answer(refused.confirmation_id, False, option_chosen=True)
+    registry.answer(not_offered.confirmation_id, True, option_chosen=True)
+
+    used = registry.consume(chosen.confirmation_id, "zone")
+    assert used is not None
+    assert used.option_chosen
+    with pytest.raises(ConfirmationRefusedError):
+        registry.consume(refused.confirmation_id, "zone")
+    plain = registry.consume(not_offered.confirmation_id, "other")
+    assert plain is not None
+    assert not plain.option_chosen

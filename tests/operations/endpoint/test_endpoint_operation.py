@@ -7,6 +7,7 @@ import pytest
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.gandi.media_type import MediaType
 from gandi_mcp.i18n.message import Message
+from gandi_mcp.operations.confirmation_answer import ConfirmationAnswer
 from gandi_mcp.operations.domain import domain_endpoints
 from gandi_mcp.operations.endpoint.endpoint import Endpoint
 from gandi_mcp.operations.endpoint.endpoint_operation import EndpointOperation
@@ -109,7 +110,9 @@ async def test_dry_run_and_secret_of_an_endpoint() -> None:
 
     assert await plain.check(client, Environment.SANDBOX, TOKEN) is None
     await checked.check(client, Environment.SANDBOX, TOKEN)
-    await code.execute(client, Environment.SANDBOX, TOKEN, SecretValue("Auth-123"))
+    await code.execute(
+        client, Environment.SANDBOX, TOKEN, ConfirmationAnswer(SecretValue("Auth-123"))
+    )
     await code.execute(client, Environment.SANDBOX, TOKEN)
 
     assert client.calls[0].dry_run

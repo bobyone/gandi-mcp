@@ -8,7 +8,7 @@ from typing import Any
 from mcp.server.elicitation import AcceptedElicitation, AcceptedUrlElicitation
 from mcp.server.mcpserver import Context
 from mcp_types.version import is_version_at_least
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, create_model
 
 from gandi_mcp.interaction.user_interaction import UserInteraction
 
@@ -56,6 +56,19 @@ class McpUserInteraction(UserInteraction):
     async def confirm(self, message: str) -> bool:
         result = await self._context.elicit(message, ConfirmationAnswer)
         return isinstance(result, AcceptedElicitation) and result.data.confirm
+
+    async def confirm_with_option(
+        self, message: str, option_label: str, option_default: bool
+    ) -> bool | None:
+        form = create_model(
+            "ConfirmationWithOption",
+            __base__=ConfirmationAnswer,
+            option=(bool, Field(default=option_default, description=option_label)),
+        )
+        result = await self._context.elicit(message, form)
+        if not isinstance(result, AcceptedElicitation) or not result.data.confirm:
+            return None
+        return bool(getattr(result.data, "option", option_default))
 
     async def open_link(self, message: str, url: str) -> bool:
         result = await self._context.elicit_url(message, url, uuid.uuid4().hex)

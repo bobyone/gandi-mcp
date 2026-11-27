@@ -13,6 +13,7 @@ from gandi_mcp.accounts.account_draft import AccountDraft
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.confirmation.confirmation_option import ConfirmationOption
 from gandi_mcp.confirmation.confirmation_request import ConfirmationRequest
 from gandi_mcp.confirmation.pending_confirmation import PendingConfirmation
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
@@ -67,7 +68,7 @@ class Pages:
         return await self.server.open_token_entry(session, locale)
 
     async def confirmation_page(
-        self, secret_input: SecretInput | None = None
+        self, secret_input: SecretInput | None = None, option: ConfirmationOption | None = None
     ) -> tuple[PendingConfirmation, str]:
         request = ConfirmationRequest(
             "domain.delete:example.com",
@@ -76,6 +77,7 @@ class Pages:
             AccountName("Pro"),
             Environment.PRODUCTION,
             secret_input,
+            option,
         )
         pending = self.pending.create(request)
         return pending, await self.server.open_confirmation(pending, "en")
@@ -430,3 +432,43 @@ async def test_refusing_needs_no_secret(pages: Pages) -> None:
     assert response.status_code == 200
     with pytest.raises(Exception, match="refused"):
         pages.pending.consume(pending.confirmation_id, pending.request.subject)
+
+
+OPTION = ConfirmationOption(Message("Create a <b>snapshot</b> first"), default=True)
+
+
+async def test_confirmation_page_offers_the_option_checked_and_escaped(pages: Pages) -> None:
+    _pending, url = await pages.confirmation_page(option=OPTION)
+
+    response = await pages.http.get(url)
+
+    assert 'type="checkbox" id="option" name="option" value="yes" checked>' in response.text
+    assert "Create a &lt;b&gt;snapshot&lt;/b&gt; first" in response.text
+
+
+@pytest.mark.parametrize(("form", "chosen"), [({"option": "yes"}, True), ({}, False)])
+async def test_the_option_choice_is_recorded_with_the_confirmation(
+    pages: Pages, form: dict[str, str], chosen: bool
+) -> None:
+    pending, url = await pages.confirmation_page(option=OPTION)
+
+    response = await pages.http.post(
+        url, data={"code": code_of(url), "decision": "confirm", **form}
+    )
+
+    assert response.status_code == 200
+    used = pages.pending.consume(pending.confirmation_id, pending.request.subject)
+    assert used is not None
+    assert used.option_chosen is chosen
+
+
+async def test_a_page_without_option_ignores_a_posted_option(pages: Pages) -> None:
+    pending, url = await pages.confirmation_page()
+
+    page = await pages.http.get(url)
+    await pages.http.post(url, data={"code": code_of(url), "decision": "confirm", "option": "yes"})
+
+    assert 'name="option"' not in page.text
+    used = pages.pending.consume(pending.confirmation_id, pending.request.subject)
+    assert used is not None
+    assert not used.option_chosen
