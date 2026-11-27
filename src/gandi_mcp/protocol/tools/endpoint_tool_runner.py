@@ -20,6 +20,7 @@ from gandi_mcp.gandi.gandi_client import QueryValue
 from gandi_mcp.gandi.gandi_response import JsonValue
 from gandi_mcp.operations.endpoint.endpoint import Endpoint
 from gandi_mcp.operations.endpoint.endpoint_operation import EndpointOperation
+from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.operation_executor import OperationExecutor
 from gandi_mcp.operations.untrusted_result import UntrustedResult
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools, pending
@@ -140,24 +141,58 @@ class EndpointToolRunner:
                 full_query.update(request.query())
             values = path_values() if path_values else {}
             operation = EndpointOperation(endpoint, values, full_query, body)
-            result = await self._executor.run(
+            return await self._read(
+                ctx,
                 operation,
-                AccountName(account) if account is not None else None,
-                self._accounts.context(ctx),
+                account,
+                request,
+                Disclosure(include_contact_details, include_authorization_code),
+                adapt,
+                when_completed,
             )
-            if not isinstance(
-                result, UntrustedResult
-            ):  # pragma: no cover - reads are never confirmed
-                raise TypeError("a read operation cannot wait for a confirmation")
-            if result.completed:
-                if when_completed is None:
-                    raise GandiUnexpectedResponseError(f"{endpoint.name}: unexpected redirect")
-                return {"status": "completed", "next_step": when_completed}
-            data = adapt(result.data) if adapt else result.data
-            disclosure = Disclosure(include_contact_details, include_authorization_code)
-            return present(result, filtered(self._filters, data, disclosure), request)
 
         return await self._accounts.guard(run)
+
+    async def read_operation(
+        self,
+        ctx: Context[Any, Any],
+        operation: Callable[[], Operation],
+        account: str | None,
+    ) -> dict[str, Any]:
+        """Read through an operation that is not a single endpoint (several calls).
+
+        The operation is built by a function, so that its validation errors are
+        explained like the others.
+        """
+
+        async def run() -> dict[str, Any]:
+            return await self._read(ctx, operation(), account, None, Disclosure(), None, None)
+
+        return await self._accounts.guard(run)
+
+    async def _read(  # noqa: PLR0917 - private helper of the two read entry points
+        self,
+        ctx: Context[Any, Any],
+        operation: Operation,
+        account: str | None,
+        request: PageRequest | None,
+        disclosure: Disclosure,
+        adapt: Callable[[JsonValue], JsonValue] | None,
+        when_completed: str | None,
+    ) -> dict[str, Any]:
+        result = await self._executor.run(
+            operation,
+            AccountName(account) if account is not None else None,
+            self._accounts.context(ctx),
+        )
+        if not isinstance(result, UntrustedResult):  # pragma: no cover - reads are never confirmed
+            raise TypeError("a read operation cannot wait for a confirmation")
+        if result.completed:
+            if when_completed is None:
+                raise GandiUnexpectedResponseError(f"{operation.name}: unexpected redirect")
+            return {"status": "completed", "next_step": when_completed}
+        data = adapt(result.data) if adapt else result.data
+        return present(result, filtered(self._filters, data, disclosure), request)
 
     async def write(
         self,

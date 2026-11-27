@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lv\n"
@@ -212,6 +212,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Apstiprinājums netika sniegts laikā: nekas netika mainīts."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Failu neizdevās nolasīt vai ierakstīt darba direktorijā: pārbaudiet tā atļaujas un to, vai tas ir"
+" UTF-8 teksts."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Sistēmas atslēgu saišķis nav pieejams. Nekas netika saglabāts: atbloķējiet vai instalējiet to un "
@@ -302,6 +310,24 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Šis domēns nav pieejams reģistrācijai: nekas netika nopirkts."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Šis fails jau pastāv darba direktorijā: izvēlieties citu nosaukumu vai lūdziet to aizstāt."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Šis fails nepastāv darba direktorijā: pārbaudiet tā nosaukumu."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Šis fails ir pārāk liels, lai to nolasītu: nekas netika mainīts."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr "Šis faila ceļš nav atļauts: norādiet ceļu darba direktorijā, bez .. un bez diska burta."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Šis nav derīgs Personal Access Token."
 
@@ -320,6 +346,14 @@ msgstr "Šis nosaukums nav derīgs domēna vārds: pārbaudiet rakstību, piem.,
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Šīs lapas derīgums ir beidzies, vai tā jau ir izmantota. Nekas netika mainīts."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Šis ieraksta nosaukums vai tips nav derīgs: izmantojiet nosaukumu attiecībā pret zonu (@, www, "
+"_dmarc) un tipu, piemēram, A, MX vai TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

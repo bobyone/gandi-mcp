@@ -104,6 +104,7 @@ class EndpointOperation(Operation):
             query=self._query or None,
             body=self._with_secret(secret),
             accept_see_other=self._endpoint.completes_with_see_other,
+            accept=self._endpoint.accept,
         )
 
     async def check(

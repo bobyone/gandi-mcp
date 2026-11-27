@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mk\n"
@@ -215,6 +215,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Потврдата не беше дадена навреме: ништо не е променето."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Датотеката не можеше да се прочита или запише во работниот директориум: проверете ги нејзините "
+"дозволи и дали е UTF-8 текст."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Привезокот за клучеви на системот е недостапен. Ништо не е зачувано: отклучете го или "
@@ -309,6 +317,28 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Овој домен не е достапен за регистрација: ништо не е купено."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr ""
+"Оваа датотека веќе постои во работниот директориум: изберете друго име или побарајте таа да се "
+"замени."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Оваа датотека не постои во работниот директориум: проверете го нејзиното име."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Оваа датотека е преголема за да се прочита: ништо не е променето."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Оваа патека на датотека не е дозволена: наведете патека во работниот директориум, без .. и без "
+"буква на диск."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Ова не е валиден Personal Access Token."
 
@@ -329,6 +359,14 @@ msgstr "Ова име не е валидно име на домен: прове�
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Оваа страница истече или веќе е искористена. Ништо не е променето."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Ова име или тип на запис не е валиден: користете име релативно на зоната (@, www, _dmarc) и тип "
+"како A, MX или TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

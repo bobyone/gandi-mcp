@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sr_Cyrl\n"
@@ -212,6 +212,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Потврда није дата на време: ништа није промењено."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Датотеку није било могуће прочитати ни уписати у радном директоријуму: проверите њене дозволе и "
+"да ли је реч о UTF-8 тексту."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Привезак кључева система није доступан. Ништа није сачувано: откључајте га или инсталирајте, "
@@ -302,6 +310,26 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Овај домен није доступан за регистрацију: ништа није купљено."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Ова датотека већ постоји у радном директоријуму: изаберите други назив или затражите да се замени."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Ова датотека не постоји у радном директоријуму: проверите њен назив."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Ова датотека је превелика за читање: ништа није промењено."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Ова путања датотеке није дозвољена: наведите путању унутар радног директоријума, без .. и без "
+"слова диска."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Ово није исправан Personal Access Token."
 
@@ -320,6 +348,14 @@ msgstr "Овај назив није исправан назив домена: �
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Ова страница је истекла или је већ искоришћена. Ништа није промењено."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Овај назив или тип записа није важећи: користите назив релативан у односу на зону (@, www, "
+"_dmarc) и тип као што је A, MX или TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

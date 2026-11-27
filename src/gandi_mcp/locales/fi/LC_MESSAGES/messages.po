@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fi\n"
@@ -211,6 +211,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Vahvistusta ei annettu ajoissa: mitään ei muutettu."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Tiedostoa ei voitu lukea tai kirjoittaa työhakemistossa: tarkista sen oikeudet ja että se on "
+"UTF-8-tekstiä."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Järjestelmän avainnippu ei ole käytettävissä. Mitään ei tallennettu: avaa sen lukitus tai asenna "
@@ -301,6 +309,26 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Tätä verkkotunnusta ei voi rekisteröidä: mitään ei ostettu."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Tämä tiedosto on jo olemassa työhakemistossa: valitse toinen nimi tai pyydä korvaamaan se."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Tätä tiedostoa ei ole työhakemistossa: tarkista sen nimi."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Tämä tiedosto on liian suuri luettavaksi: mitään ei muutettu."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Tämä tiedostopolku ei ole sallittu: anna polku työhakemiston sisällä, ilman ..-merkintää ja "
+"asemakirjainta."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Tämä ei ole kelvollinen Personal Access Token."
 
@@ -319,6 +347,14 @@ msgstr "Tämä nimi ei ole kelvollinen verkkotunnus: tarkista kirjoitusasu, esim
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Tämä sivu on vanhentunut tai jo käytetty. Mitään ei muutettu."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Tämä tietueen nimi tai tyyppi ei kelpaa: käytä vyöhykkeeseen suhteellista nimeä (@, www, _dmarc) "
+"ja tyyppiä kuten A, MX tai TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

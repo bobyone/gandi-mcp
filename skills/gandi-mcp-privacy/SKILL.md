@@ -21,7 +21,14 @@ Key facts:
   when it lists the accounts;
 - the Gandi identity behind a token is displayed when it is saved, never
   stored;
-- Gandi data is fetched on demand and not stored by the software;
+- Gandi data is fetched on demand and not stored by the software, except the
+  files the user asks to export to the work directory (zone files, TSIG
+  samples), kept until the user deletes them; the model only gets their name,
+  size and record count;
+- DNS record values may hold personal data (an email address in a TXT
+  record); long values are withheld from the model;
+- the secret of a TSIG key never reaches the model; a file holding it is
+  readable by its owner only (macOS, Linux);
 - tool results are sent to the provider of the user's AI model.
 
 To exercise rights:
@@ -29,7 +36,10 @@ To exercise rights:
 - **remove a token and its account settings**: remove the account with the
   `remove_account` tool (see the `gandi-mcp-manage-accounts` skill); the user
   confirms outside the conversation;
+- **exported files**: the user deletes them from the work directory
+  (`files.work_directory`, by default `gandi-mcp/files` in the user data
+  directory); the software never deletes them;
 - **data held by Gandi or by the AI provider**: the user contacts them
-  directly; the software keeps no copy.
+  directly; the software keeps no other copy.
 
 Never present these answers as legal advice.

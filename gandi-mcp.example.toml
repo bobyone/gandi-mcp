@@ -35,3 +35,9 @@ timeout_seconds = 600
 # Longest free input or Gandi text passed to the model as is, in characters
 # (1 to 10000). Longer Gandi texts are withheld from the model.
 max_free_input = 280
+
+[files]
+# Work directory: the only directory where zone files and TSIG configuration
+# samples are written (and, later, read). Give paths relative to it in the tools.
+# Default: <user data directory of the OS>/gandi-mcp/files
+# work_directory = "~/gandi-mcp/files"

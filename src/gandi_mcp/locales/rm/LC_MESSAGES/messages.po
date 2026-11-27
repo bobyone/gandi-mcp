@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: rm\n"
@@ -215,6 +215,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "La conferma n'è betg vegnida dada a temp: nagut n'è vegnì midà."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"La datoteca n'ha betg pudì vegnir legida u scritta en il register da lavur: controllai ses dretgs"
+" e ch'i sa tracta da text UTF-8."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Il clavier dal sistem n'è betg disponibel. Nagut n'è vegnì memorisà: deblocai u installai el ed "
@@ -307,6 +315,28 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Quest domena n'è betg disponibla per la registraziun: nagut n'è vegnì cumprà."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr ""
+"Questa datoteca exista gia en il register da lavur: tschernai in auter num u dumandai da la "
+"remplazzar."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Questa datoteca n'exista betg en il register da lavur: controllai ses num."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Questa datoteca è memia gronda per vegnir legida: nagut n'è vegnì midà."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Quest percurs da datoteca n'è betg permess: inditgai in percurs entaifer il register da lavur, "
+"senza .. e senza letra da la platta."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Quai n'è nagin Personal Access Token valid."
 
@@ -327,6 +357,14 @@ msgstr "Quest num n'è betg in num da domena valid: controllai l'ortografia, p. 
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Questa pagina è scadida u è gia vegnida utilisada. Nagut n'è vegnì midà."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Quest num u quest tip d'endataziun n'è betg valid: utilisai in num relativ a la zona (@, www, "
+"_dmarc) ed in tip sco A, MX u TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

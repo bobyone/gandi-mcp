@@ -48,7 +48,9 @@ the `main` branch.
 
 Copy [`gandi-mcp.example.toml`](../gandi-mcp.example.toml) to a `gandi-mcp.toml` of
 your choice, adjust it, and pass it with `--config <path>`. Never put your
-Personal Access Token in this file.
+Personal Access Token in this file. Its `[files]` section sets the work
+directory, where the zone files and TSIG samples you export are written (see
+[export a zone](how-to/export-and-import-a-zone.md)).
 
 ## 4. Check that it runs
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -215,6 +215,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "A megerősítés nem érkezett meg időben: semmi sem változott."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"A fájlt nem sikerült beolvasni vagy írni a munkakönyvtárban: ellenőrizze a jogosultságait, és "
+"hogy UTF-8 szöveg-e."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "A rendszer kulcstartója nem érhető el. Semmi sem lett mentve: oldja fel vagy telepítse, majd "
@@ -305,6 +313,26 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Ez a domain nem regisztrálható: semmi sem lett megvásárolva."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Ez a fájl már létezik a munkakönyvtárban: válasszon másik nevet, vagy kérje a cseréjét."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Ez a fájl nem létezik a munkakönyvtárban: ellenőrizze a nevét."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Ez a fájl túl nagy ahhoz, hogy beolvasható legyen: semmi sem változott."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Ez a fájlútvonal nem engedélyezett: adjon meg egy útvonalat a munkakönyvtáron belül, .. és "
+"meghajtóbetűjel nélkül."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Ez nem érvényes Personal Access Token."
 
@@ -323,6 +351,14 @@ msgstr "Ez a név nem érvényes domainnév: ellenőrizze a helyesírását, pl.
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Ez az oldal lejárt, vagy már felhasználták. Semmi sem változott."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Ez a rekordnév vagy rekordtípus érvénytelen: használjon a zónához viszonyított nevet (@, www, "
+"_dmarc) és olyan típust, mint az A, MX vagy TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

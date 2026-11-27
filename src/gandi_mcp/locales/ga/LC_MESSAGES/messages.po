@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ga\n"
@@ -222,6 +222,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Níor tugadh an deimhniú in am: níor athraíodh aon rud."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Níorbh fhéidir an comhad a léamh ná a scríobh san eolaire oibre: seiceáil a cheadanna agus gur "
+"téacs UTF-8 é."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Níl fáinne eochracha an chórais ar fáil. Níor sábháladh aon rud: díghlasáil nó suiteáil é, ansin "
@@ -314,6 +322,28 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Níl an fearann seo ar fáil le clárú: níor ceannaíodh aon rud."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr ""
+"Tá an comhad seo ann cheana san eolaire oibre: roghnaigh ainm eile, nó iarr go gcuirfí ceann eile"
+" ina áit."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Níl an comhad seo san eolaire oibre: seiceáil a ainm."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Tá an comhad seo rómhór le léamh: níor athraíodh aon rud."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Ní cheadaítear an chonair comhaid seo: tabhair conair laistigh den eolaire oibre, gan .. agus gan"
+" litir tiomántáin."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Ní Personal Access Token bailí é seo."
 
@@ -332,6 +362,14 @@ msgstr "Ní ainm fearainn bailí é an t-ainm seo: seiceáil an litriú, m.sh. e
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Tá an leathanach seo imithe in éag nó úsáidte cheana. Níor athraíodh aon rud."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Níl an t-ainm nó an cineál taifid seo bailí: úsáid ainm i gcoibhneas leis an gcrios (@, www, "
+"_dmarc) agus cineál mar A, MX nó TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

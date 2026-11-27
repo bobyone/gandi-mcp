@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: is\n"
@@ -213,6 +213,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Staðfesting barst ekki í tæka tíð: engu var breytt."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Ekki tókst að lesa eða skrifa skrána í vinnumöppunni: athugaðu heimildir hennar og að hún sé "
+"UTF-8 texti."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Lyklakippa kerfisins er ekki tiltæk. Ekkert var vistað: aflæstu henni eða settu hana upp og "
@@ -299,6 +307,24 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Þetta lén er ekki laust til skráningar: ekkert var keypt."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Þessi skrá er þegar til í vinnumöppunni: veldu annað heiti eða biddu um að henni verði skipt út."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Þessi skrá er ekki til í vinnumöppunni: athugaðu heiti hennar."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Þessi skrá er of stór til að hægt sé að lesa hana: engu var breytt."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr "Þessi skráarslóð er ekki leyfð: gefðu upp slóð innan vinnumöppunnar, án .. og án drifbókstafs."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Þetta er ekki gilt Personal Access Token."
 
@@ -317,6 +343,14 @@ msgstr "Þetta heiti er ekki gilt lén: athugaðu stafsetninguna, t.d. example.c
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Þessi síða er útrunnin eða hefur þegar verið notuð. Engu var breytt."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Þetta færsluheiti eða þessi færslutegund er ekki gild: notaðu heiti miðað við svæðið (@, www, "
+"_dmarc) og tegund eins og A, MX eða TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

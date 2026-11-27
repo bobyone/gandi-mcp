@@ -24,5 +24,10 @@ Ask for confirmation before each removal; removing tokens is irreversible.
      `codex plugin marketplace remove gandi-mcp`;
    - other clients: delete the `gandi` server entry from their configuration.
 4. Remove the cached package: `uv cache clean gandi-mcp`.
-5. Ask the user to delete their own `gandi-mcp.toml` if they created one; do not
+5. Offer to remove the work directory (`gandi-mcp/files` in the user data
+   directory of the OS, or the `files.work_directory` of their configuration):
+   it holds the zone files and TSIG samples the user exported, which may hold
+   secrets. Ask the user to check its content and confirm before deleting it;
+   the software itself never deletes these files.
+6. Ask the user to delete their own `gandi-mcp.toml` if they created one; do not
    read it.

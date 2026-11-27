@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Politique de confidentialité (projet)
 
 > Projet à faire valider par un professionnel du droit ; ne constitue pas un
-> conseil juridique. Version 0.4 du 27 novembre 2026. **Cette version
+> conseil juridique. Version 0.5 du 27 novembre 2026. **Cette version
 > française fait foi** ; les autres langues en sont des traductions. Elle sera
 > accessible depuis l'interface de la MCP App.
 >
@@ -49,7 +49,17 @@ responsable des données que vous traitez avec lui.
 - **Vos données Gandi** (domaines et leurs contacts, enregistrements DNS,
   boîtes mail, certificats, hébergements, factures) : lues auprès de Gandi
   lorsqu'un outil en a besoin, conservées en mémoire uniquement, jamais
-  écrites sur disque par le logiciel.
+  écrites sur disque par le logiciel, sauf si vous demandez un export. Les
+  enregistrements DNS peuvent contenir des données personnelles (une adresse
+  e-mail dans un enregistrement TXT) ; les valeurs longues ne sont pas
+  transmises au modèle.
+- **Les fichiers que vous exportez** (fichiers de zone, exemples de
+  configuration des clés TSIG) : écrits, à votre demande, dans le répertoire
+  de travail du logiciel sur votre ordinateur, et conservés jusqu'à ce que vous
+  les supprimiez. Le modèle n'apprend que leur nom, leur taille et leur nombre
+  d'enregistrements. Un exemple de configuration contient le secret de sa clé :
+  son fichier n'est lisible que par vous, et ce secret n'est jamais montré au
+  modèle.
 
 ## Qui les reçoit
 
@@ -61,7 +71,9 @@ responsable des données que vous traitez avec lui.
 
 ## Vos droits
 
-Le logiciel ne conserve aucune copie de vos données Gandi. Pour supprimer un
+Le logiciel ne conserve aucune copie de vos données Gandi, sauf les fichiers
+que vous exportez dans son répertoire de travail, que vous pouvez supprimer à
+tout moment. Pour supprimer un
 jeton et les réglages de son compte, supprimez le compte dans le logiciel : il
 efface les deux.
 Exercez vos droits sur les données détenues par Gandi ou par votre

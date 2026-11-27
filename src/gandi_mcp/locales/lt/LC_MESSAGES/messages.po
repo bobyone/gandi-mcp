@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lt\n"
@@ -214,6 +214,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Patvirtinimas nebuvo pateiktas laiku: niekas nepakeista."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Failo nepavyko perskaityti ar įrašyti darbo kataloge: patikrinkite jo teises ir ar tai UTF-8 "
+"tekstas."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Sistemos raktinė nepasiekiama. Niekas neišsaugota: atrakinkite arba įdiekite ją ir bandykite dar "
@@ -304,6 +312,24 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Šio domeno negalima registruoti: niekas nebuvo nupirkta."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Šis failas jau yra darbo kataloge: pasirinkite kitą pavadinimą arba paprašykite jį pakeisti."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Šio failo darbo kataloge nėra: patikrinkite jo pavadinimą."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Šis failas per didelis, kad būtų perskaitytas: niekas nepakeista."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr "Šis failo kelias neleidžiamas: nurodykite kelią darbo kataloge, be .. ir be disko raidės."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Tai nėra galiojantis Personal Access Token."
 
@@ -324,6 +350,14 @@ msgstr "Šis pavadinimas nėra tinkamas domeno vardas: patikrinkite rašybą, pv
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Šio puslapio galiojimas baigėsi arba jis jau panaudotas. Niekas nepakeista."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Šis įrašo pavadinimas arba tipas negalioja: naudokite pavadinimą, santykinį zonai (@, www, "
+"_dmarc), ir tipą, pavyzdžiui, A, MX arba TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

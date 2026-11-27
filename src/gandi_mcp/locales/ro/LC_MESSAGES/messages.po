@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ro\n"
@@ -218,6 +218,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Confirmarea nu a fost dată la timp: nu s-a modificat nimic."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Fișierul nu a putut fi citit sau scris în directorul de lucru: verificați-i permisiunile și că "
+"este text UTF-8."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Breloc-ul de chei al sistemului nu este disponibil. Nu s-a salvat nimic: deblocați-l sau "
@@ -312,6 +320,26 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Acest domeniu nu este disponibil pentru înregistrare: nu s-a cumpărat nimic."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Acest fișier există deja în directorul de lucru: alegeți alt nume sau cereți înlocuirea lui."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Acest fișier nu există în directorul de lucru: verificați-i numele."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Acest fișier este prea mare pentru a fi citit: nu s-a modificat nimic."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Această cale de fișier nu este permisă: indicați o cale în interiorul directorului de lucru, fără"
+" .. și fără literă de unitate."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Acesta nu este un Personal Access Token valid."
 
@@ -330,6 +358,14 @@ msgstr "Acest nume nu este un nume de domeniu valid: verificați ortografia, de 
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Această pagină a expirat sau a fost deja folosită. Nu s-a modificat nimic."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Acest nume sau tip de înregistrare nu este valid: folosiți un nume relativ la zonă (@, www, "
+"_dmarc) și un tip precum A, MX sau TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

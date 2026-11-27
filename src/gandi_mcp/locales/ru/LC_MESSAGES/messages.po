@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -214,6 +214,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Подтверждение не было дано вовремя: ничего не изменено."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Не удалось прочитать или записать файл в рабочем каталоге: проверьте права доступа и то, что это "
+"текст в UTF-8."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Связка ключей системы недоступна. Ничего не сохранено: разблокируйте или установите её и "
@@ -306,6 +314,24 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Этот домен недоступен для регистрации: ничего не куплено."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Этот файл уже существует в рабочем каталоге: выберите другое имя или попросите заменить его."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Этого файла нет в рабочем каталоге: проверьте его имя."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Этот файл слишком велик для чтения: ничего не изменено."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr "Этот путь к файлу не разрешён: укажите путь внутри рабочего каталога, без .. и без буквы диска."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Это недействительный Personal Access Token."
 
@@ -324,6 +350,14 @@ msgstr "Это имя не является допустимым доменны�
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Срок действия этой страницы истёк, или она уже использована. Ничего не изменено."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Это имя или тип записи недопустимы: используйте имя относительно зоны (@, www, _dmarc) и тип, "
+"например A, MX или TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

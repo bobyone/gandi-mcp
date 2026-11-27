@@ -5,6 +5,7 @@
 import pytest
 
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.gandi.media_type import MediaType
 from gandi_mcp.i18n.message import Message
 from gandi_mcp.operations.domain import domain_endpoints
 from gandi_mcp.operations.endpoint.endpoint import Endpoint
@@ -118,3 +119,16 @@ async def test_dry_run_and_secret_of_an_endpoint() -> None:
     assert plain.secret_input() is None
     assert code.secret_input() is not None
     assert "Auth-123" not in code.subject()
+
+
+async def test_a_text_endpoint_asks_for_text() -> None:
+    client = FakeGandiClient()
+    text = Endpoint(
+        "zone", "GET", ("zone", "{domain}"), OperationCategory.READ, accept=MediaType.TEXT
+    )
+
+    await EndpointOperation(text, {"domain": "example.com"}).execute(
+        client, Environment.SANDBOX, TOKEN
+    )
+
+    assert client.calls[0].accept is MediaType.TEXT

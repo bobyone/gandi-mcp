@@ -5,6 +5,7 @@
 import re
 from dataclasses import dataclass, field
 
+from gandi_mcp.gandi.media_type import MediaType
 from gandi_mcp.i18n.message import Message
 from gandi_mcp.operations.operation_category import OperationCategory
 
@@ -31,6 +32,7 @@ class Endpoint:
         secret_label: Label of that secret field.
         completes_with_see_other: Gandi documents a ``303 See Other`` once the
             followed operation is complete (registration status).
+        accept: Media type of the answer: JSON, or text (zone files).
     """
 
     name: str
@@ -44,6 +46,7 @@ class Endpoint:
     completes_with_see_other: bool = False
     secret_field: str | None = None
     secret_label: Message | None = None
+    accept: MediaType = MediaType.JSON
 
     def __post_init__(self) -> None:
         if self.method not in METHODS:

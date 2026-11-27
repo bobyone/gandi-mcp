@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs\n"
@@ -211,6 +211,14 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Potvrzení nebylo včas uděleno: nic nebylo změněno."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr ""
+"Soubor nebylo možné přečíst ani zapsat v pracovním adresáři: zkontrolujte jeho oprávnění a zda "
+"jde o text UTF-8."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Klíčenka systému není dostupná. Nic nebylo uloženo: odemkněte ji nebo nainstalujte a zkuste to "
@@ -297,6 +305,26 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Tuto doménu nelze zaregistrovat: nic nebylo zakoupeno."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Tento soubor již v pracovním adresáři existuje: zvolte jiný název nebo požádejte o jeho nahrazení."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Tento soubor v pracovním adresáři neexistuje: zkontrolujte jeho název."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Tento soubor je příliš velký na to, aby mohl být přečten: nic nebylo změněno."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr ""
+"Tato cesta k souboru není povolena: zadejte cestu uvnitř pracovního adresáře, bez .. a bez "
+"písmene jednotky."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Toto není platný Personal Access Token."
 
@@ -315,6 +343,14 @@ msgstr "Tento název není platný název domény: zkontrolujte jeho zápis, nap
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Platnost této stránky vypršela nebo už byla použita. Nic nebylo změněno."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Tento název nebo typ záznamu není platný: použijte název relativní k zóně (@, www, _dmarc) a typ "
+"jako A, MX nebo TXT."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

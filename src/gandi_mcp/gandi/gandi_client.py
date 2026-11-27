@@ -7,6 +7,7 @@ from collections.abc import Mapping, Sequence
 
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
+from gandi_mcp.gandi.media_type import MediaType
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
 
 type QueryValue = str | int | bool | Sequence[str]
@@ -27,6 +28,7 @@ class GandiClient(ABC):
         body: JsonValue = None,
         accept_see_other: bool = False,
         dry_run: bool = False,
+        accept: MediaType = MediaType.JSON,
     ) -> GandiResponse:
         """Send a request and return the successful response.
 
@@ -43,6 +45,8 @@ class GandiClient(ABC):
                 response instead of an error; only for endpoints documenting it.
             dry_run: Send ``Dry-Run: 1``: Gandi only checks the request and answers
                 ``{"status": "success" | "error", "errors": [...]}``.
+            accept: Media type asked for the answer; with ``TEXT``, the data of a
+                successful response is the text of its body.
 
         Raises:
             GandiError: a subclass describing why the request failed.

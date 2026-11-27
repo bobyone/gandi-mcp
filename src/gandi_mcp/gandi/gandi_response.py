@@ -17,7 +17,8 @@ class GandiResponse:
     Attributes:
         status: HTTP status code: 2xx, or 303 when Gandi points to the resulting
             resource of a completed operation (not followed).
-        data: Decoded JSON body, or ``None`` when the body is empty. Untrusted data.
+        data: Decoded JSON body (the text of the body when text was asked), or ``None``
+            when the body is empty. Untrusted data.
         total_count: Total number of items of a paginated list, when given.
         filtered_count: Number of items matching the filters of a list, when given.
         location: URL of a created resource, when given.

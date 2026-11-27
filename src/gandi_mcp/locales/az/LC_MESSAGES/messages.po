@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 00:10+0100\n"
+"POT-Creation-Date: 2026-11-27 23:45+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: az\n"
@@ -215,6 +215,12 @@ msgid "The confirmation was not given in time: nothing was changed."
 msgstr "Təsdiq vaxtında verilmədi: heç nə dəyişdirilmədi."
 
 # needs-review
+msgid ""
+"The file could not be read or written in the work directory: check its permissions and that it is"
+" UTF-8 text."
+msgstr "Fayl iş qovluğunda oxuna və ya yazıla bilmədi: onun icazələrini və UTF-8 mətn olduğunu yoxlayın."
+
+# needs-review
 msgid "The keyring of the system is unavailable. Nothing was saved: unlock or install it, then try again."
 msgstr ""
 "Sistemin açar dəsti əlçatan deyil. Heç nə yadda saxlanılmadı: onu kilidini açın və ya quraşdırın,"
@@ -301,6 +307,24 @@ msgid "This domain is not available for registration: nothing was bought."
 msgstr "Bu domen qeydiyyat üçün mövcud deyil: heç nə alınmadı."
 
 # needs-review
+msgid "This file already exists in the work directory: choose another name, or ask to replace it."
+msgstr "Bu fayl iş qovluğunda artıq mövcuddur: başqa ad seçin və ya onun əvəz edilməsini istəyin."
+
+# needs-review
+msgid "This file does not exist in the work directory: check its name."
+msgstr "Bu fayl iş qovluğunda mövcud deyil: adını yoxlayın."
+
+# needs-review
+msgid "This file is too large to be read: nothing was changed."
+msgstr "Bu fayl oxunmaq üçün çox böyükdür: heç nə dəyişdirilmədi."
+
+# needs-review
+msgid ""
+"This file path is not allowed: give a path inside the work directory, without .. nor a drive "
+"letter."
+msgstr "Bu fayl yoluna icazə verilmir: iş qovluğunun daxilində, .. və disk hərfi olmadan yol göstərin."
+
+# needs-review
 msgid "This is not a valid Personal Access Token."
 msgstr "Bu etibarlı Personal Access Token deyil."
 
@@ -319,6 +343,14 @@ msgstr "Bu ad etibarlı domen adı deyil: yazılışını yoxlayın, məsələn 
 # needs-review
 msgid "This page has expired or was already used. Nothing was changed."
 msgstr "Bu səhifənin vaxtı keçib və ya artıq istifadə olunub. Heç nə dəyişdirilmədi."
+
+# needs-review
+msgid ""
+"This record name or type is not valid: use a name relative to the zone (@, www, _dmarc) and a "
+"type such as A, MX or TXT."
+msgstr ""
+"Bu qeyd adı və ya növü etibarlı deyil: zonaya nisbətən ad (@, www, _dmarc) və A, MX və ya TXT "
+"kimi növ istifadə edin."
 
 # needs-review
 msgid "This request was refused. Nothing was changed."

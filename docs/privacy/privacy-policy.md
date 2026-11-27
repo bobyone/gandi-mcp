@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Privacy policy (draft)
 
 > Draft to be validated by a legal professional; not legal advice. Version
-> 0.4, 2026-11-27. **The [French version](privacy-policy.fr.md) is
+> 0.5, 2026-11-27. **The [French version](privacy-policy.fr.md) is
 > authoritative**; this English text and the other languages are
 > translations. It will be made accessible from the MCP App UI.
 >
@@ -45,7 +45,15 @@ organization) remain responsible for the data you process with it.
   by the Gandi organization you choose.
 - **Your Gandi data** (domains and their contacts, DNS records, mailboxes,
   certificates, hosting, invoices): fetched from Gandi when a tool needs it,
-  kept in memory only, never written to disk by the software.
+  kept in memory only, never written to disk by the software unless you ask
+  for an export. DNS records may hold personal data (an email address in a
+  TXT record); long values are withheld from the model.
+- **The files you export** (zone files, configuration samples of TSIG keys):
+  written, at your request, to the work directory of the software on your
+  computer, and kept until you delete them. The model only learns their name,
+  size and number of records. A configuration sample holds the secret of its
+  key: its file is readable by you only, and that secret is never shown to the
+  model.
 
 ## Who receives it
 
@@ -56,8 +64,9 @@ organization) remain responsible for the data you process with it.
 
 ## Your rights
 
-The software keeps no copy of your Gandi data. To remove a token and the
-settings of its account, remove the account in the software: it deletes both. Exercise your rights on data
+The software keeps no copy of your Gandi data, except the files you export to
+its work directory, which you can delete at any time. To remove a token and
+the settings of its account, remove the account in the software: it deletes both. Exercise your rights on data
 held by Gandi or by your AI provider with them directly.
 
 ## Contact
