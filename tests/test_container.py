@@ -36,5 +36,37 @@ async def test_container_wires_the_server(tmp_path: Path) -> None:
     assert container.local_pages() is container.local_pages()
 
 
+# Tools of the model that the MCP App calls too (ADR 12): never restricted to the model.
+APP_CALLED_TOOLS = {
+    "domain_list",
+    "domain_details",
+    "domain_check_availability",
+    "domain_autorenew_update",
+    "domain_transfer_lock",
+    "domain_transfer_unlock",
+    "domain_nameservers_update",
+    "domain_renew",
+    "domain_register",
+    "list_organizations",
+    "set_paying_organization",
+}
+
+
+async def test_tools_called_by_the_app_stay_visible_to_it(tmp_path: Path) -> None:
+    path = tmp_path / "gandi-mcp.toml"
+    path.write_text(
+        f'[preferences]\npath = "{(tmp_path / "prefs.json").as_posix()}"\n', encoding="utf-8"
+    )
+    container = build_container(load_configuration(path))
+
+    async with Client(container.server()) as client:
+        tools = {tool.name: tool for tool in (await client.list_tools()).tools}
+
+    assert set(tools) >= APP_CALLED_TOOLS
+    for name in APP_CALLED_TOOLS:
+        visibility = ((tools[name].meta or {}).get("ui") or {}).get("visibility", ["model", "app"])
+        assert "app" in visibility, name
+
+
 def test_user_agent() -> None:
     assert user_agent("1.2.3") == "gandi-mcp/1.2.3"

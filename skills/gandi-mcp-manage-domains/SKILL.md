@@ -78,5 +78,12 @@ text kept out of the conversation: tell the user it can be read at Gandi;
 never guess its content. Email addresses and owner names show as
 `"hidden"`.
 
+**MCP App**: when the client renders it, `open_gandi_app` shows the
+"Domains" tab, where the user lists domains, sees their full contacts (which
+never reach the model), turns the automatic renewal and the transfer lock on
+or off, changes the nameservers, and renews or registers a domain. Suggest it
+when the user wants to browse many domains or to see contact details without
+sharing them with the model.
+
 If a tool fails, relay its message: it says what happened and how to fix it.
 For other problems, use the `gandi-mcp-troubleshoot` skill.

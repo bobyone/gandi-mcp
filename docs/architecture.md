@@ -608,13 +608,36 @@ conversation and never to invent a confirmation identifier.
 | `app.accounts_app_tools.AccountsAppTools` | `open_gandi_app` (model and app) and the app-only tools `app_list_accounts`, `app_add_account`, `app_update_account`, `app_replace_account_token`, `app_change_account_environment`, `app_remove_account`. Only these receive a token. They refuse clients that did not negotiate MCP Apps. Removing an account and allowing writes are confirmed through the same chain as for the model (elicitation, else local page); `app_update_account` and `app_remove_account` accept the `confirmation_id` of a pending confirmation. |
 
 The UI (`ui/src/`, TypeScript, React-Bootstrap) has the same layering:
-`api/accounts-api.ts` (abstraction `AccountsApi`), `api/mcp/mcp-accounts-api.ts`
-(calls the app-only tools through the host), `components/` (the "Accounts"
-screen: table, add, rename, replace token, change environment, set as default,
-read-only on and off, remove with a confirmation dialog; a pending server
-confirmation shows a message and a Continue button), `i18n/` (language of
-the host, then of the browser, then English; ICU catalogs). The host style
-variables theme Bootstrap through its CSS variables (`theme.css`).
+
+- `api/`: the abstractions `AccountsApi` (`accounts-api.ts`) and `DomainsApi`
+  (`domains-api.ts`), their values (`account.ts`, `organization.ts`,
+  `domain.ts`, `pending-confirmation.ts`) and errors (`AccountsError`,
+  `DomainsError`);
+- `api/mcp/`: their implementations through the host. `tool-caller.ts`
+  (`ToolCaller`, `callTool`, `pendingOf`) calls a tool and turns a refusal
+  into the error of the notion. `McpAccountsApi` calls the app-only account
+  tools and the organization tools; `McpDomainsApi` calls the domain tools of
+  the model (ADR 12), reads their `untrusted_data` defensively and asks for the
+  full contacts;
+- `components/`: `gandi-app.tsx` shows the "Accounts" and "Domains" tabs.
+  `accounts/` holds the "Accounts" screen (table, add, rename, replace token,
+  change environment, set as default, read-only on and off, paying
+  organization, remove with a confirmation dialog). `domains/` holds the
+  "Domains" screen: account selector, name filter, table and pagination,
+  details with the full contacts, automatic renewal, transfer lock,
+  nameservers, renewal and registration dialogs with an indicative price
+  (`duration-price.tsx`, `use-quote.ts`) and the owner form; dates and prices
+  are formatted by `Intl` (`format.ts`). `feedback-area.tsx` shows the outcome
+  of an action and, while a server confirmation is pending, a Continue button
+  that resumes the call with its `confirmation_id`; while the modal details
+  dialog is open, the feedback area is shown inside it so that it stays
+  reachable. A details or quote answer that is no longer the latest request
+  (another domain opened, name edited) is ignored;
+- `i18n/`: language of the host, then of the browser, then English; ICU
+  catalogs.
+
+The host style variables theme Bootstrap through its CSS variables
+(`theme.css`).
 
 ### Wiring: `gandi_mcp.container.ApplicationContainer`
 

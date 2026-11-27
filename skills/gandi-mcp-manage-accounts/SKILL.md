@@ -36,7 +36,8 @@ or their browser) where they type it.
    `list_organizations`, then `set_paying_organization` with the chosen
    `organization_id` (omit it to clear the choice). It only changes a
    preference on this computer; moving the account to another environment
-   clears it.
+   clears it. In the MCP App, the user can also choose it from the account's
+   actions ("Choose the paying organization").
 7. If a tool fails, relay its message: it says what happened and how to fix
    it. For keyring or browser problems, use the `gandi-mcp-troubleshoot`
    skill.

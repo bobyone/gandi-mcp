@@ -22,6 +22,8 @@ operating system keyring and never reaches the model.
 - [Architecture](docs/architecture.md)
 - How-to guides: [add a Gandi account](docs/how-to/add-a-gandi-account.md),
   [use the Gandi sandbox](docs/how-to/use-the-sandbox.md),
+  [manage your domains](docs/how-to/manage-domains.md),
+  [buy or renew a domain](docs/how-to/buy-or-renew-a-domain.md),
   [add a Gandi operation](docs/how-to/add-an-operation.md),
   [run the checks](docs/how-to/run-the-checks.md),
   [build and test the MCP App](docs/how-to/build-the-ui.md),

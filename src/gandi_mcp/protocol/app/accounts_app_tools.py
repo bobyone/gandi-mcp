@@ -70,7 +70,9 @@ class AccountsAppTools(AppModule):
             name="open_gandi_app",
             title="Open the Gandi app",
             description="Show the Gandi app, where the user manages the Gandi accounts "
-            "(add, rename, replace token, remove) and types tokens safely.",
+            "(add, rename, replace token, paying organization, remove) and types tokens "
+            "safely, and browses the domains, their details and contacts, and renews, "
+            "registers or changes them.",
             annotations=ToolAnnotations(read_only_hint=True, open_world_hint=False),
         )(self.open_gandi_app)
         bindings: list[tuple[Callable[..., Awaitable[dict[str, Any]]], str, ToolAnnotations]] = [

@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
-import { isValidName, isValidToken, type Environment } from "../api/account";
+import { isValidName, isValidToken, type Environment } from "../../api/account";
 
 export const ADMIN_URLS: Readonly<Record<Environment, string>> = {
   production: "https://admin.gandi.net/",
