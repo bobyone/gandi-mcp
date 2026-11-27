@@ -6,12 +6,12 @@ from collections.abc import Mapping
 
 from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.confirmation.secret_input import SecretInput
-from gandi_mcp.domains.exceptions import InvalidDomainInputError
 from gandi_mcp.gandi.gandi_client import GandiClient, QueryValue
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.i18n.message import Message
-from gandi_mcp.operations.domain.domain_endpoint import PLACEHOLDER, DomainEndpoint
+from gandi_mcp.operations.endpoint.endpoint import PLACEHOLDER, Endpoint
+from gandi_mcp.operations.endpoint.exceptions import InvalidEndpointArgumentsError
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
@@ -19,7 +19,7 @@ from gandi_mcp.secrets.secret_value import MAX_SECRET_LENGTH, SecretValue
 
 
 class EndpointOperation(Operation):
-    """An operation built from a :class:`DomainEndpoint` and its arguments.
+    """An operation built from an :class:`Endpoint` and its arguments.
 
     Path values must come from validated value objects (``DomainName``,
     ``HostLabel``...); each one fills exactly one path segment.
@@ -27,7 +27,7 @@ class EndpointOperation(Operation):
 
     def __init__(
         self,
-        endpoint: DomainEndpoint,
+        endpoint: Endpoint,
         path_values: Mapping[str, str],
         query: Mapping[str, QueryValue | None] | None = None,
         body: JsonValue = None,
@@ -36,19 +36,19 @@ class EndpointOperation(Operation):
         """Check the arguments against the specification.
 
         Raises:
-            InvalidDomainInputError: if a path value is missing or empty, or a query
+            InvalidEndpointArgumentsError: if a path value is missing or empty, or a query
                 parameter is not accepted by the endpoint.
         """
         if set(path_values) != set(endpoint.placeholders):
-            raise InvalidDomainInputError(f"{endpoint.name}: wrong path arguments")
+            raise InvalidEndpointArgumentsError(f"{endpoint.name}: wrong path arguments")
         if any(not value or "/" in value for value in path_values.values()):
-            raise InvalidDomainInputError(f"{endpoint.name}: invalid path argument")
+            raise InvalidEndpointArgumentsError(f"{endpoint.name}: invalid path argument")
         given: dict[str, QueryValue] = {
             key: value for key, value in (query or {}).items() if value is not None
         }
         unknown = sorted(set(given) - endpoint.query)
         if unknown:
-            raise InvalidDomainInputError(f"{endpoint.name}: unknown parameters {unknown}")
+            raise InvalidEndpointArgumentsError(f"{endpoint.name}: unknown parameters {unknown}")
         self._endpoint = endpoint
         self._path_values = dict(path_values)
         self._query = given
@@ -56,7 +56,7 @@ class EndpointOperation(Operation):
         self._description_params = dict(description_params or path_values)
 
     @property
-    def endpoint(self) -> DomainEndpoint:
+    def endpoint(self) -> Endpoint:
         """The specification this operation runs."""
         return self._endpoint
 

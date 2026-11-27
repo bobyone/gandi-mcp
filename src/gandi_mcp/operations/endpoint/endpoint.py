@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 bobyone
 # SPDX-License-Identifier: GPL-2.0-or-later
-"""Declarative specification of one endpoint of the Gandi Domain API."""
+"""Declarative specification of one endpoint of a Gandi API."""
 
 import re
 from dataclasses import dataclass, field
@@ -13,7 +13,7 @@ PLACEHOLDER = re.compile(r"^\{([a-z_]+)\}$")
 
 
 @dataclass(frozen=True)
-class DomainEndpoint:
+class Endpoint:
     """What an endpoint does and how to call it.
 
     Attributes:

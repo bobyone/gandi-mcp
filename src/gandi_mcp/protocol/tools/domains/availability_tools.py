@@ -12,10 +12,10 @@ from gandi_mcp.domains.domain_name import DomainName, TldName
 from gandi_mcp.gandi.gandi_response import JsonValue
 from gandi_mcp.operations.domain import domain_endpoints
 from gandi_mcp.protocol.tool_module import ToolModule
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
+from gandi_mcp.protocol.tools.domains.domain_parameters import DomainParameter
+from gandi_mcp.protocol.tools.endpoint_tool_runner import (
     AccountParameter,
-    DomainParameter,
-    DomainToolRunner,
+    EndpointToolRunner,
     PageParameter,
     PerPageParameter,
     add_read_tool,
@@ -62,7 +62,7 @@ def keep_create_status(data: JsonValue, processes: list[str]) -> JsonValue:
 class AvailabilityTools(ToolModule):
     """Availability, quotes and extensions (TLD)."""
 
-    def __init__(self, runner: DomainToolRunner) -> None:
+    def __init__(self, runner: EndpointToolRunner) -> None:
         self._runner = runner
 
     def register(self, server: MCPServer) -> None:

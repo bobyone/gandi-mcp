@@ -4,6 +4,7 @@
 
 import pytest
 
+from gandi_mcp.content.disclosure import Disclosure
 from gandi_mcp.content.long_text_filter import WITHHELD, LongTextFilter
 from gandi_mcp.gandi.gandi_response import JsonValue
 
@@ -55,3 +56,11 @@ def test_technical_values_are_kept_only_when_they_look_technical() -> None:
 def test_the_limit_is_positive() -> None:
     with pytest.raises(ValueError, match="positive"):
         LongTextFilter(0)
+
+
+def test_as_a_result_filter_nothing_long_is_disclosed() -> None:
+    data: JsonValue = {"note": "x" * 20}
+
+    assert LongTextFilter(10).filter(data, Disclosure(True, True)) == {
+        "note": {"withheld": WITHHELD, "length": 20}
+    }

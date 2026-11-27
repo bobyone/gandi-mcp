@@ -11,10 +11,10 @@ from pydantic import Field
 from gandi_mcp.domains.domain_name import DomainName
 from gandi_mcp.operations.domain import domain_endpoints
 from gandi_mcp.protocol.tool_module import ToolModule
-from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
+from gandi_mcp.protocol.tools.domains.domain_parameters import DomainParameter
+from gandi_mcp.protocol.tools.endpoint_tool_runner import (
     AccountParameter,
-    DomainParameter,
-    DomainToolRunner,
+    EndpointToolRunner,
     PageParameter,
     PerPageParameter,
     add_read_tool,
@@ -24,7 +24,7 @@ from gandi_mcp.protocol.tools.domains.domain_tool_runner import (
 class RedirectionTools(ToolModule):
     """Web redirections."""
 
-    def __init__(self, runner: DomainToolRunner) -> None:
+    def __init__(self, runner: EndpointToolRunner) -> None:
         self._runner = runner
 
     def register(self, server: MCPServer) -> None:

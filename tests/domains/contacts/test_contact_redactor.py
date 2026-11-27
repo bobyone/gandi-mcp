@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Tests of the minimization of contacts and authorization codes."""
 
+from gandi_mcp.content.disclosure import Disclosure
 from gandi_mcp.domains.contacts.contact_redactor import HIDDEN, ContactRedactor
 from gandi_mcp.gandi.gandi_response import JsonValue
 
@@ -154,3 +155,14 @@ def test_owner_names_of_domain_lists_are_hidden() -> None:
     assert ContactRedactor().apply(listing) == [
         {"fqdn": "example.net", "owner": "alice_doe", "domain_owner": HIDDEN}
     ]
+
+
+def test_as_a_result_filter_it_follows_the_disclosure() -> None:
+    data: JsonValue = {"owner": OWNER, "authinfo": "Auth-123"}
+    redactor = ContactRedactor()
+
+    hidden = redactor.filter(data, Disclosure())
+    shown = redactor.filter(data, Disclosure(True, True))
+
+    assert hidden == redactor.apply(data)
+    assert shown == data

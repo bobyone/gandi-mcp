@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Shared runner of the order tools: account, order rules, framing."""
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from typing import Annotated, Any
 
 from mcp.server.mcpserver import Context
@@ -12,12 +12,13 @@ from pydantic import Field
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.organization_id import OrganizationId
 from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
-from gandi_mcp.content.long_text_filter import LongTextFilter
-from gandi_mcp.domains.contacts.contact_redactor import ContactRedactor
+from gandi_mcp.content.disclosure import Disclosure
+from gandi_mcp.content.result_filter import ResultFilter
 from gandi_mcp.domains.registration_duration import MAX_YEARS, MIN_YEARS
 from gandi_mcp.operations.billable_operation import BillableOperation
 from gandi_mcp.operations.order_executor import OrderExecutor
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools, pending
+from gandi_mcp.protocol.tools.endpoint_tool_runner import filtered
 from gandi_mcp.protocol.untrusted_result_presenter import present
 
 BILLABLE = ToolAnnotations(
@@ -45,13 +46,12 @@ class DomainOrderRunner:
         self,
         orders: OrderExecutor,
         accounts: AccountsTools,
-        redactor: ContactRedactor,
-        long_texts: LongTextFilter,
+        filters: Sequence[ResultFilter],
     ) -> None:
+        """``filters`` rewrite every result shown to the model, in order (ADR 10)."""
         self._orders = orders
         self._accounts = accounts
-        self._redactor = redactor
-        self._long_texts = long_texts
+        self._filters = tuple(filters)
 
     async def order(
         self,
@@ -79,7 +79,7 @@ class DomainOrderRunner:
             )
             if isinstance(outcome, ConfirmationDecision):
                 return pending(outcome)
-            data = self._long_texts.apply(self._redactor.apply(outcome.data))
+            data = filtered(self._filters, outcome.data, Disclosure())
             framed = present(outcome, data)
             framed["status"] = "ordered"
             if built.follow_up is not None:
