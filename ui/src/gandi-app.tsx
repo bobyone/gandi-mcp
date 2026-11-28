@@ -10,8 +10,10 @@ import Tabs from "react-bootstrap/Tabs";
 import { I18nextProvider } from "react-i18next";
 import { McpAccountsApi } from "./api/mcp/mcp-accounts-api";
 import { McpDomainsApi } from "./api/mcp/mcp-domains-api";
+import { McpLiveDnsApi } from "./api/mcp/mcp-livedns-api";
 import { AccountsScreen } from "./components/accounts/accounts-screen";
 import { DomainsScreen } from "./components/domains/domains-screen";
+import { ZoneScreen } from "./components/livedns/zone-screen";
 import { createI18n, negotiate } from "./i18n/i18n";
 
 export interface GandiAppProps {
@@ -20,7 +22,7 @@ export interface GandiAppProps {
   readonly error: Error | null;
 }
 
-/** Root of the MCP App: host theme and language, then the accounts and domains tabs. */
+/** Root of the MCP App: host theme and language, then the accounts, domains and DNS zone tabs. */
 export function GandiApp({ app, error }: GandiAppProps) {
   const context = app?.getHostContext();
   useHostStyles(app, context ?? null);
@@ -43,7 +45,14 @@ export function GandiApp({ app, error }: GandiAppProps) {
   }, [language, context?.theme]);
 
   const api = useMemo(
-    () => (app ? { accounts: new McpAccountsApi(app), domains: new McpDomainsApi(app) } : null),
+    () =>
+      app
+        ? {
+            accounts: new McpAccountsApi(app),
+            domains: new McpDomainsApi(app),
+            livedns: new McpLiveDnsApi(app),
+          }
+        : null,
     [app],
   );
 
@@ -65,6 +74,9 @@ export function GandiApp({ app, error }: GandiAppProps) {
           </Tab>
           <Tab eventKey="domains" title={i18n.t("tab.domains")}>
             <DomainsScreen domains={api.domains} accounts={api.accounts} />
+          </Tab>
+          <Tab eventKey="zone" title={i18n.t("tab.zone")}>
+            <ZoneScreen livedns={api.livedns} accounts={api.accounts} />
           </Tab>
         </Tabs>
       )}

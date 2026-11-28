@@ -56,6 +56,13 @@ GLOSSARY_KEYS = {
     "Registration": "action.register",
     "Expiry date": "column.expiry",
     "Availability": "action.checkAvailability",
+    "LiveDNS domain": "field.liveDnsDomain",
+    "Zone": "tab.zone",
+    "Record name": "field.recordName",
+    "Record type": "field.recordType",
+    "Record value": "field.recordValues",
+    "TTL": "field.ttl",
+    "Snapshot": "zone.snapshots",
 }
 SOURCE_LANGUAGE = "en"
 KEY_CALL = re.compile(r"""\bt\(\s*(["'`])((?:(?!\1).)+)\1""")

@@ -17,3 +17,13 @@ export function formatPrice(amount: number, currency: string, language: string):
     return null;
   }
 }
+
+/** A date and time stored in UTC, shown in the user's language and time zone; null if invalid. */
+export function formatDateTime(iso: string | null, language: string): string | null {
+  if (iso === null) return null;
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return null;
+  return new Intl.DateTimeFormat(language, { dateStyle: "medium", timeStyle: "short" }).format(
+    date,
+  );
+}

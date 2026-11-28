@@ -87,6 +87,11 @@ All notable changes are documented here. The format follows
   snapshot first, a choice the user makes outside the conversation (ADR 14). (#6)
 - A confirmation can offer a yes or no option, shown in the client form or as
   a checkbox of the local page (ADR 14). (#6)
+- App-only tool `app_livedns_records`: the records of a zone with their full
+  values, long DKIM keys included, for the MCP App only (ADR 16). (#6)
+- MCP App: a "DNS zone" screen to browse the records of a LiveDNS domain
+  (type filter, pages, full values), add, edit and delete a record, and create
+  or restore a snapshot, confirmed by the server. (#6)
 
 ### Changed
 

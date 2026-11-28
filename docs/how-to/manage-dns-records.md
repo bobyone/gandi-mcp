@@ -6,10 +6,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Manage your DNS records
 
 Look up the zones that Gandi LiveDNS serves for your domains, from the
-conversation. Try it first with a [sandbox](use-the-sandbox.md) account, if
-LiveDNS is available there for your domains.
-
-> The "DNS zone" screen of the MCP App comes in the next step of issue #6.
+conversation or from the "DNS zone" screen of the MCP App. Try it first with a
+[sandbox](use-the-sandbox.md) account, if LiveDNS is available there for your
+domains.
 
 ## From the conversation
 
@@ -95,3 +94,24 @@ long TXT records) is withheld from the model; export the zone to read it (see
   switch the domain to LiveDNS with `domain_livedns_enable` if needed.
 
 See the `gandi-mcp-troubleshoot` skill for the other errors.
+
+## From the MCP App
+
+Ask your assistant to open the Gandi app (`open_gandi_app`), then choose the
+**DNS zone** tab:
+
+1. choose the account and the **LiveDNS domain**; filter the records by
+   **Type** if needed. Values are shown in full, long DKIM keys included: they
+   never reach the model;
+2. **Add record**: type the name, the type, the TTL (empty for the default)
+   and the values, one per line. If the same record already exists, nothing
+   changes and the screen says so;
+3. **Edit** replaces the values and the TTL of a record; its name and type stay
+   fixed (delete it and add a new one to change them). **Delete** removes it;
+4. under **Snapshots**, **Create snapshot** saves the zone, and **Restore**
+   puts back every record of a snapshot.
+
+Edit, delete and restore are confirmed by gandi-mcp outside the App, as from
+the conversation, with the counted effect and the snapshot option; then select
+**Continue** in the App. With a read-only account, the screen only shows the
+records and snapshots.
