@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Privacy policy (draft)
 
 > Draft to be validated by a legal professional; not legal advice. Version
-> 0.5, 2026-11-27. **The [French version](privacy-policy.fr.md) is
+> 0.6, 2026-11-28. **The [French version](privacy-policy.fr.md) is
 > authoritative**; this English text and the other languages are
 > translations. It will be made accessible from the MCP App UI.
 >
@@ -54,6 +54,9 @@ organization) remain responsible for the data you process with it.
   size and number of records. A configuration sample holds the secret of its
   key: its file is readable by you only, and that secret is never shown to the
   model.
+- **The zone files you import**: read from the work directory and sent to
+  Gandi only, to replace the records of the zone; the model only learns their
+  name, size and number of records.
 
 ## Who receives it
 
