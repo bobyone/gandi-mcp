@@ -81,12 +81,18 @@ class PendingConfirmations:
         return pending
 
     def answer(
-        self, confirmation_id: str, accepted: bool, secret: SecretValue | None = None
+        self,
+        confirmation_id: str,
+        accepted: bool,
+        secret: SecretValue | None = None,
+        *,
+        option_chosen: bool = False,
     ) -> PendingConfirmation:
         """Record the user's answer, given on the local page.
 
         The secret is kept only with an acceptance of a request asking for one, until
-        the confirmation is used or expires.
+        the confirmation is used or expires; the option choice only with an acceptance
+        of a request offering an option.
 
         Raises:
             ConfirmationMismatchError, ConfirmationExpiredError: as :meth:`get`.
@@ -98,7 +104,8 @@ class PendingConfirmations:
             raise SecretInputMissingError("this confirmation needs a secret")
         state = PendingState.ACCEPTED if accepted else PendingState.REFUSED
         kept = secret if accepted and asks_secret else None
-        answered = replace(pending, state=state, secret=kept)
+        chosen = accepted and pending.request.option is not None and option_chosen
+        answered = replace(pending, state=state, secret=kept, option_chosen=chosen)
         self._items[confirmation_id] = answered
         if kept is not None:
             entry = weakref.ref(answered)

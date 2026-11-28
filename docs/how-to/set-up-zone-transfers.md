@@ -9,9 +9,6 @@ A secondary DNS server of yours can copy a LiveDNS zone (zone transfer,
 AXFR). LiveDNS lets it do so from the IP addresses you allow, authenticated by
 a TSIG key.
 
-> In this version, the zone transfer tools only read. Adding a secondary
-> server, creating or associating a TSIG key come in the next sub-batch of
-> issue #6.
 
 ## Check the current settings
 
@@ -25,6 +22,16 @@ zone of example.com" or "list my TSIG keys". It uses the `livedns_*` tools
 
 The secret of a TSIG key is never shown in the conversation: it appears as
 `hidden`.
+
+## Allow a secondary server
+
+1. "allow 192.0.2.53 to transfer the zone of example.com":
+   `livedns_secondary_server_add`.
+2. To authenticate the transfers, "create a TSIG key" (`livedns_tsig_key_create`),
+   then "use it for example.com" (`livedns_domain_tsig_key_add`).
+3. To stop, `livedns_secondary_server_remove` or
+   `livedns_domain_tsig_key_remove`: you confirm them outside the
+   conversation.
 
 ## Configure the secondary server
 

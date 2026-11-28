@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:52+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: tr\n"
@@ -64,6 +64,18 @@ msgstr "{account} test hesabında (sandbox) onaylayın: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Onay - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Önce bölgenin anlık görüntüsünü oluştur (otomatik anlık görüntüler kapalı)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Önce bölgenin anlık görüntüsünü oluştur (otomatik anlık görüntüler açık: LiveDNS her "
+"değişiklikten sonra da bölgeyi kaydeder)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -263,6 +275,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Bu hesabın kaldırılması yarıda kesildi: tamamlamak için hesabı yeniden kaldırın."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Bölgenin anlık görüntüsü oluşturulamadı: hiçbir şey değiştirilmedi."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Bu hesabın tokenı anahtarlıkta yok: hesabın tokenını değiştirin."
 
@@ -361,6 +377,12 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Bu araç yalnızca Gandi uygulamasından kullanılabilir."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr ""
+"Tek bir değiştirme için çok fazla kayıt: bölgeyi dışa aktarın, dosyayı düzenleyin, ardından içe "
+"aktarın."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Gandi'ye çok fazla istek gönderildi: bir dakika bekleyin, ardından tekrar deneyin."
 
@@ -399,6 +421,11 @@ msgstr "{domain} alan adının başka bir kayıt kuruluşuna aktarımını redde
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "{domain} bölgesinin tüm kayıtlarını silmek (şimdi: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "{domain} alan adının {id} DNSSEC anahtarını sil"
 
@@ -414,13 +441,42 @@ msgstr "{domain} alan adının {host} glue kaydını sil"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "{domain} bölgesinde {name} kayıtlarını silmek (şimdi: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"{domain} bölgesinin {key} imzalama anahtarını silmek: DS kaydı hâlâ kayıt kuruluşunda "
+"yayımlanıyorsa alan adı çözümlenmeyi bırakabilir"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "{domain} bölgesinin {snapshot} anlık görüntüsünü silmek"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "{host} web yönlendirmesini sil"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "{domain} bölgesinde {name} için {type} kaydını silmek (değerler: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "{domain} için DNSSEC'i devre dışı bırak"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "{key} TSIG anahtarını {domain} bölgesinden ayırmak"
 
 # needs-review
 #, python-brace-format
@@ -459,6 +515,15 @@ msgstr "{account} hesabını ve tokenını bu bilgisayardan kaldırmak"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"{domain} bölgesinde {name} için {type} kaydından değerleri kaldırmak (kaldırılan: {count}, kalan:"
+" {left}; hiç kalmazsa kayıt silinir)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "{domain} alan adını {count} yıllığına yenile: vergiler dahil {price}"
@@ -468,6 +533,42 @@ msgstr[1] "{domain} alan adını {count} yıllığına yenile: vergiler dahil {p
 #, python-brace-format
 msgid "replace all the DNSSEC keys of {domain}"
 msgstr "{domain} alan adının tüm DNSSEC anahtarlarını değiştir"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"{domain} bölgesinin tüm kayıtlarını değiştirmek (şimdi: {count}, değişiklikten sonra: {new}); @ "
+"üzerindeki NS kayıtları korunur"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"{domain} bölgesinin tüm kayıtlarını değiştirmek (şimdi: {count}, değişiklikten sonra: {new}); @ "
+"üzerindeki NS kayıtları da kaldırılır"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"{domain} bölgesinin tüm kayıtlarını {snapshot} anlık görüntüsüyle değiştirmek (şimdi: {count}, "
+"değişiklikten sonra: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"{domain} bölgesinin tüm kayıtlarını {file} bölge dosyasıyla değiştirmek (şimdi: {count}, "
+"değişiklikten sonra: {new})"
 
 # needs-review
 #, python-brace-format
@@ -481,6 +582,20 @@ msgstr "{domain} ad sunucularını değiştir; yanlış bir liste alan adını e
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "{domain} bölgesinde {name} kayıtlarını değiştirmek (şimdi: {count}, değişiklikten sonra: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"{domain} bölgesinde {name} için {type} kaydının değerlerini değiştirmek (şimdi: {count}, "
+"değişiklikten sonra: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "{domain} yetki kodunu sıfırla: mevcut kod çalışmayı bırakır"
 
@@ -488,6 +603,11 @@ msgstr "{domain} yetki kodunu sıfırla: mevcut kod çalışmayı bırakır"
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "{domain} alan adını geri yükle: vergiler dahil {price}"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "{ip} adresinin {domain} bölgesini aktarmasına artık izin vermemek"
 
 # needs-review
 #, python-brace-format

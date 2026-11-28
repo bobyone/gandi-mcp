@@ -5,6 +5,8 @@
 COMMENT = ";"
 DIRECTIVE = "$"
 CLASSES = frozenset({"IN", "CH", "HS"})
+# Not a record of the API: LiveDNS manages it and leaves it out of its record lists.
+SOA = "SOA"
 
 
 def _name_and_type(line: str, previous_name: str | None) -> tuple[str | None, str | None]:
@@ -28,6 +30,9 @@ def _name_and_type(line: str, previous_name: str | None) -> tuple[str | None, st
 def record_count(zone_file: str) -> int:
     """Number of records of a zone file: distinct name and type pairs (RRsets).
 
+    The SOA record is not counted, as in the record lists of LiveDNS, so that the
+    count of an export matches the count of the zone.
+
     Blank lines, comments and directives (``$ORIGIN``, ``$TTL``) are skipped; the
     values of one name and type count once, whether on one or several lines; a
     record spread over several lines between parentheses counts once. The count is
@@ -41,7 +46,7 @@ def record_count(zone_file: str) -> int:
         if depth == 0 and content.strip() and not content.strip().startswith(DIRECTIVE):
             name, record_type = _name_and_type(content, previous_name)
             previous_name = name
-            if record_type is not None:
+            if record_type is not None and record_type != SOA:
                 records.add((name.lower() if name else name, record_type))
         depth = max(0, depth + content.count("(") - content.count(")"))
     return len(records)

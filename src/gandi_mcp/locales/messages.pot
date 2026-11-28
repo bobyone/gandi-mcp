@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,6 +51,14 @@ msgid "Confirm on the sandbox account {account}: {action}"
 msgstr ""
 
 msgid "Confirmation - gandi-mcp"
+msgstr ""
+
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr ""
+
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS "
+"also saves the zone after each change)"
 msgstr ""
 
 msgid "Create a token in the Gandi administration"
@@ -216,6 +224,9 @@ msgid ""
 "finish it."
 msgstr ""
 
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr ""
+
 msgid ""
 "The token of this account is missing from the keyring: replace the token "
 "of the account."
@@ -303,6 +314,11 @@ msgstr ""
 msgid "This tool can only be used from the Gandi app."
 msgstr ""
 
+msgid ""
+"Too many records for one replacement: export the zone, edit the file, "
+"then import it."
+msgstr ""
+
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr ""
 
@@ -335,6 +351,10 @@ msgid "decline the transfer of {domain} to another registrar"
 msgstr ""
 
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr ""
+
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr ""
 
@@ -347,11 +367,35 @@ msgid "delete the glue record {host} of {domain}"
 msgstr ""
 
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is"
+" still published at the registry, the domain may stop resolving"
+msgstr ""
+
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr ""
+
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr ""
 
 #, python-brace-format
+msgid ""
+"delete the {type} record of {name} in the zone of {domain} (values: "
+"{count})"
+msgstr ""
+
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
+msgstr ""
+
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
 msgstr ""
 
 #, python-brace-format
@@ -382,6 +426,12 @@ msgid "remove the account {account} and its token from this computer"
 msgstr ""
 
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} "
+"(removed: {count}, left: {left}; with none left, the record is deleted)"
+msgstr ""
+
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] ""
@@ -389,6 +439,30 @@ msgstr[1] ""
 
 #, python-brace-format
 msgid "replace all the DNSSEC keys of {domain}"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the "
+"change: {new}); its NS records at @ are kept"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the "
+"change: {new}); its NS records at @ are removed too"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot "
+"{snapshot} (now: {count}, after the change: {new})"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file}"
+" (now: {count}, after the change: {new})"
 msgstr ""
 
 #, python-brace-format
@@ -402,11 +476,27 @@ msgid ""
 msgstr ""
 
 #, python-brace-format
+msgid ""
+"replace the records of {name} in the zone of {domain} (now: {count}, "
+"after the change: {new})"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain}"
+" (now: {count}, after the change: {new})"
+msgstr ""
+
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr ""
 
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
+msgstr ""
+
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
 msgstr ""
 
 #, python-brace-format

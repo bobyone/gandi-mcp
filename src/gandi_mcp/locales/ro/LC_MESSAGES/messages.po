@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ro\n"
@@ -65,6 +65,18 @@ msgstr "Confirmați în contul de test (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Confirmare - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Creați mai întâi un instantaneu al zonei (instantaneele automate sunt dezactivate)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Creați mai întâi un instantaneu al zonei (instantaneele automate sunt activate: LiveDNS salvează "
+"zona și după fiecare modificare)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -272,6 +284,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Eliminarea acestui cont a fost întreruptă: eliminați din nou contul pentru a o finaliza."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Instantaneul zonei nu a putut fi creat: nu s-a modificat nimic."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Tokenul acestui cont lipsește din brelocul de chei: înlocuiți tokenul contului."
 
@@ -376,6 +392,12 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Acest instrument poate fi folosit doar din aplicația Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr ""
+"Prea multe înregistrări pentru o singură înlocuire: exportați zona, editați fișierul, apoi "
+"importați-l."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Au fost trimise prea multe cereri către Gandi: așteptați un minut, apoi încercați din nou."
 
@@ -414,6 +436,11 @@ msgstr "refuzare transfer {domain} la alt registrar"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "ștergeți toate înregistrările zonei {domain} (acum: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "ștergere cheie DNSSEC {id} a {domain}"
 
@@ -429,13 +456,42 @@ msgstr "ștergere înregistrare glue {host} a {domain}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "ștergeți înregistrările lui {name} din zona {domain} (acum: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"ștergeți cheia de semnare {key} a zonei {domain}: dacă înregistrarea sa DS este încă publicată la"
+" registru, domeniul poate înceta să fie rezolvat"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "ștergeți instantaneul {snapshot} al zonei {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "ștergere redirecționare web pentru {host}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "ștergeți înregistrarea {type} a lui {name} din zona {domain} (valori: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "dezactivare DNSSEC pentru {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "disociați cheia TSIG {key} de zona {domain}"
 
 # needs-review
 #, python-brace-format
@@ -475,6 +531,15 @@ msgstr "eliminarea contului {account} și a tokenului său de pe acest computer"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"eliminați valori ale înregistrării {type} a lui {name} din zona {domain} (eliminate: {count}, "
+"rămase: {left}; dacă nu rămâne niciuna, înregistrarea este ștearsă)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "reînnoire {domain} pentru {count} an: {price} cu taxe"
@@ -488,6 +553,42 @@ msgstr "înlocuire toate cheile DNSSEC ale {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"înlocuiți toate înregistrările zonei {domain} (acum: {count}, după modificare: {new}); "
+"înregistrările sale NS la @ se păstrează"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"înlocuiți toate înregistrările zonei {domain} (acum: {count}, după modificare: {new}); se elimină"
+" și înregistrările sale NS la @"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"înlocuiți toate înregistrările zonei {domain} cu instantaneul {snapshot} (acum: {count}, după "
+"modificare: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"înlocuiți toate înregistrările zonei {domain} cu fișierul de zonă {file} (acum: {count}, după "
+"modificare: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "înlocuire toate etichetele {domain}"
 
@@ -498,6 +599,20 @@ msgstr "înlocuire servere de nume pentru {domain}; o listă greșită face dome
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "înlocuiți înregistrările lui {name} din zona {domain} (acum: {count}, după modificare: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"înlocuiți valorile înregistrării {type} a lui {name} din zona {domain} (acum: {count}, după "
+"modificare: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "resetare cod de autorizare pentru {domain}: codul actual nu va mai funcționa"
 
@@ -505,6 +620,11 @@ msgstr "resetare cod de autorizare pentru {domain}: codul actual nu va mai func�
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "restaurare {domain}: {price} cu taxe"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "nu mai permiteți lui {ip} să transfere zona {domain}"
 
 # needs-review
 #, python-brace-format

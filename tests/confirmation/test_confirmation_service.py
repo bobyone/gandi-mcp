@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Unit tests of the chain of confirmation channels, with doubles."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 import pytest
 
@@ -11,6 +11,7 @@ from gandi_mcp.accounts.environment import Environment
 from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChannel
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_context import ConfirmationContext
+from gandi_mcp.confirmation.confirmation_option import ConfirmationOption
 from gandi_mcp.confirmation.confirmation_request import ConfirmationRequest
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.exceptions import (
@@ -197,3 +198,39 @@ async def test_the_secret_typed_on_the_page_comes_back_once(chain: Chain) -> Non
     assert "Auth-123" not in repr(resumed)
     with pytest.raises(ConfirmationMismatchError):
         await chain.service.confirm(asks_secret, ConfirmationContext(), decision.confirmation_id)
+
+
+OPTION = ConfirmationOption(Message("Create a snapshot first"))
+
+
+@pytest.mark.parametrize("chosen", [True, False])
+async def test_elicitation_offers_the_option(chain: Chain, chosen: bool) -> None:
+    interaction = ScriptedInteraction(option_answer=chosen)
+    offered = replace(request(), option=OPTION)
+
+    decision = await chain.service.confirm(offered, ConfirmationContext(interaction))
+
+    assert decision.accepted
+    assert decision.option_chosen is chosen
+    assert interaction.options == [("Create a snapshot first", True)]
+
+
+async def test_elicitation_with_an_option_can_be_refused(chain: Chain) -> None:
+    offered = replace(request(), option=OPTION)
+
+    with pytest.raises(ConfirmationRefusedError):
+        await chain.service.confirm(offered, ConfirmationContext(ScriptedInteraction(answer=False)))
+
+
+async def test_the_option_chosen_on_a_local_page_comes_back_on_resume(chain: Chain) -> None:
+    offered = replace(request(), option=OPTION)
+    pending = await chain.service.confirm(
+        offered, ConfirmationContext(ScriptedInteraction(confirmations=False, links=False))
+    )
+    assert pending.confirmation_id is not None
+    chain.pending.answer(pending.confirmation_id, True, option_chosen=True)
+
+    decision = await chain.service.confirm(offered, ConfirmationContext(), pending.confirmation_id)
+
+    assert decision.accepted
+    assert decision.option_chosen

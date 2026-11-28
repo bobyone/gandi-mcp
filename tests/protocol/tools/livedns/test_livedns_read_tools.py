@@ -14,7 +14,9 @@ from gandi_mcp.accounts.account_draft import AccountDraft
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChannel
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
+from gandi_mcp.confirmation.confirmation_channel import ConfirmationChannel
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
 from gandi_mcp.content.long_text_filter import WITHHELD, LongTextFilter
@@ -40,8 +42,10 @@ from gandi_mcp.protocol.tools.endpoint_tool_runner import EndpointToolRunner
 from gandi_mcp.protocol.tools.livedns.domain_tools import LiveDnsDomainTools
 from gandi_mcp.protocol.tools.livedns.livedns_parameters import EXPORT_NOTICE
 from gandi_mcp.protocol.tools.livedns.record_read_tools import RecordReadTools
+from gandi_mcp.protocol.tools.livedns.record_write_tools import RecordWriteTools
 from gandi_mcp.protocol.tools.livedns.signing_key_tools import SigningKeyTools
 from gandi_mcp.protocol.tools.livedns.snapshot_tools import SnapshotTools
+from gandi_mcp.protocol.tools.livedns.verification_tools import VerificationTools
 from gandi_mcp.protocol.tools.livedns.zone_tools import ZoneTools
 from gandi_mcp.protocol.tools.livedns.zone_transfer_tools import ZoneTransferTools
 from gandi_mcp.protocol.untrusted_result_presenter import UNTRUSTED_NOTICE
@@ -105,18 +109,27 @@ class Setup:
     accounts: AccountService
     gandi: FakeGandiClient
     files: InMemoryWorkDirectory
+    pending: PendingConfirmations
 
 
 @pytest.fixture
 def setup() -> Setup:
+    return build()
+
+
+def build(*, elicitation: bool = False) -> Setup:
+    """The LiveDNS tools over doubles; with ``elicitation``, confirmations are asked in
+    the client first."""
     secrets, verifier = InMemorySecretStore(), StubTokenVerifier()
     verifier.accept(Environment.SANDBOX, TOKEN)
     accounts = AccountService(InMemoryPreferencesStore(), secrets, verifier)
     translator, presenter = SourceTranslator(), LinkPresenter(FakeBrowser())
     pending = PendingConfirmations(300)
-    confirmation = ConfirmationService(
-        [LocalLinkChannel(pending, FakeConfirmationPage(), presenter, translator)], pending
-    )
+    local = LocalLinkChannel(pending, FakeConfirmationPage(), presenter, translator)
+    channels: list[ConfirmationChannel] = [local]
+    if elicitation:
+        channels.insert(0, ElicitationChannel(translator))
+    confirmation = ConfirmationService(channels, pending)
     tools = AccountsTools(
         accounts,
         confirmation,
@@ -130,16 +143,18 @@ def setup() -> Setup:
         executor, tools, [ContactRedactor(), SecretFieldFilter(), LongTextFilter(280)]
     )
     exporter = TextFileExporter(executor, files)
-    zone_files = ZoneFileService(exporter)
+    zone_files = ZoneFileService(exporter, files, 1000)
     modules = [
         LiveDnsDomainTools(runner),
         RecordReadTools(runner),
-        ZoneTools(zone_files, tools),
+        RecordWriteTools(runner),
+        VerificationTools(runner),
+        ZoneTools(runner, zone_files, tools),
         SnapshotTools(runner, zone_files, tools),
         SigningKeyTools(runner),
         ZoneTransferTools(runner, exporter, tools),
     ]
-    return Setup(create_server("1.0.0", modules), accounts, gandi, files)
+    return Setup(create_server("1.0.0", modules), accounts, gandi, files, pending)
 
 
 async def add(setup: Setup) -> None:
@@ -166,9 +181,11 @@ async def call(setup: Setup, name: str, arguments: dict[str, Any]) -> types.Call
 
 async def test_one_read_only_tool_per_read_endpoint(setup: Setup) -> None:
     async with Client(setup.server) as session:
-        tools = {tool.name: tool for tool in (await session.list_tools()).tools}
+        listed = (await session.list_tools()).tools
+    read_names = {endpoint.name for endpoint in livedns_endpoints.READ_ENDPOINTS}
+    tools = {tool.name: tool for tool in listed if tool.name in read_names}
 
-    assert set(tools) == {endpoint.name for endpoint in livedns_endpoints.READ_ENDPOINTS}
+    assert set(tools) == read_names
     assert set(tools) == set(CALLS) | FILE_TOOLS
     for tool in tools.values():
         assert tool.annotations is not None

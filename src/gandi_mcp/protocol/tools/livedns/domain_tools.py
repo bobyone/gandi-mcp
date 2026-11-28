@@ -1,11 +1,12 @@
 # SPDX-FileCopyrightText: 2026 bobyone
 # SPDX-License-Identifier: GPL-2.0-or-later
-"""Model tools reading the record types, the LiveDNS domains and their nameservers."""
+"""Model tools on the record types, the LiveDNS domains and their nameservers."""
 
-from typing import Any
+from typing import Annotated, Any
 
 from mcp.server import MCPServer
 from mcp.server.mcpserver import Context
+from pydantic import Field
 
 from gandi_mcp.domains.domain_name import DomainName
 from gandi_mcp.operations.livedns import livedns_endpoints
@@ -16,9 +17,11 @@ from gandi_mcp.protocol.tools.endpoint_tool_runner import (
     PageParameter,
     PerPageParameter,
     add_read_tool,
+    add_write_tool,
 )
 from gandi_mcp.protocol.tools.livedns.livedns_parameters import (
     LiveDnsDomainParameter,
+    RecordParameter,
     SharingIdParameter,
     sharing_id,
 )
@@ -66,6 +69,22 @@ class LiveDnsDomainTools(ToolModule):
         )
         for function, endpoint, title, description in tools:
             add_read_tool(server, function, endpoint, title, description)
+        add_write_tool(
+            server,
+            self.livedns_domain_add,
+            livedns_endpoints.DOMAIN_ADD,
+            "Add a domain to LiveDNS",
+            "Create the LiveDNS zone of a domain of the account, optionally with its first "
+            "records; it does not change the nameservers of the domain "
+            "(domain_livedns_enable does).",
+        )
+        add_write_tool(
+            server,
+            self.livedns_automatic_snapshots_update,
+            livedns_endpoints.AUTOMATIC_SNAPSHOTS_UPDATE,
+            "Turn the automatic snapshots of a zone on or off",
+            "Turn on or off the snapshot LiveDNS takes after each change of a zone.",
+        )
 
     async def livedns_record_types(
         self, ctx: Context[Any, Any], account: AccountParameter = None
@@ -131,4 +150,51 @@ class LiveDnsDomainTools(ToolModule):
             livedns_endpoints.PUBLIC_NAMESERVERS,
             account,
             lambda: {"domain": DomainName(domain).value},
+        )
+
+    async def livedns_domain_add(
+        self,
+        domain: LiveDnsDomainParameter,
+        ctx: Context[Any, Any],
+        *,
+        records: Annotated[
+            list[RecordParameter] | None,
+            Field(default=None, description="First records of the zone.", max_length=1000),
+        ] = None,
+        organization_id: SharingIdParameter = None,
+        account: AccountParameter = None,
+    ) -> dict[str, Any]:
+        """Add a domain to LiveDNS."""
+
+        def body() -> dict[str, Any]:
+            fields: dict[str, Any] = {"fqdn": DomainName(domain).value}
+            if records:
+                fields["zone"] = {"items": [record.record().to_json() for record in records]}
+            return fields
+
+        return await self._runner.write(
+            ctx,
+            livedns_endpoints.DOMAIN_ADD,
+            account,
+            dict,
+            body=body,
+            query=lambda: {"sharing_id": sharing_id(organization_id)},
+        )
+
+    async def livedns_automatic_snapshots_update(
+        self,
+        domain: LiveDnsDomainParameter,
+        enabled: Annotated[
+            bool, Field(description="True to turn them on, false to turn them off.")
+        ],
+        ctx: Context[Any, Any],
+        account: AccountParameter = None,
+    ) -> dict[str, Any]:
+        """Turn the automatic snapshots of a zone on or off."""
+        return await self._runner.write(
+            ctx,
+            livedns_endpoints.AUTOMATIC_SNAPSHOTS_UPDATE,
+            account,
+            lambda: {"domain": DomainName(domain).value},
+            body=lambda: {"automatic_snapshots": enabled},
         )

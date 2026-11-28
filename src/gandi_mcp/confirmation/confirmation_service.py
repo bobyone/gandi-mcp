@@ -45,7 +45,7 @@ class ConfirmationService:
         if confirmation_id is not None:
             answered = self._pending.consume(confirmation_id, request.subject)
             if answered is not None:
-                return ConfirmationDecision.accept(answered.secret)
+                return ConfirmationDecision.accept(answered.secret, answered.option_chosen)
             return ConfirmationDecision.pending(confirmation_id)
         needs_secret = request.secret_input is not None
         for channel in self._channels:

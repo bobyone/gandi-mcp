@@ -38,6 +38,8 @@ max_free_input = 280
 
 [files]
 # Work directory: the only directory where zone files and TSIG configuration
-# samples are written (and, later, read). Give paths relative to it in the tools.
+# samples are written, and zone files to import are read. Give paths relative to it in the tools.
 # Default: <user data directory of the OS>/gandi-mcp/files
 # work_directory = "~/gandi-mcp/files"
+# Largest zone file read for an import, in bytes (1024 to 16777216).
+max_zone_file_size = 1048576

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:52+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uk\n"
@@ -65,6 +65,18 @@ msgstr "Підтвердьте в тестовому обліковому зап
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Підтвердження - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Спочатку створити знімок зони (автоматичні знімки вимкнено)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Спочатку створити знімок зони (автоматичні знімки ввімкнено: LiveDNS також зберігає зону після "
+"кожної зміни)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -268,6 +280,10 @@ msgstr ""
 "його."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Не вдалося створити знімок зони: нічого не змінено."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Токена цього облікового запису немає у зв'язці ключів: замініть токен облікового запису."
 
@@ -372,6 +388,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Цей інструмент можна використовувати лише з застосунку Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Забагато записів для однієї заміни: експортуйте зону, відредагуйте файл, а потім імпортуйте його."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "До Gandi надіслано забагато запитів: зачекайте хвилину й спробуйте ще раз."
 
@@ -410,6 +430,11 @@ msgstr "відхилити перенесення {domain} до іншого р�
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "видалити всі записи зони {domain} (зараз: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "видалити ключ DNSSEC {id} домену {domain}"
 
@@ -425,13 +450,42 @@ msgstr "видалити glue-запис {host} домену {domain}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "видалити записи {name} у зоні {domain} (зараз: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"видалити ключ підпису {key} зони {domain}: якщо його запис DS досі опублікований у реєстрі, домен"
+" може перестати розв'язуватися"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "видалити знімок {snapshot} зони {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "видалити веб-переспрямування {host}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "видалити запис {type} для {name} у зоні {domain} (значень: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "вимкнути DNSSEC для {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "від'єднати ключ TSIG {key} від зони {domain}"
 
 # needs-review
 #, python-brace-format
@@ -471,6 +525,15 @@ msgstr "видалити обліковий запис {account} і його т�
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"видалити значення запису {type} для {name} у зоні {domain} (видалено: {count}, залишилося: "
+"{left}; якщо не залишиться жодного, запис видаляється)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "подовжити {domain} на {count} рік: {price} з податками"
@@ -484,6 +547,38 @@ msgstr "замінити всі ключі DNSSEC домену {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"замінити всі записи зони {domain} (зараз: {count}, після зміни: {new}); її записи NS на @ "
+"зберігаються"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"замінити всі записи зони {domain} (зараз: {count}, після зміни: {new}); її записи NS на @ також "
+"видаляються"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr "замінити всі записи зони {domain} знімком {snapshot} (зараз: {count}, після зміни: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr "замінити всі записи зони {domain} файлом зони {file} (зараз: {count}, після зміни: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "замінити всі мітки домену {domain}"
 
@@ -494,6 +589,18 @@ msgstr "замінити сервери імен {domain}; хибний спис
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "замінити записи {name} у зоні {domain} (зараз: {count}, після зміни: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr "замінити значення запису {type} для {name} у зоні {domain} (зараз: {count}, після зміни: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "скинути код авторизації {domain}: поточний код перестане діяти"
 
@@ -501,6 +608,11 @@ msgstr "скинути код авторизації {domain}: поточний 
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "відновити {domain}: {price} з податками"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "заборонити {ip} передачу зони {domain}"
 
 # needs-review
 #, python-brace-format

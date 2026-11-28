@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lt\n"
@@ -65,6 +65,18 @@ msgstr "Patvirtinkite bandomojoje paskyroje (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Patvirtinimas - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Pirmiausia sukurti zonos momentinę kopiją (automatinės momentinės kopijos išjungtos)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Pirmiausia sukurti zonos momentinę kopiją (automatinės momentinės kopijos įjungtos: LiveDNS taip "
+"pat išsaugo zoną po kiekvieno pakeitimo)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -266,6 +278,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Šios paskyros šalinimas buvo nutrauktas: pašalinkite paskyrą dar kartą, kad jį užbaigtumėte."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Nepavyko sukurti zonos momentinės kopijos: niekas nepakeista."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Šios paskyros rakto nėra raktinėje: pakeiskite paskyros raktą."
 
@@ -368,6 +384,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Šį įrankį galima naudoti tik iš Gandi programos."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Per daug įrašų vienam pakeitimui: eksportuokite zoną, redaguokite failą, tada jį importuokite."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Į Gandi išsiųsta per daug užklausų: palaukite minutę ir bandykite dar kartą."
 
@@ -406,6 +426,11 @@ msgstr "atmesti {domain} perkėlimą kitam registratoriui"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "ištrinti visus zonos {domain} įrašus (dabar: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "ištrinti {domain} DNSSEC raktą {id}"
 
@@ -421,13 +446,42 @@ msgstr "ištrinti {domain} glue įrašą {host}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "ištrinti {name} įrašus zonoje {domain} (dabar: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"ištrinti zonos {domain} pasirašymo raktą {key}: jei jo DS įrašas vis dar paskelbtas registre, "
+"domenas gali nustoti būti išsprendžiamas"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "ištrinti zonos {domain} momentinę kopiją {snapshot}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "ištrinti {host} žiniatinklio peradresavimą"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "ištrinti {name} {type} įrašą zonoje {domain} (reikšmės: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "išjungti DNSSEC domenui {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "atsieti TSIG raktą {key} nuo zonos {domain}"
 
 # needs-review
 #, python-brace-format
@@ -467,6 +521,15 @@ msgstr "pašalinti paskyrą {account} ir jos raktą iš šio kompiuterio"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"pašalinti reikšmes iš {name} {type} įrašo zonoje {domain} (pašalinta: {count}, liko: {left}; jei "
+"neliko nė vienos, įrašas ištrinamas)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "pratęsti {domain} {count} metams: {price} su mokesčiais"
@@ -480,6 +543,40 @@ msgstr "pakeisti visus {domain} DNSSEC raktus"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"pakeisti visus zonos {domain} įrašus (dabar: {count}, po pakeitimo: {new}); jos NS įrašai ties @ "
+"išlaikomi"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"pakeisti visus zonos {domain} įrašus (dabar: {count}, po pakeitimo: {new}); jos NS įrašai ties @ "
+"taip pat pašalinami"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"pakeisti visus zonos {domain} įrašus momentine kopija {snapshot} (dabar: {count}, po pakeitimo: "
+"{new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr "pakeisti visus zonos {domain} įrašus zonos failu {file} (dabar: {count}, po pakeitimo: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "pakeisti visas {domain} žymas"
 
@@ -490,6 +587,18 @@ msgstr "pakeisti {domain} vardų serverius; neteisingas sąrašas padaro domeną
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "pakeisti {name} įrašus zonoje {domain} (dabar: {count}, po pakeitimo: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr "pakeisti {name} {type} įrašo reikšmes zonoje {domain} (dabar: {count}, po pakeitimo: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "atkurti {domain} autorizacijos kodą: dabartinis kodas nustos galioti"
 
@@ -497,6 +606,11 @@ msgstr "atkurti {domain} autorizacijos kodą: dabartinis kodas nustos galioti"
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "atkurti {domain}: {price} su mokesčiais"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "nebeleisti {ip} perkelti zonos {domain}"
 
 # needs-review
 #, python-brace-format

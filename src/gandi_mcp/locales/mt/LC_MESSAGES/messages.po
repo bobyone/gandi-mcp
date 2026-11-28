@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mt\n"
@@ -65,6 +65,18 @@ msgstr "Ikkonferma fuq il-kont tat-test (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Konferma - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "L-ewwel oħloq istantanja taż-żona (l-istantanji awtomatiċi huma mitfija)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"L-ewwel oħloq istantanja taż-żona (l-istantanji awtomatiċi huma mixgħula: LiveDNS jissejvja wkoll"
+" iż-żona wara kull bidla)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -264,6 +276,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "It-tneħħija ta' dan il-kont ġiet interrotta: erġa' neħħi l-kont biex tlestiha."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "L-istantanja taż-żona ma setgħetx tinħoloq: ma nbidel xejn."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "It-token ta' dan il-kont nieqes miċ-ċirku taċ-ċwievet: ibdel it-token tal-kont."
 
@@ -370,6 +386,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Din l-għodda tista' tintuża biss mill-app ta' Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Wisq rekords għal sostituzzjoni waħda: esporta ż-żona, editja l-fajl, imbagħad importah."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Intbagħtu wisq talbiet lil Gandi: stenna minuta, imbagħad erġa' pprova."
 
@@ -408,6 +428,11 @@ msgstr "irrifjuta t-trasferiment ta' {domain} lil reġistratur ieħor"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "tħassar ir-rekords kollha taż-żona ta' {domain} (issa: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "ħassar iċ-ċavetta DNSSEC {id} ta' {domain}"
 
@@ -423,13 +448,42 @@ msgstr "ħassar ir-rekord glue {host} ta' {domain}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "tħassar ir-rekords ta' {name} fiż-żona ta' {domain} (issa: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"tħassar iċ-ċavetta tal-firma {key} taż-żona ta' {domain}: jekk ir-rekord DS tagħha għadu "
+"ppubblikat fir-reġistru, id-dominju jista' jieqaf jiġi riżolt"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "tħassar l-istantanja {snapshot} taż-żona ta' {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "ħassar ir-ridirezzjoni web ta' {host}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "tħassar ir-rekord {type} ta' {name} fiż-żona ta' {domain} (valuri: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "iddiżattiva d-DNSSEC għal {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "tiddiżassoċja ċ-ċavetta TSIG {key} miż-żona ta' {domain}"
 
 # needs-review
 #, python-brace-format
@@ -471,6 +525,15 @@ msgstr "tneħħi l-kont {account} u t-token tiegħu minn dan il-kompjuter"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"tneħħi valuri mir-rekord {type} ta' {name} fiż-żona ta' {domain} (imneħħija: {count}, li jibqgħu:"
+" {left}; jekk ma jibqa' xejn, ir-rekord jitħassar)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "ġedded {domain} għal {count} sena: {price} inklużi t-taxxi"
@@ -486,6 +549,42 @@ msgstr "ibdel iċ-ċwievet DNSSEC kollha ta' {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"tissostitwixxi r-rekords kollha taż-żona ta' {domain} (issa: {count}, wara l-bidla: {new}); ir-"
+"rekords NS tagħha fuq @ jinżammu"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"tissostitwixxi r-rekords kollha taż-żona ta' {domain} (issa: {count}, wara l-bidla: {new}); ir-"
+"rekords NS tagħha fuq @ jitneħħew ukoll"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"tissostitwixxi r-rekords kollha taż-żona ta' {domain} bl-istantanja {snapshot} (issa: {count}, "
+"wara l-bidla: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"tissostitwixxi r-rekords kollha taż-żona ta' {domain} bil-fajl taż-żona {file} (issa: {count}, "
+"wara l-bidla: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "ibdel it-tikketti kollha ta' {domain}"
 
@@ -496,6 +595,20 @@ msgstr "ibdel in-nameservers ta' {domain}; lista ħażina tagħmel id-dominju in
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "tissostitwixxi r-rekords ta' {name} fiż-żona ta' {domain} (issa: {count}, wara l-bidla: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"tissostitwixxi l-valuri tar-rekord {type} ta' {name} fiż-żona ta' {domain} (issa: {count}, wara "
+"l-bidla: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "irrisettja l-kodiċi ta' awtorizzazzjoni ta' {domain}: il-kodiċi attwali ma jibqax jaħdem"
 
@@ -503,6 +616,11 @@ msgstr "irrisettja l-kodiċi ta' awtorizzazzjoni ta' {domain}: il-kodiċi attwal
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "irrestawra {domain}: {price} inklużi t-taxxi"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "ma tibqax tippermetti lil {ip} jittrasferixxi ż-żona ta' {domain}"
 
 # needs-review
 #, python-brace-format

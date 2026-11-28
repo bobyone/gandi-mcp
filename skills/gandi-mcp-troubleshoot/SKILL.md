@@ -52,6 +52,11 @@ description: Diagnose gandi-mcp problems (server not starting or not connected, 
      zone (`@`, `www`, `_dmarc`), without the domain nor a trailing dot;
    - "conflicts with the current state": for example a CNAME next to other
      records of the same name;
+   - "snapshot of the zone could not be taken": nothing was changed; retry, or
+     uncheck the snapshot box if the user accepts the risk;
+   - "too many records for one replacement": export the zone, edit the file,
+     import it (`livedns_zone_import`);
+   - "too large to be read": raise `files.max_zone_file_size`;
    - a value shown as `{"withheld": "long_text"}` (DKIM keys, long TXT) is
      withheld from the model on purpose: export the zone to read it;
    - "file path is not allowed": the path must be relative to the work

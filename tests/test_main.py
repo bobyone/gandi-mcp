@@ -42,7 +42,7 @@ def test_defaults_without_configuration_file() -> None:
         "confirmation": {"timeout_seconds": 300},
         "token_entry": {"timeout_seconds": 600},
         "content": {"max_free_input": 280},
-        "files": {"work_directory": default_work_directory()},
+        "files": {"work_directory": default_work_directory(), "max_zone_file_size": 1_048_576},
     }
 
 

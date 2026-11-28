@@ -17,9 +17,12 @@ class UntrustedResult:
         filtered_count: Number of items matching the filters of a list, when given.
         completed: Gandi answered "see other": the followed operation is complete and
             its result is another resource.
+        status: HTTP status of the answer (``200`` when nothing was created, ``201``
+            when a resource was, ``202`` when the change is applied later).
     """
 
     data: JsonValue
     total_count: int | None = None
     filtered_count: int | None = None
     completed: bool = False
+    status: int = 200

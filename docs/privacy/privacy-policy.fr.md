@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 # Politique de confidentialité (projet)
 
 > Projet à faire valider par un professionnel du droit ; ne constitue pas un
-> conseil juridique. Version 0.5 du 27 novembre 2026. **Cette version
+> conseil juridique. Version 0.6 du 28 novembre 2026. **Cette version
 > française fait foi** ; les autres langues en sont des traductions. Elle sera
 > accessible depuis l'interface de la MCP App.
 >
@@ -60,6 +60,10 @@ responsable des données que vous traitez avec lui.
   d'enregistrements. Un exemple de configuration contient le secret de sa clé :
   son fichier n'est lisible que par vous, et ce secret n'est jamais montré au
   modèle.
+- **Les fichiers de zone que vous importez** : lus dans le répertoire de
+  travail et envoyés à Gandi seulement, pour remplacer les enregistrements de
+  la zone ; le modèle n'apprend que leur nom, leur taille et leur nombre
+  d'enregistrements.
 
 ## Qui les reçoit
 

@@ -72,6 +72,21 @@ All notable changes are documented here. The format follows
   snapshots are exported there as zone files, and TSIG configuration samples
   written there in owner-only files; the model only gets the file name, size
   and number of records. (#6)
+- LiveDNS (writes): add a domain to LiveDNS, turn the automatic snapshots on or
+  off, create a record (an identical one changes nothing), add values to a
+  record, publish a domain verification value, take, rename and delete
+  snapshots, create, restore and delete signing keys, allow and remove
+  secondary servers, create TSIG keys and associate them with a zone or
+  dissociate them. Values are checked before reaching Gandi (printable ASCII,
+  shape of A, AAAA, CNAME, NS, MX and SRV values, TTL bounds); deletions are
+  confirmed by the user. (#6)
+- LiveDNS (zone changes): replace or delete a record, remove values, replace or
+  delete the records of a name, replace, import (zone file of the work
+  directory, `files.max_zone_file_size`) or empty a whole zone, and restore a
+  snapshot. The confirmation states the counted effect and offers to take a
+  snapshot first, a choice the user makes outside the conversation (ADR 14). (#6)
+- A confirmation can offer a yes or no option, shown in the client form or as
+  a checkbox of the local page (ADR 14). (#6)
 
 ### Changed
 

@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Run one declared endpoint with validated arguments (interpreter of the catalogue)."""
 
+import hashlib
 from collections.abc import Mapping
 
 from gandi_mcp.accounts.environment import Environment
@@ -10,6 +11,7 @@ from gandi_mcp.gandi.gandi_client import GandiClient, QueryValue
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.i18n.message import Message
+from gandi_mcp.operations.confirmation_answer import ConfirmationAnswer
 from gandi_mcp.operations.endpoint.endpoint import PLACEHOLDER, Endpoint
 from gandi_mcp.operations.endpoint.exceptions import InvalidEndpointArgumentsError
 from gandi_mcp.operations.operation import Operation
@@ -32,6 +34,8 @@ class EndpointOperation(Operation):
         query: Mapping[str, QueryValue | None] | None = None,
         body: JsonValue = None,
         description_params: Mapping[str, object] | None = None,
+        *,
+        text_body: str | None = None,
     ) -> None:
         """Check the arguments against the specification.
 
@@ -53,6 +57,7 @@ class EndpointOperation(Operation):
         self._path_values = dict(path_values)
         self._query = given
         self._body = body
+        self._text_body = text_body
         self._description_params = dict(description_params or path_values)
 
     @property
@@ -72,7 +77,16 @@ class EndpointOperation(Operation):
         query: dict[str, JsonValue] = {}
         for key, value in self._query.items():
             query[key] = value if isinstance(value, str | int) else [str(item) for item in value]
-        return {"path": dict(self._path_values), "query": query, "body": self._body}
+        parameters: dict[str, JsonValue] = {
+            "path": dict(self._path_values),
+            "query": query,
+            "body": self._body,
+        }
+        if self._text_body is not None:
+            # A confirmation is bound to the exact text sent (a zone file).
+            digest = hashlib.sha256(self._text_body.encode("utf-8")).hexdigest()
+            parameters["text_sha256"] = digest
+        return parameters
 
     def describe(self) -> LocalizedText:
         message = self._endpoint.description or Message(self._endpoint.name)
@@ -94,7 +108,7 @@ class EndpointOperation(Operation):
         client: GandiClient,
         environment: Environment,
         token: PersonalAccessToken,
-        secret: SecretValue | None = None,
+        answer: ConfirmationAnswer | None = None,
     ) -> GandiResponse:
         return await client.request(
             environment,
@@ -102,9 +116,10 @@ class EndpointOperation(Operation):
             self._endpoint.method,
             self.segments(),
             query=self._query or None,
-            body=self._with_secret(secret),
+            body=self._with_secret(answer.secret if answer is not None else None),
             accept_see_other=self._endpoint.completes_with_see_other,
             accept=self._endpoint.accept,
+            text_body=self._text_body,
         )
 
     async def check(

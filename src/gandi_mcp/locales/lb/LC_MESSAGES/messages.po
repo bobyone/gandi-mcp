@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: lb\n"
@@ -64,6 +64,18 @@ msgstr "Op dem Testkont (Sandbox) {account} confirméieren: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Confirmatioun - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Fir d'éischt e Snapshot vun der Zon maachen (automatesch Snapshots sinn ausgeschalt)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Fir d'éischt e Snapshot vun der Zon maachen (automatesch Snapshots sinn ageschalt: LiveDNS "
+"späichert d'Zon och no all Ännerung)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -275,6 +287,10 @@ msgstr ""
 "ofzeschléissen."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "De Snapshot vun der Zon konnt net gemaach ginn: näischt gouf geännert."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Den Token vun dësem Kont feelt am Schlësselbund: ersetzt den Token vum Kont."
 
@@ -383,6 +399,12 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Dëst Tool kann nëmmen aus der Gandi-App benotzt ginn."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr ""
+"Ze vill Agräg fir een eenzegen Ersatz: exportéiert d'Zon, ännert de Fichier an importéiert en "
+"dono."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Et goufen ze vill Ufroen u Gandi geschéckt: waart eng Minutt, a probéiert dann nach eng Kéier."
 
@@ -421,6 +443,11 @@ msgstr "den Transfert vun {domain} op en anere Registrar ofleenen"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "all d'Agräg vun der Zon vun {domain} läschen (elo: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "den DNSSEC-Schlëssel {id} vun {domain} läschen"
 
@@ -436,13 +463,42 @@ msgstr "de Glue-Record {host} vun {domain} läschen"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "d'Agräg vun {name} an der Zon vun {domain} läschen (elo: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"de Signaturschlëssel {key} vun der Zon vun {domain} läschen: wann säin DS-Agrag nach bei der "
+"Registry publizéiert ass, kann d'Domain net méi opgeléist ginn"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "de Snapshot {snapshot} vun der Zon vun {domain} läschen"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "d'Web-Weiderleedung vun {host} läschen"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "den {type}-Agrag vun {name} an der Zon vun {domain} läschen (Wäerter: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "DNSSEC fir {domain} desaktivéieren"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "den TSIG-Schlëssel {key} vun der Zon vun {domain} trennen"
 
 # needs-review
 #, python-brace-format
@@ -481,6 +537,15 @@ msgstr "de Kont {account} a säin Token vun dësem Computer ewechhuelen"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"Wäerter vum {type}-Agrag vun {name} an der Zon vun {domain} ewechhuelen (ewechgeholl: {count}, "
+"iwwreg: {left}; wann der keen iwwreg bleift, gëtt den Agrag geläscht)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "{domain} fir {count} Joer verlängeren: {price} inkl. Steieren"
@@ -490,6 +555,42 @@ msgstr[1] "{domain} fir {count} Joer verlängeren: {price} inkl. Steieren"
 #, python-brace-format
 msgid "replace all the DNSSEC keys of {domain}"
 msgstr "all d'DNSSEC-Schlësselen vun {domain} ersetzen"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"all d'Agräg vun der Zon vun {domain} ersetzen (elo: {count}, no der Ännerung: {new}); hir NS-"
+"Agräg bei @ bleiwen erhalen"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"all d'Agräg vun der Zon vun {domain} ersetzen (elo: {count}, no der Ännerung: {new}); hir NS-"
+"Agräg bei @ ginn och ewechgeholl"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"all d'Agräg vun der Zon vun {domain} duerch de Snapshot {snapshot} ersetzen (elo: {count}, no der"
+" Ännerung: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"all d'Agräg vun der Zon vun {domain} duerch de Zonefichier {file} ersetzen (elo: {count}, no der "
+"Ännerung: {new})"
 
 # needs-review
 #, python-brace-format
@@ -503,6 +604,20 @@ msgstr "d'Nummserveren vun {domain} ersetzen; eng falsch Lëscht mécht d'Domain
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "d'Agräg vun {name} an der Zon vun {domain} ersetzen (elo: {count}, no der Ännerung: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"d'Wäerter vum {type}-Agrag vun {name} an der Zon vun {domain} ersetzen (elo: {count}, no der "
+"Ännerung: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "den Autorisatiounscode vun {domain} zrécksetzen: den aktuelle Code funktionéiert net méi"
 
@@ -510,6 +625,11 @@ msgstr "den Autorisatiounscode vun {domain} zrécksetzen: den aktuelle Code funk
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "{domain} restauréieren: {price} inkl. Steieren"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "{ip} net méi erlaben, d'Zon vun {domain} ze transferéieren"
 
 # needs-review
 #, python-brace-format

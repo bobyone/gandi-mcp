@@ -25,7 +25,7 @@ operating system keyring and never reaches the model.
   [manage your domains](docs/how-to/manage-domains.md),
   [buy or renew a domain](docs/how-to/buy-or-renew-a-domain.md),
   [manage your DNS records](docs/how-to/manage-dns-records.md),
-  [export a zone](docs/how-to/export-and-import-a-zone.md),
+  [export and import a zone](docs/how-to/export-and-import-a-zone.md),
   [set up zone transfers](docs/how-to/set-up-zone-transfers.md),
   [add a Gandi operation](docs/how-to/add-an-operation.md),
   [run the checks](docs/how-to/run-the-checks.md),

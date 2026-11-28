@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hy\n"
@@ -64,6 +64,18 @@ msgstr "Հաստատեք {account} փորձարկման հաշվում (sandbox)
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Հաստատում - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Նախ ստեղծել գոտու ակնթարթային պատկեր (ավտոմատ ակնթարթային պատկերներն անջատված են)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Նախ ստեղծել գոտու ակնթարթային պատկեր (ավտոմատ ակնթարթային պատկերները միացված են. LiveDNS-ը գոտին "
+"պահպանում է նաև յուրաքանչյուր փոփոխությունից հետո)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -265,6 +277,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Այս հաշվի հեռացումն ընդհատվել է․ ավարտելու համար կրկին հեռացրեք հաշիվը։"
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Չհաջողվեց ստեղծել գոտու ակնթարթային պատկերը. ոչինչ չի փոխվել։"
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Այս հաշվի token-ը բացակայում է բանալիների պահոցից․ փոխարինեք հաշվի token-ը։"
 
@@ -367,6 +383,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Այս գործիքը կարելի է օգտագործել միայն Gandi հավելվածից։"
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Չափազանց շատ գրառումներ մեկ փոխարինման համար. արտահանեք գոտին, խմբագրեք ֆայլը, ապա ներմուծեք այն։"
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Gandi-ին ուղարկվել են չափազանց շատ հարցումներ․ սպասեք մեկ րոպե, ապա կրկին փորձեք։"
 
@@ -405,6 +425,11 @@ msgstr "մերժել {domain}-ի փոխանցումը այլ գրանցողի"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "ջնջել {domain} գոտու բոլոր գրառումները (հիմա՝ {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "ջնջել {domain}-ի {id} DNSSEC բանալին"
 
@@ -420,13 +445,42 @@ msgstr "ջնջել {domain}-ի {host} glue գրառումը"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "ջնջել {name}-ի գրառումները {domain} գոտում (հիմա՝ {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"ջնջել {domain} գոտու {key} ստորագրման բանալին. եթե դրա DS գրառումը դեռ հրապարակված է ռեեստրում, "
+"տիրույթը կարող է դադարել լուծվել"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "ջնջել {domain} գոտու {snapshot} ակնթարթային պատկերը"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "ջնջել {host}-ի վեբ վերահղումը"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "ջնջել {name}-ի {type} գրառումը {domain} գոտում (արժեքներ՝ {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "անջատել DNSSEC-ը {domain}-ի համար"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "անջատել TSIG բանալին {key} {domain} գոտուց"
 
 # needs-review
 #, python-brace-format
@@ -465,6 +519,15 @@ msgstr "հեռացնել {account} հաշիվը և դրա token-ը այս համ
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"հեռացնել արժեքներ {name}-ի {type} գրառումից {domain} գոտում (հեռացված՝ {count}, մնացած՝ {left}. "
+"եթե ոչ մեկը չմնա, գրառումը ջնջվում է)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "երկարաձգել {domain}-ը {count} տարով՝ {price} հարկերով"
@@ -474,6 +537,42 @@ msgstr[1] "երկարաձգել {domain}-ը {count} տարով՝ {price} հար�
 #, python-brace-format
 msgid "replace all the DNSSEC keys of {domain}"
 msgstr "փոխարինել {domain}-ի բոլոր DNSSEC բանալիները"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"փոխարինել {domain} գոտու բոլոր գրառումները (հիմա՝ {count}, փոփոխությունից հետո՝ {new}). դրա NS "
+"գրառումները @-ում պահպանվում են"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"փոխարինել {domain} գոտու բոլոր գրառումները (հիմա՝ {count}, փոփոխությունից հետո՝ {new}). դրա NS "
+"գրառումները @-ում նույնպես հեռացվում են"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"փոխարինել {domain} գոտու բոլոր գրառումները {snapshot} ակնթարթային պատկերով (հիմա՝ {count}, "
+"փոփոխությունից հետո՝ {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"փոխարինել {domain} գոտու բոլոր գրառումները {file} գոտու ֆայլով (հիմա՝ {count}, փոփոխությունից "
+"հետո՝ {new})"
 
 # needs-review
 #, python-brace-format
@@ -487,6 +586,20 @@ msgstr "փոխարինել {domain}-ի անունների սերվերները. 
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "փոխարինել {name}-ի գրառումները {domain} գոտում (հիմա՝ {count}, փոփոխությունից հետո՝ {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"փոխարինել {name}-ի {type} գրառման արժեքները {domain} գոտում (հիմա՝ {count}, փոփոխությունից հետո՝ "
+"{new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "վերակայել {domain}-ի թույլտվության կոդը. ընթացիկ կոդը կդադարի գործել"
 
@@ -494,6 +607,11 @@ msgstr "վերակայել {domain}-ի թույլտվության կոդը. ըն
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "վերականգնել {domain}-ը՝ {price} հարկերով"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "այլևս թույլ չտալ {ip}-ին փոխանցել {domain} գոտին"
 
 # needs-review
 #, python-brace-format

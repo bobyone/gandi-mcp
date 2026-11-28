@@ -15,6 +15,7 @@ from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChann
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
 from gandi_mcp.confirmation.confirmation_context import ConfirmationContext
 from gandi_mcp.confirmation.confirmation_decision import ConfirmationDecision
+from gandi_mcp.confirmation.confirmation_option import ConfirmationOption
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.exceptions import ConfirmationMismatchError, ConfirmationRefusedError
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
@@ -22,6 +23,7 @@ from gandi_mcp.gandi.exceptions import GandiNotFoundError
 from gandi_mcp.gandi.gandi_response import GandiResponse
 from gandi_mcp.i18n.message import Message
 from gandi_mcp.interaction.link_presenter import LinkPresenter
+from gandi_mcp.operations.confirmation_answer import ConfirmationAnswer
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.operations.operation_executor import OperationExecutor
 from gandi_mcp.operations.untrusted_result import UntrustedResult
@@ -253,3 +255,37 @@ async def test_a_read_only_toggle_during_the_token_read_stops_the_write() -> Non
         await executor.run(ScriptedOperation(OperationCategory.WRITE), None, ConfirmationContext())
 
     assert client.calls == []
+
+
+async def test_a_confirmed_operation_is_prepared_once_and_gets_the_option_choice(
+    setup: Setup,
+) -> None:
+    option = ConfirmationOption(Message("Create a snapshot first"))
+    interaction = ScriptedInteraction(confirmations=False, links=False)
+    first = ScriptedOperation(OperationCategory.DESTRUCTIVE, option=option)
+
+    pending = await setup.executor.run(first, None, ConfirmationContext(interaction))
+
+    assert isinstance(pending, ConfirmationDecision)
+    assert pending.confirmation_id is not None
+    assert first.prepared == 1
+    assert not setup.client.calls
+    setup.pending.answer(pending.confirmation_id, True, option_chosen=True)
+    resumed = ScriptedOperation(OperationCategory.DESTRUCTIVE, option=option)
+
+    result = await setup.executor.run(
+        resumed, None, ConfirmationContext(interaction), pending.confirmation_id
+    )
+
+    assert isinstance(result, UntrustedResult)
+    assert resumed.prepared == 0
+    assert resumed.answers == [ConfirmationAnswer(None, option_chosen=True)]
+
+
+async def test_a_read_is_never_prepared(setup: Setup) -> None:
+    operation = ScriptedOperation(OperationCategory.READ, method="GET")
+
+    await setup.executor.run(operation, None, ConfirmationContext())
+
+    assert operation.prepared == 0
+    assert operation.answers == [None]

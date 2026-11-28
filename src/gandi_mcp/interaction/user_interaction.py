@@ -27,6 +27,16 @@ class UserInteraction(ABC):
         """Ask the user to confirm; ``False`` when refused, cancelled or unanswered."""
 
     @abstractmethod
+    async def confirm_with_option(
+        self, message: str, option_label: str, option_default: bool
+    ) -> bool | None:
+        """Ask the user to confirm, with a yes or no option shown next to it.
+
+        Returns ``None`` when refused, cancelled or unanswered, otherwise whether the
+        option was checked.
+        """
+
+    @abstractmethod
     async def open_link(self, message: str, url: str) -> bool:
         """Offer a link to the user; ``True`` when the user agreed to open it.
 

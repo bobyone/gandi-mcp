@@ -18,16 +18,21 @@ class ConfirmationDecision:
         confirmation_id: Identifier of the pending confirmation, to give back once the
             user has answered on the page; ``None`` when accepted.
         secret: The secret typed with an accepted confirmation, when one was asked.
+        option_chosen: Whether the user checked the option of an accepted
+            confirmation; ``False`` when none was offered.
     """
 
     accepted: bool
     confirmation_id: str | None = None
     secret: SecretValue | None = field(default=None, repr=False)
+    option_chosen: bool = False
 
     @classmethod
-    def accept(cls, secret: SecretValue | None = None) -> "ConfirmationDecision":
-        """The operation may run now, with the secret typed by the user if any."""
-        return cls(accepted=True, secret=secret)
+    def accept(
+        cls, secret: SecretValue | None = None, option_chosen: bool = False
+    ) -> "ConfirmationDecision":
+        """The operation may run now, with the user's secret and option choice if any."""
+        return cls(accepted=True, secret=secret, option_chosen=option_chosen)
 
     @classmethod
     def pending(cls, confirmation_id: str) -> "ConfirmationDecision":

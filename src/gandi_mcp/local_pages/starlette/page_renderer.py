@@ -16,6 +16,7 @@ STYLE = (
     "button{margin:1rem .5rem 0 0;padding:.5rem 1.25rem;font:inherit;cursor:pointer}"
     ".alert{padding:.75rem 1rem;border-left:.25rem solid #b00020;background:#fdecee;color:#5f0010}"
     ".ok{border-left-color:#1e7e34;background:#e8f5ea;color:#0b3d17}"
+    ".option{margin:1rem 0 0}.option label{display:inline;font-weight:400;margin:0 0 0 .5rem}"
 )
 STYLE_HASH = base64.b64encode(hashlib.sha256(STYLE.encode("utf-8")).digest()).decode("ascii")
 CONTENT_SECURITY_POLICY = (
@@ -50,6 +51,8 @@ class ConfirmationForm:
     secret_label: str | None = None
     secret_max_length: int = 0
     error: str | None = None
+    option_label: str | None = None
+    option_default: bool = False
 
 
 def _document(language: str, title: str, body: str) -> str:
@@ -87,7 +90,8 @@ def token_page(language: str, form: TokenForm) -> str:
 
 
 def confirmation_page(language: str, form: ConfirmationForm) -> str:
-    """Render the confirmation form with its two buttons, and its secret field if any.
+    """Render the confirmation form with its two buttons, its secret field and its
+    option checkbox, if any.
 
     The secret is never written back into the page, even after an error.
     """
@@ -102,11 +106,18 @@ def confirmation_page(language: str, form: ConfirmationForm) -> str:
             f'maxlength="{form.secret_max_length}" autocomplete="off" spellcheck="false" '
             'autocapitalize="off" autofocus>'
         )
+    option = ""
+    if form.option_label is not None:
+        checked = " checked" if form.option_default else ""
+        option = (
+            '<p class="option"><input type="checkbox" id="option" name="option" '
+            f'value="yes"{checked}><label for="option">{escape(form.option_label)}</label></p>'
+        )
     body = (
         f"{error}<p>{escape(form.question)}</p>"
         '<form method="post" autocomplete="off">'
         f'<input type="hidden" name="code" value="{escape(form.code)}">'
-        f"{secret}"
+        f"{secret}{option}"
         f'<button type="submit" name="decision" value="confirm">{escape(form.confirm)}</button>'
         '<button type="submit" name="decision" value="refuse" formnovalidate>'
         f"{escape(form.refuse)}</button>"

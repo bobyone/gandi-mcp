@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: rm\n"
@@ -64,6 +64,18 @@ msgstr "Confermai sin il conto da test (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Conferma - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Crear l'emprim in snapshot da la zona (ils snapshots automatics èn deactivads)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Crear l'emprim in snapshot da la zona (ils snapshots automatics èn activads: LiveDNS memorisescha"
+" la zona era suenter mintga midada)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -271,6 +283,10 @@ msgstr ""
 "terminar."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Il snapshot da la zona n'ha betg pudì vegnir creà: nagut n'è vegnì midà."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Il token da quest conto manca en il clavier: remplazzai il token dal conto."
 
@@ -375,6 +391,12 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Quest utensil po vegnir duvrà mo da l'app Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr ""
+"Memia bleras endataziuns per in sulet remplazzament: exportai la zona, modifitgai la datoteca ed "
+"importai lura quella."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr ""
 "I èn vegnidas tramessas memia bleras dumondas a Gandi: spetgai ina minuta ed empruvai lura anc "
@@ -417,6 +439,11 @@ msgstr "refusar il transferiment da {domain} tar in auter registrader"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "stizzar tut las endataziuns da la zona da {domain} (ussa: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "stizzar la clav DNSSEC {id} da {domain}"
 
@@ -432,13 +459,42 @@ msgstr "stizzar l'endataziun glue {host} da {domain}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "stizzar las endataziuns da {name} en la zona da {domain} (ussa: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"stizzar la clav da suttascripziun {key} da la zona da {domain}: sch'sia endataziun DS è anc "
+"publitgada tar il register, po il domain vegnir betg pli resolvì"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "stizzar il snapshot {snapshot} da la zona da {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "stizzar la renviada web da {host}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "stizzar l'endataziun {type} da {name} en la zona da {domain} (valurs: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "deactivar DNSSEC per {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "separar la clav TSIG {key} da la zona da {domain}"
 
 # needs-review
 #, python-brace-format
@@ -477,6 +533,15 @@ msgstr "allontanar il conto {account} e ses token da quest computer"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"allontanar valurs da l'endataziun {type} da {name} en la zona da {domain} (allontanadas: {count},"
+" restantas: {left}; sch'i na resta nagina, vegn l'endataziun stizzada)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "renovar {domain} per {count} onn: {price} incl. taglias"
@@ -486,6 +551,42 @@ msgstr[1] "renovar {domain} per {count} onns: {price} incl. taglias"
 #, python-brace-format
 msgid "replace all the DNSSEC keys of {domain}"
 msgstr "remplazzar tut las clavs DNSSEC da {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"remplazzar tut las endataziuns da la zona da {domain} (ussa: {count}, suenter la midada: {new}); "
+"sias endataziuns NS sin @ vegnan mantegnidas"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"remplazzar tut las endataziuns da la zona da {domain} (ussa: {count}, suenter la midada: {new}); "
+"era sias endataziuns NS sin @ vegnan allontanadas"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"remplazzar tut las endataziuns da la zona da {domain} cun il snapshot {snapshot} (ussa: {count}, "
+"suenter la midada: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"remplazzar tut las endataziuns da la zona da {domain} cun la datoteca da zona {file} (ussa: "
+"{count}, suenter la midada: {new})"
 
 # needs-review
 #, python-brace-format
@@ -501,6 +602,22 @@ msgstr ""
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr ""
+"remplazzar las endataziuns da {name} en la zona da {domain} (ussa: {count}, suenter la midada: "
+"{new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"remplazzar las valurs da l'endataziun {type} da {name} en la zona da {domain} (ussa: {count}, "
+"suenter la midada: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "reinizialisar il code d'autorisaziun da {domain}: il code actual na funcziuna betg pli"
 
@@ -508,6 +625,11 @@ msgstr "reinizialisar il code d'autorisaziun da {domain}: il code actual na func
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "restaurar {domain}: {price} incl. taglias"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "betg pli permetter a {ip} da transferir la zona da {domain}"
 
 # needs-review
 #, python-brace-format

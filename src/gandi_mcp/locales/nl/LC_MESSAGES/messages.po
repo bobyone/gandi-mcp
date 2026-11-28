@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nl\n"
@@ -64,6 +64,18 @@ msgstr "Bevestig op het testaccount (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Bevestiging - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Eerst een snapshot van de zone maken (automatische snapshots staan uit)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Eerst een snapshot van de zone maken (automatische snapshots staan aan: LiveDNS slaat de zone ook"
+" na elke wijziging op)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -273,6 +285,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Het verwijderen van dit account is onderbroken: verwijder het account opnieuw om het te voltooien."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "De snapshot van de zone kon niet worden gemaakt: er is niets gewijzigd."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "De token van dit account ontbreekt in de sleutelbos: vervang de token van het account."
 
@@ -373,6 +389,12 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Deze tool kan alleen vanuit de Gandi-app worden gebruikt."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr ""
+"Te veel records voor één vervanging: exporteer de zone, bewerk het bestand en importeer het "
+"daarna."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Er zijn te veel verzoeken naar Gandi gestuurd: wacht een minuut en probeer het opnieuw."
 
@@ -413,6 +435,11 @@ msgstr "de verhuizing van {domain} naar een andere registrar weigeren"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "alle records van de zone van {domain} verwijderen (nu: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "de DNSSEC-sleutel {id} van {domain} verwijderen"
 
@@ -428,13 +455,42 @@ msgstr "het glue-record {host} van {domain} verwijderen"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "de records van {name} in de zone van {domain} verwijderen (nu: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"de ondertekeningssleutel {key} van de zone van {domain} verwijderen: als het DS-record nog bij "
+"het register gepubliceerd is, kan het domein niet meer worden omgezet"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "de snapshot {snapshot} van de zone van {domain} verwijderen"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "de webomleiding van {host} verwijderen"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "het {type}-record van {name} in de zone van {domain} verwijderen (waarden: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "DNSSEC voor {domain} uitschakelen"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "de TSIG-sleutel {key} loskoppelen van de zone van {domain}"
 
 # needs-review
 #, python-brace-format
@@ -473,6 +529,15 @@ msgstr "het account {account} en de token ervan van deze computer verwijderen"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"waarden van het {type}-record van {name} in de zone van {domain} verwijderen (verwijderd: "
+"{count}, over: {left}; als er geen over is, wordt het record verwijderd)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "{domain} verlengen met {count} jaar: {price} incl. belastingen"
@@ -482,6 +547,42 @@ msgstr[1] "{domain} verlengen met {count} jaar: {price} incl. belastingen"
 #, python-brace-format
 msgid "replace all the DNSSEC keys of {domain}"
 msgstr "alle DNSSEC-sleutels van {domain} vervangen"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"alle records van de zone van {domain} vervangen (nu: {count}, na de wijziging: {new}); de NS-"
+"records op @ blijven behouden"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"alle records van de zone van {domain} vervangen (nu: {count}, na de wijziging: {new}); de NS-"
+"records op @ worden ook verwijderd"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"alle records van de zone van {domain} vervangen door de snapshot {snapshot} (nu: {count}, na de "
+"wijziging: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"alle records van de zone van {domain} vervangen door het zonebestand {file} (nu: {count}, na de "
+"wijziging: {new})"
 
 # needs-review
 #, python-brace-format
@@ -495,6 +596,20 @@ msgstr "de naamservers van {domain} vervangen; een verkeerde lijst maakt het dom
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "de records van {name} in de zone van {domain} vervangen (nu: {count}, na de wijziging: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"de waarden van het {type}-record van {name} in de zone van {domain} vervangen (nu: {count}, na de"
+" wijziging: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "de autorisatiecode van {domain} opnieuw instellen: de huidige code werkt dan niet meer"
 
@@ -502,6 +617,11 @@ msgstr "de autorisatiecode van {domain} opnieuw instellen: de huidige code werkt
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "{domain} herstellen: {price} incl. belastingen"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "{ip} niet langer toestaan de zone van {domain} over te dragen"
 
 # needs-review
 #, python-brace-format

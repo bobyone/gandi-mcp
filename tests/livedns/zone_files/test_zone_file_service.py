@@ -41,7 +41,7 @@ async def service_with(
     executor = OperationExecutor(
         accounts, secrets, client, ConfirmationService([], PendingConfirmations(300))
     )
-    return ZoneFileService(TextFileExporter(executor, directory))
+    return ZoneFileService(TextFileExporter(executor, directory), directory, 1000)
 
 
 async def test_exports_the_zone_as_a_zone_file() -> None:

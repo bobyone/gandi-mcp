@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs\n"
@@ -64,6 +64,18 @@ msgstr "Potvrďte v testovacím účtu (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Potvrzení - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Nejprve vytvořit snímek zóny (automatické snímky jsou vypnuté)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Nejprve vytvořit snímek zóny (automatické snímky jsou zapnuté: LiveDNS také ukládá zónu po každé "
+"změně)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -261,6 +273,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Odebrání tohoto účtu bylo přerušeno: odeberte účet znovu, aby se dokončilo."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Snímek zóny se nepodařilo vytvořit: nic nebylo změněno."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Token tohoto účtu v klíčence chybí: nahraďte token účtu."
 
@@ -361,6 +377,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Tento nástroj lze použít pouze z aplikace Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Příliš mnoho záznamů pro jedno nahrazení: exportujte zónu, upravte soubor a pak jej importujte."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Do Gandi bylo odesláno příliš mnoho požadavků: počkejte minutu a zkuste to znovu."
 
@@ -399,6 +419,11 @@ msgstr "odmítnout převod {domain} k jinému registrátorovi"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "smazat všechny záznamy zóny {domain} (nyní: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "smazat klíč DNSSEC {id} domény {domain}"
 
@@ -414,13 +439,42 @@ msgstr "smazat glue záznam {host} domény {domain}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "smazat záznamy {name} v zóně {domain} (nyní: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"smazat podpisový klíč {key} zóny {domain}: pokud je jeho záznam DS stále zveřejněn u registru, "
+"doména se může přestat překládat"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "smazat snímek {snapshot} zóny {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "smazat webové přesměrování {host}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "smazat záznam {type} pro {name} v zóně {domain} (hodnoty: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "vypnout DNSSEC pro {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "odpojit klíč TSIG {key} od zóny {domain}"
 
 # needs-review
 #, python-brace-format
@@ -460,6 +514,15 @@ msgstr "odebrat účet {account} a jeho token z tohoto počítače"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"odebrat hodnoty záznamu {type} pro {name} v zóně {domain} (odebráno: {count}, zbývá: {left}; "
+"pokud nezbude žádná, záznam bude smazán)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "prodloužit {domain} o {count} rok: {price} včetně daní"
@@ -473,6 +536,38 @@ msgstr "nahradit všechny klíče DNSSEC domény {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"nahradit všechny záznamy zóny {domain} (nyní: {count}, po změně: {new}); její záznamy NS u @ "
+"zůstanou zachovány"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"nahradit všechny záznamy zóny {domain} (nyní: {count}, po změně: {new}); její záznamy NS u @ "
+"budou také odstraněny"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr "nahradit všechny záznamy zóny {domain} snímkem {snapshot} (nyní: {count}, po změně: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr "nahradit všechny záznamy zóny {domain} souborem zóny {file} (nyní: {count}, po změně: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "nahradit všechny štítky domény {domain}"
 
@@ -483,6 +578,18 @@ msgstr "nahradit jmenné servery {domain}; chybný seznam znepřístupní domén
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "nahradit záznamy {name} v zóně {domain} (nyní: {count}, po změně: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr "nahradit hodnoty záznamu {type} pro {name} v zóně {domain} (nyní: {count}, po změně: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "obnovit autorizační kód {domain}: současný kód přestane platit"
 
@@ -490,6 +597,11 @@ msgstr "obnovit autorizační kód {domain}: současný kód přestane platit"
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "obnovit {domain}: {price} včetně daní"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "přestat povolovat {ip} přenos zóny {domain}"
 
 # needs-review
 #, python-brace-format

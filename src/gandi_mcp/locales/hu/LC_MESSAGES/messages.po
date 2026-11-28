@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -64,6 +64,18 @@ msgstr "Megerősítés a(z) {account} tesztfiókon (sandbox): {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Megerősítés - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Először pillanatkép készítése a zónáról (az automatikus pillanatképek ki vannak kapcsolva)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Először pillanatkép készítése a zónáról (az automatikus pillanatképek be vannak kapcsolva: a "
+"LiveDNS minden módosítás után is menti a zónát)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -267,6 +279,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "A fiók eltávolítása megszakadt: távolítsa el újra a fiókot a befejezéshez."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "A zóna pillanatképét nem sikerült elkészíteni: semmi sem változott."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "A fiók tokenje hiányzik a kulcstartóból: cserélje le a fiók tokenjét."
 
@@ -369,6 +385,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Ez az eszköz csak a Gandi alkalmazásból használható."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Túl sok rekord egyetlen cseréhez: exportálja a zónát, szerkessze a fájlt, majd importálja."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Túl sok kérés érkezett a Gandihoz: várjon egy percet, majd próbálja újra."
 
@@ -407,6 +427,11 @@ msgstr "a(z) {domain} másik regisztrátorhoz való átvitelének elutasítása"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "a(z) {domain} zóna összes rekordjának törlése (most: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "a(z) {domain} {id} DNSSEC-kulcsának törlése"
 
@@ -422,13 +447,42 @@ msgstr "a(z) {domain} {host} glue-rekordjának törlése"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "{name} rekordjainak törlése a(z) {domain} zónában (most: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"a(z) {domain} zóna {key} aláírókulcsának törlése: ha DS-rekordja még közzé van téve a "
+"regisztrárnál, a domain feloldása leállhat"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "a(z) {domain} zóna {snapshot} pillanatképének törlése"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "a(z) {host} webes átirányításának törlése"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "{name} {type} rekordjának törlése a(z) {domain} zónában (értékek: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "DNSSEC kikapcsolása: {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "a(z) {key} TSIG-kulcs leválasztása a(z) {domain} zónáról"
 
 # needs-review
 #, python-brace-format
@@ -467,6 +521,15 @@ msgstr "a(z) {account} fiók és tokenje eltávolítása erről a számítógép
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"értékek eltávolítása {name} {type} rekordjából a(z) {domain} zónában (eltávolítva: {count}, "
+"megmarad: {left}; ha egy sem marad, a rekord törlődik)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "{domain} megújítása {count} évre: {price} adókkal"
@@ -476,6 +539,42 @@ msgstr[1] "{domain} megújítása {count} évre: {price} adókkal"
 #, python-brace-format
 msgid "replace all the DNSSEC keys of {domain}"
 msgstr "a(z) {domain} összes DNSSEC-kulcsának cseréje"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"a(z) {domain} zóna összes rekordjának cseréje (most: {count}, a módosítás után: {new}); a @ NS-"
+"rekordjai megmaradnak"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"a(z) {domain} zóna összes rekordjának cseréje (most: {count}, a módosítás után: {new}); a @ NS-"
+"rekordjai is törlődnek"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"a(z) {domain} zóna összes rekordjának cseréje a(z) {snapshot} pillanatképre (most: {count}, a "
+"módosítás után: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"a(z) {domain} zóna összes rekordjának cseréje a(z) {file} zónafájlra (most: {count}, a módosítás "
+"után: {new})"
 
 # needs-review
 #, python-brace-format
@@ -489,6 +588,20 @@ msgstr "a(z) {domain} névszervereinek cseréje; a hibás lista elérhetetlenné
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "{name} rekordjainak cseréje a(z) {domain} zónában (most: {count}, a módosítás után: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"{name} {type} rekordja értékeinek cseréje a(z) {domain} zónában (most: {count}, a módosítás után:"
+" {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "a(z) {domain} engedélyezési kódjának visszaállítása: a jelenlegi kód nem lesz érvényes"
 
@@ -496,6 +609,11 @@ msgstr "a(z) {domain} engedélyezési kódjának visszaállítása: a jelenlegi 
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "{domain} visszaállítása: {price} adókkal"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "a(z) {ip} címnek ne legyen többé engedélyezve a(z) {domain} zóna átvitele"
 
 # needs-review
 #, python-brace-format

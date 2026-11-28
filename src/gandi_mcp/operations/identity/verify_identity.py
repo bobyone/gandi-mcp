@@ -9,10 +9,10 @@ from gandi_mcp.gandi.gandi_client import GandiClient
 from gandi_mcp.gandi.gandi_response import GandiResponse, JsonValue
 from gandi_mcp.i18n.localized_text import LocalizedText
 from gandi_mcp.i18n.message import N_
+from gandi_mcp.operations.confirmation_answer import ConfirmationAnswer
 from gandi_mcp.operations.operation import Operation
 from gandi_mcp.operations.operation_category import OperationCategory
 from gandi_mcp.secrets.personal_access_token import PersonalAccessToken
-from gandi_mcp.secrets.secret_value import SecretValue
 
 DESCRIPTION = N_("read the identity of the account")
 
@@ -39,6 +39,6 @@ class VerifyIdentity(Operation):
         client: GandiClient,
         environment: Environment,
         token: PersonalAccessToken,
-        secret: SecretValue | None = None,
+        answer: ConfirmationAnswer | None = None,
     ) -> GandiResponse:
         return await client.request(environment, token, "GET", ("organization", "user-info"))

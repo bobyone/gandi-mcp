@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-27 23:45+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: mk\n"
@@ -64,6 +64,18 @@ msgstr "Потврдете на тест-сметката (sandbox) {account}: {
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Потврда - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Прво направи снимка на зоната (автоматските снимки се исклучени)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Прво направи снимка на зоната (автоматските снимки се вклучени: LiveDNS ја зачувува зоната и по "
+"секоја промена)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -269,6 +281,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Отстранувањето на оваа сметка е прекинато: отстранете ја сметката повторно за да се заврши."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Снимката на зоната не можеше да се направи: ништо не е променето."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Токенот на оваа сметка недостасува во привезокот за клучеви: заменете го токенот на сметката."
 
@@ -377,6 +393,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Оваа алатка може да се користи само од апликацијата Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Премногу записи за една замена: извезете ја зоната, уредете ја датотеката, а потоа увезете ја."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Испратени се премногу барања до Gandi: почекајте една минута, потоа обидете се повторно."
 
@@ -415,6 +435,11 @@ msgstr "одбивање на преносот на {domain} кај друг р�
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "да се избришат сите записи на зоната на {domain} (сега: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "бришење на DNSSEC клучот {id} на {domain}"
 
@@ -430,13 +455,42 @@ msgstr "бришење на glue записот {host} на {domain}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "да се избришат записите на {name} во зоната на {domain} (сега: {count})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"delete the signing key {key} of the zone of {domain}: if its DS record is still published at the "
+"registry, the domain may stop resolving"
+msgstr ""
+"да се избрише клучот за потпишување {key} на зоната на {domain}: ако неговиот DS запис сè уште е "
+"објавен кај регистарот, доменот може да престане да се разрешува"
+
+# needs-review
+#, python-brace-format
+msgid "delete the snapshot {snapshot} of the zone of {domain}"
+msgstr "да се избрише снимката {snapshot} на зоната на {domain}"
+
+# needs-review
+#, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "бришење на веб пренасочувањето на {host}"
 
 # needs-review
 #, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "да се избрише записот {type} на {name} во зоната на {domain} (вредности: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "disable DNSSEC for {domain}"
 msgstr "исклучување на DNSSEC за {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "dissociate the TSIG key {key} from the zone of {domain}"
+msgstr "да се одвои TSIG клучот {key} од зоната на {domain}"
 
 # needs-review
 #, python-brace-format
@@ -475,6 +529,15 @@ msgstr "отстрани ја сметката {account} и нејзиниот �
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"да се отстранат вредности од записот {type} на {name} во зоната на {domain} (отстранети: {count},"
+" преостанати: {left}; ако не остане ниедна, записот се брише)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "обновување на {domain} за {count} година: {price} со даноци"
@@ -484,6 +547,42 @@ msgstr[1] "обновување на {domain} за {count} години: {price}
 #, python-brace-format
 msgid "replace all the DNSSEC keys of {domain}"
 msgstr "замена на сите DNSSEC клучеви на {domain}"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"да се заменат сите записи на зоната на {domain} (сега: {count}, по промената: {new}); нејзините "
+"NS записи на @ се задржуваат"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"да се заменат сите записи на зоната на {domain} (сега: {count}, по промената: {new}); се "
+"отстрануваат и нејзините NS записи на @"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"да се заменат сите записи на зоната на {domain} со снимката {snapshot} (сега: {count}, по "
+"промената: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"да се заменат сите записи на зоната на {domain} со датотеката на зона {file} (сега: {count}, по "
+"промената: {new})"
 
 # needs-review
 #, python-brace-format
@@ -497,6 +596,20 @@ msgstr "замена на серверите за имиња на {domain}; по
 
 # needs-review
 #, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "да се заменат записите на {name} во зоната на {domain} (сега: {count}, по промената: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"да се заменат вредностите на записот {type} на {name} во зоната на {domain} (сега: {count}, по "
+"промената: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "reset the authorization code of {domain}: the current code stops working"
 msgstr "ресетирање на кодот за овластување на {domain}: тековниот код престанува да важи"
 
@@ -504,6 +617,11 @@ msgstr "ресетирање на кодот за овластување на {d
 #, python-brace-format
 msgid "restore {domain}: {price} including taxes"
 msgstr "враќање на {domain}: {price} со даноци"
+
+# needs-review
+#, python-brace-format
+msgid "stop allowing {ip} to transfer the zone of {domain}"
+msgstr "да не се дозволува повеќе {ip} да ја пренесува зоната на {domain}"
 
 # needs-review
 #, python-brace-format
