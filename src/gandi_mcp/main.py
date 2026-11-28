@@ -113,6 +113,7 @@ SETTINGS = (
     Setting("token_entry", "timeout_seconds", lambda: 600, _bounded_integer(60, 3600)),
     Setting("content", "max_free_input", lambda: 280, _bounded_integer(1, 10000)),
     Setting("files", "work_directory", default_work_directory, _path),
+    Setting("files", "max_zone_file_size", lambda: 1_048_576, _bounded_integer(1024, 16_777_216)),
 )
 
 

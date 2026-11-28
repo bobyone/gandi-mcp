@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-28 00:54+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sr_Cyrl\n"
@@ -65,6 +65,16 @@ msgstr "Потврдите на тестном налогу (sandbox) {account}:
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Потврда - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Прво направи снимак зоне (аутоматски снимци су искључени)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr "Прво направи снимак зоне (аутоматски снимци су укључени: LiveDNS чува зону и после сваке промене)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -262,6 +272,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Уклањање овог налога је прекинуто: поново уклоните налог да бисте га завршили."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Снимак зоне није било могуће направити: ништа није промењено."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Токен овог налога недостаје у привеску кључева: замените токен налога."
 
@@ -366,6 +380,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Ова алатка може да се користи само из апликације Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Превише записа за једну замену: извезите зону, уредите датотеку, а затим је увезите."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Gandiju је послато превише захтева: сачекајте минут, затим покушајте поново."
 
@@ -404,6 +422,11 @@ msgstr "одбити пренос домена {domain} код другог ре
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "избрисати све записе зоне {domain} (сада: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "избрисати DNSSEC кључ {id} домена {domain}"
 
@@ -416,6 +439,11 @@ msgstr "избрисати домен {domain}: биће трајно изгуб
 #, python-brace-format
 msgid "delete the glue record {host} of {domain}"
 msgstr "избрисати glue запис {host} домена {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "избрисати записе за {name} у зони {domain} (сада: {count})"
 
 # needs-review
 #, python-brace-format
@@ -435,6 +463,11 @@ msgstr "избрисати снимак {snapshot} зоне {domain}"
 #, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "избрисати веб преусмеравање за {host}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "избрисати запис {type} за {name} у зони {domain} (вредности: {count})"
 
 # needs-review
 #, python-brace-format
@@ -484,6 +517,15 @@ msgstr "уклонити налог {account} и његов токен са ов
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"уклонити вредности записа {type} за {name} у зони {domain} (уклоњено: {count}, преостало: {left};"
+" ако не остане ниједна, запис се брише)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "обновити {domain} на {count} годину: {price} са порезима"
@@ -497,6 +539,38 @@ msgstr "заменити све DNSSEC кључеве домена {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"заменити све записе зоне {domain} (сада: {count}, после промене: {new}); њени NS записи на @ се "
+"задржавају"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"заменити све записе зоне {domain} (сада: {count}, после промене: {new}); уклањају се и њени NS "
+"записи на @"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr "заменити све записе зоне {domain} снимком {snapshot} (сада: {count}, после промене: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr "заменити све записе зоне {domain} датотеком зоне {file} (сада: {count}, после промене: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "заменити све ознаке домена {domain}"
 
@@ -504,6 +578,18 @@ msgstr "заменити све ознаке домена {domain}"
 #, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "заменити сервере имена домена {domain}; погрешан списак чини домен недоступним"
+
+# needs-review
+#, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "заменити записе за {name} у зони {domain} (сада: {count}, после промене: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr "заменити вредности записа {type} за {name} у зони {domain} (сада: {count}, после промене: {new})"
 
 # needs-review
 #, python-brace-format

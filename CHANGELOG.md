@@ -80,6 +80,13 @@ All notable changes are documented here. The format follows
   dissociate them. Values are checked before reaching Gandi (printable ASCII,
   shape of A, AAAA, CNAME, NS, MX and SRV values, TTL bounds); deletions are
   confirmed by the user. (#6)
+- LiveDNS (zone changes): replace or delete a record, remove values, replace or
+  delete the records of a name, replace, import (zone file of the work
+  directory, `files.max_zone_file_size`) or empty a whole zone, and restore a
+  snapshot. The confirmation states the counted effect and offers to take a
+  snapshot first, a choice the user makes outside the conversation (ADR 14). (#6)
+- A confirmation can offer a yes or no option, shown in the client form or as
+  a checkbox of the local page (ADR 14). (#6)
 
 ### Changed
 

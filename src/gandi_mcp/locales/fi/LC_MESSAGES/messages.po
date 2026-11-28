@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-28 00:54+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fi\n"
@@ -64,6 +64,18 @@ msgstr "Vahvista testitilillä (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Vahvistus - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Luo ensin vyöhykkeestä tilannevedos (automaattiset tilannevedokset ovat pois päältä)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Luo ensin vyöhykkeestä tilannevedos (automaattiset tilannevedokset ovat päällä: LiveDNS tallentaa"
+" vyöhykkeen myös jokaisen muutoksen jälkeen)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -263,6 +275,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Tilin poisto keskeytyi: poista tili uudelleen viedäksesi poiston loppuun."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Vyöhykkeen tilannevedosta ei voitu luoda: mitään ei muutettu."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Tämän tilin token puuttuu avainnipusta: korvaa tilin token."
 
@@ -365,6 +381,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Tätä työkalua voi käyttää vain Gandi-sovelluksesta."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Liian monta tietuetta yhteen korvaukseen: vie vyöhyke, muokkaa tiedostoa ja tuo se sitten."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Gandille lähetettiin liian monta pyyntöä: odota minuutti ja yritä uudelleen."
 
@@ -403,6 +423,11 @@ msgstr "hylkää verkkotunnuksen {domain} siirto toiselle rekisterinpitäjälle"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "poista kaikki vyöhykkeen {domain} tietueet (nyt: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "poista verkkotunnuksen {domain} DNSSEC-avain {id}"
 
@@ -415,6 +440,11 @@ msgstr "poista verkkotunnus {domain}: se menetetään lopullisesti"
 #, python-brace-format
 msgid "delete the glue record {host} of {domain}"
 msgstr "poista verkkotunnuksen {domain} glue-tietue {host}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "poista nimen {name} tietueet vyöhykkeessä {domain} (nyt: {count})"
 
 # needs-review
 #, python-brace-format
@@ -434,6 +464,11 @@ msgstr "poista vyöhykkeen {domain} tilannevedos {snapshot}"
 #, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "poista isännän {host} verkko-ohjaus"
+
+# needs-review
+#, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "poista nimen {name} {type}-tietue vyöhykkeessä {domain} (arvoja: {count})"
 
 # needs-review
 #, python-brace-format
@@ -482,6 +517,15 @@ msgstr "poista tili {account} ja sen token tältä tietokoneelta"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"poista arvoja nimen {name} {type}-tietueesta vyöhykkeessä {domain} (poistettu: {count}, jäljellä:"
+" {left}; jos yhtään ei jää, tietue poistetaan)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "uusi {domain} {count} vuodeksi: {price} sis. verot"
@@ -494,6 +538,42 @@ msgstr "korvaa kaikki verkkotunnuksen {domain} DNSSEC-avaimet"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"korvaa kaikki vyöhykkeen {domain} tietueet (nyt: {count}, muutoksen jälkeen: {new}); sen @-nimen "
+"NS-tietueet säilytetään"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"korvaa kaikki vyöhykkeen {domain} tietueet (nyt: {count}, muutoksen jälkeen: {new}); myös sen "
+"@-nimen NS-tietueet poistetaan"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"korvaa kaikki vyöhykkeen {domain} tietueet tilannevedoksella {snapshot} (nyt: {count}, muutoksen "
+"jälkeen: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"korvaa kaikki vyöhykkeen {domain} tietueet vyöhyketiedostolla {file} (nyt: {count}, muutoksen "
+"jälkeen: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "korvaa kaikki verkkotunnuksen {domain} tunnisteet"
 
@@ -503,6 +583,20 @@ msgid "replace the nameservers of {domain}; a wrong list makes the domain unreac
 msgstr ""
 "korvaa verkkotunnuksen {domain} nimipalvelimet; väärä luettelo tekee verkkotunnuksesta "
 "saavuttamattoman"
+
+# needs-review
+#, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "korvaa nimen {name} tietueet vyöhykkeessä {domain} (nyt: {count}, muutoksen jälkeen: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"korvaa nimen {name} {type}-tietueen arvot vyöhykkeessä {domain} (nyt: {count}, muutoksen jälkeen:"
+" {new})"
 
 # needs-review
 #, python-brace-format

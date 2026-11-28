@@ -50,11 +50,11 @@ generated and held in server memory. Neither is sent to a recipient or logged.
 | Field | Description |
 | --- | --- |
 | Controller | [Same as P1] |
-| Purpose | Export a zone or a snapshot as a zone file, and write the configuration sample of a TSIG key for a secondary server, at the user's request; later, import a zone file (ADR 15). |
+| Purpose | Export a zone or a snapshot as a zone file, write the configuration sample of a TSIG key for a secondary server, and read a zone file to import, at the user's request (ADR 15). |
 | Legal basis | [Same as P1] |
 | Data subjects | The user; people named in DNS records (an email address in a TXT, RP or SOA record). |
 | Data categories | DNS zones (names, types, values, TTL); secrets of TSIG keys, in configuration samples. |
-| Recipients | None: the files stay on the user's computer. The LLM provider receives the file name, its size and its number of records, never its content nor its full path. |
+| Recipients | Gandi SAS receives the content of a zone file the user imports. Otherwise the files stay on the user's computer. The LLM provider receives the file name, its size and its number of records, never its content nor its full path. |
 | Transfers outside the EU | None. |
 | Retention | Until the user deletes the files: the software never deletes them. The uninstall skill offers to remove the work directory, after confirmation. |
 | Security measures | One work directory (`files.work_directory`), created with owner-only access on POSIX; relative paths only, resolved and confined to the directory (symbolic links included); no file replaced unless explicitly asked; files holding a TSIG secret readable by their owner only (0600 on POSIX, permissions of the user profile on Windows); contents never logged. |

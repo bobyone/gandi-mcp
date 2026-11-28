@@ -171,6 +171,34 @@ class EndpointToolRunner:
 
         return await self._accounts.guard(run)
 
+    async def write_operation(
+        self,
+        ctx: Context[Any, Any],
+        operation: Callable[[], Awaitable[Operation]],
+        account: str | None,
+        confirmation_id: str | None = None,
+    ) -> dict[str, Any]:
+        """Change something through an operation that is not a single endpoint call.
+
+        The operation is built by an async function (it may read a file first), so
+        that its validation errors are explained like the others.
+        """
+
+        async def run() -> dict[str, Any]:
+            outcome = await self._executor.run(
+                await operation(),
+                AccountName(account) if account is not None else None,
+                self._accounts.context(ctx),
+                confirmation_id,
+            )
+            if isinstance(outcome, ConfirmationDecision):
+                return pending(outcome)
+            framed = present(outcome, filtered(self._filters, outcome.data, Disclosure()))
+            framed["status"] = "done"
+            return framed
+
+        return await self._accounts.guard(run)
+
     async def _read(  # noqa: PLR0917 - private helper of the two read entry points
         self,
         ctx: Context[Any, Any],

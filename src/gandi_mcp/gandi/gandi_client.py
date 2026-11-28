@@ -29,6 +29,7 @@ class GandiClient(ABC):
         accept_see_other: bool = False,
         dry_run: bool = False,
         accept: MediaType = MediaType.JSON,
+        text_body: str | None = None,
     ) -> GandiResponse:
         """Send a request and return the successful response.
 
@@ -47,6 +48,7 @@ class GandiClient(ABC):
                 ``{"status": "success" | "error", "errors": [...]}``.
             accept: Media type asked for the answer; with ``TEXT``, the data of a
                 successful response is the text of its body.
+            text_body: A ``text/plain`` body (zone file), sent instead of ``body``.
 
         Raises:
             GandiError: a subclass describing why the request failed.

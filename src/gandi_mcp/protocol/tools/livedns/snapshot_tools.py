@@ -14,6 +14,8 @@ from gandi_mcp.livedns.identifiers import SnapshotId
 from gandi_mcp.livedns.snapshot_name import SnapshotName
 from gandi_mcp.livedns.zone_files.zone_file_service import ZoneFileService
 from gandi_mcp.operations.livedns import livedns_endpoints
+from gandi_mcp.operations.livedns.snapshot_restore import SnapshotRestore
+from gandi_mcp.operations.operation import Operation
 from gandi_mcp.protocol.tool_module import ToolModule
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools
 from gandi_mcp.protocol.tools.endpoint_tool_runner import (
@@ -96,6 +98,14 @@ class SnapshotTools(ToolModule):
                 livedns_endpoints.SNAPSHOT_DELETE,
                 "Delete a snapshot",
                 "Delete a snapshot of a zone for good.",
+            ),
+            (
+                self.livedns_snapshot_restore,
+                livedns_endpoints.SNAPSHOT_RESTORE,
+                "Restore a snapshot",
+                "Replace all the records of a zone with those of a snapshot. The user is "
+                "shown the counted effect and chooses, outside the conversation, whether a "
+                "snapshot of the current zone is taken first.",
             ),
         )
         for write, write_endpoint, write_title, write_description in writes:
@@ -221,3 +231,19 @@ class SnapshotTools(ToolModule):
             lambda: {"domain": DomainName(domain).value, "snapshot": SnapshotId(snapshot_id).value},
             confirmation_id=confirmation_id,
         )
+
+    async def livedns_snapshot_restore(
+        self,
+        domain: LiveDnsDomainParameter,
+        snapshot_id: SnapshotIdParameter,
+        ctx: Context[Any, Any],
+        *,
+        confirmation_id: ConfirmationIdParameter = None,
+        account: AccountParameter = None,
+    ) -> dict[str, Any]:
+        """Restore a snapshot."""
+
+        async def operation() -> Operation:
+            return SnapshotRestore(DomainName(domain), SnapshotId(snapshot_id))
+
+        return await self._runner.write_operation(ctx, operation, account, confirmation_id)

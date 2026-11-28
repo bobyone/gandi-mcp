@@ -58,6 +58,7 @@ from gandi_mcp.i18n.translator import Translator
 from gandi_mcp.livedns.exceptions import InvalidLiveDnsInputError, InvalidRecordError
 from gandi_mcp.operations.endpoint.exceptions import InvalidEndpointArgumentsError
 from gandi_mcp.operations.exceptions import DryRunRejectedError, PriceChangedError
+from gandi_mcp.operations.livedns.exceptions import SnapshotFailedError, TooManyRecordsError
 from gandi_mcp.preferences.exceptions import PreferencesError
 from gandi_mcp.secrets.exceptions import (
     InvalidTokenFormatError,
@@ -156,6 +157,10 @@ WORK_FILE = N_(
     "The file could not be read or written in the work directory: check its permissions "
     "and that it is UTF-8 text."
 )
+SNAPSHOT_FAILED = N_("The snapshot of the zone could not be taken: nothing was changed.")
+TOO_MANY_RECORDS = N_(
+    "Too many records for one replacement: export the zone, edit the file, then import it."
+)
 APP_ONLY = N_("This tool can only be used from the Gandi app.")
 INTERNAL = N_("An unexpected error occurred: nothing was changed.")
 
@@ -200,6 +205,8 @@ MESSAGES: Mapping[type[Exception], Message] = {
     UnknownOrganizationError: UNKNOWN_ORGANIZATION,
     InvalidDomainInputError: INVALID_INPUT,
     InvalidEndpointArgumentsError: INVALID_INPUT,
+    SnapshotFailedError: SNAPSHOT_FAILED,
+    TooManyRecordsError: TOO_MANY_RECORDS,
     InvalidRecordError: INVALID_RECORD,
     InvalidLiveDnsInputError: INVALID_INPUT,
     OutsideWorkDirectoryError: OUTSIDE_WORK_DIRECTORY,

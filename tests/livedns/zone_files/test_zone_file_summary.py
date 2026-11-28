@@ -24,8 +24,8 @@ mail 300 A 192.0.2.3
 
 
 def test_records_are_name_and_type_pairs() -> None:
-    # SOA, @ A, @ MX (two values), www CNAME, @ TXT (two lines), SRV, mail A (twice).
-    assert record_count(ZONE) == 7
+    # @ A, @ MX (two values), www CNAME, @ TXT (two lines), SRV, mail A (twice); no SOA.
+    assert record_count(ZONE) == 6
 
 
 def test_an_empty_zone_has_no_record() -> None:

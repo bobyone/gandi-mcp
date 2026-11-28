@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-28 00:54+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pt\n"
@@ -64,6 +64,18 @@ msgstr "Confirme na conta de testes (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Confirmação - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Criar primeiro um snapshot da zona (os snapshots automáticos estão desativados)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Criar primeiro um snapshot da zona (os snapshots automáticos estão ativados: o LiveDNS também "
+"guarda a zona após cada alteração)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -263,6 +275,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "A remoção desta conta foi interrompida: remova a conta novamente para a concluir."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Não foi possível criar o snapshot da zona: nada foi alterado."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "O token desta conta não está no porta-chaves: substitua o token da conta."
 
@@ -363,6 +379,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Esta ferramenta só pode ser usada a partir da aplicação Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Demasiados registos para uma só substituição: exporte a zona, edite o ficheiro e depois importe-o."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Foram enviados demasiados pedidos à Gandi: aguarde um minuto e tente novamente."
 
@@ -401,6 +421,11 @@ msgstr "recusar a transferência de {domain} para outro registrador"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "eliminar todos os registos da zona de {domain} (agora: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "eliminar a chave DNSSEC {id} de {domain}"
 
@@ -413,6 +438,11 @@ msgstr "eliminar o domínio {domain}: será perdido para sempre"
 #, python-brace-format
 msgid "delete the glue record {host} of {domain}"
 msgstr "eliminar o registo glue {host} de {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "eliminar os registos de {name} na zona de {domain} (agora: {count})"
 
 # needs-review
 #, python-brace-format
@@ -432,6 +462,11 @@ msgstr "eliminar o snapshot {snapshot} da zona de {domain}"
 #, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "eliminar o redirecionamento web de {host}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "eliminar o registo {type} de {name} na zona de {domain} (valores: {count})"
 
 # needs-review
 #, python-brace-format
@@ -481,6 +516,15 @@ msgstr "remover a conta {account} e o respetivo token deste computador"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"remover valores do registo {type} de {name} na zona de {domain} (removidos: {count}, restantes: "
+"{left}; se não restar nenhum, o registo é eliminado)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "renovar {domain} por {count} ano: {price} com impostos"
@@ -494,6 +538,42 @@ msgstr "substituir todas as chaves DNSSEC de {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"substituir todos os registos da zona de {domain} (agora: {count}, após a alteração: {new}); os "
+"seus registos NS em @ são mantidos"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"substituir todos os registos da zona de {domain} (agora: {count}, após a alteração: {new}); os "
+"seus registos NS em @ também são removidos"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"substituir todos os registos da zona de {domain} pelo snapshot {snapshot} (agora: {count}, após a"
+" alteração: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"substituir todos os registos da zona de {domain} pelo ficheiro de zona {file} (agora: {count}, "
+"após a alteração: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "substituir todas as etiquetas de {domain}"
 
@@ -501,6 +581,20 @@ msgstr "substituir todas as etiquetas de {domain}"
 #, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "substituir os servidores de nomes de {domain}; uma lista errada torna o domínio inacessível"
+
+# needs-review
+#, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "substituir os registos de {name} na zona de {domain} (agora: {count}, após a alteração: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"substituir os valores do registo {type} de {name} na zona de {domain} (agora: {count}, após a "
+"alteração: {new})"
 
 # needs-review
 #, python-brace-format

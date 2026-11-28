@@ -101,6 +101,7 @@ class HttpGandiClient(GandiClient):
         accept_see_other: bool = False,
         dry_run: bool = False,
         accept: MediaType = MediaType.JSON,
+        text_body: str | None = None,
     ) -> GandiResponse:
         verb = method.upper()
         if verb not in METHODS:
@@ -113,13 +114,18 @@ class HttpGandiClient(GandiClient):
         headers = {"Accept": accept.value, "Authorization": f"Bearer {token.reveal()}"}
         if dry_run:
             headers["Dry-Run"] = "1"
+        content: bytes | None = None
+        if text_body is not None:
+            headers["Content-Type"] = "text/plain; charset=utf-8"
+            content = text_body.encode("utf-8")
         started = time.monotonic()
         try:
             response = await self._client.request(
                 verb,
                 url,
                 params=params,
-                json=body,
+                json=body if content is None else None,
+                content=content,
                 headers=headers,
             )
         except httpx2.TimeoutException as error:

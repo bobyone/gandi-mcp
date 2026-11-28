@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-28 00:54+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: bs\n"
@@ -65,6 +65,18 @@ msgstr "Potvrdite na testnom računu (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Potvrda - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Prvo napravi snimak zone (automatski snimci su isključeni)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Prvo napravi snimak zone (automatski snimci su uključeni: LiveDNS sprema zonu i nakon svake "
+"promjene)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -262,6 +274,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Uklanjanje ovog računa je prekinuto: ponovo uklonite račun da biste ga završili."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Snimak zone nije bilo moguće napraviti: ništa nije promijenjeno."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Token ovog računa nedostaje u privjesku ključeva: zamijenite token računa."
 
@@ -364,6 +380,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Ovaj alat se može koristiti samo iz aplikacije Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "Previše zapisa za jednu zamjenu: izvezite zonu, uredite datoteku, a zatim je uvezite."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Previše zahtjeva je poslano Gandiju: sačekajte minutu, zatim pokušajte ponovo."
 
@@ -402,6 +422,11 @@ msgstr "odbiti prijenos domene {domain} kod drugog registrara"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "izbrisati sve zapise zone {domain} (sada: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "izbrisati DNSSEC ključ {id} domene {domain}"
 
@@ -414,6 +439,11 @@ msgstr "izbrisati domenu {domain}: bit će trajno izgubljena"
 #, python-brace-format
 msgid "delete the glue record {host} of {domain}"
 msgstr "izbrisati glue zapis {host} domene {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "izbrisati zapise za {name} u zoni {domain} (sada: {count})"
 
 # needs-review
 #, python-brace-format
@@ -433,6 +463,11 @@ msgstr "izbrisati snimak {snapshot} zone {domain}"
 #, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "izbrisati web preusmjeravanje za {host}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "izbrisati zapis {type} za {name} u zoni {domain} (vrijednosti: {count})"
 
 # needs-review
 #, python-brace-format
@@ -482,6 +517,15 @@ msgstr "ukloniti račun {account} i njegov token s ovog računara"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"ukloniti vrijednosti zapisa {type} za {name} u zoni {domain} (uklonjeno: {count}, preostalo: "
+"{left}; ako ne ostane nijedna, zapis se briše)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "obnoviti {domain} na {count} godinu: {price} s porezima"
@@ -495,6 +539,38 @@ msgstr "zamijeniti sve DNSSEC ključeve domene {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"zamijeniti sve zapise zone {domain} (sada: {count}, nakon promjene: {new}); njeni NS zapisi na @ "
+"se zadržavaju"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"zamijeniti sve zapise zone {domain} (sada: {count}, nakon promjene: {new}); uklanjaju se i njeni "
+"NS zapisi na @"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr "zamijeniti sve zapise zone {domain} snimkom {snapshot} (sada: {count}, nakon promjene: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr "zamijeniti sve zapise zone {domain} datotekom zone {file} (sada: {count}, nakon promjene: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "zamijeniti sve oznake domene {domain}"
 
@@ -502,6 +578,20 @@ msgstr "zamijeniti sve oznake domene {domain}"
 #, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "zamijeniti nameservere domene {domain}; pogrešan popis čini domenu nedostupnom"
+
+# needs-review
+#, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "zamijeniti zapise za {name} u zoni {domain} (sada: {count}, nakon promjene: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"zamijeniti vrijednosti zapisa {type} za {name} u zoni {domain} (sada: {count}, nakon promjene: "
+"{new})"
 
 # needs-review
 #, python-brace-format

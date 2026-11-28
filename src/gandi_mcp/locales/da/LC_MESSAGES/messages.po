@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-28 00:54+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: da\n"
@@ -64,6 +64,18 @@ msgstr "Bekræft på testkontoen (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Bekræftelse - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Opret først et snapshot af zonen (automatiske snapshots er slået fra)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Opret først et snapshot af zonen (automatiske snapshots er slået til: LiveDNS gemmer også zonen "
+"efter hver ændring)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -261,6 +273,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Fjernelsen af kontoen blev afbrudt: fjern kontoen igen for at fuldføre den."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Snapshottet af zonen kunne ikke oprettes: intet blev ændret."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Denne kontos token mangler i nøgleringen: erstat kontoens token."
 
@@ -361,6 +377,10 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Dette værktøj kan kun bruges fra Gandi-appen."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr "For mange poster til én erstatning: eksportér zonen, redigér filen, og importér den derefter."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Der blev sendt for mange anmodninger til Gandi: vent et minut, og prøv igen."
 
@@ -399,6 +419,11 @@ msgstr "afvis overførslen af {domain} til en anden registrator"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "slette alle poster i zonen for {domain} (nu: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "slet DNSSEC-nøglen {id} for {domain}"
 
@@ -411,6 +436,11 @@ msgstr "slet domænet {domain}: det vil være tabt for altid"
 #, python-brace-format
 msgid "delete the glue record {host} of {domain}"
 msgstr "slet glue-posten {host} for {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "slette posterne for {name} i zonen for {domain} (nu: {count})"
 
 # needs-review
 #, python-brace-format
@@ -430,6 +460,11 @@ msgstr "slette snapshottet {snapshot} af zonen for {domain}"
 #, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "slet webomdirigeringen for {host}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "slette {type}-posten for {name} i zonen for {domain} (værdier: {count})"
 
 # needs-review
 #, python-brace-format
@@ -478,6 +513,15 @@ msgstr "fjerne kontoen {account} og dens token fra denne computer"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"fjerne værdier fra {type}-posten for {name} i zonen for {domain} (fjernet: {count}, tilbage: "
+"{left}; er der ingen tilbage, slettes posten)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "forny {domain} i {count} år: {price} inkl. afgifter"
@@ -490,6 +534,42 @@ msgstr "erstat alle DNSSEC-nøgler for {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"erstatte alle poster i zonen for {domain} (nu: {count}, efter ændringen: {new}); dens NS-poster "
+"på @ bevares"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"erstatte alle poster i zonen for {domain} (nu: {count}, efter ændringen: {new}); dens NS-poster "
+"på @ fjernes også"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"erstatte alle poster i zonen for {domain} med snapshottet {snapshot} (nu: {count}, efter "
+"ændringen: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"erstatte alle poster i zonen for {domain} med zonefilen {file} (nu: {count}, efter ændringen: "
+"{new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "erstat alle tags for {domain}"
 
@@ -497,6 +577,20 @@ msgstr "erstat alle tags for {domain}"
 #, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "erstat navneserverne for {domain}; en forkert liste gør domænet utilgængeligt"
+
+# needs-review
+#, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "erstatte posterne for {name} i zonen for {domain} (nu: {count}, efter ændringen: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"erstatte værdierne i {type}-posten for {name} i zonen for {domain} (nu: {count}, efter ændringen:"
+" {new})"
 
 # needs-review
 #, python-brace-format

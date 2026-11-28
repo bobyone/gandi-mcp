@@ -14,7 +14,9 @@ from gandi_mcp.accounts.account_draft import AccountDraft
 from gandi_mcp.accounts.account_name import AccountName
 from gandi_mcp.accounts.account_service import AccountService
 from gandi_mcp.accounts.environment import Environment
+from gandi_mcp.confirmation.channels.elicitation_channel import ElicitationChannel
 from gandi_mcp.confirmation.channels.local_link_channel import LocalLinkChannel
+from gandi_mcp.confirmation.confirmation_channel import ConfirmationChannel
 from gandi_mcp.confirmation.confirmation_service import ConfirmationService
 from gandi_mcp.confirmation.pending_confirmations import PendingConfirmations
 from gandi_mcp.content.long_text_filter import WITHHELD, LongTextFilter
@@ -112,14 +114,22 @@ class Setup:
 
 @pytest.fixture
 def setup() -> Setup:
+    return build()
+
+
+def build(*, elicitation: bool = False) -> Setup:
+    """The LiveDNS tools over doubles; with ``elicitation``, confirmations are asked in
+    the client first."""
     secrets, verifier = InMemorySecretStore(), StubTokenVerifier()
     verifier.accept(Environment.SANDBOX, TOKEN)
     accounts = AccountService(InMemoryPreferencesStore(), secrets, verifier)
     translator, presenter = SourceTranslator(), LinkPresenter(FakeBrowser())
     pending = PendingConfirmations(300)
-    confirmation = ConfirmationService(
-        [LocalLinkChannel(pending, FakeConfirmationPage(), presenter, translator)], pending
-    )
+    local = LocalLinkChannel(pending, FakeConfirmationPage(), presenter, translator)
+    channels: list[ConfirmationChannel] = [local]
+    if elicitation:
+        channels.insert(0, ElicitationChannel(translator))
+    confirmation = ConfirmationService(channels, pending)
     tools = AccountsTools(
         accounts,
         confirmation,
@@ -133,13 +143,13 @@ def setup() -> Setup:
         executor, tools, [ContactRedactor(), SecretFieldFilter(), LongTextFilter(280)]
     )
     exporter = TextFileExporter(executor, files)
-    zone_files = ZoneFileService(exporter)
+    zone_files = ZoneFileService(exporter, files, 1000)
     modules = [
         LiveDnsDomainTools(runner),
         RecordReadTools(runner),
         RecordWriteTools(runner),
         VerificationTools(runner),
-        ZoneTools(zone_files, tools),
+        ZoneTools(runner, zone_files, tools),
         SnapshotTools(runner, zone_files, tools),
         SigningKeyTools(runner),
         ZoneTransferTools(runner, exporter, tools),

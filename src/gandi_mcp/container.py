@@ -78,7 +78,8 @@ class ApplicationContainer(containers.DeclarativeContainer):
         ``preferences.path``, ``gandi.production_url``, ``gandi.sandbox_url``,
         ``gandi.timeout_seconds``, ``confirmation.timeout_seconds``,
         ``token_entry.timeout_seconds``, ``content.max_free_input``,
-        ``files.work_directory``: validated by the entry point.
+        ``files.work_directory``, ``files.max_zone_file_size``: validated by the entry
+        point.
     """
 
     config = providers.Configuration(strict=True)
@@ -168,7 +169,9 @@ class ApplicationContainer(containers.DeclarativeContainer):
     )
     work_directory = providers.Singleton(LocalWorkDirectory, config.files.work_directory)
     text_file_exporter = providers.Singleton(TextFileExporter, operation_executor, work_directory)
-    zone_file_service = providers.Singleton(ZoneFileService, text_file_exporter)
+    zone_file_service = providers.Singleton(
+        ZoneFileService, text_file_exporter, work_directory, config.files.max_zone_file_size
+    )
     organization_service = providers.Singleton(
         OrganizationService,
         account_service,
@@ -194,7 +197,7 @@ class ApplicationContainer(containers.DeclarativeContainer):
         providers.Singleton(RecordReadTools, endpoint_tool_runner),
         providers.Singleton(RecordWriteTools, endpoint_tool_runner),
         providers.Singleton(VerificationTools, endpoint_tool_runner),
-        providers.Singleton(ZoneTools, zone_file_service, accounts_tools),
+        providers.Singleton(ZoneTools, endpoint_tool_runner, zone_file_service, accounts_tools),
         providers.Singleton(SnapshotTools, endpoint_tool_runner, zone_file_service, accounts_tools),
         providers.Singleton(SigningKeyTools, endpoint_tool_runner),
         providers.Singleton(

@@ -25,6 +25,7 @@ class RecordedCall:
     accept_see_other: bool = False
     dry_run: bool = False
     accept: MediaType = MediaType.JSON
+    text_body: str | None = None
 
 
 @dataclass
@@ -47,6 +48,7 @@ class FakeGandiClient(GandiClient):
         accept_see_other: bool = False,
         dry_run: bool = False,
         accept: MediaType = MediaType.JSON,
+        text_body: str | None = None,
     ) -> GandiResponse:
         self.calls.append(
             RecordedCall(
@@ -59,6 +61,7 @@ class FakeGandiClient(GandiClient):
                 accept_see_other,
                 dry_run,
                 accept,
+                text_body,
             )
         )
         outcome = self.outcomes.pop(0) if self.outcomes else GandiResponse(200, None)

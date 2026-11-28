@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-28 00:54+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -64,6 +64,18 @@ msgstr "Επιβεβαιώστε στον δοκιμαστικό λογαρια�
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Επιβεβαίωση - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Δημιουργία πρώτα στιγμιότυπου της ζώνης (τα αυτόματα στιγμιότυπα είναι απενεργοποιημένα)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Δημιουργία πρώτα στιγμιότυπου της ζώνης (τα αυτόματα στιγμιότυπα είναι ενεργά: το LiveDNS "
+"αποθηκεύει τη ζώνη και μετά από κάθε αλλαγή)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -269,6 +281,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Η αφαίρεση αυτού του λογαριασμού διακόπηκε: αφαιρέστε ξανά τον λογαριασμό για να ολοκληρωθεί."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Δεν ήταν δυνατή η δημιουργία στιγμιότυπου της ζώνης: δεν άλλαξε τίποτα."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Το token αυτού του λογαριασμού λείπει από την κλειδοθήκη: αντικαταστήστε το token του λογαριασμού."
 
@@ -379,6 +395,12 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Αυτό το εργαλείο μπορεί να χρησιμοποιηθεί μόνο από την εφαρμογή Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr ""
+"Πάρα πολλές εγγραφές για μία αντικατάσταση: εξαγάγετε τη ζώνη, επεξεργαστείτε το αρχείο και "
+"έπειτα εισαγάγετέ το."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Στάλθηκαν πάρα πολλά αιτήματα στη Gandi: περιμένετε ένα λεπτό και δοκιμάστε ξανά."
 
@@ -420,6 +442,11 @@ msgstr "απόρριψη της μεταφοράς του {domain} σε άλλο
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "διαγραφή όλων των εγγραφών της ζώνης του {domain} (τώρα: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "διαγραφή του κλειδιού DNSSEC {id} του {domain}"
 
@@ -432,6 +459,11 @@ msgstr "διαγραφή του τομέα {domain}: θα χαθεί οριστ�
 #, python-brace-format
 msgid "delete the glue record {host} of {domain}"
 msgstr "διαγραφή της εγγραφής glue {host} του {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "διαγραφή των εγγραφών του {name} στη ζώνη του {domain} (τώρα: {count})"
 
 # needs-review
 #, python-brace-format
@@ -451,6 +483,11 @@ msgstr "διαγραφή του στιγμιότυπου {snapshot} της ζώ�
 #, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "διαγραφή της ανακατεύθυνσης ιστού του {host}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "διαγραφή της εγγραφής {type} του {name} στη ζώνη του {domain} (τιμές: {count})"
 
 # needs-review
 #, python-brace-format
@@ -499,6 +536,15 @@ msgstr "αφαίρεση του λογαριασμού {account} και του t
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"αφαίρεση τιμών από την εγγραφή {type} του {name} στη ζώνη του {domain} (αφαιρούνται: {count}, "
+"απομένουν: {left}; αν δεν απομείνει καμία, η εγγραφή διαγράφεται)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "ανανέωση του {domain} για {count} έτος: {price} με φόρους"
@@ -511,6 +557,42 @@ msgstr "αντικατάσταση όλων των κλειδιών DNSSEC το�
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"αντικατάσταση όλων των εγγραφών της ζώνης του {domain} (τώρα: {count}, μετά την αλλαγή: {new}); "
+"οι εγγραφές NS στο @ διατηρούνται"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"αντικατάσταση όλων των εγγραφών της ζώνης του {domain} (τώρα: {count}, μετά την αλλαγή: {new}); "
+"αφαιρούνται και οι εγγραφές NS στο @"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"αντικατάσταση όλων των εγγραφών της ζώνης του {domain} με το στιγμιότυπο {snapshot} (τώρα: "
+"{count}, μετά την αλλαγή: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"αντικατάσταση όλων των εγγραφών της ζώνης του {domain} με το αρχείο ζώνης {file} (τώρα: {count}, "
+"μετά την αλλαγή: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "αντικατάσταση όλων των ετικετών του {domain}"
 
@@ -518,6 +600,22 @@ msgstr "αντικατάσταση όλων των ετικετών του {doma
 #, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "αντικατάσταση των διακομιστών ονομάτων του {domain}· μια λάθος λίστα κάνει τον τομέα μη προσβάσιμο"
+
+# needs-review
+#, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr ""
+"αντικατάσταση των εγγραφών του {name} στη ζώνη του {domain} (τώρα: {count}, μετά την αλλαγή: "
+"{new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"αντικατάσταση των τιμών της εγγραφής {type} του {name} στη ζώνη του {domain} (τώρα: {count}, μετά"
+" την αλλαγή: {new})"
 
 # needs-review
 #, python-brace-format

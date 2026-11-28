@@ -147,3 +147,67 @@ WRITE_ENDPOINTS: tuple[Endpoint, ...] = (
     DOMAIN_TSIG_KEY_ADD,
     DOMAIN_TSIG_KEY_REMOVE,
 )
+
+# Destructive zone changes, run by the ZoneChange operations (counted effect, optional
+# snapshot first, ADR 14).
+NAME_PATH = (*RECORDS, "{name}")
+RECORD_REPLACE = Endpoint(
+    "livedns_record_replace", "PUT", RECORD_PATH, DESTRUCTIVE, description=messages.REPLACE_RECORD
+)
+RECORD_VALUES_REMOVE = Endpoint(
+    "livedns_record_values_remove",
+    "PATCH",
+    RECORD_PATH,
+    DESTRUCTIVE,
+    description=messages.REMOVE_RECORD_VALUES,
+)
+RECORD_DELETE = Endpoint(
+    "livedns_record_delete", "DELETE", RECORD_PATH, DESTRUCTIVE, description=messages.DELETE_RECORD
+)
+NAME_RECORDS_REPLACE = Endpoint(
+    "livedns_name_records_replace",
+    "PUT",
+    NAME_PATH,
+    DESTRUCTIVE,
+    description=messages.REPLACE_NAME_RECORDS,
+)
+NAME_RECORDS_DELETE = Endpoint(
+    "livedns_name_records_delete",
+    "DELETE",
+    NAME_PATH,
+    DESTRUCTIVE,
+    description=messages.DELETE_NAME_RECORDS,
+)
+ZONE_REPLACE = Endpoint(
+    "livedns_zone_replace", "PUT", RECORDS, DESTRUCTIVE, description=messages.REPLACE_ZONE
+)
+ZONE_REPLACE_WITHOUT_APEX_NS = Endpoint(
+    "livedns_zone_replace",
+    "PUT",
+    RECORDS,
+    DESTRUCTIVE,
+    description=messages.REPLACE_ZONE_WITHOUT_APEX_NS,
+)
+# The same PUT with a zone file (text/plain) read from the work directory (ADR 15).
+ZONE_IMPORT = Endpoint(
+    "livedns_zone_import", "PUT", RECORDS, DESTRUCTIVE, description=messages.IMPORT_ZONE
+)
+ZONE_DELETE = Endpoint(
+    "livedns_zone_delete", "DELETE", RECORDS, DESTRUCTIVE, description=messages.DELETE_ZONE
+)
+# No restore endpoint: the records of the snapshot replace the zone (SnapshotRestore).
+SNAPSHOT_RESTORE = Endpoint(
+    "livedns_snapshot_restore", "PUT", RECORDS, DESTRUCTIVE, description=messages.RESTORE_SNAPSHOT
+)
+
+ZONE_CHANGE_ENDPOINTS: tuple[Endpoint, ...] = (
+    RECORD_REPLACE,
+    RECORD_VALUES_REMOVE,
+    RECORD_DELETE,
+    NAME_RECORDS_REPLACE,
+    NAME_RECORDS_DELETE,
+    ZONE_REPLACE,
+    ZONE_IMPORT,
+    ZONE_DELETE,
+    SNAPSHOT_RESTORE,
+)

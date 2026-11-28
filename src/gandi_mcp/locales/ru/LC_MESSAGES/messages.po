@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-28 00:54+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -65,6 +65,18 @@ msgstr "Подтвердите в тестовой учётной записи (
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Подтверждение - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Сначала создать снимок зоны (автоматические снимки отключены)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Сначала создать снимок зоны (автоматические снимки включены: LiveDNS также сохраняет зону после "
+"каждого изменения)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -264,6 +276,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Удаление этой учётной записи было прервано: удалите учётную запись ещё раз, чтобы завершить его."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Не удалось создать снимок зоны: ничего не изменено."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "Токен этой учётной записи отсутствует в связке ключей: замените токен учётной записи."
 
@@ -368,6 +384,12 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Этот инструмент можно использовать только из приложения Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr ""
+"Слишком много записей для одной замены: экспортируйте зону, отредактируйте файл, затем "
+"импортируйте его."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "В Gandi отправлено слишком много запросов: подождите минуту и повторите попытку."
 
@@ -406,6 +428,11 @@ msgstr "отклонить перенос {domain} к другому регис�
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "удалить все записи зоны {domain} (сейчас: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "удалить ключ DNSSEC {id} домена {domain}"
 
@@ -418,6 +445,11 @@ msgstr "удалить домен {domain}: он будет утрачен на�
 #, python-brace-format
 msgid "delete the glue record {host} of {domain}"
 msgstr "удалить glue-запись {host} домена {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "удалить записи {name} в зоне {domain} (сейчас: {count})"
 
 # needs-review
 #, python-brace-format
@@ -437,6 +469,11 @@ msgstr "удалить снимок {snapshot} зоны {domain}"
 #, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "удалить веб-перенаправление {host}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "удалить запись {type} для {name} в зоне {domain} (значений: {count})"
 
 # needs-review
 #, python-brace-format
@@ -486,6 +523,15 @@ msgstr "удалить учётную запись {account} и её токен 
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"удалить значения записи {type} для {name} в зоне {domain} (удалено: {count}, осталось: {left}; "
+"если не останется ни одного, запись удаляется)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "продлить {domain} на {count} год: {price} с налогами"
@@ -499,6 +545,38 @@ msgstr "заменить все ключи DNSSEC домена {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"заменить все записи зоны {domain} (сейчас: {count}, после изменения: {new}); её записи NS на @ "
+"сохраняются"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"заменить все записи зоны {domain} (сейчас: {count}, после изменения: {new}); её записи NS на @ "
+"также удаляются"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr "заменить все записи зоны {domain} снимком {snapshot} (сейчас: {count}, после изменения: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr "заменить все записи зоны {domain} файлом зоны {file} (сейчас: {count}, после изменения: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "заменить все метки домена {domain}"
 
@@ -506,6 +584,20 @@ msgstr "заменить все метки домена {domain}"
 #, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "заменить серверы имён {domain}; неверный список делает домен недоступным"
+
+# needs-review
+#, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "заменить записи {name} в зоне {domain} (сейчас: {count}, после изменения: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"заменить значения записи {type} для {name} в зоне {domain} (сейчас: {count}, после изменения: "
+"{new})"
 
 # needs-review
 #, python-brace-format

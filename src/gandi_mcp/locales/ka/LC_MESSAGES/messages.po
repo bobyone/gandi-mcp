@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-28 00:54+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ka\n"
@@ -64,6 +64,18 @@ msgstr "დაადასტურეთ სატესტო ანგარ�
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "დადასტურება - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "ჯერ ზონის სნეპშოტის შექმნა (ავტომატური სნეპშოტები გამორთულია)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"ჯერ ზონის სნეპშოტის შექმნა (ავტომატური სნეპშოტები ჩართულია: LiveDNS ზონას ყოველი ცვლილების "
+"შემდეგაც ინახავს)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -263,6 +275,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "ამ ანგარიშის წაშლა შეწყდა: დასასრულებლად კვლავ წაშალეთ ანგარიში."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "ზონის სნეპშოტის შექმნა ვერ მოხერხდა: არაფერი შეცვლილა."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "ამ ანგარიშის ტოკენი გასაღებების საცავში არ არის: შეცვალეთ ანგარიშის ტოკენი."
 
@@ -361,6 +377,12 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "ამ ხელსაწყოს გამოყენება მხოლოდ Gandi აპლიკაციიდან შეიძლება."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr ""
+"ზედმეტად ბევრი ჩანაწერი ერთი ჩანაცვლებისთვის: გაიტანეთ ზონა, შეცვალეთ ფაილი, შემდეგ შემოიტანეთ "
+"იგი."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Gandi-ს ძალიან ბევრი მოთხოვნა გაეგზავნა: დაელოდეთ ერთ წუთს და სცადეთ ხელახლა."
 
@@ -399,6 +421,11 @@ msgstr "{domain}-ის სხვა რეგისტრატორთან 
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "{domain}-ის ზონის ყველა ჩანაწერის წაშლა (ახლა: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "{domain}-ის DNSSEC გასაღების {id} წაშლა"
 
@@ -411,6 +438,11 @@ msgstr "დომენის {domain} წაშლა: ის სამუდ�
 #, python-brace-format
 msgid "delete the glue record {host} of {domain}"
 msgstr "{domain}-ის glue ჩანაწერის {host} წაშლა"
+
+# needs-review
+#, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "{name}-ის ჩანაწერების წაშლა {domain}-ის ზონაში (ახლა: {count})"
 
 # needs-review
 #, python-brace-format
@@ -430,6 +462,11 @@ msgstr "{domain}-ის ზონის სნეპშოტის {snapshot} �
 #, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "{host}-ის ვებ გადამისამართების წაშლა"
+
+# needs-review
+#, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "{name}-ის {type} ჩანაწერის წაშლა {domain}-ის ზონაში (მნიშვნელობები: {count})"
 
 # needs-review
 #, python-brace-format
@@ -478,6 +515,15 @@ msgstr "ანგარიშის {account} და მისი ტოკე�
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"მნიშვნელობების ამოღება {name}-ის {type} ჩანაწერიდან {domain}-ის ზონაში (ამოღებული: {count}, "
+"დარჩენილი: {left}; თუ არცერთი არ დარჩება, ჩანაწერი წაიშლება)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "{domain}-ის განახლება {count} წლით: {price} გადასახადების ჩათვლით"
@@ -490,6 +536,42 @@ msgstr "{domain}-ის ყველა DNSSEC გასაღების ჩ�
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"{domain}-ის ზონის ყველა ჩანაწერის ჩანაცვლება (ახლა: {count}, ცვლილების შემდეგ: {new}); მისი NS "
+"ჩანაწერები @-ზე შენარჩუნებულია"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"{domain}-ის ზონის ყველა ჩანაწერის ჩანაცვლება (ახლა: {count}, ცვლილების შემდეგ: {new}); მისი NS "
+"ჩანაწერები @-ზე ასევე წაიშლება"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"{domain}-ის ზონის ყველა ჩანაწერის ჩანაცვლება სნეპშოტით {snapshot} (ახლა: {count}, ცვლილების "
+"შემდეგ: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"{domain}-ის ზონის ყველა ჩანაწერის ჩანაცვლება ზონის ფაილით {file} (ახლა: {count}, ცვლილების "
+"შემდეგ: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "{domain}-ის ყველა ტეგის ჩანაცვლება"
 
@@ -497,6 +579,20 @@ msgstr "{domain}-ის ყველა ტეგის ჩანაცვლე
 #, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "{domain}-ის სახელების სერვერების ჩანაცვლება; არასწორი სია დომენს მიუწვდომელს ხდის"
+
+# needs-review
+#, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "{name}-ის ჩანაწერების ჩანაცვლება {domain}-ის ზონაში (ახლა: {count}, ცვლილების შემდეგ: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"{name}-ის {type} ჩანაწერის მნიშვნელობების ჩანაცვლება {domain}-ის ზონაში (ახლა: {count}, ცვლილების"
+" შემდეგ: {new})"
 
 # needs-review
 #, python-brace-format

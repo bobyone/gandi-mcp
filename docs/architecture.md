@@ -266,7 +266,7 @@ Sends authenticated requests to the Gandi API v5 of an environment.
 
 | Operation | Contract |
 | --- | --- |
-| `request(environment, token, method, path, *, query=None, body=None, accept_see_other=False, dry_run=False, accept=MediaType.JSON)` | `accept` (`gandi.media_type.MediaType`: `JSON` or `TEXT`) is the media type asked for: with `TEXT`, the data of a successful answer is its body text (zone files). `dry_run` sends `Dry-Run: 1` (Gandi only checks the request). `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
+| `request(environment, token, method, path, *, query=None, body=None, accept_see_other=False, dry_run=False, accept=MediaType.JSON, text_body=None)` | `accept` (`gandi.media_type.MediaType`: `JSON` or `TEXT`) is the media type asked for: with `TEXT`, the data of a successful answer is its body text (zone files). `text_body` sends a `text/plain` body (zone file import) instead of `body`. `dry_run` sends `Dry-Run: 1` (Gandi only checks the request). `path` is a sequence of segments, each encoded so that user input never changes the path structure. Returns a `GandiResponse` (`status`, decoded `data`, `total_count` of paginated lists, `location` of created resources); its data is untrusted. Raises a `GandiError` subclass. |
 | `close()` | Releases network resources. |
 
 Errors: `GandiAuthenticationError` (401), `GandiPermissionError` (403),
@@ -310,12 +310,43 @@ cannot be read or written.
 Exceptions derive from `LiveDnsError`. `livedns.zone_files.zone_file_summary.record_count(text)`
 counts the records of a zone file: distinct name and type pairs, like the
 records of the API (blank lines, comments and directives skipped; a record
-between parentheses read once). A zone export counts its SOA, which the record
-list of the API leaves out.
+between parentheses read once). The SOA record is left out, as in the record
+lists of the API, so that the count of an export matches the zone.
 `livedns.zone_files.zone_file_service.ZoneFileService(exporter)` exports the
 zone of a domain, or one of its snapshots, as a zone file:
 `export(account, context, domain, relative_path, *, overwrite=False, snapshot=None)`
-returns a `ZoneFileExport` (`file`, `record_count`).
+returns a `ZoneFileExport` (`file`, `record_count`). `ZoneFileService(exporter,
+work_directory, max_zone_file_size)` also reads the zone file of an import:
+`read(relative_path)` returns a `ZoneFile` (`relative_path`, `text`,
+`record_count`), bounded by `files.max_zone_file_size`.
+
+### Zone changes: `gandi_mcp.operations.livedns.zone_change.ZoneChange`
+
+A destructive change of the records of a zone, an `EndpointOperation`
+(template method, ADR 14):
+
+1. `prepare` reads the automatic snapshots setting of the zone
+   (`livedns_domain`), then what the change affects (`affected()`, per
+   subclass); a missing target is a Gandi error, raised before any
+   confirmation;
+2. `describe` gives the effect with these counts (`count`, `new`, `left`);
+   `confirmation_option()` offers "Create a snapshot of the zone first",
+   checked by default, its label stating whether automatic snapshots are on;
+3. `execute` takes the snapshot when the user chose it (a failure raises
+   `SnapshotFailedError` and nothing changes), then runs `change()`; the result
+   is then `{"result", "snapshot_id"}`.
+
+| Subclass | Affected state read | Tools |
+| --- | --- | --- |
+| `RecordChange` | the record of a name and type (`count` values; for a removal, `count` removed and `left` kept) | `livedns_record_replace`, `livedns_record_values_remove`, `livedns_record_delete` |
+| `NameRecordsChange` | the records of a name (`count`) | `livedns_name_records_replace`, `livedns_name_records_delete` |
+| `ZoneReplacement` | the total of the record list (`count`) | `livedns_zone_replace` (at most `MAX_REPLACED_RECORDS`, 1000, otherwise `TooManyRecordsError`), `livedns_zone_import` (a `text/plain` body), `livedns_zone_delete` |
+| `SnapshotRestore` (a `ZoneReplacement`) | also the snapshot (its name, `new` records) | `livedns_snapshot_restore`: reads the snapshot again, then replaces the zone with its `zone_data` |
+
+The confirmation is bound to the subject (operation and parameters), not to
+the zone content: an import is bound to the SHA-256 of its file
+(`EndpointOperation` adds `text_sha256` to its parameters), so a file changed
+before the resume needs a new confirmation.
 
 ## Implementations
 
@@ -332,6 +363,7 @@ Command line: `gandi-mcp [--config PATH] [--version]`.
 | `gandi.timeout_seconds` | number, 1 to 300 | `30` | no | Timeout of one request to Gandi. |
 | `confirmation.timeout_seconds` | integer, 30 to 3600 | `300` | no | Validity of a confirmation request. |
 | `token_entry.timeout_seconds` | integer, 60 to 3600 | `600` | no | Validity of a token entry session. |
+| `files.max_zone_file_size` | integer, 1024 to 16777216 | `1048576` | no | Largest zone file read for an import, in bytes. |
 | `content.max_free_input` | integer, 1 to 10000 | `280` | no | Longest free input or Gandi text passed to the model as is; longer Gandi texts are withheld. |
 | `files.work_directory` | path (`~` expanded) | `<user data directory>/gandi-mcp/files` | no | Work directory: the only directory where zone files and TSIG configuration samples are written (ADR 15). |
 
@@ -714,14 +746,17 @@ conversation and never to invent a confirmation identifier.
 | `tools.domains.domains_tools.DomainsTools` | `domain_list` (page, `fqdn` pattern with `*`, `tld`, `nameserver`, `sort_by` by name, expiry or creation date, `-` to reverse), `domain_details` (contact details and authorization code on request only), `domain_contacts` (contact details on request only), `domain_creation_status` (`completed` once registered), `domain_tags`, `domain_renewal_info`, `domain_restore_info`, `domain_claims`. |
 | `tools.domains.nameserver_tools.NameserverTools` | `domain_nameservers`, `domain_livedns_status`, `domain_dnssec_status`, `domain_dnssec_keys`, `domain_glue_records`, `domain_glue_record`. |
 | `tools.domains.redirection_tools.RedirectionTools` | `domain_web_redirections`, `domain_web_redirection`. |
+| `tools.endpoint_tool_runner.EndpointToolRunner.write_operation` | `write_operation(ctx, operation, account, confirmation_id=None)`: a write through an operation built by an async function (it may read a file first), confirmed like the others; the zone changes use it. |
 | `tools.endpoint_tool_runner.EndpointToolRunner.read_operation` | `read_operation(ctx, operation, account)`: the same read for an operation built by a function and made of several calls (`TsigConfiguration`). |
 | `tools.livedns.domain_tools.LiveDnsDomainTools` | `livedns_record_types`, `livedns_domains` (page, `organization_id` sent as `sharing_id`), `livedns_domain`, `livedns_nameservers`, `livedns_public_nameservers` (nameservers LiveDNS would give any name). |
 | `tools.livedns.record_read_tools.RecordReadTools` | `livedns_records` (`record_type` filter, `sort_by` by name or type, `-` to reverse, page), `livedns_name_records`, `livedns_record`. Names are `RecordName` values, types `RecordType` values (`InvalidRecordError`). |
 | `tools.livedns.domain_tools.LiveDnsDomainTools` (writes) | `livedns_domain_add` (optional first records, `organization_id`), `livedns_automatic_snapshots_update`. |
 | `tools.livedns.record_write_tools.RecordWriteTools` | `livedns_record_create` (`unchanged` when it exists with the same values; Gandi refuses other values), `livedns_record_values_add` (adds values, keeps the others). |
 | `tools.livedns.verification_tools.VerificationTools` | `livedns_domain_verification` (TXT or CNAME validation value). |
+| `tools.livedns.record_write_tools.RecordWriteTools` (zone changes) | `livedns_record_replace`, `livedns_record_values_remove`, `livedns_record_delete`, `livedns_name_records_replace`, `livedns_name_records_delete`: `RecordChange` and `NameRecordsChange` through `write_operation`. |
+| `tools.livedns.zone_tools.ZoneTools` (zone changes) | `livedns_zone_replace` (records, `remove_apex_ns`), `livedns_zone_import` (a file of the work directory, read by `ZoneFileService.read`; its content is never shown to the model), `livedns_zone_delete`. |
 | `tools.livedns.zone_tools.ZoneTools` | `livedns_zone_export(domain, file, overwrite=False)`: writes the zone file through `ZoneFileService`; returns `{"status": "done", "notice", "file", "size_bytes", "record_count"}`, never the content nor the full path. |
-| `tools.livedns.snapshot_tools.SnapshotTools` | `livedns_snapshots` (`automatic` filter, `sort_by` by date, newest first by default, page), `livedns_snapshot`, `livedns_snapshot_export` (same result as the zone export), `livedns_snapshot_create` (optional name), `livedns_snapshot_rename`, `livedns_snapshot_delete` (confirmed). |
+| `tools.livedns.snapshot_tools.SnapshotTools` | `livedns_snapshots` (`automatic` filter, `sort_by` by date, newest first by default, page), `livedns_snapshot`, `livedns_snapshot_export` (same result as the zone export), `livedns_snapshot_create` (optional name), `livedns_snapshot_rename`, `livedns_snapshot_delete` (confirmed), `livedns_snapshot_restore` (`SnapshotRestore`). |
 | `tools.livedns.signing_key_tools.SigningKeyTools` | `livedns_signing_keys`, `livedns_signing_key`, `livedns_signing_key_create` (flags 256 or 257), `livedns_signing_key_restore`, `livedns_signing_key_delete` (confirmed; warns about a DS still published at the registry). |
 | `tools.livedns.zone_transfer_tools.ZoneTransferTools` | `livedns_secondary_servers`, `livedns_tsig_keys`, `livedns_tsig_key`, `livedns_domain_tsig_keys`, `livedns_tsig_config(key_id, software, file=None, overwrite=False)`: without `file`, the sample with its secret hidden; with `file`, the full sample written to a private file of the work directory (`TextFileExporter`), only the file being described. Writes: `livedns_secondary_server_add`, `livedns_secondary_server_remove` (confirmed), `livedns_tsig_key_create` (its secret is never returned), `livedns_domain_tsig_key_add`, `livedns_domain_tsig_key_remove` (confirmed). |
 | `tools.endpoint_tool_runner.EndpointToolRunner.write` | Shared by the write tools: builds the `EndpointOperation` (path values and body as functions, validation errors explained), runs it through the `OperationExecutor` with an optional `confirmation_id`, and returns the pending confirmation or `status: done` with the minimized result and the follow-up tool. `add_write_tool` annotates a tool `destructiveHint` for confirmed categories. |

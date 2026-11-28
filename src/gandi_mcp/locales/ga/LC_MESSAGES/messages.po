@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-28 00:54+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ga\n"
@@ -65,6 +65,18 @@ msgstr "Deimhnigh ar an gcuntas tástála (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Deimhniú - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Griangraf den chrios a chruthú ar dtús (tá griangraif uathoibríocha múchta)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Griangraf den chrios a chruthú ar dtús (tá griangraif uathoibríocha ar siúl: sábhálann LiveDNS an"
+" crios tar éis gach athraithe freisin)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -274,6 +286,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Cuireadh isteach ar bhaint an chuntais seo: bain an cuntas arís chun é a chríochnú."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Níorbh fhéidir griangraf den chrios a chruthú: níor athraíodh aon rud."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr ""
 "Tá comhartha an chuntais seo ar iarraidh ón bhfáinne eochracha: athsholáthair comhartha an "
@@ -380,6 +396,12 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Ní féidir an uirlis seo a úsáid ach ón aip Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr ""
+"An iomarca taifead d'athsholáthar amháin: easpórtáil an crios, cuir an comhad in eagar, ansin "
+"iompórtáil é."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Seoladh an iomarca iarratas chuig Gandi: fan nóiméad, ansin bain triail eile as."
 
@@ -418,6 +440,11 @@ msgstr "diúltú d'aistriú {domain} chuig cláraitheoir eile"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "taifid uile chrios {domain} a scriosadh (anois: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "eochair DNSSEC {id} de {domain} a scriosadh"
 
@@ -430,6 +457,11 @@ msgstr "an fearann {domain} a scriosadh: caillfear go deo é"
 #, python-brace-format
 msgid "delete the glue record {host} of {domain}"
 msgstr "taifead glue {host} de {domain} a scriosadh"
+
+# needs-review
+#, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "taifid {name} i gcrios {domain} a scriosadh (anois: {count})"
 
 # needs-review
 #, python-brace-format
@@ -449,6 +481,11 @@ msgstr "an griangraf {snapshot} de chrios {domain} a scriosadh"
 #, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "atreorú gréasáin {host} a scriosadh"
+
+# needs-review
+#, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "an taifead {type} de {name} i gcrios {domain} a scriosadh (luachanna: {count})"
 
 # needs-review
 #, python-brace-format
@@ -500,6 +537,15 @@ msgstr "an cuntas {account} agus a chomhartha a bhaint den ríomhaire seo"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"luachanna a bhaint as an taifead {type} de {name} i gcrios {domain} (bainte: {count}, fágtha: "
+"{left}; mura bhfuil aon cheann fágtha, scriostar an taifead)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "{domain} a athnuachan ar feadh {count} bhliain: {price} lena n-áirítear cánacha"
@@ -515,6 +561,42 @@ msgstr "gach eochair DNSSEC de {domain} a athsholáthar"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"taifid uile chrios {domain} a athsholáthar (anois: {count}, tar éis an athraithe: {new}); "
+"coimeádtar a thaifid NS ag @"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"taifid uile chrios {domain} a athsholáthar (anois: {count}, tar éis an athraithe: {new}); "
+"baintear a thaifid NS ag @ freisin"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr ""
+"taifid uile chrios {domain} a athsholáthar leis an ngriangraf {snapshot} (anois: {count}, tar éis"
+" an athraithe: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"taifid uile chrios {domain} a athsholáthar leis an gcomhad crios {file} (anois: {count}, tar éis "
+"an athraithe: {new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "gach clib de {domain} a athsholáthar"
 
@@ -522,6 +604,20 @@ msgstr "gach clib de {domain} a athsholáthar"
 #, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "freastalaithe ainmneacha {domain} a athsholáthar; fágann liosta mícheart an fearann gan rochtain"
+
+# needs-review
+#, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "taifid {name} i gcrios {domain} a athsholáthar (anois: {count}, tar éis an athraithe: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"luachanna an taifid {type} de {name} i gcrios {domain} a athsholáthar (anois: {count}, tar éis an"
+" athraithe: {new})"
 
 # needs-review
 #, python-brace-format

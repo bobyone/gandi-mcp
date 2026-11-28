@@ -103,3 +103,19 @@ RecordValuesParameter = Annotated[
 TtlParameter = Annotated[
     int | None, Field(default=None, description="TTL in seconds, 300 to 2592000.")
 ]
+
+
+class TypedRecordParameter(BaseModel):
+    """A record of a given name: its type, values and optional TTL."""
+
+    type: str = Field(description="Record type, e.g. A, MX, TXT.", max_length=10)
+    values: list[str] = Field(
+        description="Values as LiveDNS writes them; TXT values in double quotes.",
+        min_length=1,
+        max_length=100,
+    )
+    ttl: int | None = Field(default=None, description="TTL in seconds, 300 to 2592000.")
+
+    def record(self, name: str) -> Record:
+        """The validated record of ``name``."""
+        return Record.of(name, self.type, self.values, self.ttl)

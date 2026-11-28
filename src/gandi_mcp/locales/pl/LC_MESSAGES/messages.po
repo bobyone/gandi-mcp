@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gandi-mcp VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/bobyone/gandi-mcp/issues\n"
-"POT-Creation-Date: 2026-11-28 00:54+0100\n"
+"POT-Creation-Date: 2026-11-28 01:06+0100\n"
 "PO-Revision-Date: 2026-11-26 10:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -65,6 +65,18 @@ msgstr "Potwierdź na koncie testowym (sandbox) {account}: {action}"
 # needs-review
 msgid "Confirmation - gandi-mcp"
 msgstr "Potwierdzenie - gandi-mcp"
+
+# needs-review
+msgid "Create a snapshot of the zone first (automatic snapshots are off)"
+msgstr "Najpierw utwórz migawkę strefy (automatyczne migawki są wyłączone)"
+
+# needs-review
+msgid ""
+"Create a snapshot of the zone first (automatic snapshots are on: LiveDNS also saves the zone "
+"after each change)"
+msgstr ""
+"Najpierw utwórz migawkę strefy (automatyczne migawki są włączone: LiveDNS zapisuje też strefę po "
+"każdej zmianie)"
 
 # needs-review
 msgid "Create a token in the Gandi administration"
@@ -264,6 +276,10 @@ msgid "The removal of this account was interrupted: remove the account again to 
 msgstr "Usuwanie tego konta zostało przerwane: usuń konto ponownie, aby je dokończyć."
 
 # needs-review
+msgid "The snapshot of the zone could not be taken: nothing was changed."
+msgstr "Nie udało się utworzyć migawki strefy: nic nie zostało zmienione."
+
+# needs-review
 msgid "The token of this account is missing from the keyring: replace the token of the account."
 msgstr "W pęku kluczy brakuje tokenu tego konta: zastąp token konta."
 
@@ -368,6 +384,12 @@ msgid "This tool can only be used from the Gandi app."
 msgstr "Tego narzędzia można używać tylko z aplikacji Gandi."
 
 # needs-review
+msgid "Too many records for one replacement: export the zone, edit the file, then import it."
+msgstr ""
+"Zbyt wiele rekordów na jedno zastąpienie: wyeksportuj strefę, edytuj plik, a następnie go "
+"zaimportuj."
+
+# needs-review
 msgid "Too many requests were sent to Gandi: wait a minute, then try again."
 msgstr "Wysłano zbyt wiele żądań do Gandi: odczekaj minutę i spróbuj ponownie."
 
@@ -408,6 +430,11 @@ msgstr "odrzucić transfer {domain} do innego rejestratora"
 
 # needs-review
 #, python-brace-format
+msgid "delete all the records of the zone of {domain} (now: {count})"
+msgstr "usunąć wszystkie rekordy strefy {domain} (teraz: {count})"
+
+# needs-review
+#, python-brace-format
 msgid "delete the DNSSEC key {id} of {domain}"
 msgstr "usunąć klucz DNSSEC {id} domeny {domain}"
 
@@ -420,6 +447,11 @@ msgstr "usunąć domenę {domain}: zostanie utracona na zawsze"
 #, python-brace-format
 msgid "delete the glue record {host} of {domain}"
 msgstr "usunąć rekord glue {host} domeny {domain}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the records of {name} in the zone of {domain} (now: {count})"
+msgstr "usunąć rekordy {name} w strefie {domain} (teraz: {count})"
 
 # needs-review
 #, python-brace-format
@@ -439,6 +471,11 @@ msgstr "usunąć migawkę {snapshot} strefy {domain}"
 #, python-brace-format
 msgid "delete the web redirection of {host}"
 msgstr "usunąć przekierowanie WWW {host}"
+
+# needs-review
+#, python-brace-format
+msgid "delete the {type} record of {name} in the zone of {domain} (values: {count})"
+msgstr "usunąć rekord {type} dla {name} w strefie {domain} (wartości: {count})"
 
 # needs-review
 #, python-brace-format
@@ -488,6 +525,15 @@ msgstr "usunąć konto {account} i jego token z tego komputera"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"remove values of the {type} record of {name} in the zone of {domain} (removed: {count}, left: "
+"{left}; with none left, the record is deleted)"
+msgstr ""
+"usunąć wartości rekordu {type} dla {name} w strefie {domain} (usunięte: {count}, pozostałe: "
+"{left}; jeśli nie zostanie żadna, rekord zostanie usunięty)"
+
+# needs-review
+#, python-brace-format
 msgid "renew {domain} for {count} year: {price} including taxes"
 msgid_plural "renew {domain} for {count} years: {price} including taxes"
 msgstr[0] "odnowić {domain} na {count} rok: {price} z podatkami"
@@ -501,6 +547,40 @@ msgstr "zastąpić wszystkie klucze DNSSEC domeny {domain}"
 
 # needs-review
 #, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are kept"
+msgstr ""
+"zastąpić wszystkie rekordy strefy {domain} (teraz: {count}, po zmianie: {new}); jej rekordy NS w "
+"@ zostają zachowane"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} (now: {count}, after the change: {new}); its NS "
+"records at @ are removed too"
+msgstr ""
+"zastąpić wszystkie rekordy strefy {domain} (teraz: {count}, po zmianie: {new}); jej rekordy NS w "
+"@ również zostają usunięte"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the snapshot {snapshot} (now: {count}, after"
+" the change: {new})"
+msgstr "zastąpić wszystkie rekordy strefy {domain} migawką {snapshot} (teraz: {count}, po zmianie: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace all the records of the zone of {domain} with the zone file {file} (now: {count}, after "
+"the change: {new})"
+msgstr ""
+"zastąpić wszystkie rekordy strefy {domain} plikiem strefy {file} (teraz: {count}, po zmianie: "
+"{new})"
+
+# needs-review
+#, python-brace-format
 msgid "replace all the tags of {domain}"
 msgstr "zastąpić wszystkie tagi domeny {domain}"
 
@@ -508,6 +588,18 @@ msgstr "zastąpić wszystkie tagi domeny {domain}"
 #, python-brace-format
 msgid "replace the nameservers of {domain}; a wrong list makes the domain unreachable"
 msgstr "zastąpić serwery nazw {domain}; błędna lista sprawi, że domena będzie nieosiągalna"
+
+# needs-review
+#, python-brace-format
+msgid "replace the records of {name} in the zone of {domain} (now: {count}, after the change: {new})"
+msgstr "zastąpić rekordy {name} w strefie {domain} (teraz: {count}, po zmianie: {new})"
+
+# needs-review
+#, python-brace-format
+msgid ""
+"replace the values of the {type} record of {name} in the zone of {domain} (now: {count}, after "
+"the change: {new})"
+msgstr "zastąpić wartości rekordu {type} dla {name} w strefie {domain} (teraz: {count}, po zmianie: {new})"
 
 # needs-review
 #, python-brace-format
