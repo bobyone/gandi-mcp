@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Tests of the values written to LiveDNS: TTL, record values, records, snapshots, keys."""
 
+import time
+
 import pytest
 
 from gandi_mcp.livedns.exceptions import InvalidLiveDnsInputError, InvalidRecordError
@@ -65,11 +67,24 @@ def test_values_of_the_right_shape_are_accepted(record_type: str, value: str) ->
         ("MX", "mail.example.com."),
         ("MX", "70000 mail.example.com."),
         ("SRV", "0 0 mail.example.com."),
+        ("CNAME", "a..b"),
+        ("CNAME", "a-"),
+        ("CNAME", "a" * 64),
     ],
 )
 def test_values_of_the_wrong_shape_are_refused(record_type: str, value: str) -> None:
     with pytest.raises(InvalidRecordError):
         record_values(RecordType.parse(record_type), [value])
+
+
+@pytest.mark.parametrize("value", ["*" + "00" * 127 + "!", "a" * 254 + "!", "a." * 127 + "!"])
+def test_a_long_malformed_host_is_refused_quickly(value: str) -> None:
+    started = time.perf_counter()
+
+    with pytest.raises(InvalidRecordError):
+        record_values(RecordType.CNAME, [value])
+
+    assert time.perf_counter() - started < 0.5
 
 
 def test_duplicate_values_are_merged_and_counts_bounded() -> None:

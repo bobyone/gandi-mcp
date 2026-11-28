@@ -12,8 +12,10 @@ from gandi_mcp.livedns.record_value import RecordValue
 
 MAX_UINT16 = 65535
 # A host name as a record value: relative (``mail``), absolute (``mail.example.com.``)
-# or the zone itself (``@``).
-HOST = re.compile(r"^(@|\.|(?:[A-Za-z0-9_*](?:[A-Za-z0-9_-]{0,61}[A-Za-z0-9_])?\.?)+)$")
+# or the zone itself (``@``). Labels are separated by a mandatory dot, so that a name
+# splits into labels in one way only: no catastrophic backtracking.
+LABEL = r"[A-Za-z0-9_*](?:[A-Za-z0-9_-]{0,61}[A-Za-z0-9_])?"
+HOST = re.compile(rf"^(?:@|\.|{LABEL}(?:\.{LABEL})*\.?)$")
 
 
 def _uint16(text: str) -> bool:
