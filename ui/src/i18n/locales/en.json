@@ -147,7 +147,7 @@
   "zone.snapshots": "Snapshots",
   "zone.snapshotsLoading": "Loading the snapshots…",
   "zone.snapshotsEmpty": "No snapshot.",
-  "field.zone": "LiveDNS domain",
+  "field.liveDnsDomain": "LiveDNS domain",
   "field.recordName": "Name",
   "field.recordName.help": "Relative to the zone: @ for the zone itself, * for a wildcard.",
   "field.recordType": "Type",

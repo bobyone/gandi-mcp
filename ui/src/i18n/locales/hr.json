@@ -147,7 +147,7 @@
   "zone.snapshots": "Snimke",
   "zone.snapshotsLoading": "Učitavanje snimaka…",
   "zone.snapshotsEmpty": "Nema snimaka.",
-  "field.zone": "LiveDNS domena",
+  "field.liveDnsDomain": "LiveDNS domena",
   "field.recordName": "Naziv",
   "field.recordName.help": "U odnosu na zonu: @ za samu zonu, * za zamjenski znak.",
   "field.recordType": "Vrsta",

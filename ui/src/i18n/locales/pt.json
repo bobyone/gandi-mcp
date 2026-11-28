@@ -147,7 +147,7 @@
   "zone.snapshots": "Snapshots",
   "zone.snapshotsLoading": "A carregar os snapshots…",
   "zone.snapshotsEmpty": "Nenhum snapshot.",
-  "field.zone": "Domínio LiveDNS",
+  "field.liveDnsDomain": "Domínio LiveDNS",
   "field.recordName": "Nome",
   "field.recordName.help": "Relativo à zona: @ para a própria zona, * para um caráter universal.",
   "field.recordType": "Tipo",

@@ -147,7 +147,7 @@
   "zone.snapshots": "Griangraif",
   "zone.snapshotsLoading": "Na griangraif á lódáil…",
   "zone.snapshotsEmpty": "Gan griangraf.",
-  "field.zone": "Fearann LiveDNS",
+  "field.liveDnsDomain": "Fearann LiveDNS",
   "field.recordName": "Ainm",
   "field.recordName.help": "I gcoibhneas leis an gcrios: @ don chrios féin, * do shaoróg.",
   "field.recordType": "Cineál",

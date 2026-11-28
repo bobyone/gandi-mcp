@@ -147,7 +147,7 @@
   "zone.snapshots": "Momentuzņēmumi",
   "zone.snapshotsLoading": "Ielādē momentuzņēmumus…",
   "zone.snapshotsEmpty": "Nav momentuzņēmumu.",
-  "field.zone": "LiveDNS domēns",
+  "field.liveDnsDomain": "LiveDNS domēns",
   "field.recordName": "Nosaukums",
   "field.recordName.help": "Attiecībā pret zonu: @ pašai zonai, * aizstājējzīmei.",
   "field.recordType": "Tips",

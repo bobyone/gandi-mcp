@@ -147,7 +147,7 @@
   "zone.snapshots": "Posnetki",
   "zone.snapshotsLoading": "Nalaganje posnetkov…",
   "zone.snapshotsEmpty": "Ni posnetkov.",
-  "field.zone": "Domena LiveDNS",
+  "field.liveDnsDomain": "Domena LiveDNS",
   "field.recordName": "Ime",
   "field.recordName.help": "Glede na cono: @ za samo cono, * za nadomestni znak.",
   "field.recordType": "Vrsta",

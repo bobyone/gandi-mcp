@@ -139,7 +139,11 @@ export function ZoneScreen({ livedns, accounts }: ZoneScreenProps) {
     let active = true;
     livedns.records(account, zone, page, PER_PAGE, typeFilter).then(
       (found) => {
-        if (active) setResult({ key, listing: found });
+        if (!active) return;
+        setResult({ key, listing: found });
+        // A page beyond the last one (its last record deleted) goes back to the last one.
+        const last = found.total !== null ? Math.max(1, Math.ceil(found.total / PER_PAGE)) : null;
+        if (found.records.length === 0 && last !== null && page > last) setPage(last);
       },
       (error: unknown) => {
         if (!active) return;
@@ -314,7 +318,7 @@ export function ZoneScreen({ livedns, accounts }: ZoneScreenProps) {
               <>
                 <Col xs={12} md={5}>
                   <Form.Group controlId={`${id}-zone`}>
-                    <Form.Label>{t("field.zone")}</Form.Label>
+                    <Form.Label>{t("field.liveDnsDomain")}</Form.Label>
                     <Form.Select
                       value={zone}
                       onChange={(event) => {
@@ -372,47 +376,53 @@ export function ZoneScreen({ livedns, accounts }: ZoneScreenProps) {
                   <Spinner animation="border" size="sm" className="me-2" aria-hidden="true" />
                   {t("zone.loading")}
                 </div>
-              ) : listing === null ? null : listing.records.length === 0 ? (
-                <p>{t("zone.empty")}</p>
-              ) : (
+              ) : listing === null ? null : (
                 <>
-                  {total !== null && (
-                    <p className="text-body-secondary">{t("zone.count", { count: total })}</p>
+                  {listing.records.length === 0 && <p>{t("zone.empty")}</p>}
+                  {listing.records.length > 0 && (
+                    <>
+                      {total !== null && (
+                        <p className="text-body-secondary">{t("zone.count", { count: total })}</p>
+                      )}
+                      <RecordTable
+                        records={listing.records}
+                        readOnly={readOnly}
+                        busy={busy}
+                        onEdit={(record) => {
+                          setDialog({ kind: "edit", record });
+                        }}
+                        onDelete={(record) => {
+                          setDialog({ kind: "delete", record });
+                        }}
+                      />
+                    </>
                   )}
-                  <RecordTable
-                    records={listing.records}
-                    readOnly={readOnly}
-                    busy={busy}
-                    onEdit={(record) => {
-                      setDialog({ kind: "edit", record });
-                    }}
-                    onDelete={(record) => {
-                      setDialog({ kind: "delete", record });
-                    }}
-                  />
-                  <nav aria-label={t("pagination.records")}>
-                    <Pagination className="flex-wrap align-items-center">
-                      <Pagination.Prev
-                        disabled={page <= 1}
-                        aria-label={t("pagination.previous")}
-                        onClick={() => {
-                          setPage(page - 1);
-                        }}
-                      />
-                      <li className="px-3" aria-current="page">
-                        {pages !== null
-                          ? t("pagination.pageOf", { page, pages })
-                          : t("pagination.page", { page })}
-                      </li>
-                      <Pagination.Next
-                        disabled={!hasNext}
-                        aria-label={t("pagination.next")}
-                        onClick={() => {
-                          setPage(page + 1);
-                        }}
-                      />
-                    </Pagination>
-                  </nav>
+                  {/* Past the last page (its last record deleted), Previous stays reachable. */}
+                  {(listing.records.length > 0 || page > 1) && (
+                    <nav aria-label={t("pagination.records")}>
+                      <Pagination className="flex-wrap align-items-center">
+                        <Pagination.Prev
+                          disabled={page <= 1}
+                          aria-label={t("pagination.previous")}
+                          onClick={() => {
+                            setPage(page - 1);
+                          }}
+                        />
+                        <li className="px-3" aria-current="page">
+                          {pages !== null
+                            ? t("pagination.pageOf", { page, pages })
+                            : t("pagination.page", { page })}
+                        </li>
+                        <Pagination.Next
+                          disabled={!hasNext}
+                          aria-label={t("pagination.next")}
+                          onClick={() => {
+                            setPage(page + 1);
+                          }}
+                        />
+                      </Pagination>
+                    </nav>
+                  )}
                 </>
               )}
               <SnapshotsPanel

@@ -147,7 +147,7 @@
   "zone.snapshots": "Anlık görüntüler",
   "zone.snapshotsLoading": "Anlık görüntüler yükleniyor…",
   "zone.snapshotsEmpty": "Anlık görüntü yok.",
-  "field.zone": "LiveDNS alan adı",
+  "field.liveDnsDomain": "LiveDNS alan adı",
   "field.recordName": "Ad",
   "field.recordName.help": "Bölgeye göre: bölgenin kendisi için @, joker karakter için *.",
   "field.recordType": "Tür",

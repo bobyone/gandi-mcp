@@ -147,7 +147,7 @@
   "zone.snapshots": "სნეპშოტები",
   "zone.snapshotsLoading": "სნეპშოტები იტვირთება…",
   "zone.snapshotsEmpty": "სნეპშოტი არ არის.",
-  "field.zone": "LiveDNS დომენი",
+  "field.liveDnsDomain": "LiveDNS დომენი",
   "field.recordName": "სახელი",
   "field.recordName.help": "ზონის მიმართ: @ თავად ზონისთვის, * შემცვლელი სიმბოლოსთვის.",
   "field.recordType": "ტიპი",

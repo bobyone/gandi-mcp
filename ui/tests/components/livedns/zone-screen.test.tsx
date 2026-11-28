@@ -118,6 +118,45 @@ describe("ZoneScreen", () => {
     });
   });
 
+  it("goes back to the last page when the only record of a page is deleted", async () => {
+    const livedns = fakeLiveDns(page([WWW], 26));
+    const user = show(livedns);
+
+    await user.click(await screen.findByLabelText("Next page"));
+    expect(await screen.findByText("Page 2 of 2")).toBeInTheDocument();
+    livedns.records.mockImplementation((_account, _zone, number) =>
+      Promise.resolve(number === 2 ? page([], 25) : { ...page([KEY], 25), page: 1 }),
+    );
+    await user.click(screen.getByRole("button", { name: "Delete www A" }));
+    await user.click(
+      within(await screen.findByRole("dialog")).getByRole("button", { name: "Delete" }),
+    );
+
+    expect(await screen.findByText("Page 1 of 1")).toBeInTheDocument();
+    expect(
+      await screen.findByRole("rowheader", { name: "default._domainkey" }),
+    ).toBeInTheDocument();
+    expect(livedns.records).toHaveBeenLastCalledWith("Perso", "example.com", 1, 25, "");
+  });
+
+  it("keeps Previous after an empty page when the total is unknown", async () => {
+    const full = Array.from({ length: 25 }, (_, i) => ({ ...WWW, name: `h${i}` }));
+    const livedns = fakeLiveDns(page(full, null));
+    const user = show(livedns);
+
+    const next = await screen.findByLabelText("Next page");
+    livedns.records.mockResolvedValue({ ...page([], null), page: 2 });
+    await user.click(next);
+    expect(await screen.findByText("No record.")).toBeInTheDocument();
+    expect(screen.getByText("Page 2")).toBeInTheDocument();
+    expect(screen.getByLabelText("Next page").closest("li")).toHaveClass("disabled");
+    livedns.records.mockResolvedValue(page(full, null));
+    await user.click(screen.getByLabelText("Previous page"));
+
+    expect(await screen.findByText("Page 1")).toBeInTheDocument();
+    expect(livedns.records).toHaveBeenLastCalledWith("Perso", "example.com", 1, 25, "");
+  });
+
   it("adds a record and reports an identical one", async () => {
     const livedns = fakeLiveDns();
     const user = show(livedns);

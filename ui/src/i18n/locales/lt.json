@@ -147,7 +147,7 @@
   "zone.snapshots": "Momentinės kopijos",
   "zone.snapshotsLoading": "Įkeliamos momentinės kopijos…",
   "zone.snapshotsEmpty": "Momentinių kopijų nėra.",
-  "field.zone": "LiveDNS domenas",
+  "field.liveDnsDomain": "LiveDNS domenas",
   "field.recordName": "Pavadinimas",
   "field.recordName.help": "Zonos atžvilgiu: @ pačiai zonai, * pakaitos simboliui.",
   "field.recordType": "Tipas",

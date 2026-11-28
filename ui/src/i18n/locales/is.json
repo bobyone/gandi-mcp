@@ -147,7 +147,7 @@
   "zone.snapshots": "Skyndimyndir",
   "zone.snapshotsLoading": "Hleð skyndimyndum…",
   "zone.snapshotsEmpty": "Engin skyndimynd.",
-  "field.zone": "LiveDNS-lén",
+  "field.liveDnsDomain": "LiveDNS-lén",
   "field.recordName": "Heiti",
   "field.recordName.help": "Miðað við svæðið: @ fyrir svæðið sjálft, * fyrir algildisstaf.",
   "field.recordType": "Tegund",

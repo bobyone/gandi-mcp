@@ -147,7 +147,7 @@
   "zone.snapshots": "Pillanatképek",
   "zone.snapshotsLoading": "A pillanatképek betöltése…",
   "zone.snapshotsEmpty": "Nincs pillanatkép.",
-  "field.zone": "LiveDNS-domain",
+  "field.liveDnsDomain": "LiveDNS-domain",
   "field.recordName": "Név",
   "field.recordName.help": "A zónához képest: @ magát a zónát jelöli, * a helyettesítő karaktert.",
   "field.recordType": "Típus",

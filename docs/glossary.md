@@ -72,7 +72,7 @@ in the UI says "not displayed".
 | Expiry date | The date until which a domain is registered at its registry, stored in UTC. | `expires_at` | Expiry date (`column.expiry`) |
 | Availability | Whether a name can be registered, as announced by Gandi with its quote. | `availability` | Check availability (`action.checkAvailability`) |
 | LiveDNS | The Gandi DNS service hosting the zone of a domain. | `livedns` | not displayed |
-| LiveDNS domain | A domain whose zone is hosted by LiveDNS. | `livedns_domain` | LiveDNS domain (`field.zone`) |
+| LiveDNS domain | A domain whose zone is hosted by LiveDNS. | `livedns_domain` | LiveDNS domain (`field.liveDnsDomain`) |
 | Zone | All the records of a LiveDNS domain. | `zone` | DNS zone (`tab.zone`) |
 | Record | The values of one name and one type in a zone, with their TTL (an RRset in the Gandi API). | `record` | record, inside messages (`action.addRecord`, `feedback.record*`) |
 | Record name | The name of a record relative to its zone: `@` for the apex, `*` for a wildcard. | `record_name` | Name (`field.recordName`) |

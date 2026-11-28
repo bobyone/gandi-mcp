@@ -147,7 +147,7 @@
   "zone.snapshots": "Ակնթարթային պատկերներ",
   "zone.snapshotsLoading": "Ակնթարթային պատկերները բեռնվում են…",
   "zone.snapshotsEmpty": "Ակնթարթային պատկեր չկա։",
-  "field.zone": "LiveDNS դոմեն",
+  "field.liveDnsDomain": "LiveDNS դոմեն",
   "field.recordName": "Անուն",
   "field.recordName.help": "Գոտու նկատմամբ՝ @ բուն գոտու համար, * փոխարինող նշանի համար։",
   "field.recordType": "Տեսակ",

@@ -147,7 +147,7 @@
   "zone.snapshots": "Snapshots",
   "zone.snapshotsLoading": "D'Snapshots ginn gelueden…",
   "zone.snapshotsEmpty": "Keen Snapshot.",
-  "field.zone": "LiveDNS-Domain",
+  "field.liveDnsDomain": "LiveDNS-Domain",
   "field.recordName": "Numm",
   "field.recordName.help": "Relativ zur Zon: @ fir d'Zon selwer, * fir e Wildcard.",
   "field.recordType": "Typ",

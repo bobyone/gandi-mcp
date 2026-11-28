@@ -147,7 +147,7 @@
   "zone.snapshots": "Hetktõmmised",
   "zone.snapshotsLoading": "Hetktõmmiste laadimine…",
   "zone.snapshotsEmpty": "Hetktõmmiseid pole.",
-  "field.zone": "LiveDNS-i domeen",
+  "field.liveDnsDomain": "LiveDNS-i domeen",
   "field.recordName": "Nimi",
   "field.recordName.help": "Tsooni suhtes: @ tsooni enda jaoks, * metamärgi jaoks.",
   "field.recordType": "Tüüp",

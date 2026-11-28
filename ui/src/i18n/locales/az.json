@@ -147,7 +147,7 @@
   "zone.snapshots": "Anlıq görüntülər",
   "zone.snapshotsLoading": "Anlıq görüntülər yüklənir…",
   "zone.snapshotsEmpty": "Anlıq görüntü yoxdur.",
-  "field.zone": "LiveDNS domeni",
+  "field.liveDnsDomain": "LiveDNS domeni",
   "field.recordName": "Ad",
   "field.recordName.help": "Zonaya nisbətən: zonanın özü üçün @, şablon simvolu üçün *.",
   "field.recordType": "Növ",

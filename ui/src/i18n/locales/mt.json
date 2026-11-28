@@ -147,7 +147,7 @@
   "zone.snapshots": "Istantanji",
   "zone.snapshotsLoading": "Qed jitgħabbew l-istantanji…",
   "zone.snapshotsEmpty": "L-ebda istantanja.",
-  "field.zone": "Dominju LiveDNS",
+  "field.liveDnsDomain": "Dominju LiveDNS",
   "field.recordName": "Isem",
   "field.recordName.help": "Relattiv għaż-żona: @ għaż-żona nfisha, * għal wildcard.",
   "field.recordType": "Tip",

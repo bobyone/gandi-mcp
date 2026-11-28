@@ -147,7 +147,7 @@
   "zone.snapshots": "Migawki",
   "zone.snapshotsLoading": "Wczytywanie migawek…",
   "zone.snapshotsEmpty": "Brak migawek.",
-  "field.zone": "Domena LiveDNS",
+  "field.liveDnsDomain": "Domena LiveDNS",
   "field.recordName": "Nazwa",
   "field.recordName.help": "Względem strefy: @ dla samej strefy, * dla symbolu wieloznacznego.",
   "field.recordType": "Typ",

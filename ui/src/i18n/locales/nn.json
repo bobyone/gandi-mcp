@@ -147,7 +147,7 @@
   "zone.snapshots": "Augneblinksbilete",
   "zone.snapshotsLoading": "Lastar inn augneblinksbileta…",
   "zone.snapshotsEmpty": "Ingen augneblinksbilete.",
-  "field.zone": "LiveDNS-domene",
+  "field.liveDnsDomain": "LiveDNS-domene",
   "field.recordName": "Namn",
   "field.recordName.help": "Relativt til sona: @ for sjølve sona, * for eit jokerteikn.",
   "field.recordType": "Type",

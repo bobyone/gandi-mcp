@@ -147,7 +147,7 @@
   "zone.snapshots": "Моментни снимки",
   "zone.snapshotsLoading": "Зареждане на моментните снимки…",
   "zone.snapshotsEmpty": "Няма моментни снимки.",
-  "field.zone": "Домейн в LiveDNS",
+  "field.liveDnsDomain": "Домейн в LiveDNS",
   "field.recordName": "Име",
   "field.recordName.help": "Спрямо зоната: @ за самата зона, * за заместващ знак.",
   "field.recordType": "Тип",

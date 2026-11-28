@@ -147,7 +147,7 @@
   "zone.snapshots": "Snapshots",
   "zone.snapshotsLoading": "Ils snapshots vegnan chargiads…",
   "zone.snapshotsEmpty": "Nagin snapshot.",
-  "field.zone": "Domena LiveDNS",
+  "field.liveDnsDomain": "Domena LiveDNS",
   "field.recordName": "Num",
   "field.recordName.help": "Relativ a la zona: @ per la zona sezza, * per in wildcard.",
   "field.recordType": "Tip",

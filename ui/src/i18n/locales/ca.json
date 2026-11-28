@@ -147,7 +147,7 @@
   "zone.snapshots": "Instantànies",
   "zone.snapshotsLoading": "S'estan carregant les instantànies…",
   "zone.snapshotsEmpty": "Cap instantània.",
-  "field.zone": "Domini LiveDNS",
+  "field.liveDnsDomain": "Domini LiveDNS",
   "field.recordName": "Nom",
   "field.recordName.help": "Relatiu a la zona: @ per a la zona mateixa, * per a un comodí.",
   "field.recordType": "Tipus",

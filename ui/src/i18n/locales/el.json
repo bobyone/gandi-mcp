@@ -147,7 +147,7 @@
   "zone.snapshots": "Στιγμιότυπα",
   "zone.snapshotsLoading": "Φόρτωση των στιγμιότυπων…",
   "zone.snapshotsEmpty": "Κανένα στιγμιότυπο.",
-  "field.zone": "Τομέας LiveDNS",
+  "field.liveDnsDomain": "Τομέας LiveDNS",
   "field.recordName": "Όνομα",
   "field.recordName.help": "Σε σχέση με τη ζώνη: @ για την ίδια τη ζώνη, * για χαρακτήρα μπαλαντέρ.",
   "field.recordType": "Τύπος",

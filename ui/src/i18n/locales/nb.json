@@ -147,7 +147,7 @@
   "zone.snapshots": "Øyeblikksbilder",
   "zone.snapshotsLoading": "Laster inn øyeblikksbildene…",
   "zone.snapshotsEmpty": "Ingen øyeblikksbilder.",
-  "field.zone": "LiveDNS-domene",
+  "field.liveDnsDomain": "LiveDNS-domene",
   "field.recordName": "Navn",
   "field.recordName.help": "Relativt til sonen: @ for selve sonen, * for et jokertegn.",
   "field.recordType": "Type",

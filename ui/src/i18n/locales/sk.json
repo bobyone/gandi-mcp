@@ -147,7 +147,7 @@
   "zone.snapshots": "Snímky",
   "zone.snapshotsLoading": "Načítavajú sa snímky…",
   "zone.snapshotsEmpty": "Žiadna snímka.",
-  "field.zone": "Doména LiveDNS",
+  "field.liveDnsDomain": "Doména LiveDNS",
   "field.recordName": "Názov",
   "field.recordName.help": "Vzhľadom na zónu: @ pre samotnú zónu, * pre zástupný znak.",
   "field.recordType": "Typ",

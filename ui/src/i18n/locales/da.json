@@ -147,7 +147,7 @@
   "zone.snapshots": "Snapshots",
   "zone.snapshotsLoading": "Indlæser snapshots…",
   "zone.snapshotsEmpty": "Intet snapshot.",
-  "field.zone": "LiveDNS-domæne",
+  "field.liveDnsDomain": "LiveDNS-domæne",
   "field.recordName": "Navn",
   "field.recordName.help": "I forhold til zonen: @ for selve zonen, * for et jokertegn.",
   "field.recordType": "Type",

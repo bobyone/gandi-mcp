@@ -56,7 +56,7 @@ GLOSSARY_KEYS = {
     "Registration": "action.register",
     "Expiry date": "column.expiry",
     "Availability": "action.checkAvailability",
-    "LiveDNS domain": "field.zone",
+    "LiveDNS domain": "field.liveDnsDomain",
     "Zone": "tab.zone",
     "Record name": "field.recordName",
     "Record type": "field.recordType",

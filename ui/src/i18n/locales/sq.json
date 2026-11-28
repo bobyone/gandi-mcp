@@ -147,7 +147,7 @@
   "zone.snapshots": "Fotografi të çastit",
   "zone.snapshotsLoading": "Po ngarkohen fotografitë e çastit…",
   "zone.snapshotsEmpty": "Asnjë fotografi e çastit.",
-  "field.zone": "Domen LiveDNS",
+  "field.liveDnsDomain": "Domen LiveDNS",
   "field.recordName": "Emri",
   "field.recordName.help": "Në lidhje me zonën: @ për vetë zonën, * për një shenjë zëvendësuese.",
   "field.recordType": "Lloji",

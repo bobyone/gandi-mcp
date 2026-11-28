@@ -147,7 +147,7 @@
   "zone.snapshots": "Ögonblicksbilder",
   "zone.snapshotsLoading": "Läser in ögonblicksbilderna…",
   "zone.snapshotsEmpty": "Ingen ögonblicksbild.",
-  "field.zone": "LiveDNS-domän",
+  "field.liveDnsDomain": "LiveDNS-domän",
   "field.recordName": "Namn",
   "field.recordName.help": "Relativt till zonen: @ för själva zonen, * för ett jokertecken.",
   "field.recordType": "Typ",

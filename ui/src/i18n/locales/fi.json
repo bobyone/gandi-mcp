@@ -147,7 +147,7 @@
   "zone.snapshots": "Tilannevedokset",
   "zone.snapshotsLoading": "Ladataan tilannevedoksia…",
   "zone.snapshotsEmpty": "Ei tilannevedoksia.",
-  "field.zone": "LiveDNS-verkkotunnus",
+  "field.liveDnsDomain": "LiveDNS-verkkotunnus",
   "field.recordName": "Nimi",
   "field.recordName.help": "Suhteessa vyöhykkeeseen: @ itse vyöhykkeelle, * jokerimerkille.",
   "field.recordType": "Tyyppi",

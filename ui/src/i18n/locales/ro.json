@@ -147,7 +147,7 @@
   "zone.snapshots": "Instantanee",
   "zone.snapshotsLoading": "Se încarcă instantaneele…",
   "zone.snapshotsEmpty": "Niciun instantaneu.",
-  "field.zone": "Domeniu LiveDNS",
+  "field.liveDnsDomain": "Domeniu LiveDNS",
   "field.recordName": "Nume",
   "field.recordName.help": "Relativ la zonă: @ pentru zona însăși, * pentru un wildcard.",
   "field.recordType": "Tip",
