@@ -9,6 +9,7 @@ from typing import Any
 import mcp_types as types
 import pytest
 from mcp.client import Client
+from mcp.server.apps import Apps
 
 from gandi_mcp.accounts.account_draft import AccountDraft
 from gandi_mcp.accounts.account_name import AccountName
@@ -29,6 +30,9 @@ from gandi_mcp.livedns.zone_files.zone_file_service import ZoneFileService
 from gandi_mcp.operations.livedns import livedns_endpoints
 from gandi_mcp.operations.operation_executor import OperationExecutor
 from gandi_mcp.operations.text_file_exporter import TextFileExporter
+from gandi_mcp.protocol.app.app_resource import register_app_resource
+from gandi_mcp.protocol.app.livedns_app_tools import LiveDnsAppTools
+from gandi_mcp.protocol.app_module import AppModule
 from gandi_mcp.protocol.error_presenter import (
     FILE_EXISTS,
     INVALID_RECORD,
@@ -112,6 +116,13 @@ class Setup:
     pending: PendingConfirmations
 
 
+class AppResource(AppModule):
+    """Serves a stand-in App page, which the app-only tools are bound to."""
+
+    def register(self, apps: Apps) -> None:
+        register_app_resource(apps, "<!doctype html><title>Gandi</title>")
+
+
 @pytest.fixture
 def setup() -> Setup:
     return build()
@@ -154,7 +165,11 @@ def build(*, elicitation: bool = False) -> Setup:
         SigningKeyTools(runner),
         ZoneTransferTools(runner, exporter, tools),
     ]
-    return Setup(create_server("1.0.0", modules), accounts, gandi, files, pending)
+    # The app-only reader of the "DNS zone" screen, without the long text filter (ADR 16).
+    app_runner = EndpointToolRunner(executor, tools, [SecretFieldFilter()])
+    app_modules = [AppResource(), LiveDnsAppTools(app_runner, tools)]
+    server = create_server("1.0.0", modules, app_modules=app_modules)
+    return Setup(server, accounts, gandi, files, pending)
 
 
 async def add(setup: Setup) -> None:

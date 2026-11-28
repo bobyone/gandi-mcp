@@ -32,6 +32,7 @@ from gandi_mcp.operations.text_file_exporter import TextFileExporter
 from gandi_mcp.preferences.json.json_preferences_store import JsonPreferencesStore
 from gandi_mcp.protocol.app.accounts_app_tools import AccountsAppTools
 from gandi_mcp.protocol.app.app_resource import load_app_html
+from gandi_mcp.protocol.app.livedns_app_tools import LiveDnsAppTools
 from gandi_mcp.protocol.error_presenter import ErrorPresenter
 from gandi_mcp.protocol.server_factory import create_server
 from gandi_mcp.protocol.tools.accounts_tools import AccountsTools
@@ -213,10 +214,23 @@ class ApplicationContainer(containers.DeclarativeContainer):
         providers.Callable(load_app_html),
     )
 
+    # The App gets the full values of the records (ADR 16): no long text filter, and
+    # its results never reach the model.
+    livedns_app_tools = providers.Singleton(
+        LiveDnsAppTools,
+        providers.Singleton(
+            EndpointToolRunner,
+            operation_executor,
+            accounts_tools,
+            providers.List(secret_field_filter),
+        ),
+        accounts_tools,
+    )
+
     server = providers.Singleton(
         create_server,
         version=config.app.version,
         tool_modules=tool_modules,
-        app_modules=providers.List(accounts_app_tools),
+        app_modules=providers.List(accounts_app_tools, livedns_app_tools),
         closers=providers.List(gandi_client.provided.close, local_pages.provided.close),
     )

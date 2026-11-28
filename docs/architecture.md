@@ -780,6 +780,7 @@ conversation and never to invent a confirmation identifier.
 | `AppModule` | Abstraction: `register(apps)` adds UI resources and UI-bound tools to the MCP Apps extension. |
 | `app.app_resource` | Serves `ui://gandi/app.html` (`text/html;profile=mcp-app`, empty CSP domains) from `protocol/app/static/app.html`, built from `ui/` and committed (ADR 5); `AppResourceMissingError` when missing. |
 | `app.accounts_app_tools.AccountsAppTools` | `open_gandi_app` (model and app) and the app-only tools `app_list_accounts`, `app_add_account`, `app_update_account`, `app_replace_account_token`, `app_change_account_environment`, `app_remove_account`. Only these receive a token. They refuse clients that did not negotiate MCP Apps. Removing an account and allowing writes are confirmed through the same chain as for the model (elicitation, else local page); `app_update_account` and `app_remove_account` accept the `confirmation_id` of a pending confirmation. |
+| `app.livedns_app_tools.LiveDnsAppTools` | The app-only `app_livedns_records`: a page of records of a zone with their full values, for the "DNS zone" screen (ADR 16). Same parameters as `livedns_records`; its own `EndpointToolRunner` presents results with the secret filter only, without the long text filter. Refused unless the client negotiated MCP Apps. |
 
 The UI (`ui/src/`, TypeScript, React-Bootstrap) has the same layering:
 
