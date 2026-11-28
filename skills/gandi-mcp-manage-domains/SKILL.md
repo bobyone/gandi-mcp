@@ -83,7 +83,8 @@ never guess its content. Email addresses and owner names show as
 never reach the model), turns the automatic renewal and the transfer lock on
 or off, changes the nameservers, and renews or registers a domain. Suggest it
 when the user wants to browse many domains or to see contact details without
-sharing them with the model.
+sharing them with the model. Its "DNS zone" tab edits the LiveDNS records (see
+the `gandi-mcp-manage-dns` skill).
 
 If a tool fails, relay its message: it says what happened and how to fix it.
 For other problems, use the `gandi-mcp-troubleshoot` skill.

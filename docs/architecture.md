@@ -784,17 +784,21 @@ conversation and never to invent a confirmation identifier.
 
 The UI (`ui/src/`, TypeScript, React-Bootstrap) has the same layering:
 
-- `api/`: the abstractions `AccountsApi` (`accounts-api.ts`) and `DomainsApi`
-  (`domains-api.ts`), their values (`account.ts`, `organization.ts`,
-  `domain.ts`, `pending-confirmation.ts`) and errors (`AccountsError`,
-  `DomainsError`);
+- `api/`: the abstractions `AccountsApi` (`accounts-api.ts`), `DomainsApi`
+  (`domains-api.ts`) and `LiveDnsApi` (`livedns-api.ts`), their values
+  (`account.ts`, `organization.ts`, `domain.ts`, `livedns.ts`,
+  `pending-confirmation.ts`) and errors (`AccountsError`, `DomainsError`,
+  `LiveDnsError`);
 - `api/mcp/`: their implementations through the host. `tool-caller.ts`
   (`ToolCaller`, `callTool`, `pendingOf`) calls a tool and turns a refusal
   into the error of the notion. `McpAccountsApi` calls the app-only account
   tools and the organization tools; `McpDomainsApi` calls the domain tools of
   the model (ADR 12), reads their `untrusted_data` defensively and asks for the
-  full contacts;
-- `components/`: `gandi-app.tsx` shows the "Accounts" and "Domains" tabs.
+  full contacts; `McpLiveDnsApi` reads the records through the app-only
+  `app_livedns_records` (full values, ADR 16) and calls the LiveDNS tools of
+  the model for the rest;
+- `components/`: `gandi-app.tsx` shows the "Accounts", "Domains" and "DNS
+  zone" tabs.
   `accounts/` holds the "Accounts" screen (table, add, rename, replace token,
   change environment, set as default, read-only on and off, paying
   organization, remove with a confirmation dialog). `domains/` holds the
@@ -807,7 +811,14 @@ The UI (`ui/src/`, TypeScript, React-Bootstrap) has the same layering:
   that resumes the call with its `confirmation_id`; while the modal details
   dialog is open, the feedback area is shown inside it so that it stays
   reachable. A details or quote answer that is no longer the latest request
-  (another domain opened, name edited) is ignored;
+  (another domain opened, name edited) is ignored. `livedns/` holds the "DNS
+  zone" screen (`zone-screen.tsx`): account and LiveDNS domain selectors, type
+  filter, the records table with full values (`record-table.tsx`) and
+  pagination, the add and edit dialog (`record-dialog.tsx`; name and type
+  fixed when editing, values one per line), delete and restore previews
+  (`ConfirmDialog`), and the latest snapshots (`snapshots-panel.tsx`,
+  `snapshot-dialog.tsx`); the usual record types are offered when LiveDNS
+  does not list them;
 - `i18n/`: language of the host, then of the browser, then English; ICU
   catalogs.
 

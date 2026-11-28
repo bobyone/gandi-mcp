@@ -37,11 +37,14 @@ if the build changed, the hook fails; add the rebuilt files and commit again.
 
 ## Structure
 
-- `src/api/`: `AccountsApi` and `DomainsApi` (abstractions) and, in `mcp/`,
-  `McpAccountsApi` (app-only account tools) and `McpDomainsApi` (the domain
-  tools of the model, see ADR 12).
-- `src/components/`: the tabs, the "Accounts" screen (`accounts/`) and the
-  "Domains" screen (`domains/`) with their dialogs.
+- `src/api/`: `AccountsApi`, `DomainsApi` and `LiveDnsApi` (abstractions)
+  and, in `mcp/`, `McpAccountsApi` (app-only account tools), `McpDomainsApi`
+  (the domain tools of the model, see ADR 12) and `McpLiveDnsApi` (the
+  app-only `app_livedns_records` and the LiveDNS tools of the model, see
+  ADR 16).
+- `src/components/`: the tabs, the "Accounts" screen (`accounts/`), the
+  "Domains" screen (`domains/`) and the "DNS zone" screen (`livedns/`) with
+  their dialogs.
 - `src/i18n/`: language negotiation, i18next with ICU messages, and one
   catalog per language in `locales/`; `needs-review.json` lists the
   translations awaiting a native speaker.
